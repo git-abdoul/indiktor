@@ -1,0 +1,364 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:amq="http://activemq.apache.org/schema/core"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
+	</bean>   
+	
+	<bean class="org.springframework.web.context.support.ServletContextPropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+		<property name="searchContextAttributes" value="true"/>
+		<property name="contextOverride" value="true"/>
+		<property name="ignoreResourceNotFound" value="true"/>
+		<property name="locations">
+			<list>
+				<value>file:${ikr.appEnv.prop}</value>
+			</list>
+		</property>
+	</bean>	
+	
+	<import resource="classpath:applicationContext-persistency.xml"/>
+	<import resource="classpath:applicationContext-foundation.xml"/>
+	
+	<bean id="cacheManager" class="com.fsi.monitoring.cache.EhCacheManagerBean">
+  		<property name="ehcacheConfigLocation">
+    		<value>classpath:ehcache.xml</value>
+  		</property>
+		<property name="propertiesFile">
+    		<value>file:${ikr.appEnv.prop}</value>
+  		</property>
+		<property name="componentName">
+    		<value>indiktor-web-server</value>
+  		</property>
+		<property name="cacheManagerName">
+    		<value>indiktor-web-server</value>
+  		</property>
+	</bean>
+	
+	<bean id="cacheManagerCustom" class="com.fsi.monitoring.cache.EhCacheManagerBean">
+  		<property name="ehcacheConfigLocation">
+    		<value>classpath:ehcachecustom.xml</value>
+  		</property>
+		<property name="propertiesFile">
+    		<value>file:${ikr.appEnv.prop}</value>
+  		</property>
+		<property name="componentName">
+    		<value>indiktor-web-server-custom</value>
+  		</property>
+		<property name="cacheManagerName">
+    		<value>indiktor-web-server-custom</value>
+  		</property>
+	</bean>
+
+	<bean id="beanPM"
+	      class="com.fsi.monitoring.datamodel.bean.factory.BeanPMFactory"
+		  scope="singleton"
+		  init-method="init">
+		<property name="cacheManager" ref="cacheManagerCustom"/>  
+      	<property name="monitoringPM" ref="monitoringPM"/>
+   	  	<property name="dataModelPM" ref="dataModelPM"/>
+		<property name="alertPM" ref="alertPM"/>
+		<property name="userPM" ref="userPM"/>
+		<property name="histoPM" ref="histoPM"/>
+		<property name="ikrValuePreloadCacheSize" value="${webPreloadCache.ikrValue}"/> 
+		<property name="ikrDefinitionPreloadCacheSize" value="${webPreloadCache.ikrDefinition}"/> 
+		<property name="alertDefinitionPreloadCacheSize" value="${webPreloadCache.alertDefinition}"/> 
+		<property name="monitorConfigPreloadCacheSize" value="${webPreloadCache.monitorConfig}"/>
+		<property name="connectorConfigPreloadCacheSize" value="${webPreloadCache.connectorConfig}"/>
+		<property name="ikrStaticDomainPreloadCacheSize" value="${webPreloadCache.ikrStaticDomain}"/>
+		<property name="logicalEnvPreloadCacheSize" value="${webPreloadCache.logicalEnv}"/>
+	</bean>
+
+	<bean id="styleBean"
+	      class="com.fsi.monitoring.util.StyleBean"
+		  scope="singleton">
+	</bean>	
+<!-- 
+	<bean id="renderManager" 
+		  class="com.icesoft.faces.async.render.RenderManager"
+   	 	  scope="singleton"/>
+ -->
+    <bean id="realTimeRender"
+    	  class="com.fsi.monitoring.realTime.RealTimeRender"
+    	  scope="singleton"
+    	  init-method="init">
+    	  <property name="listeners">
+            <list>
+                <ref bean="alertRTListener"/>
+				<ref bean="ikrValueRTListener"/>
+            </list>
+		  </property>
+    	  <property name="interval" value="10"/>
+	</bean>	
+	
+	 <bean id="adminEventRealTimeRender"
+    	  class="com.fsi.monitoring.realTime.RealTimeRender"
+    	  scope="singleton"
+    	  init-method="init">
+    	  <property name="listeners">
+            <list>
+                <ref bean="adminEventListener"/>
+            </list>
+		  </property>
+    	  <property name="interval" value="30"/>
+	</bean>	
+	
+	<bean id="alertRTListener"
+    	  class="com.fsi.monitoring.realTime.listener.AlertRealTimeListener"
+    	  scope="singleton"
+    	  init-method="init">
+    	  <property name="jmsFactory" ref="jmsProcessorFactory"/>
+		  <property name="jmsProcessorType" value="ALERT"/>
+    	  <property name="computeServiceConnector" ref="computeServerConnector"/>
+    	  <property name="userPM" ref="userPM"/>
+		  <property name="beanPM" ref="beanPM"/>
+	</bean>
+	
+    <bean id="ikrValueRTListener"
+    	  class="com.fsi.monitoring.realTime.listener.IkrValueRealTimeListener"
+    	  scope="singleton"
+    	  init-method="init">
+    	 <property name="jmsFactory" ref="jmsProcessorFactory"/>
+		 <property name="jmsProcessorType" value="IKR_VALUE"/>
+    	 <property name="beanPM" ref="beanPM"/>
+	</bean>	
+	
+	<bean id="adminEventListener"
+    	  class="com.fsi.monitoring.realTime.listener.AdminEventListener"
+    	  scope="singleton"
+    	  init-method="init">
+    	 <property name="jmsFactory" ref="jmsProcessorFactory"/>
+		 <property name="jmsProcessorType" value="EVENT_LOG"/>
+	</bean>	
+
+	<bean id="computeServerConnector"
+    	  class="com.fsi.fwk.apps.connection.RemoteServiceConnector"
+    	  scope="singleton"
+		  init-method="initConnection">
+		<property name="hostName">
+			<value>${compute-server.hostname}</value>
+		</property>   
+		<property name="port">
+			<value>${compute-server.port}</value>
+		</property>
+		<property name="serviceName">
+			<value>${compute-server.serviceName}</value>
+		</property>			
+	</bean>
+	
+    <bean id="xmlComponentManager"
+       class="com.fsi.monitoring.dashboard.config.ComponentXmlManager"
+       scope="singleton">
+	   <property name="boardRoot">
+			<value>${ikrDashboard.directory}</value>
+		</property>
+    </bean>	
+	
+	<bean id="realTimeComponentFactory"
+		  class="com.fsi.monitoring.realTime.subscriber.RealTimeComponentFactory"
+   	 	  scope="singleton"
+   	 	  init-method="init">
+	  
+   	 	<property name="alertRTListener" ref="alertRTListener"/>
+   	 	<property name="ikrValueRTListener" ref="ikrValueRTListener"/>
+   	 	<property name="realTimeRender" ref="realTimeRender"/>
+   	 	
+   	 	<property name="monitoringPM" ref="monitoringPM"/>
+   	 	<property name="alertPM" ref="alertPM"/>
+   	 	<property name="dataModelPM" ref="dataModelPM"/>
+   	 	<property name="beanPM" ref="beanPM"/>
+		
+		<property name="xmlComponentManager" ref="xmlComponentManager"/>
+		<property name="globalEnv" value="global"/>
+		<property name="globalType" value="alertBoard"/>
+		<property name="globalTitle" value="DashBoard"/>
+   	</bean>
+   	
+   	<bean id="ikrVersionBean"
+		  class="com.fsi.monitoring.util.IkrVersionBean"
+   	 	  scope="singleton">
+   	 	  <property name="dataModelPM" ref="dataModelPM"/>
+   	</bean>
+  
+    <bean id="reportConfigurationBean"
+    	  class="com.fsi.monitoring.report.ReportConfigurationBean"
+    	  scope="singleton">
+    	  <property name="actionFolder" value="C:/visokio/action/"/>
+    	  <property name="templateFolder" value="C:/visokio/template/"/>
+    	  <property name="outFolder" 	  value="C:/visokio/out/"/>
+    	  <property name="watchFolder" value="C:/Program Files/Visokio Omniscope/scheduler/watch/"/>				
+	</bean>   
+	
+	<bean id="exportConfigBean"
+    	  class="com.fsi.monitoring.util.export.ExportConfigBean"
+    	  scope="singleton">
+    	  <property name="exportFolder" value=""/>			
+	</bean>
+
+	<bean id="staticDataConfigBean"
+	      class="com.fsi.monitoring.datamodel.staticData.StaticDataConfigBean"
+		  scope="session">				
+	</bean>	   
+   
+	<bean id="securityBean"
+	      class="com.fsi.monitoring.sec.SecurityBean"
+		  scope="session">				
+	</bean>	
+	
+	<bean id="reportGenerationBean"
+	      class="com.fsi.monitoring.report.ReportGenerationBean"
+		  scope="session">
+	</bean>		
+	
+	<bean id="boardBean"
+	      class="com.fsi.monitoring.dashboard.bean.GlobalBoardBean"
+		  scope="session">
+		  <property name="alertPM" ref="alertPM"/>
+	</bean>		
+	
+	<bean id="boardBeanManager"
+	      class="com.fsi.monitoring.dashboard.bean.GlobalBoardBeanManager"
+		  scope="session">
+	</bean>	
+	
+	<bean id="crossComputeConfigBean"
+	      class="com.fsi.monitoring.datamodel.bean.CrossComputeConfigBean"
+		  scope="session">
+	</bean>	
+	
+	<bean id="alertManagerBean"
+	      class="com.fsi.monitoring.alert.manager.AlertManagerBean"
+		  scope="session">
+	</bean>
+	
+	<bean id="adminConsoleBean"
+	      class="com.fsi.monitoring.admin.console.AdminConsoleBean"
+		  scope="session"
+		  init-method="initBean">
+		  <property name="dataModelPM" ref="dataModelPM"/>
+		  <property name="jmsFactory" ref="jmsProcessorFactory"/>
+	</bean>
+	
+	<bean id="monitorCreationBean"
+	      class="com.fsi.monitoring.datamodel.monitor.MonitorCreationBean"
+		  scope="session"
+		  init-method="initJms">
+		 <property name="jmsFactory" ref="jmsProcessorFactory"/>
+	</bean>
+	
+	<bean id="connectorConfigBean"
+	      class="com.fsi.monitoring.datamodel.connector.ConnectorConfigBean"
+		  scope="session"
+		  init-method="initJms">
+		 <property name="jmsFactory" ref="jmsProcessorFactory"/>
+	</bean>		
+	
+	<bean id="jobSchedulerCreationBean"
+	      class="com.fsi.monitoring.datamodel.jobScheduler.JobSchedulerCreationBean"
+		  scope="session"
+		  init-method="initJms">
+		  <property name="jmsFactory" ref="jmsProcessorFactory"/>
+	</bean>
+	
+	<bean id="adminBean"
+	      class="com.fsi.monitoring.admin.AdminBean"
+		  scope="session">
+	</bean>	
+	
+	<bean id="ConnectorConfigSelectionBean"
+		  class="com.fsi.monitoring.datamodel.connector.ConnectorConfigSelectionBean"
+		  scope="session">
+	</bean>
+		
+	<bean id="dashboardMainConfigBean"
+	      class="com.fsi.monitoring.dashboard.config.DashboardMainConfigBean"
+		  scope="session">		
+	</bean>
+	
+	<bean id="dashboardSelectMainConfigBean"
+	      class="com.fsi.monitoring.dashboard.config.DashboardSelectMainConfigBean"
+		  scope="session">		
+	</bean>
+	
+	<bean id="alertBoardConfigBean"
+	      class="com.fsi.monitoring.dashboard.config.AlertBoardConfigBean"
+		  scope="session">		
+	</bean>
+	
+	<bean id="alertBoardGridConfigBean"
+	      class="com.fsi.monitoring.dashboard.config.AlertBoardGridConfigBean"
+		  scope="session">		
+	</bean>
+	
+	<bean id="navigationBoardConfigBean"
+	      class="com.fsi.monitoring.dashboard.config.NavigationBoardConfigBean"
+		  scope="session">		
+	</bean>
+	
+	<bean id="definitionChartConfigBean"
+	      class="com.fsi.monitoring.dashboard.config.DefinitionChartConfigBean"
+		  scope="session">		
+	</bean>	
+	
+	<bean id="threadConfigBean"
+	      class="com.fsi.monitoring.dashboard.config.ThreadConfigBean"
+		  scope="session">		
+	</bean>		
+	
+	<bean id="categoryChartConfigBean"
+	      class="com.fsi.monitoring.dashboard.config.CategoryChartConfigBean"
+		  scope="session">		
+	</bean>	
+	
+	<bean id="infoBoardConfigBean"
+	      class="com.fsi.monitoring.dashboard.config.InfoBoardConfigBean"
+		  scope="session">		
+	</bean>		
+	
+	<bean id="batchBoardConfigBean"
+	      class="com.fsi.monitoring.dashboard.config.BatchBoardConfigBean"
+		  scope="session">		
+	</bean>	
+	
+	<bean id="ikrSelectorBean"
+	      class="com.fsi.monitoring.component.ikrSelector.IkrSelectorBean"
+		  scope="session">	
+	</bean>
+	
+	<bean id="metricSelectorBean"
+	      class="com.fsi.monitoring.component.ikrSelector.MetricSelectorBean"
+		  scope="session">	
+	</bean>	
+	
+	<bean id="errorMessageBean"
+	      class="com.fsi.monitoring.util.ErrorMessageBean"
+		  scope="session">	
+	</bean>
+	
+	<bean id="workSpaceBean"
+	      class="com.fsi.monitoring.workSpace.bean.WorkSpaceBean"
+		  scope="session">	
+	</bean>
+	
+	<bean id="alertDefinitionModificationBean"
+		class="com.fsi.monitoring.alert.config.AlertDefinitionModificationBean"
+		scope="session">
+	</bean>		
+	
+	<bean id="metricDomainManagerBean"
+		class="com.fsi.monitoring.datamodel.ikrStaticDomain.metricDomainResource.MetricDomainManagerBean"
+		scope="singleton"
+		init-method="init">
+	</bean>		
+	
+	<bean id="snmpConfigurationBean"
+		class="com.fsi.monitoring.alert.config.SnmpConfigurationBean"
+		scope="session">
+	</bean>	
+</beans>

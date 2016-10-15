@@ -1,0 +1,192 @@
+<f:subview id="alertActions" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">   
+<ice:panelGrid columns="1" width="900" style="text-align: center;" >
+<ice:outputLabel value="Alert Preview" style="font-size: 14px; font-weight: bold"/>
+<HR/>
+<br/>
+<table  border="0px" width="100%">
+	<tr>
+		<td align="center">
+			<ice:panelGroup>
+			<table border="1" frame="box" rules="rows">
+			<tr>
+				<td align="left" bgcolor="#7bb7cf"><ice:outputLabel value="Alert Properties" style="font-size: 14px;"/></td>
+			</tr>
+			<tr>
+				<td>
+				<table>
+				<tr>
+					<td align="right"><ice:outputLabel value="Name"/></td>
+					<td></td>
+					<td colspan="5"><ice:outputText value="#{alertDefinitionModificationBean.alertDefinition.name}"/></td>
+				</tr>
+				<tr>
+					<td align="right" valign="top"><ice:outputLabel value="Description"/></td>
+					<td></td>
+					<td colspan="5">    
+						<ice:outputText value="#{alertDefinitionModificationBean.alertDefinition.description}"/>
+				    </td>
+				</tr>
+				<tr>
+					<td align="right"><ice:outputLabel value="How to URL"/></td>
+					<td></td>
+					<td colspan="5"><ice:outputText value="#{alertDefinitionModificationBean.alertDefinition.howTo}"/></td>
+				</tr>
+				<tr>
+					<td align="right"><ice:outputLabel value="Environment"/></td>
+					<td></td>
+					<td><ice:outputText value="#{alertDefinitionModificationBean.logicalEnv.name}"/></td>		
+					<td></td>
+					<td align="right"><ice:outputLabel value="Domain"/></td>
+					<td></td>
+					<td><ice:outputText value="#{alertDefinitionModificationBean.domainStr}"/></td>			
+				</tr>	
+				<tr>
+					<td align="right"><ice:outputLabel value="Group"/></td>
+					<td></td>
+					<td><ice:outputText value="#{alertDefinitionModificationBean.groupStr}"/></td>		
+					<td></td>
+					<td align="right"><ice:outputLabel value="Sub-Domain"/></td>
+					<td></td>
+					<td><ice:outputText value="#{alertDefinitionModificationBean.subDomainStr}"/></td>
+				</tr>
+				<tr height="20px"><td></td></tr>
+				</table>
+				</td>
+			</tr>
+			<tr bgcolor="#7bb7cf">
+				<td align="left" valign="top" ><ice:outputLabel value="Alert Condition" style="font-size: 14px;"/></td>
+			</tr>
+			<tr>
+				<td>
+				<table>
+					<ui:repeat var="conditionBean" value="#{alertDefinitionModificationBean.alertConditionBeans}">
+					<tr>
+						<td width="20"></td>
+						<td>
+							<ice:outputText value="(C#{conditionBean.id})" />
+						</td>
+						<td>	
+							<ice:outputText value="&#160;&#160;" />	
+							<ice:outputText id="linkHeader" value="#{conditionBean.ikrMetricLabel} (#{conditionBean.ikrCategory.label})"/>
+						</td>
+						<td>
+							<ice:outputText value="&#160;&#160;&#160;#{conditionBean.operator}" style="width:140px"/>
+						</td>
+						<td>
+							<ice:outputText  value="&#160;&#160;&#160;&#160;#{conditionBean.value}" />
+							<ice:outputText  value="#{conditionBean.unitSymbol}" rendered="#{conditionBean.unitsRendered}"/>
+						</td>
+					</tr>
+					</ui:repeat>
+					<tr height="20px"><td></td></tr>
+				</table>
+				</td>
+			</tr>
+			<tr bgcolor="#7bb7cf">
+				<td align="left" valign="top" ><ice:outputLabel value="Alert Computation" style="font-size: 14px;"/></td>
+			</tr>
+			<tr>
+				<td>
+				<table>
+				<ui:repeat var="alertCompute" value="#{alertDefinitionModificationBean.alertDefinition.alertComputes}">
+				    <ice:panelGroup rendered="#{alertCompute.enable == true}">
+					<tr>
+						<td width="20px"></td>
+						<td>
+							<ice:outputText value="#{alertCompute.workflow}" title="Computation Workflow">
+								<f:converter converterId="DisplayConverter"/>
+							</ice:outputText>
+						</td>
+						<td><ice:outputText value="&#160;&#160;&#160;&#160;#{alertCompute.cause}"/></td>
+						<td><ice:outputText value="&#160;&#160;&#160;&#160;#{alertCompute.label}&#160;&#160;&#160;&#160;"/></td>
+					</tr>
+					</ice:panelGroup>
+				</ui:repeat>
+				<tr height="20px"><td></td></tr>
+				</table>
+				</td>
+			</tr>
+			<tr bgcolor="#7bb7cf">
+				<td align="left" valign="top" ><ice:outputLabel value="Alert TimeSlot" style="font-size: 14px;"/></td>
+			</tr>
+			<tr>
+			    <td>
+				<table>
+				<tr>
+					<td width="20px"></td>		
+					<td align="right"><ice:outputLabel value="Alert Raising Delay:&#160;&#160;" /></td>
+					<td><ice:outputText value="#{alertDefinitionModificationBean.alertDefinition.raisingDelay}&#160;&#160; sec"/></td>
+				</tr>		
+				<tr height="20px"><td></td></tr>
+				</table>    
+				</td>
+			</tr>
+			
+			<tr bgcolor="#7bb7cf">
+				<td align="left" valign="top" ><ice:outputLabel value="Alert Notification" style="font-size: 14px;"/></td>
+			</tr>
+			<tr>
+			    <td>
+				<table>
+				<tr>
+					<td width="20px"></td>
+					<td align="right"><ice:outputLabel value="SMS Activated&#160;&#160;&#160;&#160;" /></td>
+					<td><ice:outputText value="#{alertDefinitionModificationBean.alertUserActionBean.sms == true ? 'YES' : 'NO'}"/></td>
+				</tr>
+				<tr>
+					<td width="20px"></td>
+					<td align="right"><ice:outputLabel value="MAIL Activated&#160;&#160;&#160;&#160;" /></td>
+					<td><ice:outputText value="#{alertDefinitionModificationBean.alertUserActionBean.mail == true ? 'YES' : 'NO'}"/></td>
+				</tr>
+				<tr>
+					<td width="20px"></td>
+					<td align="right"><ice:outputLabel value="SNMP Activated&#160;&#160;&#160;&#160;" /></td>
+					<td><ice:outputText value="#{alertDefinitionModificationBean.alertSnmpActionBean.snmp == true ? 'YES' : 'NO'}"/></td>
+				</tr>		
+				<tr height="20px"><td></td></tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table align="center" cellspacing="5">
+				<tr>
+					<td>
+						<ice:outputText value="#{alertDefinitionModificationBean.alertDefinition.enable == true ? 'This Alert is activated' : 'This Alert is NOT activated'}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<ice:form>
+							<ice:panelGroup>
+								<ice:commandButton	value="Modify" 
+													actionListener="#{alertCenterBean.modifyAlertDef}"/>
+								<ice:commandButton 	panelConfirmation="deleteConfirmPanel"
+													value="Delete" 
+													actionListener="#{alertCenterBean.deleteAlertDef}"/>				 
+						 		<ice:panelConfirmation 	id="deleteConfirmPanel" 
+													message="Are you sure to delete this alert definition ?"
+						                       		acceptLabel="Delete" 
+						                       		rendered="true"
+						                       		autoCentre="true"/>	
+						         <ice:commandButton value="Back" actionListener="#{alertCenterBean.navigate}">
+									<f:attribute name="to" value="alertDefinitionList"/> 
+								</ice:commandButton>
+							</ice:panelGroup>			
+						</ice:form>
+					</td>
+				</tr>
+				</table>
+				</td>
+			</tr>
+			</table>	
+			</ice:panelGroup>
+		</td>
+	</tr>
+</table>
+</ice:panelGrid> 
+</f:subview>

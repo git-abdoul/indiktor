@@ -1,0 +1,158 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component"
+             	xmlns:h="http://java.sun.com/jsf/html">
+<ui:param name="pageTitle" value="DashBoard Configuration" />
+<ui:define name="content">	
+<ice:panelGrid columns="1" width="900" style="text-align: center;" >
+<ice:outputLabel value="Dashboard Update" style="font-size: 14px; font-weight: bold"/>
+<HR/>
+<ice:form>
+	<table border="1px" bordercolor="#FFFFFF" width="800px" cellspacing="25px">
+		<tr bordercolor="#336699">
+			<td align="center" valign="top" width="250px">
+				<ice:outputLabel value="Create Dashboard" style="font-size: 12px; font-weight: bold"/>
+				<br/>
+				<HR/>
+				<ice:panelGrid style="text-align: left">
+					<table border="1px" bordercolor="#FFFFFF" width="100%" cellspacing="10px">
+							<tr bordercolor="#336699">
+								<td align="center">
+									<ice:outputLabel value="Environment " style="font-size: 10px; font-weight: bold"/>
+									<HR/>
+									<ice:panelGrid columns="2">
+										<ice:outputLabel value="Select: " style="font-size: 10px; font-weight: bold"/>
+										<ice:selectOneMenu value="#{dashboardMainConfigBean.navItem.environment}" style="width: 150px">
+											<f:selectItems value="#{dashboardMainConfigBean.navItem.environmentItems}"/>
+										</ice:selectOneMenu>	
+										<ice:outputLabel value="New: " style="font-size: 10px; font-weight: bold"/>
+										<ice:inputText value="#{dashboardMainConfigBean.newEnv}" style="width: 150px"/>	
+									</ice:panelGrid>
+								</td>
+							</tr>
+							<tr bordercolor="#336699">
+								<td align="center">
+									<ice:outputLabel value="Type " style="font-size: 10px; font-weight: bold"/>
+									<HR/>
+									<ice:panelGrid columns="2">
+										<ice:outputLabel value="Select: " style="font-size: 10px; font-weight: bold"/>
+										<ice:selectOneMenu value="#{dashboardMainConfigBean.navItem.type}" style="width: 150px">		   
+											<f:selectItems value="#{dashboardMainConfigBean.allTypeItems}"/>
+										</ice:selectOneMenu>	
+										<ice:outputLabel value="New: " style="font-size: 10px; font-weight: bold"/>
+										<ice:inputText value="#{dashboardMainConfigBean.newType}" style="width: 150px"/>	
+									</ice:panelGrid>
+								</td>
+							</tr>
+							<tr bordercolor="#336699">
+								<td align="center">
+									<ice:outputLabel value="Title " style="font-size: 10px; font-weight: bold"/>
+									<HR/>
+									<ice:panelGrid columns="2">
+										<ice:outputLabel value="New: " style="font-size: 10px; font-weight: bold"/>
+										<ice:inputText value="#{dashboardMainConfigBean.newTitle}" style="width: 150px"/>	
+									</ice:panelGrid>
+								</td>
+							</tr>
+					</table>
+				</ice:panelGrid>
+				<br/>
+				<ice:commandButton value="Create" 
+							   	   actionListener="#{dashboardMainConfigBean.createNewDashBoard}"
+							   	   action="#{dashboardMainConfigBean.action}">
+				 </ice:commandButton>		
+			</td>
+			<td align="center" valign="top" width="550px">
+				<ice:outputLabel value="Configure ComponentBoards" style="font-size: 12px; font-weight: bold"/>
+				<br/>
+				<HR/>
+				<ice:panelGroup rendered="#{dashboardMainConfigBean.showComponentConfiguration}">					
+					<ice:outputText style="font-size: 11px; font-weight: bold" value="#{dashboardMainConfigBean.components.summary.env} > #{dashboardMainConfigBean.components.summary.type} > #{dashboardMainConfigBean.components.summary.title}" />
+					<br/>
+					<ice:panelGroup>	
+						<table border="1px" bordercolor="#FFFFFF" width="550px" cellspacing="10px">
+							<tr bordercolor="#336699">
+								<td align="center" valign="top" width="150px">
+									<ice:outputText value="New" style="font-size: 12px; font-weight: bold"/>
+									<HR/>
+									<br/>
+									<ice:panelGrid columns="2">
+										<ice:outputLabel value="Type: " style="font-size: 10px; font-weight: bold"/>
+										<ice:selectOneMenu value="#{dashboardMainConfigBean.componentType}"
+														   valueChangeListener="#{dashboardMainConfigBean.onChangeComponentType}"
+														   partialSubmit="true"
+														   style="width: 150px">
+											<f:selectItems value="#{dashboardMainConfigBean.componentTypeItems}"/>	
+										</ice:selectOneMenu>
+									</ice:panelGrid>	
+									<br/>
+									<ice:commandButton value="Add" 
+								 	 					actionListener="#{dashboardMainConfigBean.editComponent}"
+												   	    action="#{dashboardMainConfigBean.action}">
+										<f:attribute name="operation" value="add"/>	   	    			   	    
+									</ice:commandButton>	
+								</td>	
+								<td align="center" valign="top">	
+									<ice:outputText value="Update" style="font-size: 12px; font-weight: bold"/>
+									<HR/>
+									<ice:panelGroup scrollHeight="262px" scrollWidth="400px" >
+									  	<table width="100%">
+									  		<tr>
+									  			<td align="center"><ice:outputText value="Type" style="font-size: 10px; font-weight: bold"/></td>
+									  			<td align="center"><ice:outputText value="Name" style="font-size: 10px; font-weight: bold"/></td>
+									  			<td align="center"></td>
+									  		</tr>
+											<ui:repeat var="component" value="#{dashboardMainConfigBean.componentElements}">
+												<tr valign="middle">
+													<td align="center"><ice:outputText value="#{component.componentType}" style="font-size: 10px"/></td>
+													<td align="center">
+														<ice:commandLink value="#{component.title}" 
+													 	 				 actionListener="#{dashboardMainConfigBean.editComponent}"
+																	   	 action="#{dashboardMainConfigBean.action}">
+															<f:attribute name="operation" value="update"/>	
+															<f:attribute name="componentId" value="#{component.componentId}"/>		
+															<f:attribute name="componentType" value="#{component.componentType}"/>	   	    			   	    
+														 </ice:commandLink>
+													</td>
+													<td align="center">
+														<ice:commandLink panelConfirmation="deleteComponentConfirmPanel"
+													  	 				 value="X" 
+													  	 				 actionListener="#{dashboardMainConfigBean.editComponent}"
+																	   	 action="dashboardSelectMainConfig">
+															<f:attribute name="operation" value="remove"/>
+															<f:attribute name="componentId" value="#{component.componentId}"/>		
+															<f:attribute name="componentType" value="#{component.componentType}"/>	
+													 	</ice:commandLink>
+													</td>
+												</tr>
+											</ui:repeat>
+										</table>										
+									</ice:panelGroup>			
+								</td>
+							</tr>
+						</table>
+					</ice:panelGroup>					
+					<ice:commandButton value="Preview" 
+								   	  actionListener="#{boardBeanManager.init}"
+								   	  action="boardUpdate">
+						<f:attribute name="backAction" value="dashboardCreateMainConfig"/>
+						<f:attribute name="boardEnv" value="#{dashboardMainConfigBean.components.summary.env}"/>
+						<f:attribute name="boardType" value="#{dashboardMainConfigBean.components.summary.type}"/>
+						<f:attribute name="boardTitle" value="#{dashboardMainConfigBean.components.summary.title}"/>
+				 </ice:commandButton>	
+				</ice:panelGroup>			
+			</td>
+		</tr>
+	</table>
+	<ice:panelConfirmation 	id="deleteComponentConfirmPanel" 
+							message="Are you sure to remove the component ?"
+	                   		acceptLabel="Delete" 
+	                   		rendered="true"
+	                   		autoCentre="true"/>		
+</ice:form>
+</ice:panelGrid>
+</ui:define>
+</ui:composition>
+

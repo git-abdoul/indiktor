@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<DOMAIN_CONFIG>
+	<DOMAIN_TYPE type="TRANSACTION">
+		<METRIC_DOMAIN type="TRADE_ACTIVITY">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="true" classname="com.fsi.monitoring.kpi.monitor.calypso.transaction.CalypsoTradeActivityMonitor" description="Calypso Trade Activity Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="DATA_SYNCHRONIZATION" label="Synchronize" enable="true" fieldType="selectBooleanCheckbox" fieldTypeValues=""/>
+					<FIELD name="STAT_FREQUENCY" label="Stat Frequency" enable="true" fieldType="selectOneMenu" fieldTypeValues="NONE,DAILY,WEEKLY,MONTHLY"/>
+				</ATTRIBUTE_FIELDS>
+				<CONFIG_ITEMS item="Action,ProductType,TradeCurrency,TraderName,Book,CounterParty,Status,SettleCurrency,ProcessingOrg,TradeDate,SettleDate,MarketType,Role,Broker,Agent"/>
+				<RESOURCES>
+					<RESOURCE name="TRADE" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.transaction.MurexTradeActivityMonitor" description="Murex Trade Activity Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="MUREX_TRADE" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>		
+	</DOMAIN_TYPE>
+	
+	<DOMAIN_TYPE type="CONFIRMATION">
+		<METRIC_DOMAIN type="MESSAGE_ACTIVITY">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="true" classname="com.fsi.monitoring.kpi.monitor.calypso.confirmation.CalypsoMessageActivityMonitor" description="Calypso Message Activity Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="DATA_SYNCHRONIZATION" label="Synchronize" enable="true" fieldType="selectBooleanCheckbox" fieldTypeValues=""/>
+					<FIELD name="STAT_FREQUENCY" label="Stat Frequency" enable="true" fieldType="selectOneMenu" fieldTypeValues="NONE,DAILY,WEEKLY,MONTHLY"/>
+				</ATTRIBUTE_FIELDS>
+				<CONFIG_ITEMS item="Action,EventType,ProductType,Receiver,Status,Sender,SettleDate,MessageType,AddressMethod,TemplateName,FormatType,Gateway"/>
+				<RESOURCES>
+					<RESOURCE name="MESSAGE" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>
+		<!--
+		<METRIC_DOMAIN type="DOCUMENT_ACTIVITY">
+			<CONFIG connectorType="CALYPSO" classname="com.fsi.monitoring.kpi.monitor.calypso.confirmation.CalypsoDocumentActivityMonitor" description="Calypso Document Activity Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="DATA_SYNCHRONIZATION" label="Data Synchronization" enable="false"/>
+				</ATTRIBUTE_FIELDS>
+			</CONFIG>
+		</METRIC_DOMAIN>
+		-->
+	</DOMAIN_TYPE>
+	
+	<DOMAIN_TYPE type="PAYMENT_SETTLEMENT">
+		<METRIC_DOMAIN type="TRANSFER_PAYMENT_ACTIVITY">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="true" classname="com.fsi.monitoring.kpi.monitor.calypso.paymentSettlement.CalypsoTransferPaymentActivityMonitor" description="Calypso Transfer Payment Activity Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="DATA_SYNCHRONIZATION" label="Synchronize" enable="true" fieldType="selectBooleanCheckbox" fieldTypeValues=""/>
+					<FIELD name="STAT_FREQUENCY" label="Stat Frequency" enable="true" fieldType="selectOneMenu" fieldTypeValues="NONE,DAILY,WEEKLY,MONTHLY"/>
+				</ATTRIBUTE_FIELDS>
+				<CONFIG_ITEMS item="Action,EventType,ProductType,ProcessingOrg,SettlementCurrency,SettlementMethod,Receiver,Payer,Status,NettingType,DeliveryType,TransferType,DeliveryMethod,DeliveryInstruction"/>
+				<RESOURCES>
+					<RESOURCE name="TRANSFER" enable="true"/>
+					<RESOURCE name="PAYMENT" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.paymentSettlement.MurexTransferPaymentActivityMonitor" description="Murex Transfer Payment Activity Monitoring from IndiKtor">
+				<CONFIG_ITEMS item="Status,ValueDate"/>
+				<RESOURCES>
+					<RESOURCE name="PAYMENT" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>	
+	</DOMAIN_TYPE>	
+	
+	<DOMAIN_TYPE type="ACCOUNTING">
+		<METRIC_DOMAIN type="ACCOUTING_ENTRY_POSTING">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="true" classname="com.fsi.monitoring.kpi.monitor.calypso.accounting.CalypsoAccountingEntryMonitor" description="Calypso Posting Activity Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="DATA_SYNCHRONIZATION" label="Synchronize" enable="true" fieldType="selectBooleanCheckbox" fieldTypeValues=""/>
+					<FIELD name="STAT_FREQUENCY" label="Stat Frequency" enable="true" fieldType="selectOneMenu" fieldTypeValues="NONE,DAILY,WEEKLY,MONTHLY"/>
+				</ATTRIBUTE_FIELDS>
+				<CONFIG_ITEMS item="EventType,PostingType,AccountBook,Currency,EffectiveDate,BookingDate,SentDate,Status"/>
+				<RESOURCES>
+					<RESOURCE name="ACCOUTING_POSTING" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>	
+		<METRIC_DOMAIN type="ACCOUTING_ENTRY_CRE">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="true" classname="com.fsi.monitoring.kpi.monitor.calypso.accounting.CalypsoAccountingEntryMonitor" description="Calypso CRE Activity Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="DATA_SYNCHRONIZATION" label="Synchronize" enable="true" fieldType="selectBooleanCheckbox" fieldTypeValues=""/>
+					<FIELD name="STAT_FREQUENCY" label="Stat Frequency" enable="true" fieldType="selectOneMenu" fieldTypeValues="NONE,DAILY,WEEKLY,MONTHLY"/>
+				</ATTRIBUTE_FIELDS>
+				<CONFIG_ITEMS item="EventType,CreType,AccountBook,Currency,EffectiveDate,BookingDate,SentDate,Status,SentStatus,SettlementDate"/>
+				<RESOURCES>
+					<RESOURCE name="ACCOUTING_CRE" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>
+	</DOMAIN_TYPE>
+	
+	<DOMAIN_TYPE type="STP">
+		<METRIC_DOMAIN type="TASK_ACTIVITY">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="true" classname="com.fsi.monitoring.kpi.monitor.calypso.stp.CalypsoTaskActivityMonitor" description="Calypso Task Activity Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="DATA_SYNCHRONIZATION" label="Synchronize" enable="true" fieldType="selectBooleanCheckbox" fieldTypeValues=""/>
+					<FIELD name="STAT_FREQUENCY" label="Stat Frequency" enable="true" fieldType="selectOneMenu" fieldTypeValues="NONE,DAILY,WEEKLY,MONTHLY"/>
+				</ATTRIBUTE_FIELDS>
+				<CONFIG_ITEMS item="Status,Priority,CounterParty,Class,Type,ProcessingOrg,Owner"/>
+				<RESOURCES>
+					<RESOURCE name="TASKS" enable="true"/>
+				</RESOURCES>
+			</CONFIG>	
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>			
+		</METRIC_DOMAIN>	
+		<METRIC_DOMAIN type="KICKOFF_CUTTOFF_ACTIVITY">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="true" classname="com.fsi.monitoring.kpi.monitor.calypso.stp.CalypsoKickOffCutOffActivityMonitor" description="Calypso KickOff - CutOff Activity Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="DATA_SYNCHRONIZATION" label="Synchronize" enable="true" fieldType="selectBooleanCheckbox" fieldTypeValues=""/>
+					<FIELD name="STAT_FREQUENCY" label="Stat Frequency" enable="false" fieldType="selectOneMenu" fieldTypeValues="NONE,DAILY,WEEKLY,MONTHLY"/>
+					<FIELD name="EVENT_CLASS" label="Event Class" enable="true" fieldType="selectOneMenu" fieldTypeValues="Message,Trade,Transfer"/>
+				</ATTRIBUTE_FIELDS>
+				<RESOURCES>
+					<RESOURCE name="KICKOFF_CUTTOFF" enable="true"/>
+				</RESOURCES>
+			</CONFIG>	
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>	
+		<METRIC_DOMAIN type="MUREX_TRADE_TASK_ACTIVITY">
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.stp.MurexTradeTaskActivityMonitor" description="Murex Trade Task Activity Monitoring from IndiKtor">
+				<CONFIG_ITEMS item="StatusDate"/>
+				<RESOURCES>
+					<RESOURCE name="MUREX_TRADE_TASKS" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>	
+		<METRIC_DOMAIN type="MUREX_MESSAGE_TASK_ACTIVITY">
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.stp.MurexMessageTaskActivityMonitor" description="Murex Message Task Activity Monitoring from IndiKtor">
+				<CONFIG_ITEMS item="XmlFlowStatus"/>
+				<RESOURCES>
+					<RESOURCE name="MUREX_MESSAGE_TASKS" enable="true"/>
+				</RESOURCES>
+			</CONFIG>	
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>			
+		</METRIC_DOMAIN>	
+		<METRIC_DOMAIN type="MUREX_PAYMENT_TASK_ACTIVITY">
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.stp.MurexPaymentTaskActivityMonitor" description="Murex Payment Task Activity Monitoring from IndiKtor">
+				<CONFIG_ITEMS item="StatusDate"/>
+				<RESOURCES>
+					<RESOURCE name="MUREX_PAYMENT_TASKS" enable="true"/>
+				</RESOURCES>
+			</CONFIG>		
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>	
+		<METRIC_DOMAIN type="MUREX_FIXINGS_ACTIVITY">
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.stp.MurexFixingsActivityMonitor" description="Murex Fixings Activity Monitoring from IndiKtor">
+				<CONFIG_ITEMS item="FixDate"/>
+				<RESOURCES>
+					<RESOURCE name="MUREX_FIXINGS" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>	
+		<METRIC_DOMAIN type="BATCH_PROCESS">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.calypso.stp.CalypsoScheduledTaskMonitor" description="Calypso Scheduled Tasks Monitoring from IndiKtor">
+				<CONFIG_ITEMS item="Id,Type,ProcessingOrg"/>
+				<RESOURCES>
+					<RESOURCE name="BATCH" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.stp.MurexBatchMonitor" description="Murex Batches Monitoring from IndiKtor">
+				<CONFIG_ITEMS item="Name"/>
+				<RESOURCES>
+					<RESOURCE name="BATCH" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.stp.MurexReportMonitor" description="Murex Reports Monitoring from IndiKtor">
+				<CONFIG_ITEMS item="Name"/>
+				<RESOURCES>
+					<RESOURCE name="BATCH" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.stp.MurexDatamartMonitor" description="Murex Datamart Monitoring from IndiKtor">
+				<CONFIG_ITEMS item="Name"/>
+				<RESOURCES>
+					<RESOURCE name="BATCH" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>
+		<METRIC_DOMAIN type="OPERATIONAL_ANOMALY">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="true" classname="com.fsi.monitoring.kpi.monitor.calypso.exception.CalypsoExceptionMonitor" description="Calypso Operational Anomaly Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="DATA_SYNCHRONIZATION" label="Synchronize" enable="true" fieldType="selectBooleanCheckbox" fieldTypeValues=""/>
+					<FIELD name="STAT_FREQUENCY" label="Stat Frequency" enable="true" fieldType="selectOneMenu" fieldTypeValues="NONE,DAILY,WEEKLY,MONTHLY"/>
+				</ATTRIBUTE_FIELDS>
+				<CONFIG_ITEMS item="Class,Type,Source,CounterParty,ProcessingOrg"/>
+				<RESOURCES>
+					<RESOURCE name="OPERATION_EXCEPTION_COUNT" enable="true"/>
+					<RESOURCE name="OPERATION_EXCEPTION_CONTENT" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>
+		<METRIC_DOMAIN type="SYSTEM_ANOMALY">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.calypso.exception.CalypsoExceptionMonitor" description="Calypso System Anomaly Monitoring from IndiKtor">
+				<CONFIG_ITEMS item="ApplicationName"/>
+				<RESOURCES>
+					<RESOURCE name="EXCEPTION_COUNT" enable="true"/>
+					<RESOURCE name="EXCEPTION_CONTENT" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>
+		<METRIC_DOMAIN type="GENERIC_LOG_ANALYSIS">
+			<CONFIG connectorType="SYSTEM_AGENT" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.log.generic.GenericLogInfoMonitor" description="Generic Log File Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="LOG_CONTENT_FILTERS" label="Log Content Filters" enable="true" fieldType="inputText" fieldTypeValues=""/>
+					<FIELD name="LOG_FILENAME_FILTERS" label="Log Filename Filters" enable="true" fieldType="inputText" fieldTypeValues=""/>
+				</ATTRIBUTE_FIELDS>
+				<RESOURCES>
+					<RESOURCE name="LOG_CONTENT" enable="true"/>
+				</RESOURCES>
+			</CONFIG>	
+		</METRIC_DOMAIN>
+	</DOMAIN_TYPE>
+	
+	<DOMAIN_TYPE type="MUREX">
+		<METRIC_DOMAIN type="MUREX_SERVER">
+			<CONFIG connectorType="SYSTEM_AGENT" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.server.MurexServerMonitor" description="Murex Server Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="MUREX_SERVER" enable="true"/>
+				</RESOURCES>
+			</CONFIG>	
+		</METRIC_DOMAIN>
+		<METRIC_DOMAIN type="MUREX_SESSION">
+			<CONFIG connectorType="SYSTEM_AGENT" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.session.MurexSessionMonitor" description="Murex Session Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="MUREX_SESSION" enable="true"/>
+				</RESOURCES>
+			</CONFIG>	
+		</METRIC_DOMAIN>
+		<METRIC_DOMAIN type="MUREX_SERVICE">
+			<CONFIG connectorType="SYSTEM_AGENT" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.service.MurexServiceMonitor" description="Murex Service Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="MUREX_SERVICE" enable="true"/>
+				</RESOURCES>
+			</CONFIG>	
+		</METRIC_DOMAIN>
+		<METRIC_DOMAIN type="MUREX_MD">
+			<CONFIG connectorType="SYSTEM_AGENT" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.murex.marketData.MurexMarketDataMonitor" description="Murex Market Data Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="MUREX_MD" enable="true"/>
+				</RESOURCES>
+			</CONFIG>	
+		</METRIC_DOMAIN>
+	</DOMAIN_TYPE>
+	
+	<DOMAIN_TYPE type="CALYPSO">
+		<METRIC_DOMAIN type="CALYPSO_DS_CACHE">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.calypso.cache.CalypsoDsCacheMonitor" description="Calypso DataServer Cache Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="CALYPSO_DS_CACHE" enable="true"/>
+					<RESOURCE name="CALYPSO_DS_CACHE_READ" enable="true"/>
+					<RESOURCE name="CALYPSO_DS_CACHE_WRITE" enable="true"/>
+					<RESOURCE name="CALYPSO_DS_CACHE_REMOVE" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>			
+		</METRIC_DOMAIN>
+		<METRIC_DOMAIN type="CALYPSO_PSEVENT">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.calypso.event.CalypsoEventMonitor" description="Calypso PSEvent Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="PENDING_TIME_FETCHING_DELAY" label="Pending Time Fetching Delay (mins)" enable="true" fieldType="inputText" fieldTypeValues=""/>
+					<FIELD name="PENDING_RAISING_TIME" label="Pending Raising Time (mins)" enable="true" fieldType="inputText" fieldTypeValues=""/>
+				</ATTRIBUTE_FIELDS>
+				<RESOURCES>
+					<RESOURCE name="CALYPSO_PSEVENT" enable="true"/>
+					<RESOURCE name="CALYPSO_PSEVENT_PT" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.sqlQuery.GenericSQLQueryCollector" description="Generic SQL Query Collector from IndiKtor">
+				<ATTRIBUTES>
+					<ATTRIBUTE key="ON_THE_FLY" value="true"/>
+				</ATTRIBUTES>
+				<RESOURCES>
+					<RESOURCE name="SQL_QUERY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>
+		<METRIC_DOMAIN type="CALYPSO_DATASERVER">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.calypso.ds.CalypsoDataServerMonitor" description="Calypso DataServer Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="CALYPSO_DATASERVER" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>	
+		<METRIC_DOMAIN type="CALYPSO_EVENTSERVER">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.calypso.es.CalypsoEventServerMonitor" description="Calypso EventServer Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="CALYPSO_EVENTSERVER_POOL" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>
+		<METRIC_DOMAIN type="CALYPSO_ENGINE">
+			<CONFIG connectorType="CALYPSO" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.calypso.engine.CalypsoEngineMonitor" description="Calypso Engine Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="CALYPSO_ENGINE_EVENTPOOL" enable="true"/>
+					<RESOURCE name="CALYPSO_ENGINE_CACHE" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>
+	</DOMAIN_TYPE>
+			
+	<DOMAIN_TYPE type="JVM">
+		<METRIC_DOMAIN type="JVM_ACTIVITY">
+			<CONFIG connectorType="JMX" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.jmx.JmxMonitor" description="Java Virtual Machine (JVM) Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="JMX_PROCESS_HEAP_MEMORY" enable="true"/>
+					<RESOURCE name="JMX_PROCESS_NON_HEAP_MEMORY" enable="true"/>
+					<RESOURCE name="JMX_PROCESS_MEMORY_POOL" enable="true"/>
+					<RESOURCE name="JMX_PROCESS_GC" enable="true"/>
+					<RESOURCE name="JMX_PROCESS_CLASS" enable="true"/>
+					<RESOURCE name="JMX_PROCESS_JVM" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>			
+		<METRIC_DOMAIN type="THREAD_ACTIVITY">
+			<CONFIG connectorType="JMX" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.jmx.JmxThreadMonitor" description="Java Thread Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="THREAD_STATS" enable="true"/>
+					<RESOURCE name="THREAD_STATUS" enable="true"/>
+					<RESOURCE name="THREAD_TYPE" enable="true"/>
+					<RESOURCE name="THREAD_METHOD" enable="true"/>
+					<RESOURCE name="THREAD_INFO" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>
+	</DOMAIN_TYPE>
+	
+	<DOMAIN_TYPE type="PROCESS">		
+		<METRIC_DOMAIN type="PROCESS_ACTIVITY" label="Process Activity">
+			<CONFIG connectorType="SYSTEM_AGENT" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.process.ProcessMonitor" description="Process Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="PROCESS_NAME_FILTERS" label="Process Name Filters" enable="true" fieldType="inputText" fieldTypeValues=""/>
+					<FIELD name="JAR_NAME_FILTERS" label="Jar Name Filters" enable="true" fieldType="inputText" fieldTypeValues=""/>
+					<FIELD name="CLASS_NAME_FILTERS" label="Class Name Filters" enable="true" fieldType="inputText" fieldTypeValues=""/>
+					<FIELD name="ARGUMENT_FILTERS" label="Argument Filters" enable="true" fieldType="inputText" fieldTypeValues=""/>
+				</ATTRIBUTE_FIELDS>
+				<RESOURCES>
+					<RESOURCE name="SYSTEM_PROCESS_STATS" enable="true"/>
+					<RESOURCE name="SYSTEM_PROCESS_AVAILABILITY" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<!--
+			<CONFIG connectorType="SYSLOAD" classname="com.fsi.monitoring.kpi.monitor.sysload.ProcessMonitor" description="Process Monitoring from Sysload">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="PROCESS_NAME_FILTERS" label="Process Name Filters" enable="true"/>
+					<FIELD name="JAR_NAME_FILTERS" label="Jar Name Filters" enable="true"/>
+					<FIELD name="CLASS_NAME_FILTERS" label="Class Name Filters" enable="true"/>
+					<FIELD name="ARGUMENT_FILTERS" label="Argument Filters" enable="true"/>
+				</ATTRIBUTE_FIELDS>
+			</CONFIG>
+			-->
+		</METRIC_DOMAIN>			
+	</DOMAIN_TYPE>
+
+	<DOMAIN_TYPE type="SYSTEM">		
+		<METRIC_DOMAIN type="HARDWARE_ACTIVITY">
+			<CONFIG connectorType="SYSTEM_AGENT" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.system.SystemMonitor" description="System Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="SYSTEM_CPU" enable="true"/>
+					<RESOURCE name="SYSTEM_DISK" enable="true"/>
+					<RESOURCE name="SYSTEM_LOAD" enable="true"/>
+					<RESOURCE name="SYSTEM_MEMORY" enable="true"/>
+					<RESOURCE name="SYSTEM_NETWORK_INTERFACE" enable="true"/>
+					<RESOURCE name="SYSTEM_UPTIME" enable="true"/>
+					<RESOURCE name="SYSTEM_PROC_STAT" enable="true"/>
+					<RESOURCE name="SYSTEM_SWAP" enable="true"/>
+					<RESOURCE name="SYSTEM_NETWORK_TCP" enable="true"/>
+					<RESOURCE name="SYSTEM_NETWORK_STAT" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+			<!-- <CONFIG connectorType="SYSLOAD" classname="com.fsi.monitoring.kpi.monitor.sysload.SystemMonitor" description="System Monitoring from Sysload"/> -->
+		</METRIC_DOMAIN>	
+		<METRIC_DOMAIN type="PING">
+			<CONFIG connectorType="SYSTEM_AGENT" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.network.PingMonitor" description="Ping Monitoring from IndiKtor">
+				<ATTRIBUTE_FIELDS>
+					<FIELD name="HOSTNAMES" label="Hosts To Ping" enable="true" fieldType="inputText" fieldTypeValues=""/>
+				</ATTRIBUTE_FIELDS>
+				<RESOURCES>
+					<RESOURCE name="PING_20" enable="true"/>
+					<RESOURCE name="PING_64" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>
+	</DOMAIN_TYPE>
+
+	<DOMAIN_TYPE type="DBMS">
+		<METRIC_DOMAIN type="SYBASE">
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.dbms.sybase.SybaseMonitor" description="Sybase Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="SYBASE_STATEMENT" enable="true"/>
+					<RESOURCE name="SYBASE_DEVICE" enable="true"/>
+					<RESOURCE name="SYBASE_PROCESS" enable="true"/>
+					<RESOURCE name="SYBASE_PROCESS_NETWORK" enable="true"/>
+					<RESOURCE name="SYBASE_PROCESS_CONTENTION" enable="true"/>
+					<RESOURCE name="SYBASE_PROCESS_TRANSACTION" enable="true"/>
+					<RESOURCE name="SYBASE_PROCESS_ULC" enable="true"/>
+					<RESOURCE name="SYBASE_PROCESS_THREAD" enable="true"/>
+					<RESOURCE name="SYBASE_PROCESS_IO" enable="true"/>
+					<RESOURCE name="SYBASE_LOG_SEVERITY" enable="true"/>
+					<RESOURCE name="SYBASE_LOG_MESSAGE" enable="true"/>
+					<RESOURCE name="SYBASE_MONITORCONF" enable="true"/>
+					<RESOURCE name="SYBASE_NETWORK" enable="true"/>
+					<RESOURCE name="SYBASE_ENGINE" enable="true"/>
+					<RESOURCE name="SYBASE_ENGINE_CPU_TIME" enable="true"/>
+					<RESOURCE name="SYBASE_ENGINE_DISK" enable="true"/>
+					<RESOURCE name="SYBASE_ENGINE_HKGC" enable="true"/>
+					<RESOURCE name="SYBASE_TABLE" enable="true"/>
+					<RESOURCE name="SYBASE_CACHE_DATA" enable="true"/>
+					<RESOURCE name="SYBASE_CACHE_OBJECT" enable="true"/>
+					<RESOURCE name="SYBASE_CACHE_POOL" enable="true"/>
+					<RESOURCE name="SYBASE_CACHE_PROCEDURE" enable="true"/>
+					<RESOURCE name="SYBASE_CONTENTION" enable="true"/>
+					<RESOURCE name="SYBASE_PARTITION" enable="true"/>
+				</RESOURCES>
+			</CONFIG>
+		</METRIC_DOMAIN>		
+		<METRIC_DOMAIN type="ORACLE">
+			<CONFIG connectorType="RDBMS" useDataSynchronization="false" classname="com.fsi.monitoring.kpi.monitor.dbms.oracle.OracleMonitor" description="Oracle Monitoring from IndiKtor">
+				<RESOURCES>
+					<RESOURCE name="ORACLE_PROCESS" enable="true"/>
+					<RESOURCE name="ORACLE_STATEMENT_GLOBAL" enable="true"/>
+					<RESOURCE name="ORACLE_NETWORK_SHARED_SERVER" enable="true"/>
+					<RESOURCE name="ORACLE_NETWORK_DISPATCHER" enable="true"/>
+					<RESOURCE name="ORACLE_NETWORK_CIRCUIT" enable="true"/>
+					<RESOURCE name="ORACLE_NETWORK_EVENT" enable="true"/>
+					<RESOURCE name="ORACLE_REDO" enable="true"/>
+					<RESOURCE name="ORACLE_IO_STATS" enable="true"/>
+					<RESOURCE name="ORACLE_IO_STORAGE" enable="true"/>
+					<RESOURCE name="ORACLE_SGA_SIZE" enable="true"/>
+					<RESOURCE name="ORACLE_SGA_HIT_RATIO" enable="true"/>
+					<RESOURCE name="ORACLE_ROLLBACK_SEGMENT" enable="true"/>
+					<RESOURCE name="ORACLE_LATCH" enable="true"/>
+					<RESOURCE name="ORACLE_LATCH_PERF" enable="true"/>
+					<RESOURCE name="ORACLE_LOCK" enable="true"/>
+					<RESOURCE name="ORACLE_WAIT_EVENT" enable="true"/>
+					<RESOURCE name="ORACLE_SESSION_WAIT" enable="true"/>
+					<RESOURCE name="ORACLE_SESSION_PERF" enable="true"/>
+					<RESOURCE name="ORACLE_SHARED_POOL_HITS" enable="true"/>
+					<RESOURCE name="ORACLE_SHARED_POOL_MEMORY" enable="true"/>
+					<RESOURCE name="ORACLE_SEGMENT_STATS" enable="true"/>
+					<RESOURCE name="ORACLE_DATABASE" enable="true"/>
+					<RESOURCE name="ORACLE_STORAGE" enable="true"/>
+				</RESOURCES>	
+			</CONFIG>
+		</METRIC_DOMAIN>	
+	</DOMAIN_TYPE>	
+</DOMAIN_CONFIG>

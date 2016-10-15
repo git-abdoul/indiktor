@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns="http://java.sun.com/xml/ns/j2ee" 
+		xmlns:javaee="http://java.sun.com/xml/ns/javaee" 
+		xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_4.xsd" 
+		xmlns:web_1="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_4.xsd" 
+		version="2.4">
+  
+  <display-name>IndiKtor - Monitoring Integration Plateform</display-name>
+  
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+			classpath:applicationContext-web.xml
+		</param-value>
+  </context-param>
+  
+  <context-param>
+    <param-name>com.icesoft.faces.debugDOMUpdate</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  
+  <context-param>
+    <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  
+  <context-param>
+    <param-name>javax.faces.VALIDATE_EMPTY_FIELDS</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  
+  <context-param>
+    <param-name>com.icesoft.faces.standardRequestScope</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  
+  <context-param>
+    <param-name>com.icesoft.faces.concurrentDOMViews</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  
+  <context-param>
+    <param-name>com.icesoft.faces.synchronousUpdate</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  
+  <context-param>
+    <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+    <param-value>/WEB-INF/tld/indiktor.xml</param-value>
+  </context-param>
+ <!-- 
+  <context-param>
+    <param-name>com.icesoft.faces.uploadDirectory</param-name>
+    <param-value>upload</param-value>
+  </context-param>
+  
+  <servlet>
+    <servlet-name>uploadServlet</servlet-name>
+    <servlet-class>com.icesoft.faces.component.inputfile.FileUploadServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>uploadServlet</servlet-name>
+    <url-pattern>/uploadHtml</url-pattern>
+  </servlet-mapping>
+   --> 
+   
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>/icefaces/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>/faces/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.jsf</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.faces</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>Resource Servlet</servlet-name>
+    <servlet-class>com.icesoft.faces.webapp.CompatResourceServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Resource Servlet</servlet-name>
+    <url-pattern>/xmlhttp/*</url-pattern>
+  </servlet-mapping>
+  
+  <session-config>
+    <session-timeout>1440</session-timeout>
+  </session-config>
+  
+  <filter>
+    <filter-name>securityFilter</filter-name>
+    <filter-class>com.fsi.monitoring.sec.SecurityFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>securityFilter</filter-name>
+    <url-pattern>*.jsf</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  
+  <welcome-file-list>
+    <welcome-file>index.jsf</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  
+  <listener>
+    <listener-class>com.sun.faces.application.WebappLifecycleListener</listener-class>
+  </listener>
+  
+  <listener>
+    <listener-class>com.fsi.monitoring.util.SystemPropertiesHelper</listener-class>
+  </listener>
+  
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+  
+  <context-param>
+    <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>client</param-value>
+  </context-param>
+  
+  <context-param>
+    <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+    <param-value>resources.application</param-value>
+  </context-param>
+  
+  <listener>
+    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+  </listener>
+</web-app>

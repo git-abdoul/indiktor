@@ -1,0 +1,467 @@
+<f:subview id="alertConfig" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:ice-cc="http://www.icesoft.com/icefaces-composite-comps">
+	
+<ice:form>
+	<table id="pageAlertDefinition">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft">
+							<div class="topMenuBarLeftAB2">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/AlertBoardOFF.png"
+												   title="Board"
+												   value="#{alertCenterBean.menus['alertBoard']}"
+												   actionListener="#{alertCenterBean.navigate}">
+									<f:attribute name="to" value="alertBoard" />
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftAD2">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/AlertDefinitionON.png"
+												   title="Definition"
+												   value="#{alertCenterBean.menus['alertDefinitionList']}"
+												   actionListener="#{alertCenterBean.navigate}">
+									<f:attribute name="to" value="alertDefinitionList" />
+								</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<!-- 
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   actionListener="#{alertCenterBean.openAlertFilterPopup}"
+														   image="/images/IndiKtor2.0/Buttons/filter.png"
+													   	   title="Alert Filter"/>
+										 -->
+										 <ice:panelGrid columns="2">
+										 	<ice:outputLabel value="Search"/>
+											<ice:inputText value="#{allAlertDefinitionBean.searchQuery}"
+										 				   valueChangeListener="#{allAlertDefinitionBean.searchAlertDefQuery}"	
+										 				   style="width:200px; font-size: 10px; margin-right: 30px;"/>
+										</ice:panelGrid>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/add.png"
+														   title="Add new alert"
+														   value="Add new alert"
+														   actionListener="#{alertCenterBean.openNewAlertPopUp}">
+											<f:attribute name="to" value="alertDefinitionConfig" />
+											<f:attribute name="isNew" value="true" />
+										</ice:commandButton>
+									</td>
+									<!-- 
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/add.png"
+														   title="Add new alert"
+														   value="Add new alert"
+														   actionListener="#{alertCenterBean.navigate}">
+											<f:attribute name="to" value="alertDefinitionConfig" />
+											<f:attribute name="isNew" value="true" />
+										</ice:commandButton>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   actionListener="#{alertCenterBean.modifyAlertDef}"
+														   image="/images/IndiKtor2.0/Buttons/edit.png"
+														   title="Edit selected alert">
+										</ice:commandButton>
+									</td>
+									<td>
+										<ice:commandButton panelConfirmation="#{allAlertDefinitionBean.selectedAlertDefinitionId==0 ? false : 'deleteConfirmPanel'}"
+														   styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/delete.png"
+														   actionListener="#{alertCenterBean.deleteAlertDef}"
+														   title="Delete selected alert">
+										</ice:commandButton>
+												
+										<ice:panelConfirmation 	id="deleteConfirmPanel"
+																message="#{allAlertDefinitionBean.deleteMessage}"
+																type="normal"
+																acceptLabel="Delete"
+																rendered="true"
+																autoCentre="true"/>	
+									</td>
+									 -->
+									<td>
+										<ice:commandButton panelConfirmation="#{allAlertDefinitionBean.alertDefinitionsSelected == 0 ? false : 'deleteConfirmPanel'}"
+														   styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/delete.png"
+														   actionListener="#{alertCenterBean.deleteSelectedAlertDef}"
+														   title="Delete selected alerts"
+														   rendered="#{allAlertDefinitionBean.alertDefinitionsSelected != 0}"/>
+										<ice:panelConfirmation 	id="deleteConfirmPanel"
+																message="#{allAlertDefinitionBean.deleteMessage}"
+																type="normal"
+																acceptLabel="Delete"
+																rendered="true"
+																autoCentre="true"/>
+									</td>			
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+														   title="Help" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentFullPanelAlertDefinition">
+							<table>
+								<tr>
+									<td>				 
+										<ice:panelGroup style="text-align:center;"
+														rendered="#{allAlertDefinitionBean.alertDefinitionSelector.dataEnable}">
+											<ice:dataPaginator id="alertDefsScroll_2" for="alertDefs"
+												rowsCountVar="rowsCount"
+												displayedRowsCountVar="displayedRowsCountVar"
+												firstRowIndexVar="firstRowIndex"
+												lastRowIndexVar="lastRowIndex" pageCountVar="pageCount"
+												pageIndexVar="pageIndex">
+												<ice:outputFormat
+													value="{0} Alert Definitions found,  displaying {1} Alert Definitions,  from {2} to {3}. Page {4} / {5}."
+													style="font-weight: bold;" styleClass="standard">
+													<f:param value="#{rowsCount}" />
+													<f:param value="#{displayedRowsCountVar}" />
+													<f:param value="#{firstRowIndex}" />
+													<f:param value="#{lastRowIndex}" />
+													<f:param value="#{pageIndex}" />
+													<f:param value="#{pageCount}" />
+												</ice:outputFormat>
+											</ice:dataPaginator>
+										</ice:panelGroup>
+									</td>
+								</tr>
+								<tr height="10px"><td></td></tr>
+								<tr>
+									<td style="text-align: center;">
+										<!-- <ice:outputLabel value="No Alert Defined" style="font-size: 11px; font-weight: bold" rendered="#{!allAlertDefinitionBean.alertDefinitionSelector.dataEnable}"/>
+										<ice:panelGroup rendered="#{allAlertDefinitionBean.alertDefinitionSelector.dataEnable}"> -->
+										<ice:panelGrid columns="1" style="text-align: center;" width="1150px">
+											<ice:outputLabel value="No Alert Definition has been configured. Click on the plus icon (+) to add Alert Definitions."
+															 rendered="#{!allAlertDefinitionBean.alertDefinitionSelector.dataEnable}"/>
+										</ice:panelGrid>
+										<ice:panelGroup rendered="#{allAlertDefinitionBean.alertDefinitionSelector.dataEnable}">
+											<ice:dataTable id="alertDefs"
+												sortColumn="#{allAlertDefinitionBean.sortColumnName}"
+												sortAscending="#{allAlertDefinitionBean.ascending}"
+												value="#{allAlertDefinitionBean.alertDefinitionBeans}"
+												var="item"
+												rows="#{allAlertDefinitionBean.rowsByPage}"
+												cellspacing="0" cellpadding="0" border="0" width="100%"
+												columnClasses="tableCol"
+												columnWidths="20px, 290px, 205px, 150px, 150px, 150px, 60px, 40px">
+
+												<ice:column style="#{item.style}">													
+													<f:facet name="header">
+												       	<ice:selectBooleanCheckbox value="#{allAlertDefinitionBean.selectAll}" 
+												       							   valueChangeListener="#{allAlertDefinitionBean.handleSelectAllAlerts}"	
+												       							   partialSubmit="true"
+												       							   style="text-align: center;"/>
+													</f:facet>
+											       	<ice:selectBooleanCheckbox value="#{item.selected}" 
+											       							   valueChangeListener="#{allAlertDefinitionBean.handleSelectedAlert}"	
+											       							   partialSubmit="true"
+											       							   style="text-align: center;">
+											       		<f:attribute name="checkedAlert" value="#{item}"/> 							   
+											       	</ice:selectBooleanCheckbox>
+												</ice:column>
+												<ice:column style="#{item.style}">
+													<!-- <ice:rowSelector value="#{item.selected}" 
+														selectedClass="tableRowSelSelected"
+														mouseOverClass="tableRowSelMouseOver"
+														selectedMouseOverClass="tableRowSelSelectedMouseOver"
+														enhancedMultiple="true"
+										               	styleClass="iceRowSel-Dis"
+										                selectionListener="#{allAlertDefinitionBean.rowSelectionListener}"/> -->													
+													<f:facet name="header">
+														<ice:commandSortHeader
+															columnName="#{allAlertDefinitionBean.labelColumnName}"
+															arrow="true">
+															<ice:outputText
+																value="#{allAlertDefinitionBean.labelColumnName}" />
+														</ice:commandSortHeader>
+													</f:facet>
+													<ice:outputText value="#{item.alertDefinitionBean.alertDefinition.name}" />
+												</ice:column>
+												<ice:column style="#{item.style}">
+													<f:facet name="header">
+														<ice:commandSortHeader
+															columnName="#{allAlertDefinitionBean.envColumnName}"
+															arrow="true">
+															<ice:outputText
+																value="#{allAlertDefinitionBean.envColumnName}" />
+														</ice:commandSortHeader>
+													</f:facet>
+													<ice:outputText
+														value="#{item.alertDefinitionBean.logicalEnv.name}" />
+												</ice:column>
+												<ice:column style="#{item.style}">
+													<f:facet name="header">
+														<ice:commandSortHeader
+															columnName="#{allAlertDefinitionBean.groupColumnName}"
+															arrow="true">
+															<ice:outputText
+																value="#{allAlertDefinitionBean.groupColumnName}" />
+														</ice:commandSortHeader>
+													</f:facet>
+													<ice:outputText value="#{item.alertDefinitionBean.group}" />
+												</ice:column>
+												<ice:column style="#{item.style}">
+													<f:facet name="header">
+														<ice:commandSortHeader
+															columnName="#{allAlertDefinitionBean.domainColumnName}"
+															arrow="true">
+															<ice:outputText
+																value="#{allAlertDefinitionBean.domainColumnName}" />
+														</ice:commandSortHeader>
+													</f:facet>
+													<ice:outputText value="#{item.alertDefinitionBean.domain}" />
+												</ice:column>
+												<ice:column style="#{item.style}">
+													<f:facet name="header">
+														<ice:commandSortHeader
+															columnName="#{allAlertDefinitionBean.subDomainColumnName}"
+															arrow="true">
+															<ice:outputText
+																value="#{allAlertDefinitionBean.subDomainColumnName}" />
+														</ice:commandSortHeader>
+													</f:facet>
+													<ice:outputText
+														value="#{item.alertDefinitionBean.subDomain}" />
+												</ice:column>
+												<ice:column style="#{item.style}">
+													<f:facet name="header">
+														<!-- <ice:commandSortHeader columnName="#{allAlertDefinitionBean.ActiveColumnName}" arrow="true"> -->
+															<ice:outputLabel value="Active" style="text-align: center;"/>
+														<!-- </ice:commandSortHeader> -->
+													</f:facet>
+													<ice:outputText style="text-align: center;"
+																	value="#{item.alertDefinitionBean.alertDefinition.enable}" />
+												</ice:column>
+												<ice:column style="text-align: center;">
+													<f:facet name="header">
+											        </f:facet>
+													<ice:commandButton actionListener="#{alertCenterBean.modifyAlertDef}"
+																	   image="/images/IndiKtor2.0/Buttons/editSmall.png"
+																	   title="Edit this alert">
+														<f:attribute name="alertDefinitionId" value="#{item.id}"/>
+													</ice:commandButton>
+													<ice:commandButton panelConfirmation="#{item.id==0 ? false : 'deleteNoSelectionConfirmPanel'}"
+																	   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+																	   actionListener="#{alertCenterBean.deleteAlertDef}"
+																	   title="Delete this alert"
+																   	   style="margin-left: 10px;">
+														<f:attribute name="alertDefinitionId" value="#{item.id}"/>
+													</ice:commandButton>
+													<ice:panelConfirmation 	id="deleteNoSelectionConfirmPanel"
+																			message="Are you sure to delete this alert definition : #{item.alertDefinitionBean.alertDefinition.name}"
+																			type="normal"
+																			acceptLabel="Delete"
+																			rendered="true"
+																			autoCentre="true"/>
+												</ice:column>
+											</ice:dataTable>
+										</ice:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<ice:panelGroup style="float:center;"
+														visible="#{allAlertDefinitionBean.paginationVisible}"
+														rendered="#{allAlertDefinitionBean.alertDefinitionSelector.dataEnable}">
+											<center>
+												<ice:dataPaginator id="alertDefsScroll_1" for="alertDefs"
+													fastStep="3" paginator="true" paginatorMaxPages="4" actionListener="#{allAlertDefinitionBean.pageChangeListener}">
+													<f:facet name="first">
+														<ice:graphicImage id="firstpage_1"
+															url="#{styleBean.imageDirectory}arrow-first.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.firstpage']}" />
+													</f:facet>
+													<f:facet name="last">
+														<ice:graphicImage id="lastpage_1"
+															url="#{styleBean.imageDirectory}arrow-last.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.lastpage']}" />
+													</f:facet>
+													<f:facet name="previous">
+														<ice:graphicImage id="previouspage_1"
+															url="#{styleBean.imageDirectory}arrow-previous.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.previouspage']}" />
+													</f:facet>
+													<f:facet name="next">
+														<ice:graphicImage id="nextpage_1"
+															url="#{styleBean.imageDirectory}arrow-next.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.nextpage']}" />
+													</f:facet>
+													<f:facet name="fastforward">
+														<ice:graphicImage id="fastforward_1"
+															url="#{styleBean.imageDirectory}arrow-ff.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastforward']}" />
+													</f:facet>
+													<f:facet name="fastrewind">
+														<ice:graphicImage id="fastrewind_1"
+															url="#{styleBean.imageDirectory}arrow-fr.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastbackward']}" />
+													</f:facet>
+												</ice:dataPaginator>
+											</center>
+										</ice:panelGroup>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="15px"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true"
+					rendered="#{alertCenterBean.popUpNewAlert}" style="width: 900px; height: 650px;">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputText style="float: left;" value="Create a new alert"/></td>
+		       			<td>
+		       				<ice:commandButton style="float: right;"
+		       								   image="/images/i/cal_off.gif"
+											   title="Cancel"
+											   value="Cancel"
+											   actionListener="#{alertCenterBean.closeNewAlertPopUp}"/>
+							<ice:commandButton style="float: right;" 
+		       								   styleClass="iconPopup" 
+											   image="/images/IndiKtor2.0/Buttons/saveSmall.png"
+										   	   title="Save"
+										   	   value="Save"
+											   actionListener="#{alertCenterBean.save}"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGrid align="center" cellpadding="0" cellspacing="0">
+				<ui:include src="/jsp/alert/config/alertProperties.jspx"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+	
+	<!-- <ice:panelPopup draggable="true" modal="true" autoCentre="true" rendered="#{alertCenterBean.rendererAlertFilter}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputText style="float: left;" value="Alert Filter"/></td>
+		       			<td><ice:commandButton style="float: right;" 
+		       								   actionListener="#{alertCenterBean.closeAlertFilterPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<table>
+				<tr>
+					<td>
+						 <b class="filterLabel">Environment</b>
+						 <ice:selectOneMenu
+							value="#{allAlertDefinitionBean.alertDefinitionSelector.logicalEnvSelectionBean.logicalEnvId}"
+							valueChangeListener="#{allAlertDefinitionBean.alertDefinitionSelector.logicalEnvSelectionBean.onChangeLogicalEnv}"
+							partialSubmit="true" styleClass="filterMenu">
+							<f:selectItems
+								value="#{allAlertDefinitionBean.alertDefinitionSelector.logicalEnvSelectionBean.logicalEnvItems}" />
+						</ice:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						 <b class="filterLabel">Group</b>
+						 <ice:selectOneMenu
+							value="#{allAlertDefinitionBean.alertDefinitionSelector.group}"
+							valueChangeListener="#{allAlertDefinitionBean.alertDefinitionSelector.onChangeGroup}"
+							partialSubmit="true" styleClass="filterMenu">
+							<f:converter converterId="numberConverter" />
+							<f:selectItems
+								value="#{allAlertDefinitionBean.alertDefinitionSelector.groupItems}" />
+						</ice:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td><b class="filterLabel">Domain</b>
+						<ice:selectOneMenu
+							value="#{allAlertDefinitionBean.alertDefinitionSelector.domain}"
+							valueChangeListener="#{allAlertDefinitionBean.alertDefinitionSelector.onChangeDomain}"
+							partialSubmit="true" styleClass="filterMenu">
+							<f:converter converterId="numberConverter" />
+							<f:selectItems
+								value="#{allAlertDefinitionBean.alertDefinitionSelector.domainItems}" />
+						</ice:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td><b class="filterLabel">Sub-Domain</b>
+						<ice:selectOneMenu
+							value="#{allAlertDefinitionBean.alertDefinitionSelector.subDomain}"
+							valueChangeListener="#{allAlertDefinitionBean.alertDefinitionSelector.onChangeSubDomain}"
+							partialSubmit="true" styleClass="filterMenu">
+							<f:converter converterId="numberConverter" />
+							<f:selectItems
+								value="#{allAlertDefinitionBean.alertDefinitionSelector.subDomainItems}" />
+						</ice:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td><b class="filterLabel">Active</b>
+						<ice:selectOneMenu
+							value="#{allAlertDefinitionBean.alertDefinitionSelector.active}"
+							partialSubmit="true" styleClass="filterMenu">
+							<f:selectItems
+								value="#{allAlertDefinitionBean.alertDefinitionSelector.activeItems}" />
+						</ice:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td><b class="filterLabel">Label</b>
+						<ice:inputText
+							styleClass="filterMenu" size="100"
+							value="#{allAlertDefinitionBean.alertDefinitionSelector.alertDefinitionNameFilter}"
+							partialSubmit="true" />
+					</td>
+				</tr>
+				<tr>
+					<td align="right">
+						<ice:commandButton value="Filter"
+									       actionListener="#{allAlertDefinitionBean.alertDefinitionSelector.filter}"
+							  			   image="/images/IndiKtor2.0/WelcomeLoginPages/Validate.png"
+							  			   title="Filter" />
+					</td>
+				</tr>
+			</table>
+	    </f:facet>
+	</ice:panelPopup> -->
+	
+</ice:form>
+</f:subview>

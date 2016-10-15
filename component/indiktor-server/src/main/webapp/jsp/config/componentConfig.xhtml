@@ -1,0 +1,385 @@
+<f:subview id="wsCompute" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component"> 
+	<ice:panelGroup>
+		<ice:form id="panelStackForm" partialSubmit="false">
+			<ice:panelStack selectedPanel="#{panelStack.selectedPanel}">
+				<ice:panelGroup id="EMPTY">
+					<table border="1px" bordercolor="#336699" width="600px">
+						<tr bgcolor="#336699" height="30px" align="center"> 
+							<th>
+								<ice:outputLabel value="New Agent Configuration" style="font-size: 12px; color: #FFF; font-weight: bold;"/>
+							</th>				
+						</tr>
+						<tr bordercolor="#FFFFFF" align="center">
+							<td>
+								<ice:commandButton 	actionListener="#{agentBean.addAgent}"
+				                       	 			action="#{agentBean.action}"
+				                         			value="New Agent"/>
+							</td>
+						</tr>
+					</table>	        			
+                </ice:panelGroup> 
+   
+    			<ice:panelGrid id="AGENT" columns="1" style="align: center;">
+    				<table border="1px" bordercolor="#336699" width="600px">
+						<tr bgcolor="#336699" height="30px" align="center"> 
+							<th>
+								<ice:outputLabel value="#{agentBean.config.name} Configuration" style="font-size: 12px; color: #FFF; font-weight: bold;"/>
+							</th>				
+						</tr>
+						<tr bordercolor="#FFFFFF" align="center">
+							<td>
+								<ice:panelGrid columns="1"  style="align: center;">
+									<ice:panelGrid columns="2">
+				        				<ice:outputLabel value="Name:"/>
+				            			<ice:inputText value="#{agentBean.config.name}"/>
+				            			<ice:outputLabel value="Type:"/>
+				             			<ice:selectOneMenu
+				                        	value="#{agentBean.config.type}" 
+				                        	partialSubmit="true"
+				                        	binding="#{agentBean.typeSelectionMenu}">
+				                        	<f:converter converterId="AgentTypeConverter"/>
+				                    		<f:selectItems 
+				                                    value="#{agentBean.agentTypes}"/>
+				                		</ice:selectOneMenu>           
+				        			</ice:panelGrid>
+				
+									<ice:panelGroup>
+				        				<ice:commandButton                
+				                        	 actionListener="#{agentBean.validate}"
+				                        	 action="#{agentBean.action}"
+				                             value="Validate" />
+				                       <ice:commandButton                 
+				                        	 actionListener="#{agentBean.delete}"
+				                        	 action="#{agentBean.action}"
+				                         	 value="Delete" />     
+				                   	 	<ice:commandButton
+				                         	value="New Monitor"
+				                         	binding="#{agentBean.newMonitorCommand}"
+				                         	actionListener="#{agentBean.addMonitor}"
+				                         	action="#{agentBean.action}"/>
+				                    </ice:panelGroup>  
+			                    </ice:panelGrid>                                  
+							</td>
+						</tr>
+					</table>	
+    			</ice:panelGrid>
+
+				<ice:panelGrid id="MONITOR" columns="1">
+					<table border="1px" bordercolor="#336699" width="600px">
+						<tr bgcolor="#336699" height="30px" align="center"> 
+							<th>
+								<ice:outputLabel value="#{monitorBean.config.name} Configuration" style="font-size: 12px; color: #FFF; font-weight: bold;"/>
+							</th>				
+						</tr>
+						<tr bordercolor="#FFFFFF" align="center">
+							<td>
+								<ice:panelGrid columns="1"  style="align: center;">
+									<ice:panelSeries id="icePnlSrs"
+                                    	 			 value="#{tree.selectedTreePath}"
+                                     				 var="treePath">
+                        				<ice:graphicImage
+                                			width="11" height="8"
+                               		 		style="margin-left:3px;margin-right:3px;"
+                                			value="/xmlhttp/css/rime/css-images/bullet.gif" />
+                        				<ice:outputText id="treePath" value="#{treePath}"/>
+                   				    </ice:panelSeries>
+                   				    <ice:panelTabSet> 
+								        <ice:panelTab id="tab1" label="Properties">
+								        	<ice:panelGrid columns="2">
+												<ice:outputLabel value="Auto Start"/>
+												<ice:selectOneMenu value="#{monitorBean.config.started}">
+						                    		<f:selectItems value="#{monitorBean.startedItems}"/>
+						                		</ice:selectOneMenu>
+												<ice:outputLabel value="Name:"/>
+												<ice:inputText value="#{monitorBean.config.name}" style="width: 200px;"/>
+												<ice:outputLabel value="Env:"/>
+												<ice:inputText value="#{monitorBean.config.env}" style="width: 200px;"/>
+												<ice:outputLabel value="Metric Domain:"/>
+												<ice:selectOneMenu value="#{monitorBean.metricDomain}"
+						                        				   partialSubmit="true"
+						                        				   valueChangeListener="#{monitorBean.changeType}"  
+						                        				   style="width: 200px;">
+						                        	<f:selectItems value="#{monitorBean.metricDomainItems}"/>
+						                		</ice:selectOneMenu>
+						                		
+						                		<ice:outputLabel value="Metric Domain Config:"/>
+						                		<ice:selectOneMenu value="#{monitorBean.metricDomainConfig}"
+						                        				   partialSubmit="true"
+						                        				   valueChangeListener="#{monitorBean.changeMetricDomainConfig}"
+						                        				   style="width: 200px;">
+						                        	<f:selectItems value="#{monitorBean.metricDomainConfigItems}"/>
+						                		</ice:selectOneMenu>
+		
+									  			<ice:outputLabel value="Calypso:" rendered="#{monitorBean.calypsoConnectorRendered}"/>
+												<ice:selectOneMenu value="#{monitorBean.calypsoConnectorId}"
+																   rendered="#{monitorBean.calypsoConnectorRendered}"
+																   style="width: 200px;">
+						                        	<f:selectItems value="#{monitorBean.calypsoConnectorItems}"/>
+						                		</ice:selectOneMenu> 
+												<ice:outputLabel value="JMX:" rendered="#{monitorBean.jmxConnectorRendered}"/>
+												<ice:selectOneMenu value="#{monitorBean.jmxConnectorId}"
+						                        				   rendered="#{monitorBean.jmxConnectorRendered}"
+						                        				   style="width: 200px;">
+						                        	<f:selectItems value="#{monitorBean.jmxConnectorItems}"/>
+						                		</ice:selectOneMenu>
+												<ice:outputLabel value="HTTP:" rendered="#{monitorBean.httpConnectorRendered}"/>
+												<ice:selectOneMenu value="#{monitorBean.httpConnectorId}"
+																   rendered="#{monitorBean.httpConnectorRendered}"
+																   style="width: 200px;">
+						                        	<f:selectItems value="#{monitorBean.httpConnectorItems}"/>
+						                		</ice:selectOneMenu>
+												<ice:outputLabel value="SYSLOAD:" rendered="#{monitorBean.sysloadConnectorRendered}"/>
+												<ice:selectOneMenu value="#{monitorBean.sysloadConnectorId}"
+																   rendered="#{monitorBean.sysloadConnectorRendered}"
+																   style="width: 200px;">
+						                        	<f:selectItems value="#{monitorBean.sysloadConnectorItems}"/>
+						                		</ice:selectOneMenu>
+						                		<ice:outputLabel value="SYSTEM AGENT:" rendered="#{monitorBean.systemAgentConnectorRendered}"/>
+												<ice:selectOneMenu value="#{monitorBean.systemAgentConnectorId}"
+																   rendered="#{monitorBean.systemAgentConnectorRendered}"
+																   style="width: 200px;">
+						                        	<f:selectItems value="#{monitorBean.systemAgentConnectorItems}"/>
+						                		</ice:selectOneMenu>
+												<ice:outputLabel value="RDBMS:" rendered="#{monitorBean.rdbmsConnectorRendered}"/>
+												<ice:selectOneMenu value="#{monitorBean.rdbmsConnectorId}"
+																   rendered="#{monitorBean.rdbmsConnectorRendered}"
+																   style="width: 200px;">
+						                        	<f:selectItems value="#{monitorBean.rdbmsConnectorItems}"/>
+						                		</ice:selectOneMenu>  
+						                	</ice:panelGrid>
+								        </ice:panelTab>									 
+								        <ice:panelTab id="tab2" label="Attributes" rendered="#{monitorBean.attributesEnabled}">								        									        	
+								        	<ice:panelGrid columns="1">								        		
+								        		<ice:panelGroup rendered="#{monitorBean.domainItemsEnabled}">
+								        			<ice:outputText value="Metric View" style="14px; font-weight: bold;"/><BR/><BR/>
+								        			<ui:include src="/jsp/config/metricDomainItemsDualList.xhtml/>
+								        		</ice:panelGroup>
+								        		<BR/><BR/><BR/>
+								        		<ice:panelGroup rendered="#{monitorBean.domainItemsEnabled}">
+								        			<ice:outputText value="Business Filters" style="14px; font-weight: bold;"/><BR/><BR/>
+								        			<ui:include src="/jsp/config/monitorBusinessFilterSe.xhtmlml"/>
+								        		</ice:panelGroup>
+								        		<ice:panelGrid columns="2">
+									        		<ice:outputLabel binding="#{monitorBean.attribute1LabelUI}"/>
+													<ice:inputText 	 binding="#{monitorBean.attribute1UI}" style="width: 200px;"/>
+													<ice:outputLabel binding="#{monitorBean.attribute2LabelUI}"/>
+													<ice:inputText 	 binding="#{monitorBean.attribute2UI}" style="width: 200px;"/>
+													<ice:outputLabel binding="#{monitorBean.attribute3LabelUI}"/>
+													<ice:inputText 	 binding="#{monitorBean.attribute3UI}" style="width: 200px;"/>	
+													<ice:outputLabel binding="#{monitorBean.attribute4LabelUI}"/>
+													<ice:inputText 	 binding="#{monitorBean.attribute4UI}" style="width: 200px;"/>
+													<ice:outputLabel binding="#{monitorBean.attribute5LabelUI}"/>
+													<ice:inputText 	 binding="#{monitorBean.attribute5UI}" style="width: 200px;"/>
+													<ice:outputLabel binding="#{monitorBean.attribute6LabelUI}"/>
+													<ice:inputText 	 binding="#{monitorBean.attribute6UI}" style="width: 200px;"/>			
+													<ice:outputLabel binding="#{monitorBean.attribute7LabelUI}"/>
+													<ice:inputText 	 binding="#{monitorBean.attribute7UI}" style="width: 200px;"/>
+													<ice:outputLabel binding="#{monitorBean.attribute8LabelUI}"/>
+													<ice:inputText 	 binding="#{monitorBean.attribute8UI}" style="width: 200px;"/>
+													<ice:outputLabel binding="#{monitorBean.attribute9LabelUI}"/>
+													<ice:inputText 	 binding="#{monitorBean.attribute9UI}" style="width: 200px;"/>
+													<ice:outputLabel binding="#{monitorBean.attribute10LabelUI}"/>
+													<ice:inputText 	 binding="#{monitorBean.attribute10UI}" style="width: 200px;"/>							 
+												</ice:panelGrid>
+											</ice:panelGrid>
+								        </ice:panelTab>									 
+								        <ice:panelTab id="tab3" label="Scheduling">
+								        	<ice:panelGrid columns="2">
+						        				<ice:outputLabel value="Type:"/>
+						                		<ice:selectOneMenu value="#{monitorBean.schedulerConfig.schedulerType}"
+						                        				   partialSubmit="true"
+						                        				   valueChangeListener="#{monitorBean.changeSchedulerType}"
+						                        				   style="width: 200px;">
+						                        	<f:selectItems value="#{monitorBean.schedulerTypeItems}"/>
+						                		</ice:selectOneMenu>
+						            			<ice:outputLabel value="Mode:"/>
+						                		<ice:selectOneMenu value="#{monitorBean.schedulerConfig.schedulerMode}"
+						                        				   partialSubmit="true"
+						                        				   valueChangeListener="#{monitorBean.changeSchedulerMode}"
+						                        				   disabled="#{monitorBean.disableSchedulerMode}"
+						                        				   style="width: 200px;">
+						                        	<f:selectItems value="#{monitorBean.schedulerModeItems}"/>
+						                		</ice:selectOneMenu>
+						                		<ice:outputLabel value="Capture Delay:"/>
+												<ice:inputText value="#{monitorBean.schedulerConfig.delay}" disabled="#{monitorBean.disableCaptureDelay}" style="width: 200px;"/>
+						        			</ice:panelGrid> 
+						        			<ice:panelGrid columns="1"> 
+							        			<ice:panelGrid columns="2">
+							        				<ice:selectBooleanCheckbox disabled="#{monitorBean.startDate.disableSelection}" valueChangeListener="#{monitorBean.startDateValueChanged}" value="#{monitorBean.startDate.active}" partialSubmit="true"/>
+												    <ice:outputLabel value="#{monitorBean.startDate.label}"/>											     
+												</ice:panelGrid>
+												<ice:panelGrid columns="6">
+							        				<ice:outputLabel value="#{monitorBean.startDate.dayLabel}" rendered="#{monitorBean.startDate.dayRendered}"/>
+							        				<ice:panelGroup rendered="#{monitorBean.startDate.dayRendered}">
+							        					<ice:inputText 	value="#{monitorBean.startDate.day}" rendered="#{monitorBean.startDate.monthlyRenderer}" disabled="#{monitorBean.startDate.disableComponent}" style="width: 50px;"/>
+							        					<ice:selectOneMenu value="#{monitorBean.startDate.day}"
+						                        				   partialSubmit="true"
+						                        				   valueChangeListener="#{monitorBean.onChangeStartDateWeekly}"
+						                        				   disabled="#{monitorBean.startDate.disableComponent}"
+						                        				   rendered="#{monitorBean.startDate.weeklyRenderer}"
+						                        				   style="width: 100px;">
+								                        	<f:selectItems value="#{monitorBean.daysOfWeekItems}"/>
+								                		</ice:selectOneMenu>
+							        				</ice:panelGroup>												    	
+												    <ice:outputLabel value="Hour"/>
+												    <ice:inputText 	value="#{monitorBean.startDate.hour}" disabled="#{monitorBean.startDate.disableComponent}" style="width: 50px;"/>	
+												    <ice:outputLabel value="min"/>
+												    <ice:inputText 	value="#{monitorBean.startDate.min}" disabled="#{monitorBean.startDate.disableComponent}" style="width: 50px;"/>											     
+												</ice:panelGrid>
+											</ice:panelGrid>
+											<ice:panelGrid columns="1"> 
+							        			<ice:panelGrid columns="2">
+							        				<ice:selectBooleanCheckbox disabled="#{monitorBean.endDate.disableSelection}" valueChangeListener="#{monitorBean.endDateValueChanged}" value="#{monitorBean.endDate.active}" partialSubmit="true"/>
+												    <ice:outputLabel value="#{monitorBean.endDate.label}"/>											     
+												</ice:panelGrid>
+												<ice:panelGrid columns="6">
+							        				<ice:outputLabel value="#{monitorBean.endDate.dayLabel}" rendered="#{monitorBean.endDate.dayRendered}"/>
+												   <ice:panelGroup rendered="#{monitorBean.endDate.dayRendered}">
+							        					<ice:inputText 	value="#{monitorBean.endDate.day}" rendered="#{monitorBean.endDate.monthlyRenderer}" disabled="#{monitorBean.endDate.disableComponent}" style="width: 50px;"/>
+							        					<ice:selectOneMenu value="#{monitorBean.endDate.day}"
+						                        				   partialSubmit="true"
+						                        				   valueChangeListener="#{monitorBean.onChangeEndDateWeekly}"
+						                        				   disabled="#{monitorBean.endDate.disableComponent}"
+						                        				   rendered="#{monitorBean.endDate.weeklyRenderer}"
+						                        				   style="width: 100px;">
+								                        	<f:selectItems value="#{monitorBean.daysOfWeekItems}"/>
+								                		</ice:selectOneMenu>
+							        				</ice:panelGroup>				
+												    <ice:outputLabel value="Hour"/>
+												    <ice:inputText 	value="#{monitorBean.endDate.hour}" disabled="#{monitorBean.endDate.disableComponent}" style="width: 50px;"/>	
+												    <ice:outputLabel value="min"/>
+												    <ice:inputText 	value="#{monitorBean.endDate.min}" disabled="#{monitorBean.endDate.disableComponent}" style="width: 50px;"/>											     
+												</ice:panelGrid>
+											</ice:panelGrid>
+								        </ice:panelTab>									 
+									</ice:panelTabSet>
+									<ice:panelGroup>
+				        				<ice:commandButton                 
+				                        	 actionListener="#{monitorBean.validate}"
+				                        	 action="#{monitorBean.action}"
+				                         	 value="Validate" />
+				                        <ice:commandButton                 
+				                        	 actionListener="#{monitorBean.duplicate}"
+				                        	 action="#{monitorBean.action}"
+				                         	 value="Duplicate" /> 	 
+				        				<ice:commandButton                 
+				                        	 actionListener="#{monitorBean.delete}"
+				                        	 action="#{monitorBean.action}"
+				                         	 value="Delete" />
+				                    </ice:panelGroup>
+								</ice:panelGrid>					
+							</td>
+						</tr>
+					</table>	        	
+				</ice:panelGrid>
+					
+				<ice:panelGrid id="IKR_DEFINITION" columns="1">	
+					<table border="1px" bordercolor="#336699" width="600px">
+						<tr bgcolor="#336699" height="30px" align="center"> 
+							<th>
+								<ice:outputLabel value="#{filesRecordsManager.ikrCategoryGroup} Configuration" style="font-size: 12px; color: #FFF; font-weight: bold;"/>
+							</th>				
+						</tr>
+						<tr bordercolor="#FFFFFF" align="center">
+							<td>
+								<ice:panelGrid columns="1" style="align: center;">
+									<ice:panelSeries id="icePnlSrs"
+                                    	 			 value="#{tree.selectedTreePath}"
+                                     				 var="treePath">
+                        				<ice:graphicImage
+                                			width="11" height="8"
+                               		 		style="margin-left:3px;margin-right:3px;"
+                                			value="/xmlhttp/css/rime/css-images/bullet.gif" />
+                        				<ice:outputText id="treePath" value="#{treePath}"/>
+                   				    </ice:panelSeries>
+
+						    		<ice:panelGroup>
+					        			<ice:commandButton                 
+					                        	 actionListener="#{filesRecordsManager.validate}"
+					                         	 value="Validate" />	 
+					                </ice:panelGroup>
+					                <ice:dataTable id="IKR_DEFINITION_TABLE"
+						    						value="#{filesRecordsManager.filesGroupRecordBeans}"
+						                   			var="filesRecord"
+						                   			cellpadding="0">
+						        		<ice:column>
+						            		<ice:panelGroup>	       
+						                		<ice:commandLink actionListener="#{filesRecord.toggleSubGroupAction}">
+						                    		<ice:graphicImage value="#{filesRecord.expandContractImage}"
+						                                      	  	  style="border: 0px solid;"/>
+						                		</ice:commandLink>
+						            		</ice:panelGroup>
+						        		</ice:column>
+						 				<ice:column>
+						        			<f:facet name="header">
+						             			<ice:outputText value="#{msgs['page.expandTable.header1']}"/>
+						         			</f:facet>
+						         			<ice:panelGroup style="width: 70px;">
+						             			<ice:outputText value="#{filesRecord.id}"/>
+						         			</ice:panelGroup> 
+						        		</ice:column>
+						        		<ice:column>
+						        			<f:facet name="header">
+						             			<ice:outputText value="#{msgs['page.expandTable.header2']}"/>
+						         			</f:facet>
+						         			<ice:panelGroup style="width: 400px;">
+						             			<ice:outputText value="#{filesRecord.name}"/>
+						         			</ice:panelGroup> 
+						        		</ice:column>
+						     
+						     			<ice:column>
+						         			<f:facet name="header">
+						             			<ice:outputText value="Compute"/>
+						         			</f:facet>
+						         			<ice:panelStack selectedPanel="#{filesRecord.computePanelStack}">
+						         				<ice:panelGrid columns="2" id="NO_COMPUTE">
+						         				</ice:panelGrid>
+							         			<ice:panelGrid columns="2" id="STATISTIC_COMPUTE">
+													<ice:selectOneMenu value="#{filesRecord.metricCompute}"
+																	   partialSubmit="trues">
+					                        			<f:selectItems value="#{filesRecord.metricComputeItems}"/>
+					                				</ice:selectOneMenu>
+					                				<ice:commandButton value="+"
+					                								   actionListener="#{monitorBean.createNewMetricCompute}"
+					                        	 					   action="#{monitorBean.action}">
+					                        	 		<f:attribute name="compute" value="#{filesRecord.metricCompute}"/>
+					                        	 		<f:attribute name="ikrInstance" value="#{filesRecord.name}"/>
+					                        	 		<f:attribute name="ikrCategoryId" value="#{filesRecord.ikrCategoryId}"/>				                        	 					   
+					                        	 	</ice:commandButton>		
+							         			</ice:panelGrid>
+							         			<ice:panelGrid columns="1" id="CROSS_COMPUTE">
+							         					<ice:commandButton value="Edit"
+					                								   actionListener="#{monitorBean.editCrossCompute}"
+					                        	 					   action="#{monitorBean.action}">
+					                        	 		   <f:attribute name="ikrDefinitionId" value="#{filesRecord.id}"/>			                        	 					   
+					                        	 	</ice:commandButton>
+						         				</ice:panelGrid>
+						         			</ice:panelStack>
+						        		</ice:column>
+						     
+						        		<ice:column>
+						         			<f:facet name="header">
+						             			<ice:outputText value="#{msgs['page.expandTable.header3']}"/>
+						         			</f:facet>
+						         			<ice:panelGroup>
+					                			<ice:selectBooleanCheckbox 
+					                               value="#{filesRecord.enable}"
+					                               valueChangeListener="#{filesRecord.select}"
+					                               partialSubmit="true"/>
+						         			</ice:panelGroup>
+						        		</ice:column>
+						     		</ice:dataTable>
+					     		</ice:panelGrid>
+							</td>
+						</tr>
+					</table>
+	     		</ice:panelGrid>	
+	  		</ice:panelStack>
+  		</ice:form>
+	</ice:panelGroup>
+</f:subview>
+

@@ -1,0 +1,207 @@
+<f:subview id="alertActions" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">   
+        
+<ice:form>
+	<table id="pageAlertDefinitionFull">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft">
+							<div class="topMenuBarLeftAB2">
+									<ice:commandButton
+										image="/images/IndiKtor2.0/Content/AlertBoardOFF.png"
+										title="Board" value="#{alertCenterBean.menus['alertBoard']}"
+										actionListener="#{alertCenterBean.navigate}">
+										<f:attribute name="to" value="alertBoard" />
+									</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftAD2">
+									<ice:commandButton
+										image="/images/IndiKtor2.0/Content/AlertDefinitionON.png"
+										title="Definition"
+										value="#{alertCenterBean.menus['alertDefinitionList']}"
+										actionListener="#{alertCenterBean.navigate}">
+										<f:attribute name="to" value="alertDefinitionList" />
+									</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>														
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/save.png"
+														   title="Save"
+														   value="Save"
+														   actionListener="#{alertCenterBean.checkAlertValidity}">
+											<f:attribute name="currentAction" value="alertDefinitionActions"/>
+											<f:attribute name="nextAction" value="alertDefinitionConfig"/>		   
+										</ice:commandButton>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+												   		   image="/images/IndiKtor2.0/Buttons/cancel.png"
+														   title="Cancel"
+														   value="Cancel"
+														   actionListener="#{alertCenterBean.navigate}">
+											<f:attribute name="to" value="alertDefinitionConfig"/> 
+											<f:attribute name="isNew" value="false"/> 
+										</ice:commandButton>
+									</td>
+									<td>
+											<ice:commandButton styleClass="topMenuBarRightIcons"
+												image="/images/IndiKtor2.0/Buttons/help.png"
+												title="Help" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr align="center">
+						<td>
+							<table border="0px" width="98%">
+								<tr>
+									<td align="center">
+										<ice:panelGroup>
+											<table border="1px" bordercolor="#FFFFFF" width="100%">
+												<tr bordercolor="#336699">
+													<td align="center"><ice:panelGroup><ui:include src="/jsp/alert/config/userAlertActions.jspx"/></ice:panelGroup></td>
+													<td align="center"><ice:panelGroup><ui:include src="/jsp/alert/config/snmpAlertActions.jspx"/></ice:panelGroup></td>
+												</tr>
+											</table>
+										</ice:panelGroup>
+									</td>
+									<td width="10px"></td>
+								</tr>
+								<tr>
+									<td align="left">
+										<br/>
+										<br/>
+										<ice:panelGrid rendered="#{alertDefinitionModificationBean.alertWorflowFilterRendered}">
+											<ice:outputLabel value="Alert Workflow Filter" style="font-size: 12px;"/>					
+											<ice:panelGroup>
+												<table border="0px" width="100%">
+													<tr>
+														<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.lowWfw}" partialSubmit="true"/></td>
+												  		<td><ice:outputText value="LOW" style="font-size: 10px;"/></td>								
+													</tr>
+													<tr>
+														<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.mediumWfw}" partialSubmit="true"/></td>								
+												  		<td><ice:outputText value="MEDIUM" style="font-size: 10px;"/></td>	
+													</tr>
+													<tr>
+														<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.highWfw}" partialSubmit="true"/></td>
+												  		<td><ice:outputText value="HIGH" style="font-size: 10px;"/></td>	
+													</tr>
+													<tr>
+														<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.notRunningWfw}" partialSubmit="true"/></td>
+												  		<td><ice:outputText value="NOT_RUNNING" style="font-size: 10px;"/></td>	
+													</tr>
+													<tr>
+														<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.autoDownWfw}" partialSubmit="true"/></td>
+												  		<td><ice:outputText value="AUTO_DOWN" style="font-size: 10px;"/></td>	
+													</tr>
+													<tr>
+														<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.userAckWfw}" partialSubmit="true"/></td>
+												  		<td><ice:outputText value="USER_ACK" style="font-size: 10px;"/></td>	
+													</tr>
+												</table>
+											</ice:panelGroup>
+										</ice:panelGrid>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</ice:form>
+</f:subview>        
+        
+<!-- <ice:panelGrid columns="1" width="900" style="text-align: center;" >
+<ice:outputLabel value="Alert Actions" style="font-size: 14px; font-weight: bold"/>
+<HR/>
+<ice:form>
+	<table border="0px" width="100%">
+		<tr>
+			<td align="center">
+				<ice:panelGroup>
+					<table border="1px" bordercolor="#FFFFFF" width="100%">
+						<tr bordercolor="#336699">
+							<td align="center"><ice:panelGroup><ui:include src="/jsp/alert/config/userAlertActions.jspx"/></ice:panelGroup></td>
+							<td align="center"><ice:panelGroup><ui:include src="/jsp/alert/config/snmpAlertActions.jspx"/></ice:panelGroup></td>
+						</tr>
+					</table>
+				</ice:panelGroup>
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				<br/>
+				<br/>
+				<ice:panelGrid rendered="#{alertDefinitionModificationBean.alertWorflowFilterRendered}">
+					<ice:outputLabel value="Alert Workflow Filter" style="font-size: 12px;"/>					
+					<ice:panelGroup>
+						<table border="0px" width="100%">
+							<tr>
+								<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.lowWfw}" partialSubmit="true"/></td>
+						  		<td><ice:outputText value="LOW" style="font-size: 10px;"/></td>								
+							</tr>
+							<tr>
+								<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.mediumWfw}" partialSubmit="true"/></td>								
+						  		<td><ice:outputText value="MEDIUM" style="font-size: 10px;"/></td>	
+							</tr>
+							<tr>
+								<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.highWfw}" partialSubmit="true"/></td>
+						  		<td><ice:outputText value="HIGH" style="font-size: 10px;"/></td>	
+							</tr>
+							<tr>
+								<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.notRunningWfw}" partialSubmit="true"/></td>
+						  		<td><ice:outputText value="NOT_RUNNING" style="font-size: 10px;"/></td>	
+							</tr>
+							<tr>
+								<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.autoDownWfw}" partialSubmit="true"/></td>
+						  		<td><ice:outputText value="AUTO_DOWN" style="font-size: 10px;"/></td>	
+							</tr>
+							<tr>
+								<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.userAckWfw}" partialSubmit="true"/></td>
+						  		<td><ice:outputText value="USER_ACK" style="font-size: 10px;"/></td>	
+							</tr>
+						</table>
+					</ice:panelGroup>
+				</ice:panelGrid>
+			</td>
+		</tr>
+		<tr>
+			<td align="center">
+				<HR/>
+				<ice:panelGrid columns="2">
+					<ice:commandButton value="Save" 
+								   actionListener="#{alertCenterBean.checkAlertValidity}">
+						<f:attribute name="currentAction" value="alertDefinitionActions"/>
+						<f:attribute name="nextAction" value="alertDefinitionConfig"/>		   
+					</ice:commandButton>
+					<ice:commandButton value="Cancel" actionListener="#{alertCenterBean.navigate}">
+						<f:attribute name="to" value="alertDefinitionConfig"/> 
+						<f:attribute name="isNew" value="false"/>
+					</ice:commandButton>
+				</ice:panelGrid>
+			</td>
+		</tr>
+	</table>
+</ice:form>
+</ice:panelGrid> 
+</f:subview> -->

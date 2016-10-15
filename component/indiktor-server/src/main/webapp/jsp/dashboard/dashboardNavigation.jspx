@@ -1,0 +1,34 @@
+<f:subview id="alertList" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:form styleClass="menuNavDB">
+
+<table border="0" cellspacing="0" witdh="100%">
+<tr align="left">	
+  <ice:panelSeries var="summary" 
+  				   value="#{boardBean.navigationRoute}" >
+   <td>
+      <ice:commandLink value="#{summary.title}"
+      				   actionListener="#{boardBean.navigate}"
+		  			   action="#{boardBean.action}">	
+	  		<f:attribute name="to" value="#{summary}"/> 
+	  </ice:commandLink>
+	  <ice:outputLabel styleClass="menuNavDB" value="  >  " />
+	</td>
+   </ice:panelSeries>
+	<td>
+	 <ice:outputLabel styleClass="menuNavDB" value="#{boardBean.components.summary.title}"/>
+	 <ice:outputText styleClass="menuNavDB" value=" ["/>
+	 <ice:outputText styleClass="menuNavDB" value="#{boardBean.components.summary.env}"/><ice:outputText styleClass="menuNavDB" value="/"/>
+	 <ice:outputText styleClass="menuNavDB" value="#{boardBean.components.summary.type}"/><ice:outputText styleClass="menuNavDB" value="/"/>
+	 <ice:outputText styleClass="menuNavDB" value="#{boardBean.components.summary.title}"/>
+	 <ice:outputText styleClass="menuNavDB" value="]"/>
+	</td>
+</tr>
+</table>
+</ice:form>
+
+</f:subview>

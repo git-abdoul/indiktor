@@ -1,0 +1,95 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.xhtml
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ui:param name="pageTitle" value="smtpConfig" />
+<ui:define name="content">
+
+<ice:panelGrid>
+<ice:panelGrid>
+<ice:form>
+	<table id="pageThirdPartySMTP">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft2">		
+							<div class="topMenuBarLeftAnalysis2">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/ThirdParty/SNMPOFF.png"
+								   				   title="SNMP Config"
+								   				   value="SNMP Config"
+								   				   actionListener="#{snmpConfigurationBean.init}"
+												   action="#{snmpConfigurationBean.action}">
+								</ice:commandButton>
+							</div>								
+							<div class="topMenuBarLeftDomain2">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/ThirdParty/SMTPON.png"
+								   				   title="SMTP Config"
+								   				   value="SMTP Config"
+								   				   actionListener="#{smtpConfigurationBean.init}"
+												   action="#{smtpConfigurationBean.action}">
+								</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Add"
+														   image="/images/IndiKtor2.0/Buttons/add.png"
+													   	   title="Add new SNMP alert configuration"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Edit"
+														   image="/images/IndiKtor2.0/Buttons/edit.png"
+													   	   title="Edit SNMP alert configuration"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Remove"
+														   image="/images/IndiKtor2.0/Buttons/delete.png"
+													   	   title="Remove SNMP alert configuration"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Cancel"
+														   image="/images/IndiKtor2.0/Buttons/cancel.png"
+													   	   title="Cancel"
+													   	   actionListener="#{adminBean.init}"
+													   	   action="#{adminBean.action}"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+													   	   title="Help"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentFullPanel3">
+							
+						</td>
+						<td></td>
+					</tr>
+				</table> 	
+			</td>
+		</tr>
+	</table>
+</ice:form>
+<ui:include src="/jsp/util/errorMessage.xhtml/>
+</ice:panelGrid>
+</ice:panelGrid>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,168 @@
+<!-- <ui:composition template="/WEB-INF/template/mainTemplate.xhtml
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component"
+             	xmlns:h="http://java.sun.com/jsf/html">
+<ui:param name="pageTitle" value="DashBoard Configuration" />
+<ui:define name="content">
+<ice:panelGrid columns="1" width="900" style="text-align: center;" >
+<ice:outputLabel value="Thread Component Configuration" style="font-size: 14px; font-weight: bold"/>
+<HR/>	
+<br/>
+<ice:form> -->
+
+<f:subview id="ThreadConfig" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+        
+  <table border="0" align="center">
+  	<tr>
+  	  <td style="text-align: right;">
+  	  	<b>Thread Title: </b>
+  	  </td>
+  	  <td>
+	 	<ice:inputText size="50" value="#{threadConfigBean.threadType.title}" />
+	 	<ice:outputText value="Thread Title cannot be empty"
+				  		rendered="#{threadConfigBean.errorThreadTitleVisible}"
+				  		style="color: red;"/>
+	  </td>
+  	</tr>
+  	<tr>
+  	  <td style="text-align: right;">
+  	  	<b>Process: </b>
+  	  </td>
+  	  <td>
+	 	<ice:inputText size="50" value="#{threadConfigBean.threadType.process}" />
+	  </td>
+  	</tr>
+  	<tr>
+  	  <td style="text-align: right;">
+  	  	<b>Hostname: </b>
+  	  </td>
+  	  <td>
+	 	<ice:inputText size="50" value="#{threadConfigBean.threadType.hostname}" />
+	  </td>
+  	</tr>
+  </table>
+  <BR/><BR/>
+  
+  <table border="0" align="center">	
+   	<tr>
+  	  <td style="text-align: right;"><b>Detail Title: </b></td>
+  	  <td>
+	 	<ice:inputText size="50" value="#{threadConfigBean.threadType.detail.title}" />
+	  </td>
+	  <td style="text-align: right;"><b>Detail Display: </b></td>
+  	  <td>
+	 	<ice:selectOneMenu value="#{threadConfigBean.threadType.detail.rendered}">
+			<f:selectItems value="#{threadConfigBean.renderedItems}"/>
+		 </ice:selectOneMenu>	
+	  </td>
+  	</tr>
+   	<tr>
+  	  <td style="text-align: right;">
+  	  	<b>Method Title: </b>
+  	  </td>
+  	  <td>
+	 	<ice:inputText size="50" value="#{threadConfigBean.threadType.method.title}" />
+	  </td>
+	  <td style="text-align: right;"><b>Method Display: </b></td>
+	  <td>
+	 	<ice:selectOneMenu value="#{threadConfigBean.threadType.method.rendered}">
+			<f:selectItems value="#{threadConfigBean.renderedItems}"/>
+		 </ice:selectOneMenu>	
+	  </td>
+  	</tr> 
+   	<tr>
+  	  <td style="text-align: right;">
+  	  	<b>Status Title: </b>
+  	  </td>
+  	  <td>
+	 	<ice:inputText size="50" value="#{threadConfigBean.threadType.status.title}" />
+	  </td>
+	  <td style="text-align: right;"><b>Status Display: </b></td>
+  	  <td>
+	 	<ice:selectOneMenu value="#{threadConfigBean.threadType.status.rendered}">
+			<f:selectItems value="#{threadConfigBean.renderedItems}"/>
+		 </ice:selectOneMenu>	
+	  </td>
+  	</tr>
+   	<tr>
+  	  <td style="text-align: right;">
+  	  	<b>Type Title: </b>
+  	  </td>
+  	  <td>
+	 	<ice:inputText size="50" value="#{threadConfigBean.threadType.type.title}" />
+	  </td>
+	  <td style="text-align: right;"><b>Type Display: </b></td>
+	  <td>
+	 	<ice:selectOneMenu value="#{threadConfigBean.threadType.type.rendered}">
+			<f:selectItems value="#{threadConfigBean.renderedItems}"/>
+		 </ice:selectOneMenu>	
+	  </td>
+  	</tr>  	 
+   	<tr>
+  	  <td style="text-align: right;">
+  	  	<b>StackTrace Title: </b>
+  	  </td>
+  	  <td>
+	 	<ice:inputText size="50" value="#{threadConfigBean.threadType.stackTrace.title}" />
+	  </td>
+	  <td style="text-align: right;"><b>StackTrace Display: </b></td>
+	  <td>
+	 	<ice:selectOneMenu value="#{threadConfigBean.threadType.stackTrace.rendered}">
+			<f:selectItems value="#{threadConfigBean.renderedItems}"/>
+		 </ice:selectOneMenu>	
+	  </td>
+  	</tr>      	   	
+  </table>
+  <!-- <br/><br/>
+  
+  <br/>
+  <table align="center">
+  <tr>
+  	<td style="text-align: left;">
+  	  <ice:commandButton value="Save" 
+  	  					 actionListener="#{threadConfigBean.save}"
+  	  					 action="#{threadConfigBean.action}"/>
+  	  <ice:commandButton value="Cancel"
+  	  					 action="dashboardMainConfig"/> 
+  	</td>
+  </tr>
+  </table> -->
+  
+  <!-- <ice:panelPopup id="modalPnlPop"
+		            draggable="false" modal="true"
+		            visible="#{threadConfigBean.error}"
+		            autoCentre="true"
+		            style="width: 300px;">
+	    	<f:facet name="header">
+		       <ice:outputLabel value="#{threadConfigBean.message}"/>
+	    	</f:facet>
+	    	<f:facet name="body">
+		        <ice:panelGroup>
+					<table width="100%" border="0">
+						<tr>
+							<td align="center">
+								<ice:commandButton
+											value="Ok"
+											actionListener="#{threadConfigBean.ackError}"
+				    						style="width:75px;"/>
+							</td>									
+						</tr>
+					</table>
+		    	</ice:panelGroup>  
+	    	</f:facet>
+   </ice:panelPopup>  -->
+   
+</f:subview>
+
+<!-- </ice:form>
+</ice:panelGrid>
+</ui:define>
+</ui:composition>
+
+ -->

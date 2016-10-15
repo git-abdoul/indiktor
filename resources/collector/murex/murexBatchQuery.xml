@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<CONFIG>
+
+<QUERY_CONFIG connector="" query="select M_NAME, M_DATE, M_START, M_END, M_STATUS from REPBATCH#BAT_EXEC_DBF where M_DATE in (SELECT convert(char(12),M_DATE) from TRN_PC_DBF)">
+	<QUERY_ITEM itemType="INSTANCE" item="Name" queryField="M_NAME" datatype="STRING"/>
+	<QUERY_ITEM itemType="METRIC" item="startDate" queryField="M_DATE" datatype="INTEGER"/>
+	<QUERY_ITEM itemType="METRIC" item="startTime" queryField="M_START" datatype="INTEGER"/>
+	<QUERY_ITEM itemType="METRIC" item="endTime" queryField="M_END" datatype="INTEGER"/>
+	<QUERY_ITEM itemType="METRIC" item="status" queryField="M_STATUS" datatype="INTEGER"/>
+</QUERY_CONFIG>
+
+</CONFIG>

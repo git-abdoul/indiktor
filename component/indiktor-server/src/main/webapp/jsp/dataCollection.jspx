@@ -1,0 +1,388 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+             	
+<ui:param name="pageTitle" value="Collectors"/>
+<ui:define name="content">
+
+<ice:panelGrid>
+<ice:panelGrid>
+<ice:form>
+	<table id="pageCollectors">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft2">
+							<div class="topMenuBarLeftAnalysis2">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/DataCollection/ConnectorsOFF.png"
+												   title="Connectors"
+												   value="Connectors"
+												   action="#{connectorConfigBean.action}"
+												   actionListener="#{connectorConfigBean.init}">
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftCC2">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/DataCollection/CollectorsON.png"
+								   				   title="Collectors"
+								   				   value="Collectors"
+								   				   action="#{monitorSelectionBean.action}"
+								   				   actionListener="#{monitorSelectionBean.init}">
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftSD">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/DataCollection/JobSchedulerOFF.png"
+												   title="Jobs Schedulers"
+												   value="Jobs Schedulers"
+												   action="#{jobSchedulerSelectionBean.action}"
+												   actionListener="#{jobSchedulerSelectionBean.init}">	
+								</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<!-- 
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   actionListener="#{monitorSelectionBean.openFilterPopup}"
+														   image="/images/IndiKtor2.0/Buttons/filter.png"
+													   	   title="Filter"/>
+										 -->
+										 <ice:panelGrid columns="2">
+										 	<ice:outputLabel value="Search"/>
+										 	<ice:inputText value="#{monitorSelectionBean.searchQuery}"
+										 				   valueChangeListener="#{monitorSelectionBean.searchMonitorQuery}"	
+										 				   style="width:200px; font-size: 10px"									 	
+										 	/>
+										 </ice:panelGrid>
+									</td>
+									<td></td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   value="Add new collector" 
+														   image="/images/IndiKtor2.0/Buttons/add.png"
+													   	   title="Add new collector"
+													   	   actionListener="#{monitorSelectionBean.createNewCollector}"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/edit.png"
+													   	   title="Edit selected collector"
+													   	   actionListener="#{monitorSelectionBean.editCollector}">
+										</ice:commandButton>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/metricDomain.png"
+													   	   title="Add metric"
+													   	   actionListener="#{monitorSelectionBean.editCollectorMetrics}">
+										</ice:commandButton>
+									</td> 
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/duplicate.png"
+													   	   title="Duplicate selected collector"
+													   	   actionListener="#{monitorSelectionBean.duplicateCollector}">
+										</ice:commandButton>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   panelConfirmation="#{monitorSelectionBean.selectedMonitorConfig == null ? false : 'deleteConfirmPanel'}" 
+														   value="Delete"
+														   image="/images/IndiKtor2.0/Buttons/delete.png"
+													   	   title="Delete selected collector"
+													   	   actionListener="#{monitorSelectionBean.deleteCollector}">
+										</ice:commandButton>
+										<ice:panelConfirmation 	id="deleteConfirmPanel" 
+																message="#{monitorSelectionBean.deleteMessage}"
+										                   		acceptLabel="Delete" 
+									                   			rendered="true"
+									                   			autoCentre="true"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Return to administration panel"
+														   image="/images/IndiKtor2.0/Buttons/cancel.png"
+													   	   title="Return to administration panel"
+													   	   actionListener="#{adminBean.init}"
+													   	   action="#{adminBean.action}"/>
+									</td>
+									<td>
+										<a style="cursor: Pointer" title="Help"
+										   onclick="window.open('#{facesContext.externalContext.requestContextPath}/htmlHelpFiles/admin/collectors/IndiKtorOnlineDocumentation-Collectors.htm',
+										   'popup','width=1000,height=700,scrollbars=yes,resizable=yes,toolbar=no,directories=no,location=no,menubar=yes,status=no,left=50,top=0'); return false">
+											<img class="topMenuBarRightIcons"
+												 src="#{facesContext.externalContext.requestContextPath}/images/IndiKtor2.0/Buttons/help.png"/>
+										</a>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentFullPanelCollectors">
+							<table>								
+								<tr>
+									<td>
+										<ice:panelGroup style="text-align:center;">
+											<ice:dataPaginator id="CollectorConfigTableScroll_2" for="CollectorConfigTable"
+												rowsCountVar="rowsCount"
+												displayedRowsCountVar="displayedRowsCountVar"
+												firstRowIndexVar="firstRowIndex"
+												lastRowIndexVar="lastRowIndex" pageCountVar="pageCount"
+												pageIndexVar="pageIndex">
+												<ice:outputFormat
+													value="{0} Collectors found,  displaying {1} Collectors,  from {2} to {3}. Page {4} / {5}."
+													style="font-weight: bold;" styleClass="standard">
+													<f:param value="#{rowsCount}" />
+													<f:param value="#{displayedRowsCountVar}" />
+													<f:param value="#{firstRowIndex}" />
+													<f:param value="#{lastRowIndex}" />
+													<f:param value="#{pageIndex}" />
+													<f:param value="#{pageCount}" />
+												</ice:outputFormat>
+											</ice:dataPaginator>
+										</ice:panelGroup>
+									</td>
+								</tr>
+								<tr height="10px"><td></td></tr>
+								<tr>
+									<td align="center">	
+											<ice:dataTable id="CollectorConfigTable"
+														   value="#{monitorSelectionBean.monitorConfigs}" 
+														   var="monitorConfigBean"	
+														   sortColumn="#{monitorSelectionBean.sortColumnName}"	
+														   sortAscending="#{monitorSelectionBean.ascending}"						   
+														   columnWidths="250,275,200,300,60"
+													       cellspacing="0" cellpadding="0" border="0"
+													       rows="#{monitorSelectionBean.rowsByPage}">
+												<ice:column style="text-align: left;">
+													<ice:rowSelector value="#{monitorConfigBean.selected}" 
+																	selectedClass="tableRowSelSelected"
+																	mouseOverClass="tableRowSelMouseOver"
+																	selectedMouseOverClass="tableRowSelSelectedMouseOver"
+																	enhancedMultiple="true"
+													               	styleClass="iceRowSel-Dis"
+													                selectionListener="#{monitorSelectionBean.rowSelectionListener}"/>
+													<f:facet name="header">
+														<ice:commandSortHeader columnName="#{monitorSelectionBean.envColumnName}" arrow="true" >
+											                <ice:outputText value="#{monitorSelectionBean.envColumnName}"/>
+											            </ice:commandSortHeader>
+													</f:facet>	
+													<ice:panelGroup style="font-size: 11px;">
+														<ice:outputText value="#{monitorConfigBean.logicalEnv.name}"/>
+													</ice:panelGroup> 							
+												</ice:column>		
+												<ice:column style="text-align: left;">													
+													<f:facet name="header">
+														<ice:commandSortHeader columnName="#{monitorSelectionBean.metricDomainColumnName}" arrow="true" >
+											                <ice:outputText value="#{monitorSelectionBean.metricDomainColumnName}"/>
+											            </ice:commandSortHeader>
+													</f:facet>	
+													<ice:panelGroup style="font-size: 11px;">
+														<ice:outputText value="#{monitorConfigBean.ikrStaticDomain.label} #{monitorConfigBean.domainView}"/>
+													</ice:panelGroup> 							
+												</ice:column>	
+												<ice:column style="text-align: left;">
+													<f:facet name="header">
+														<ice:commandSortHeader columnName="#{monitorSelectionBean.connectorTypeColumnName}" arrow="true" >
+											                <ice:outputText value="#{monitorSelectionBean.connectorTypeColumnName}"/>
+											            </ice:commandSortHeader>
+													</f:facet>	
+													<ice:panelGroup style="font-size: 11px;">
+														<ice:outputText value="#{monitorConfigBean.connectorTypes}"/>
+													</ice:panelGroup> 							
+												</ice:column>						  
+												<ice:column style="text-align: left;">
+													<f:facet name="header">
+														<ice:commandSortHeader columnName="#{monitorSelectionBean.contextColumnName}" arrow="true" >
+											                <ice:outputText value="#{monitorSelectionBean.contextColumnName}"/>
+											            </ice:commandSortHeader>
+													</f:facet>	
+													<ice:panelGroup style=" font-size: 11px;">
+														<ice:outputText value="#{monitorConfigBean.context}"/>
+													</ice:panelGroup> 							
+												</ice:column>
+												<ice:column style="text-align: center;">
+													<f:facet name="header">
+														<ice:commandSortHeader columnName="#{monitorSelectionBean.autoStartColumnName}" arrow="true" >
+											                <ice:outputText value="#{monitorSelectionBean.autoStartColumnName}"/>
+											            </ice:commandSortHeader>
+													</f:facet>	
+													<ice:panelGroup style="font-size: 11px;">
+														<ice:outputText value="#{monitorConfigBean.monitorConfig.started}"/>
+													</ice:panelGroup> 							
+												</ice:column>
+											</ice:dataTable>
+									</td>
+								</tr>   
+								<tr>
+									<td>
+										<ice:panelGroup style="float:center;"
+											visible="#{monitorSelectionBean.paginationVisible}">
+											<center>
+												<ice:dataPaginator id="CollectorConfigTableScroll_1" for="CollectorConfigTable"
+													fastStep="3" paginator="true" paginatorMaxPages="4">
+													<f:facet name="first">
+														<ice:graphicImage id="firstpage_1"
+															url="#{styleBean.imageDirectory}arrow-first.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.firstpage']}" />
+													</f:facet>
+													<f:facet name="last">
+														<ice:graphicImage id="lastpage_1"
+															url="#{styleBean.imageDirectory}arrow-last.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.lastpage']}" />
+													</f:facet>
+													<f:facet name="previous">
+														<ice:graphicImage id="previouspage_1"
+															url="#{styleBean.imageDirectory}arrow-previous.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.previouspage']}" />
+													</f:facet>
+													<f:facet name="next">
+														<ice:graphicImage id="nextpage_1"
+															url="#{styleBean.imageDirectory}arrow-next.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.nextpage']}" />
+													</f:facet>
+													<f:facet name="fastforward">
+														<ice:graphicImage id="fastforward_1"
+															url="#{styleBean.imageDirectory}arrow-ff.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastforward']}" />
+													</f:facet>
+													<f:facet name="fastrewind">
+														<ice:graphicImage id="fastrewind_1"
+															url="#{styleBean.imageDirectory}arrow-fr.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastbackward']}" />
+													</f:facet>
+												</ice:dataPaginator>
+											</center>
+										</ice:panelGroup>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table> 	
+			</td>
+		</tr>
+	</table>
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{monitorSelectionBean.rendererFilter}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputText style="float: left;" value="Filter"/></td>
+		       			<td><ice:commandButton style="float: right;" 
+		       								   actionListener="#{monitorSelectionBean.closeFilterPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<table>
+				<tr>
+					<td align="center">
+						<ice:outputLabel value="Logical Environment"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<ice:selectOneMenu value="#{monitorSelectionBean.logicalEnvSelectionBean.logicalEnvId}"
+										   valueChangeListener="#{monitorSelectionBean.logicalEnvSelectionBean.onChangeLogicalEnv}"
+										   partialSubmit="true">
+							<f:selectItems value="#{monitorSelectionBean.logicalEnvSelectionBean.logicalEnvItems}"/>
+						</ice:selectOneMenu>
+					</td>
+				</tr>
+			</table>
+	    </f:facet>
+	</ice:panelPopup>
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{monitorCreationBean.rendererCollector}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td>
+		       				<ice:panelGrid>
+								<ice:outputLabel style="float: left;" value="Create New Collector" rendered="#{monitorCreationBean.config.id == 0}"/>
+								<ice:outputLabel style="float: left;" value="Modify Collector" rendered="#{monitorCreationBean.config.id != 0}"/>
+							</ice:panelGrid>
+		       			</td>
+		       			<td>
+		       				<ice:commandButton style="float: right;" 
+		       								   actionListener="#{monitorCreationBean.closeCollectorPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+							<ice:commandButton style="float: right;" 
+											   image="/images/IndiKtor2.0/Buttons/saveSmall.png"
+										   	   title="Save"
+										   	   value="Save"
+										   	   styleClass="iconPopup"
+										   	   actionListener="#{monitorCreationBean.save}"/>		       								   
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGrid id="NewCollector">
+				<ui:include src="/jsp/monitor/createMonitor.jspx"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{ikrDefinitionsManager.rendererIkrDefinitionsManager}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputLabel style="float: left;" value="Update collector"/></td>
+		       			<td>
+		       				<ice:commandButton style="float: right;" 
+		       								   actionListener="#{ikrDefinitionsManager.closeIkrDefinitionsManagerPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+							<ice:commandButton style="float: right;" 
+											   image="/images/IndiKtor2.0/Buttons/saveSmall.png"
+										   	   title="Save"
+										   	   value="Save"
+										   	   styleClass="iconPopup"
+										   	   actionListener="#{ikrDefinitionsManager.validate}"/>		       								   
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGrid id="UpdateCollector">
+				<ui:include src="/jsp/ikrDefinition/ikrDefinitionsUpdate.jspx"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+			
+</ice:form>
+<ui:include src="/jsp/util/errorMessage.jspx"/>
+</ice:panelGrid>
+</ice:panelGrid>
+</ui:define>
+</ui:composition>

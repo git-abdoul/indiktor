@@ -1,0 +1,72 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ui:param name="pageTitle" value="#{boardBean.title} Board : #{boardBean.env}"/>		
+
+<ui:define name="nav">
+ <ice:outputStyle href="#{styleBean.style}"/>
+ <ui:include src="/jsp/dashboard/dashboardNavigation.jspx"/>
+</ui:define>
+
+<ui:define name="content">
+		<div id="mainFrame" style="width: 1000px;">
+			<div class="tableBox">
+				<table cellspacing="0" cellpadding="0" border="0" class="fxProductionNyContentTable">
+					<tr>
+						<td class="title"><b>Components</b></td>
+					</tr>
+					<tr>
+						<td style="padding-left: 5px; padding-top: 5px;">
+							<ice:form>
+							<ui:repeat var="component" value="#{boardBean.alertBoards['Alerts'].children}">
+								<div class="engineItem">
+									<ice:commandLink actionListener="#{boardBean.navigate}"
+		         			    							 action="#{boardBean.action}">
+										<h:outputLabel value="#{component.title}"/>
+										<h:graphicImage url="#{component.url}" height="80"/>
+										<f:attribute name="component" value="#{component}"/>
+									</ice:commandLink> 
+								</div>
+							</ui:repeat>
+							</ice:form>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div style="clear: both;"></div>
+			<!-- Graph -->
+			<ui:repeat var="techIkrElementBean" value="#{boardBean.definitionGraphComponents}">
+  				<div class="tableBox" id="fxProductionNyContentTableSmall">				
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="fxProductionNyContentTableSmall">
+					
+						<tr>
+							<td class="label"><h:outputLabel value="#{techIkrElementBean.title}"/></td>
+						</tr>
+						<tr>
+							<td width="100%" height="300"><ice:graphicImage id="monId" value="#{techIkrElementBean.charts['300']}"/></td>
+						</tr>
+					</table>
+  				</div> 
+			</ui:repeat>
+			<!-- Alerts -->
+		<!--  
+		  	<ice:form>
+				<ui:include src="/jsp/alert/alertList.jspx"/>
+			</ice:form>
+			-->			
+		</div>
+	<ice:form>
+	<ice:panelGroup rendered="#{alertDetailBean.showAlertDetails}"
+			style="width: 650px; cursor:move; top: -300px; position: absolute; left: 400px; top: 550px;"
+			draggable="true" dragMask="hover_start, dragging, hover_end, drag_cancel" 
+			dragOptions="solid">
+		 <ui:include src="/jsp/alert/alertDetails.jspx"/>  
+	</ice:panelGroup>
+	</ice:form>		
+	</ui:define>
+</ui:composition>
+

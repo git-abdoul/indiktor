@@ -1,0 +1,305 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.xhtml
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+             	
+<ui:param name="pageTitle" value="Monitors"/>
+<ui:define name="content">
+
+<ice:panelGrid>
+<ice:panelGrid>
+<ice:form>	 
+	<table id="pageExtensionsMDC">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft2">		
+							<div class="topMenuBarLeftAnalysis">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/Extensions/MDCON.png"
+								   				   title="Metric Domain Config"
+								   				   value="Metric Domain Config"
+								   				   actionListener="#{metricDomainConfigSelectionBean.init}"
+										     	   action="#{metricDomainConfigSelectionBean.action}">
+								</ice:commandButton>
+							</div>		
+							<div class="topMenuBarLeftDomain">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/Extensions/MDROFF.png"
+								   				   title="Metric Domain Resource"
+								   				   value="Metric Domain Resource"
+								   				   actionListener="#{metricDomainResourceSelectionBean.init}"
+								   				   action="#{metricDomainResourceSelectionBean.action}">
+								</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<ice:panelGrid columns="2">
+										 	<ice:outputLabel value="Search"/>
+										 	<ice:inputText value="#{metricDomainConfigSelectionBean.searchQuery}"
+										 				   valueChangeListener="#{metricDomainConfigSelectionBean.searchMetricDomainConfigQuery}"	
+										 				   style="width:200px; font-size: 10px; margin-right: 30px;"									 	
+										 	/>
+										 </ice:panelGrid>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/add.png"
+													   	   title="Add new metric domain config"
+													   	   value="Add new metric domain config" 
+														   actionListener="#{metricDomainConfigCreationBean.initForCreate}"/>
+									</td>
+									<td>
+										<ice:commandButton panelConfirmation="#{metricDomainConfigSelectionBean.metricDomainConfigBeansSelected == 0 ? false : 'deleteConfirmPanel'}"
+														   styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/delete.png"
+													   	   title="Delete selected metric domain configs"              
+														   actionListener="#{metricDomainConfigCreationBean.deleteSelectedMetricDomainConfigBeans}"
+													       value="Delete selected metric domain configs"
+													       rendered="#{metricDomainConfigSelectionBean.metricDomainConfigBeansSelected != 0}">
+										</ice:commandButton>
+										<ice:panelConfirmation 	id="deleteConfirmPanel" 
+																message="#{metricDomainConfigSelectionBean.deleteMessage}"
+									                   			acceptLabel="Delete" 
+									                   			rendered="true"
+									                   			autoCentre="true"/>													       
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Return to administration panel"
+														   image="/images/IndiKtor2.0/Buttons/cancel.png"
+													   	   title="Return to administration panel"
+													   	   actionListener="#{adminBean.init}"
+													   	   action="#{adminBean.action}"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+													   	   title="Help"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentFullPanelMDC">
+							<table>
+								<tr>
+									<td>
+										<ice:panelGroup style="text-align:center;" rendered="#{metricDomainConfigSelectionBean.listRendered}">
+											<ice:dataPaginator id="metricDomainCongigTableScroll_2" for="metricDomainCongigTable"
+												rowsCountVar="rowsCount"
+												displayedRowsCountVar="displayedRowsCountVar"
+												firstRowIndexVar="firstRowIndex"
+												lastRowIndexVar="lastRowIndex" pageCountVar="pageCount"
+												pageIndexVar="pageIndex">
+												<ice:outputFormat
+													value="{0} Metric Domain Config found,  displaying {1} Metric Domain Config  from {2} to {3}. Page {4} / {5}."
+													style="font-weight: bold;" styleClass="standard">
+													<f:param value="#{rowsCount}" />
+													<f:param value="#{displayedRowsCountVar}" />
+													<f:param value="#{firstRowIndex}" />
+													<f:param value="#{lastRowIndex}" />
+													<f:param value="#{pageIndex}" />
+													<f:param value="#{pageCount}" />
+												</ice:outputFormat>
+											</ice:dataPaginator>
+										</ice:panelGroup>
+									</td>
+								</tr>
+								<tr height="10px"><td></td></tr>
+								<tr>
+									<td align="center">
+										<ice:panelGrid columns="1" style="text-align: center;" width="1150px">
+											<ice:outputLabel value="No Metric Domain Config has been configured. Click on the plus icon (+) to add Metric Domain Configs."
+															 rendered="#{!metricDomainConfigSelectionBean.listRendered}"/>
+										</ice:panelGrid>
+										<ice:panelGroup rendered="#{metricDomainConfigSelectionBean.listRendered}">		
+											<ice:dataTable id="metricDomainCongigTable"
+														   value="#{metricDomainConfigSelectionBean.metricDomainConfigBeans}" 
+														   var="metricDomainConfigBean"
+														   sortColumn="#{metricDomainConfigSelectionBean.sortColumnName}"	
+														   sortAscending="#{metricDomainConfigSelectionBean.ascending}"
+														   rows="#{metricDomainConfigSelectionBean.rowsByPage}"
+													       cellspacing="0" cellpadding="0" border="0" width="100%"
+													       columnWidths="20, 235, 250, 550, 40">
+												<ice:column>													
+													<f:facet name="header">
+												       	<ice:selectBooleanCheckbox value="#{metricDomainConfigSelectionBean.selectAll}" 
+												       							   valueChangeListener="#{metricDomainConfigSelectionBean.handleSelectAllMetricDomainConfigBeans}"	
+												       							   partialSubmit="true"
+												       							   style="text-align: center;"/>
+													</f:facet>
+											       	<ice:selectBooleanCheckbox value="#{metricDomainConfigBean.selected}" 
+											       							   valueChangeListener="#{metricDomainConfigSelectionBean.handleSelectedMetricDomainConfigBean}"	
+											       							   partialSubmit="true"
+											       							   style="text-align: center;">
+											       		<f:attribute name="metricDomainConfigBean" value="#{metricDomainConfigBean}"/> 							   
+											       	</ice:selectBooleanCheckbox>
+												</ice:column>
+												<ice:column style="text-align: left;">
+													<f:facet name="header">
+											            <ice:commandSortHeader
+											                    columnName="#{metricDomainConfigSelectionBean.domainTypeColumnName}"
+											                    arrow="true" >
+											                <ice:outputText value="#{metricDomainConfigSelectionBean.domainTypeColumnName}"/>
+											            </ice:commandSortHeader>
+											        </f:facet>	
+													<ice:outputText value="#{metricDomainConfigBean.domainType}"/>
+												</ice:column>
+												<ice:column style="text-align: left;">																							                
+													<f:facet name="header">
+														<ice:commandSortHeader
+											                    columnName="#{metricDomainConfigSelectionBean.metricDomainColumnName}"
+											                    arrow="true" >
+											                <ice:outputText value="#{metricDomainConfigSelectionBean.metricDomainColumnName}"/>
+											            </ice:commandSortHeader>
+													</f:facet>						
+													<ice:panelGroup style="font-size: 11px;">
+														<ice:outputText value="#{metricDomainConfigBean.metricDomain}"/>
+													</ice:panelGroup> 							
+												</ice:column>
+												<ice:column style="text-align: left;">																							                
+													<f:facet name="header">
+														<ice:commandSortHeader
+											                    columnName="#{metricDomainConfigSelectionBean.metricDomainConfigColumnName}"
+											                    arrow="true" >
+											                <ice:outputText value="#{metricDomainConfigSelectionBean.metricDomainConfigColumnName}"/>
+											            </ice:commandSortHeader>
+													</f:facet>						
+													<ice:panelGroup style="font-size: 11px;">
+														<ice:outputText value="#{metricDomainConfigBean.metricDomainConfig.description}"/>
+													</ice:panelGroup> 							
+												</ice:column>		
+												<ice:column>
+													<f:facet name="header">
+													</f:facet>	
+													<ice:commandButton actionListener="#{metricDomainConfigCreationBean.initForUpdate}"
+																	   image="/images/IndiKtor2.0/Buttons/editSmall.png"
+																	   title="Edit this metric domain config">
+														<f:attribute name="metricDomainConfigBean" value="#{metricDomainConfigBean}"/>
+													</ice:commandButton>
+													<ice:commandButton panelConfirmation="deleteNoSelectionConfirmPanel"
+																	   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+																	   actionListener="#{metricDomainConfigCreationBean.deleteMetricDomainConfigBean}"
+																	   title="Delete this metric domain config"
+																   	   style="margin-left: 10px;">
+														<f:attribute name="metricDomainConfigBean" value="#{metricDomainConfigBean}"/>	
+													</ice:commandButton>
+															
+													<ice:panelConfirmation 	id="deleteNoSelectionConfirmPanel"
+																			message="Are you sure to delete this metric domain config : #{metricDomainConfigBean.metricDomainConfig.description}"
+																			type="normal"
+																			acceptLabel="Delete"
+																			rendered="true"
+																			autoCentre="true"/>							
+												</ice:column>
+											</ice:dataTable>
+										</ice:panelGroup>	
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<ice:panelGroup style="float:center;"
+														visible="#{metricDomainConfigSelectionBean.paginationVisible}"
+														rendered="#{metricDomainConfigSelectionBean.listRendered}">
+											<center>
+												<ice:dataPaginator id="metricDomainCongigTableScroll_1" for="metricDomainCongigTable"
+													fastStep="3" paginator="true" paginatorMaxPages="4" actionListener="#{metricDomainConfigSelectionBean.pageChangeListener}">
+													<f:facet name="first">
+														<ice:graphicImage id="firstpage_1"
+															url="#{styleBean.imageDirectory}arrow-first.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.firstpage']}" />
+													</f:facet>
+													<f:facet name="last">
+														<ice:graphicImage id="lastpage_1"
+															url="#{styleBean.imageDirectory}arrow-last.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.lastpage']}" />
+													</f:facet>
+													<f:facet name="previous">
+														<ice:graphicImage id="previouspage_1"
+															url="#{styleBean.imageDirectory}arrow-previous.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.previouspage']}" />
+													</f:facet>
+													<f:facet name="next">
+														<ice:graphicImage id="nextpage_1"
+															url="#{styleBean.imageDirectory}arrow-next.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.nextpage']}" />
+													</f:facet>
+													<f:facet name="fastforward">
+														<ice:graphicImage id="fastforward_1"
+															url="#{styleBean.imageDirectory}arrow-ff.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastforward']}" />
+													</f:facet>
+													<f:facet name="fastrewind">
+														<ice:graphicImage id="fastrewind_1"
+															url="#{styleBean.imageDirectory}arrow-fr.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastbackward']}" />
+													</f:facet>
+												</ice:dataPaginator>
+											</center>
+										</ice:panelGroup>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table> 	
+			</td>
+		</tr>
+	</table>
+
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{metricDomainConfigCreationBean.rendererMetricDomainConfig}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputLabel style="float: left;" value="#{metricDomainConfigCreationBean.metricDomainConfig.id != 0 ? 'Update Metric Domain Config' : 'Create New Metric Domain Config'}"/></td>
+		       			<td>
+		       				<ice:commandButton style="float: right;" 
+		       								   actionListener="#{metricDomainConfigCreationBean.closeMetricDomainConfigPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+							<ice:commandButton style="float: right;" 
+											   image="/images/IndiKtor2.0/Buttons/saveSmall.png"
+										   	   title="Save"
+										   	   value="Save"
+										   	   styleClass="iconPopup"
+										   	   actionListener="#{metricDomainConfigCreationBean.save}"/>		       								   
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGrid id="MetricDomainConfig">
+				 
+				<ui:include src="/jsp/ikrStaticDomain/metricDomainConfig/metricDomainConfigCreation.xhtml/>
+				
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+		
+</ice:form>
+<ui:include src="/jsp/util/errorMessag.xhtmlml"/>
+</ice:panelGrid>
+
+</ice:panelGrid>
+</ui:define>
+</ui:composition>

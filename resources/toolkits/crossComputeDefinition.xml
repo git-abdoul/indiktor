@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<CROSS_COMPUTES>
+
+	<COMPUTE domainType="JVM" metricDomain="JVM_ACTIVITY" metricCategory="Heap Memory Ratio" unitType="RATE" unit="PERCENT" description="">
+		<METRICS>
+			<METRIC id="1" 	ikrCategoryValue="Heap Memory Used" ikrInstance="%PROCESS_NAME%" context="%CONTEXT1%" compute="RT"/>
+			<METRIC id="2" 	ikrCategoryValue="Max Heap Memory" ikrInstance="%PROCESS_NAME%" context="%CONTEXT1%" compute="RT"/>
+		</METRICS>
+		<COMPUTE_DEF name="%PROCESS_NAME%" computation="(%M1%/%M2%)*100" />
+	</COMPUTE>
+	
+	<COMPUTE domainType="JVM" metricDomain="THREAD_ACTIVITY" metricCategory="Threads Type Status Ratio" unitType="RATE" unit="PERCENT" description="">
+		<METRICS>
+			<METRIC id="1" 	ikrCategoryValue="Thread Type Count" ikrInstance="%PROCESS_NAME%[%THREAD_TYPE%,%THREAD_STATUS%]" context="%CONTEXT1%" compute="RT"/>
+			<METRIC id="2" 	ikrCategoryValue="Thread Type Count" ikrInstance="%PROCESS_NAME%[%THREAD_TYPE%]" context="%CONTEXT1%" compute="RT"/>
+		</METRICS>
+		<COMPUTE_DEF name="%PROCESS_NAME%[%THREAD_TYPE%,%THREAD_STATUS%]" computation="(%M1%/%M2%)*100" />
+	</COMPUTE>
+	
+	<COMPUTE domainType="CALYPSO" metricDomain="CALYPSO_DS_CACHE" metricCategory="Cache Count Ratio" unitType="RATE" unit="PERCENT" description="">
+		<METRICS>
+			<METRIC id="1" 	ikrCategoryValue="Cache Count" ikrInstance="Cache[%CACHE_NAME%]" context="%CONTEXT1%" compute="RT"/>
+			<METRIC id="2" 	ikrCategoryValue="Cache Limit" ikrInstance="Cache[%CACHE_NAME%]" context="%CONTEXT1%" compute="RT"/>
+		</METRICS>
+		<COMPUTE_DEF name="Cache[%CACHE_NAME%]" computation="(%M1%/%M2%)*100" />
+	</COMPUTE>
+	
+	<COMPUTE domainType="CALYPSO" metricDomain="CALYPSO_DATASERVER" metricCategory="DS Total Db Connections" unitType="NUMBER" unit="NUMBER" description="">
+		<METRICS>
+			<METRIC id="1" 	ikrCategoryValue="DS Open Db Connections" ikrInstance="dataserver" context="%CONTEXT1%" compute="RT"/>
+			<METRIC id="2" 	ikrCategoryValue="DS Used Db Connections" ikrInstance="dataserver" context="%CONTEXT1%" compute="RT"/>
+		</METRICS>
+		<COMPUTE_DEF name="dataserver" computation="%M1%+%M2%" />
+	</COMPUTE>
+	
+	<COMPUTE domainType="CALYPSO" metricDomain="CALYPSO_DATASERVER" metricCategory="DS Used Db Connections Ratio" unitType="RATE" unit="PERCENT" description="">
+		<METRICS>
+			<METRIC id="1" 	ikrCategoryValue="DS Used Db Connections" ikrInstance="dataserver" context="%CONTEXT1%" compute="RT"/>
+			<METRIC id="2" 	ikrCategoryValue="COMPUTED - DS Total Db Connections" ikrInstance="dataserver" context="COMPUTED" compute="RT"/>
+		</METRICS>
+		<COMPUTE_DEF name="dataserver" computation="(%M1%/%M2%)*100" />
+	</COMPUTE>
+	
+	<COMPUTE domainType="CALYPSO" metricDomain="CALYPSO_DATASERVER" metricCategory="DS Event Buffer Ratio" unitType="RATE" unit="PERCENT" description="">
+		<METRICS>
+			<METRIC id="1" 	ikrCategoryValue="DS Event Buffer Count" ikrInstance="dataserver" context="%CONTEXT1%" compute="RT"/>
+			<METRIC id="2" 	ikrCategoryValue="DS Event Buffer Limit" ikrInstance="dataserver" context="%CONTEXT1%" compute="RT"/>
+		</METRICS>
+		<COMPUTE_DEF name="dataserver" computation="(%M1%/%M2%)*100" />
+	</COMPUTE>
+	
+	<COMPUTE domainType="CALYPSO" metricDomain="CALYPSO_EVENTSERVER" metricCategory="EventServer Pool Ratio" unitType="RATE" unit="PERCENT" description="">
+		<METRICS>
+			<METRIC id="1" 	ikrCategoryValue="EventServer Pool Count" ikrInstance="eventserver" context="%CONTEXT1%" compute="RT"/>
+			<METRIC id="2" 	ikrCategoryValue="EventServer Pool Count Limit" ikrInstance="eventserver" context="%CONTEXT1%" compute="RT"/>
+		</METRICS>
+		<COMPUTE_DEF name="dataserver" computation="(%M1%/%M2%)*100" />
+	</COMPUTE>
+	
+	<COMPUTE domainType="CALYPSO" metricDomain="CALYPSO_ENGINE" metricCategory="Engine Pool Ratio" unitType="RATE" unit="PERCENT" description="">
+		<METRICS>
+			<METRIC id="1" 	ikrCategoryValue="Engine EventPool Count" ikrInstance="%ENGINE_NAME%" context="%CONTEXT1%" compute="RT"/>
+			<METRIC id="2" 	ikrCategoryValue="Engine EventPool Limit" ikrInstance="%ENGINE_NAME%" context="%CONTEXT1%" compute="RT"/>
+		</METRICS>
+		<COMPUTE_DEF name="%ENGINE_NAME%" computation="(%M1%/%M2%)*100" />
+	</COMPUTE>
+	
+	<COMPUTE domainType="CALYPSO" metricDomain="CALYPSO_ENGINE" metricCategory="Engine Unconsumed Events Ratio" unitType="RATE" unit="PERCENT" description="">
+		<METRICS>
+			<METRIC id="1" 	ikrCategoryValue="Engine Unconsumed Events" ikrInstance="%ENGINE_NAME%" context="%CONTEXT1%" compute="RT"/>
+			<METRIC id="2" 	ikrCategoryValue="Engine Produced Events" ikrInstance="%ENGINE_NAME%" context="%CONTEXT1%" compute="RT"/>
+		</METRICS>
+		<COMPUTE_DEF name="%ENGINE_NAME%" computation="(%M1%/%M2%)*100" />
+	</COMPUTE>
+	
+</CROSS_COMPUTES>

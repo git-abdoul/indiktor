@@ -1,0 +1,598 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.xhtml
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ui:param name="pageTitle" value="Admin Console" />
+<ui:define name="content">	
+<h:form>
+	<br/>
+	<table>
+		<tr>
+			<td>
+				<ice:outputLabel styleClass="pageTitle" value="Administration Console"/>
+			</td>
+		</tr>
+	</table>	
+	<br/>
+	<table width="100%">
+		<tr valign="top">
+			<td width="50%" valign="top">
+				<ice:panelGroup style="border: 1px solid #336699; width: 100%; text-align: center;" scrollHeight="250">
+					<ice:panelGroup style="width: 100%;">
+						<table width="100%">
+							<tr>
+								<td width="15%">
+									<ice:outputLabel value="Connectors"/>
+								</td>
+								<td width="80%" align="center">
+									<ice:outputText value="#{adminConsoleBean.connectorConsole.statistic}" style="font-size: 11px; font-weight: bold;"/>
+								</td>
+								<td width="5%">
+									<ice:commandButton styleClass="topMenuBarRightIcons"
+													   actionListener="#{adminConsoleBean.openFilterScreen}"
+													   image="/images/IndiKtor2.0/Buttons/filter.png"
+												   	   title="Status Filter">
+										<f:attribute name="adminConsole" value="#{adminConsoleBean.connectorConsole}"/>
+									</ice:commandButton>
+								</td>
+							</tr>
+						</table>	
+					</ice:panelGroup>						
+					<ice:dataTable id="connectorAdminConsole"
+								   value="#{adminConsoleBean.connectorConsole.eventBeans}"
+								   sortColumn="#{adminConsoleBean.connectorConsole.sortColumnName}"
+								   sortAscending="#{adminConsoleBean.connectorConsole.ascending}" 
+								   var="eventLogBean"								   
+								   cellspacing="0" cellpadding="0" border="0"
+								   style="width: 100%; text-align: center; border: 0px;"
+								   columnWidths="12%,43%,20%,16%,7%,2%"
+								   scrollable="true" scrollHeight="180px">	
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.typeColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.typeColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px; width: 100%;">
+								<ice:outputText value="#{eventLogBean.category}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.nameColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.nameColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;width: 100%;">
+								<ice:outputText value="#{eventLogBean.componentName}" title="#{eventLogBean.componentName}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.startTimeColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.startTimeColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;width: 100%;">
+								<ice:outputText value="#{eventLogBean.startTime}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.statusColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.statusColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;width: 100%;">
+								<ice:outputText value="#{eventLogBean.status}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+							</f:facet>	
+							<ice:panelGroup style="text-align: center; font-size: 11px; width: 100%;" rendered="#{eventLogBean.renderCommand}">
+								<ice:commandButton style="float: center;" 
+												   value="start"
+											   	   title="Start #{eventLogBean.componentName}"		
+											   	   image="/images/IndiKtor2.0/Buttons/playSmall.png"												   	   
+											   	   actionListener="#{adminConsoleBean.startComponent}"
+											   	   rendered="#{!eventLogBean.up}">
+									<f:attribute name="componentId" value="#{eventLogBean.eventLog.valueDefinitionId}"/>
+									<f:attribute name="componentType" value="#{eventLogBean.eventLog.componentType}"/>
+								</ice:commandButton>
+								<ice:commandButton style="float: center;" 
+												   value="Stop"
+												   title="Stop #{eventLogBean.componentName}"	
+												   image="/images/IndiKtor2.0/Buttons/stopSmall.png"														   	   
+											   	   actionListener="#{adminConsoleBean.stopComponent}"
+											   	   rendered="#{eventLogBean.up}">
+									<f:attribute name="componentId" value="#{eventLogBean.eventLog.valueDefinitionId}"/>
+									<f:attribute name="componentType" value="#{eventLogBean.eventLog.componentType}"/>
+								</ice:commandButton>
+								<ice:commandButton style="float: center;" 
+												   value="Details"
+												   title="#{eventLogBean.componentName} Details"	
+												   image="/images/IndiKtor2.0/Buttons/showSmall.png"													   	   
+											   	   actionListener="#{adminConsoleBean.showComponentLogDetails}" >
+									<f:attribute name="componentId" value="#{eventLogBean.eventLog.valueDefinitionId}"/>
+									<f:attribute name="componentType" value="#{eventLogBean.eventLog.componentType}"/>
+								</ice:commandButton>
+							</ice:panelGroup> 							
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>				
+			</td>
+			<td width="50%" valign="top" rowspan="3">
+				<ice:panelGroup style="border: 1px solid #336699; width: 100%; text-align: left;"  scrollHeight="762">
+					<ice:panelGroup style="width: 100%;">
+						<table width="100%">
+							<tr>
+								<td width="95%">
+									<ice:outputLabel value="Logs"/>
+								</td>
+								<td width="5%">
+									<ice:commandButton styleClass="topMenuBarRightIcons"
+													   actionListener="#{adminConsoleBean.openLogFilterScreen}"
+													   image="/images/IndiKtor2.0/Buttons/filter.png"
+												   	   title="Status Filter"/>
+								</td>
+							</tr>
+						</table>	
+					</ice:panelGroup>		
+					<ice:dataTable id="logBufferConsole"
+								   value="#{adminConsoleBean.globalLogBuffer}" 
+								   var="logBean"								   
+								   cellspacing="0" cellpadding="0" border="0"
+								   style="width: 100%; text-align: center; border: 0px;"
+								   columnWidths="15%,10%,25%,10%,40%"
+								   scrollable="true" scrollHeight="692px">	
+						<ice:column style="#{logBean.style}">
+							<f:facet name="header">
+								<ice:outputLabel value="Date"/>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{logBean.logTime}" style="font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{logBean.style}">
+							<f:facet name="header">
+								<ice:outputLabel value="Component"/>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{logBean.componentType}" style="font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{logBean.style}">
+							<f:facet name="header">
+								<ice:outputLabel value="Name"/>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{logBean.componentName}" style="font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{logBean.style}">
+							<f:facet name="header">
+								<ice:outputLabel value="Category"/>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{logBean.category}" style="font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{logBean.style}">
+							<f:facet name="header">
+								<ice:outputLabel value="Content"/>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{logBean.content}" style="font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+					</ice:dataTable>
+			    </ice:panelGroup>	
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<ice:panelGroup style="border: 1px solid #336699; width: 100%; text-align: center;" scrollHeight="250">
+					<ice:panelGroup style="width: 100%;">
+						<table width="100%">
+							<tr>
+								<td width="15%">
+									<ice:outputLabel value="Collectors"/>
+								</td>
+								<td width="80%" align="center">
+									<ice:outputText value="#{adminConsoleBean.collectorConsole.statistic}" style="font-size: 11px; font-weight: bold;"/>
+								</td>
+								<td width="5%">
+									<ice:commandButton styleClass="topMenuBarRightIcons"
+													   actionListener="#{adminConsoleBean.openFilterScreen}"
+													   image="/images/IndiKtor2.0/Buttons/filter.png"
+												   	   title="Status Filter">
+										<f:attribute name="adminConsole" value="#{adminConsoleBean.collectorConsole}"/>
+									</ice:commandButton>
+								</td>
+							</tr>
+						</table>	
+					</ice:panelGroup>			
+					<ice:dataTable id="collectorAdminConsole"
+								   value="#{adminConsoleBean.collectorConsole.eventBeans}" 
+								   sortColumn="#{adminConsoleBean.collectorConsole.sortColumnName}"
+								   sortAscending="#{adminConsoleBean.collectorConsole.ascending}" 
+								   var="eventLogBean"								   
+								   cellspacing="0" cellpadding="0" border="0"
+								   style="width: 100%; text-align: center; border: 0px;"
+								   columnWidths="12%,14%,38%,15%,14%,7%"
+								   scrollable="true" scrollHeight="180px">	
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.envColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.envColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{eventLogBean.logicalEnv}" style="#{eventLogBean.style} font-size: 10px;width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.typeColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.typeColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{eventLogBean.category}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.nameColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.nameColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{eventLogBean.componentName}" title="#{eventLogBean.componentName}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.startTimeColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.startTimeColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{eventLogBean.startTime}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.statusColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.statusColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{eventLogBean.status}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+							</f:facet>	
+							<ice:panelGroup style="text-align: center; font-size: 11px; width: 100%;" rendered="#{eventLogBean.renderCommand}">
+								<ice:commandButton style="float: center;" 
+												   value="start"
+											   	   title="Start #{eventLogBean.componentName}"	
+											   	   image="/images/IndiKtor2.0/Buttons/playSmall.png"													   	   
+											   	   actionListener="#{adminConsoleBean.startComponent}"
+											   	   rendered="#{!eventLogBean.up}">
+									<f:attribute name="componentId" value="#{eventLogBean.eventLog.valueDefinitionId}"/>
+									<f:attribute name="componentType" value="#{eventLogBean.eventLog.componentType}"/>
+								</ice:commandButton>										
+								<ice:commandButton style="float: center;" 
+												   value="Stop"
+												   title="Stop #{eventLogBean.componentName}"	
+												   image="/images/IndiKtor2.0/Buttons/stopSmall.png"														   	   
+											   	   actionListener="#{adminConsoleBean.stopComponent}"
+											   	   rendered="#{eventLogBean.up}">
+									<f:attribute name="componentId" value="#{eventLogBean.eventLog.valueDefinitionId}"/>
+									<f:attribute name="componentType" value="#{eventLogBean.eventLog.componentType}"/>
+								</ice:commandButton>
+								<ice:commandButton style="float: center;" 
+												   value="Details"
+												   title="#{eventLogBean.componentName} Details"	
+												   image="/images/IndiKtor2.0/Buttons/showSmall.png"													   	   
+											   	   actionListener="#{adminConsoleBean.showComponentLogDetails}">
+									<f:attribute name="componentId" value="#{eventLogBean.eventLog.valueDefinitionId}"/>
+									<f:attribute name="componentType" value="#{eventLogBean.eventLog.componentType}"/>
+								</ice:commandButton>
+							</ice:panelGroup> 							
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>			
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<ice:panelGroup style="border: 1px solid #336699; width: 100%; text-align: center;"  scrollHeight="250">
+					<ice:panelGroup style="width: 100%;">
+						<table width="100%">
+							<tr>
+								<td width="15%">
+									<ice:outputLabel value="Job Schedulers"/>
+								</td>
+								<td width="80%" align="center">
+									<ice:outputText value="#{adminConsoleBean.jobSchedulerConsole.statistic}" style="font-size: 11px; font-weight: bold;"/>
+								</td>
+								<td width="5%">
+									<ice:commandButton styleClass="topMenuBarRightIcons"
+													   actionListener="#{adminConsoleBean.openFilterScreen}"
+													   image="/images/IndiKtor2.0/Buttons/filter.png"
+												   	   title="Status Filter">
+										<f:attribute name="adminConsole" value="#{adminConsoleBean.jobSchedulerConsole}"/>
+									</ice:commandButton>
+								</td>
+							</tr>
+						</table>	
+					</ice:panelGroup>			
+					<ice:dataTable id="jobSchedulerAdminConsole"
+								   value="#{adminConsoleBean.jobSchedulerConsole.eventBeans}" 
+								   sortColumn="#{adminConsoleBean.jobSchedulerConsole.sortColumnName}"
+								   sortAscending="#{adminConsoleBean.jobSchedulerConsole.ascending}" 
+								   var="eventLogBean"								   
+								   cellspacing="0" cellpadding="0" border="0"
+								   style="width: 100%; text-align: center; border: 0px;"
+								   columnWidths="12%,14%,38%,15%,14%,7%"
+								   scrollable="true" scrollHeight="180px">	
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.envColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.envColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{eventLogBean.logicalEnv}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.typeColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.typeColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{eventLogBean.category}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.nameColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.nameColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{eventLogBean.componentName}" title="#{eventLogBean.componentName}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.startTimeColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.startTimeColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{eventLogBean.startTime}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column style="#{eventLogBean.style}">
+							<f:facet name="header">
+								<ice:commandSortHeader
+					                    columnName="#{adminConsoleBean.statusColumnName}"
+					                    arrow="true" >
+					                <ice:outputText value="#{adminConsoleBean.statusColumnName}"/>
+					            </ice:commandSortHeader>
+							</f:facet>	
+							<ice:panelGroup style="text-align: left; font-size: 11px;">
+								<ice:outputText value="#{eventLogBean.status}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+							</ice:panelGroup> 							
+						</ice:column>
+						<ice:column>
+							<f:facet name="header">
+							</f:facet>	
+							<ice:panelGroup style="text-align: center; font-size: 11px; width: 100%;" rendered="#{eventLogBean.renderCommand}">
+								<ice:commandButton style="float: center;" 
+												   value="start"
+											   	   title="Start #{eventLogBean.componentName}"			
+											   	   image="/images/IndiKtor2.0/Buttons/playSmall.png"											   	   
+											   	   actionListener="#{adminConsoleBean.startComponent}"
+											   	   rendered="#{!eventLogBean.up}">
+									<f:attribute name="componentId" value="#{eventLogBean.eventLog.valueDefinitionId}"/>
+									<f:attribute name="componentType" value="#{eventLogBean.eventLog.componentType}"/>
+								</ice:commandButton>
+								<ice:commandButton style="float: center;" 
+												   value="Stop"
+												   title="Stop #{eventLogBean.componentName}"		
+												   image="/images/IndiKtor2.0/Buttons/stopSmall.png"													   	   
+											   	   actionListener="#{adminConsoleBean.stopComponent}"
+											   	   rendered="#{eventLogBean.up}">
+									<f:attribute name="componentId" value="#{eventLogBean.eventLog.valueDefinitionId}"/>
+									<f:attribute name="componentType" value="#{eventLogBean.eventLog.componentType}"/>
+								</ice:commandButton>
+								<ice:commandButton style="float: center;" 
+												   value="Details"
+												   title="#{eventLogBean.componentName} Details"	
+												   image="/images/IndiKtor2.0/Buttons/showSmall.png"													   	   
+											   	   actionListener="#{adminConsoleBean.showComponentLogDetails}">
+									<f:attribute name="componentId" value="#{eventLogBean.eventLog.valueDefinitionId}"/>
+									<f:attribute name="componentType" value="#{eventLogBean.eventLog.componentType}"/>
+								</ice:commandButton>
+							</ice:panelGroup> 							
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>
+			</td>		
+		</tr>
+	</table>
+	<ice:panelPopup draggable="true" style="border: 2px solid #336699;-moz-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); -webkit-box-shadow: -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); box-shadow: 0px 5px 10px rgba(0,0,0,0.8); width: 600px; left: 200px; top: 200px; position: absolute;" rendered="#{adminConsoleBean.renderEventLogDetailsScreen}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px; width: 600px;cursor: move; background-color: #071a39;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputText style="float: left; color: white;" value="#{adminConsoleBean.selectedEventLogBean.category} - #{adminConsoleBean.selectedEventLogBean.componentName} Details"/></td>
+		       			<td><ice:commandButton style="float: right;cursor: pointer;" 
+		       								   actionListener="#{adminConsoleBean.closeComponentLogDetailsScreen}"
+		       								   image="/images/i/cal_off_white.gif"
+		       								   alt="Close"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGroup style="text-align: center; width: 100%">
+					<table width="100%">
+			       		<tr valign="top">
+			       			<td valign="top" align="center">
+			       				<ice:panelGroup rendered="#{adminConsoleBean.selectedEventLogBean.renderLogDetails}" style="border: 1px solid #336699;">
+									<ice:dataTable id="logBufferDetails"
+												   value="#{adminConsoleBean.selectedEventLogBean.logBeans}" 
+												   var="logBean"								   
+												   cellspacing="0" cellpadding="0" border="0"
+												   style="width: 100%; text-align: center; border: 0px;"
+												   columnWidths="30%,70%">	
+										<ice:column style="#{logBean.style}">
+											<f:facet name="header">
+												<ice:outputLabel value="Date"/>
+											</f:facet>	
+											<ice:panelGroup style="text-align: left; font-size: 11px;">
+												<ice:outputText value="#{logBean.logTime}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+											</ice:panelGroup> 							
+										</ice:column>
+										<ice:column style="#{logBean.style}">
+											<f:facet name="header">
+												<ice:outputLabel value="Content"/>
+											</f:facet>	
+											<ice:panelGroup style="text-align: left; font-size: 11px;">
+												<ice:outputText value="#{logBean.content}" style="#{eventLogBean.style} font-size: 10px; width: 100%;"/>
+											</ice:panelGroup> 							
+										</ice:column>
+									</ice:dataTable>
+								</ice:panelGroup>
+								<ice:panelGroup rendered="#{!adminConsoleBean.selectedEventLogBean.renderLogDetails}">
+									<ice:outputText value="Nothing To Report"/>
+								</ice:panelGroup>								
+			       			</td>
+			       			<td valign="top" align="center">
+			       				<ice:panelGroup rendered="#{adminConsoleBean.selectedEventLogBean.renderStatsDetails}" style="border: 1px solid #336699;">
+									<ice:dataTable id="statsDetails"
+												   value="#{adminConsoleBean.selectedEventLogBean.statsBean}" 
+												   var="statBean"								   
+												   cellspacing="0" cellpadding="0" border="0"
+												   style="width: 100%; text-align: center; border: 0px;"
+												   columnWidths="50%,50%">	
+										<ice:column>
+											<f:facet name="header">
+												<ice:outputLabel value="Attribute"/>
+											</f:facet>	
+											<ice:panelGroup style="text-align: left; font-size: 11px;">
+												<ice:outputText value="#{statBean.attribute}" style="font-size: 10px; width: 100%;"/>
+											</ice:panelGroup> 							
+										</ice:column>
+										<ice:column>
+											<f:facet name="header">
+												<ice:outputLabel value="Value"/>
+											</f:facet>	
+											<ice:panelGroup style="text-align: left; font-size: 11px;">
+												<ice:outputText value="#{statBean.value}" style="font-size: 10px; width: 100%;"/>
+											</ice:panelGroup> 							
+										</ice:column>
+									</ice:dataTable>
+								</ice:panelGroup>
+							</td>
+			       		</tr>
+			       	</table> 				
+			</ice:panelGroup>
+		</f:facet>
+	</ice:panelPopup>
+	<ice:panelPopup draggable="true" modal="false" autoCentre="false" rendered="#{adminConsoleBean.renderFilterScreen}" style="border: 2px solid #336699;left: 350px; top: 350px; position: absolute;-moz-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); -webkit-box-shadow: -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); box-shadow: 0px 5px 10px rgba(0,0,0,0.8);">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;cursor: move; background-color: #071a39;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputText style="float: left; color: white;" value="Status Filter"/></td>
+		       			<td><ice:commandButton style="float: right;cursor: pointer;" 
+		       								   actionListener="#{adminConsoleBean.closeFilterScreen}"
+		       								   image="/images/i/cal_off_white.gif"
+		       								   alt="Close"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGroup style="border: 1px solid #336699; width: 144px; margin-left: 2px; padding-top: 10px; margin-right: 2px;">
+				<ice:panelGroup style="text-align: center;">
+					<ice:panelGroup rendered="#{!adminConsoleBean.renderLogFilterScreen}">
+						<table width="100%">
+							<ui:repeat var="filterBean" value="#{adminConsoleBean.selectedAdminConsole.statusFilters}">
+								<tr>
+									<td align="left" width="90%"><ice:outputLabel value="#{filterBean.status.label}" style="font-size: 11px;"/></td>
+									<td align="center" width="10%">
+										<ice:selectBooleanCheckbox value="#{filterBean.selected}"
+														   	   	   valueChangeListener="#{adminConsoleBean.filterValueChanged}"
+														       	   partialSubmit="true">
+											<f:attribute name="filter" value="#{filterBean.status}"/>
+										</ice:selectBooleanCheckbox>
+									</td>
+								</tr>								
+							</ui:repeat>
+						</table>  
+					</ice:panelGroup>
+					<ice:panelGroup rendered="#{adminConsoleBean.renderLogFilterScreen}">
+						<table width="100%">
+							<ui:repeat var="filterBean" value="#{adminConsoleBean.logFilterBeans}">
+								<tr>
+									<td align="left" width="90%"><ice:outputLabel value="#{filterBean.category.label}" style="font-size: 11px;"/></td>
+									<td align="center" width="10%">
+										<ice:selectBooleanCheckbox value="#{filterBean.selected}"
+														   	   	   valueChangeListener="#{adminConsoleBean.filterValueChanged}"
+														       	   partialSubmit="true">
+											<f:attribute name="filter" value="#{filterBean.category}"/>
+										</ice:selectBooleanCheckbox>
+									</td>
+								</tr>								
+							</ui:repeat>
+						</table>  
+					</ice:panelGroup>
+				</ice:panelGroup>
+			</ice:panelGroup>
+		</f:facet>
+	</ice:panelPopup>
+</h:form>
+</ui:define>	
+</ui:composition>

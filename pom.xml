@@ -1,0 +1,61 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>indiktor</groupId>
+	<artifactId>indiktor-suite</artifactId>
+	<version>1.5.3</version>
+	<name>Indiktor Monitoring Suite</name>
+	<packaging>pom</packaging> 
+  
+	<modules>
+		<module>component/foundation</module>
+		<module>component/persistency</module>	
+		<module>component/framework-base</module>
+		<module>component/krysalis-jCharts</module>
+		<module>component/publisher</module>
+		<module>component/system-agent</module>
+		<module>component/compute-server</module>	
+		<module>component/monitor-server</module>	
+		<module>component/scheduler-server</module>	
+		<module>component/toolkits</module>		
+		<module>component/indiktor-server</module>
+	</modules>
+  
+	<build>
+		<directory>distrib</directory>  
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>  
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>ext-lib</directory>
+						</fileset>
+						<fileset>
+							<directory>ikr-lib</directory>
+						</fileset>
+				</filesets>
+			</configuration>
+		  </plugin>
+		</plugins>
+	</build>
+  
+	<repositories>
+		<repository>  
+			<id>prime-repo</id>  
+			<name>PrimeFaces Maven Repository</name>  
+			<url>http://repository.primefaces.org</url>  
+			<layout>default</layout>  
+		</repository>
+	</repositories> 
+</project>

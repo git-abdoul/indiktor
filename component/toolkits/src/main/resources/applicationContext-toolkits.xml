@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+	"-//SPRING//DTD BEAN//EN"
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="propertyConfigurer"
+		  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>file:${file.propEnv}</value>
+		</property>
+	</bean>
+	
+	<import resource="classpath:applicationContext-persistency.xml"/>
+	
+	<bean id="cacheManager" class="com.fsi.monitoring.cache.EhCacheManagerBean">
+  		<property name="ehcacheConfigLocation">
+    		<value>classpath:ehcache.xml</value>
+  		</property>
+		<property name="propertiesFile">
+    		<value>file:${file.propEnv}</value>
+  		</property>
+		<property name="componentName">
+    		<value>toolkits</value>
+  		</property>
+		<property name="cacheManagerName">
+    		<value>toolkits</value>
+  		</property>
+	</bean>
+	
+	<bean id="jnlpClasspathGenerator" class="com.fsi.toolkits.jnlp.JnlpClasspathGeneratorConfig">
+		<property name="jarNamesExcluded">
+			<value>${jnlp.jarsExcluded}</value>
+		</property>   
+		<property name="jnlpDownloadProtocol">
+			<value>${jnlp.fileGetProtocol}</value>
+		</property>   
+		<property name="jnlpDownloadHostname">
+			<value>${jnlp.fileGetHostname}</value>
+		</property>
+		<property name="jnlpDownloadPort">
+			<value>${jnlp.fileGetPort}</value>
+		</property>	
+		<property name="jnlpDownloadPath">
+			<value>${jnlp.fileGetPath}</value>
+		</property>   		
+		<property name="jarDownloadProtocol">
+			<value>${jnlp.jarGetProtocol}</value>
+		</property>   
+		<property name="jarDownloadHostname">
+			<value>${jnlp.jarGetHostname}</value>
+		</property>
+		<property name="jarDownloadPort">
+			<value>${jnlp.jarGetPort}</value>
+		</property>	
+		<property name="jarDownloadPath">
+			<value>${jnlp.jarGetPath}</value>
+		</property>   		
+		<property name="jarDirectoryWrite">
+			<value>${jnlp.jarPutPath}</value>
+		</property>			
+		<property name="classpathEnv">
+			<value>${jnlp.ikrLogicalEnv}</value>
+		</property>			
+	</bean>	
+</beans>

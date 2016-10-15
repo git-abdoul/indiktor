@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<CONFIG>
+
+<QUERY_CONFIG connector="" query="select count(*) as NB from TRN_HDR_DBF where M_TRN_STATUS = 'LIVE'">
+	<QUERY_ITEM itemType="INSTANCE" item="Name" queryField="LIVE" datatype="STRING"/>
+	<QUERY_ITEM itemType="METRIC" item="liveCount" queryField="NB" datatype="INTEGER"/>
+</QUERY_CONFIG>
+
+<QUERY_CONFIG connector="" query="select count(*) as NB from TRN_HDR_DBF where M_TRN_STATUS = 'DEAD'">
+	<QUERY_ITEM itemType="INSTANCE" item="Name" queryField="DEAD" datatype="STRING"/>
+	<QUERY_ITEM itemType="METRIC" item="deadCount" queryField="NB" datatype="INTEGER"/>
+</QUERY_CONFIG>
+
+<QUERY_CONFIG connector="" query="select count(*) as NB from TRN_HDR_DBF where M_PURGE_STS = 2">
+	<QUERY_ITEM itemType="INSTANCE" item="Name" queryField="PURGED" datatype="STRING"/>
+	<QUERY_ITEM itemType="METRIC" item="purgedCount" queryField="NB" datatype="INTEGER"/>
+</QUERY_CONFIG>
+
+</CONFIG>

@@ -1,0 +1,294 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component"
+             	xmlns:ice-cc="http://www.icesoft.com/icefaces-composite-comps">
+
+<ui:param name="pageTitle" value="Security configuration" />
+<ui:define name="content">
+
+<ice:panelGrid>
+<ice:panelGrid>
+<ice:form>
+	<table id="pageSecurityRole">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft">	
+							<div class="topMenuBarLeftAnalysis">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/Security/RoleON.png"
+								   				   title="Role"
+								   				   value="Role"
+										 	       actionListener="#{roleBean.init}" 
+							  				 	   action="#{roleBean.action}">
+								</ice:commandButton>
+							</div>		
+							<div class="topMenuBarLeftDomain">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/Security/UserOFF.png"
+								   				   title="User"
+								   				   value="User"
+								   				   actionListener="#{userBean.init}" 
+										 	       action="#{userBean.action}">
+								</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Create New Role"
+														   image="/images/IndiKtor2.0/Buttons/add.png"
+													   	   title="Add new role"
+													   	   actionListener="#{roleBean.openCreateNewRolePopup}"/>
+									</td>
+									<!-- 
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   actionListener="#{roleBean.openUpdateUserPopup}"
+														   image="/images/IndiKtor2.0/Buttons/edit.png"
+														   title="Edit selected role"
+														   value="Edit selected role">
+										</ice:commandButton>
+									</td>
+									 -->
+									<td> 
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   panelConfirmation="#{roleBean.roleItemsSelected == 0 ? false : 'deleteConfirmPanel'}"
+														   image="/images/IndiKtor2.0/Buttons/delete.png"
+													   	   title="Delete selected roles"
+													   	   actionListener="#{roleBean.deleteSelectedRoles}"
+													   	   rendered="#{roleBean.roleItemsSelected != 0}">													   	   	
+										</ice:commandButton>
+										<ice:panelConfirmation 	id="deleteConfirmPanel" 
+																message="#{roleBean.deleteMessage}"
+										                   		acceptLabel="Delete"
+										                   		autoCentre="true"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Return to administration panel"
+														   image="/images/IndiKtor2.0/Buttons/cancel.png"
+													   	   title="Return to administration panel"
+													   	   actionListener="#{adminBean.init}"
+													   	   action="#{adminBean.action}"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+													   	   title="Help"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentFullPanelRoles">
+							<table>
+								<tr>
+									<td>
+										<ice:panelGroup style="text-align:center;" rendered="#{roleBean.listRendered}">
+											<ice:dataPaginator id="roleSelectionScroll_2" for="roleSelection"
+												rowsCountVar="rowsCount"
+												displayedRowsCountVar="displayedRowsCountVar"
+												firstRowIndexVar="firstRowIndex"
+												lastRowIndexVar="lastRowIndex" pageCountVar="pageCount"
+												pageIndexVar="pageIndex">
+												<ice:outputFormat
+													value="{0} Roles found,  displaying {1} Roles  from {2} to {3}. Page {4} / {5}."
+													style="font-weight: bold;" styleClass="standard">
+													<f:param value="#{rowsCount}" />
+													<f:param value="#{displayedRowsCountVar}" />
+													<f:param value="#{firstRowIndex}" />
+													<f:param value="#{lastRowIndex}" />
+													<f:param value="#{pageIndex}" />
+													<f:param value="#{pageCount}" />
+												</ice:outputFormat>
+											</ice:dataPaginator>
+										</ice:panelGroup>
+									</td>
+								</tr>
+								<tr height="10px"><td></td></tr>
+								<tr>
+									<td align="center">
+										<ice:panelGrid columns="1" style="text-align: center;" width="1150px">
+											<ice:outputLabel value="No Role has been configured. Click on the plus icon (+) to add Roles."
+															 rendered="#{!roleBean.listRendered}"/>
+										</ice:panelGrid>
+										<ice:panelGroup rendered="#{roleBean.listRendered}">
+									    	<ice:dataTable id="roleSelection"
+									    		  	    value="#{roleBean.roleItems}"
+									                	var="roleItem"
+									                	sortColumn="#{roleBean.sortColumnName}"	
+														sortAscending="#{roleBean.ascending}"
+									                	cellpadding="0"
+									                	rows="#{roleBean.rowsByPage}"
+									                	columnWidths="20, 525, 525, 40">	
+													<ice:column>													
+														<f:facet name="header">
+													       	<ice:selectBooleanCheckbox value="#{roleBean.selectAll}" 
+													       							   valueChangeListener="#{roleBean.handleSelectAllRoles}"	
+													       							   partialSubmit="true"
+													       							   style="text-align: center;"/>
+														</f:facet>
+												       	<ice:selectBooleanCheckbox value="#{roleItem.selected}" 
+												       							   valueChangeListener="#{roleBean.handleSelectedRole}"	
+												       							   partialSubmit="true"
+												       							   style="text-align: center;">
+												       		<f:attribute name="RoleItem" value="#{roleItem}"/> 							   
+												       	</ice:selectBooleanCheckbox>
+													</ice:column>
+									        		<ice:column>
+									        			<!-- <ice:rowSelector value="#{roleItem.selected}"
+											                         selectionListener="#{roleBean.rowSelectionListener}"
+											                         preStyleOnSelection="true"
+											                         selectedClass="tableRowSelSelected"
+																	 mouseOverClass="tableRowSelMouseOver"
+																	 selectedMouseOverClass="tableRowSelSelectedMouseOver"
+																	 enhancedMultiple="true" 
+													               	 styleClass="iceRowSel-Dis"/> -->
+									        			<f:facet name="header">
+									             			<ice:commandSortHeader columnName="#{roleBean.nameColumnName}" arrow="true" >
+											                	<ice:outputText value="#{roleBean.nameColumnName}"/>
+											            	</ice:commandSortHeader>
+									         			</f:facet>
+									         			<ice:panelGroup>
+									         				<ice:outputText value="#{roleItem.role.name}" style="text-align: center;"/>
+									         			</ice:panelGroup>
+									        		</ice:column>
+									        		<ice:column>
+									        			<f:facet name="header">
+									             			<ice:commandSortHeader columnName="#{roleBean.descriptionColumnName}" arrow="true" >
+											                	<ice:outputText value="#{roleBean.descriptionColumnName}"/>
+											            	</ice:commandSortHeader>
+									         			</f:facet>
+									         			<ice:panelGroup>
+									         				<ice:outputText value="#{roleItem.role.description}" style="text-align: center;"/>
+									         			</ice:panelGroup>
+									        		</ice:column>	
+													<ice:column>
+														<f:facet name="header">
+														</f:facet>	
+														<ice:commandButton actionListener="#{roleBean.openUpdateRolePopup}"
+																		   image="/images/IndiKtor2.0/Buttons/editSmall.png"
+																		   title="Edit this role">
+															<f:attribute name="RoleItem" value="#{roleItem}"/>
+														</ice:commandButton>
+														<ice:commandButton panelConfirmation="deleteNoSelectionConfirmPanel"
+																		   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+																		   actionListener="#{roleBean.deleteRole}"
+																		   title="Delete this role"
+																	   	   style="margin-left: 10px;">
+															<f:attribute name="RoleItem" value="#{roleItem}"/>	
+														</ice:commandButton>
+																
+														<ice:panelConfirmation 	id="deleteNoSelectionConfirmPanel"
+																				message="Are you sure to delete this role : #{roleItem.role.name}"
+																				type="normal"
+																				acceptLabel="Delete"
+																				rendered="true"
+																				autoCentre="true"/>							
+													</ice:column>
+									     	</ice:dataTable>
+								     	</ice:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<ice:panelGroup style="float:center;"
+														visible="#{roleBean.paginationVisible}"
+														rendered="#{roleBean.listRendered}">
+											<center>
+												<ice:dataPaginator id="roleSelectionScroll_1" for="roleSelection"
+													fastStep="3" paginator="true" paginatorMaxPages="4" actionListener="#{roleBean.pageChangeListener}">
+													<f:facet name="first">
+														<ice:graphicImage id="firstpage_1"
+															url="#{styleBean.imageDirectory}arrow-first.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.firstpage']}" />
+													</f:facet>
+													<f:facet name="last">
+														<ice:graphicImage id="lastpage_1"
+															url="#{styleBean.imageDirectory}arrow-last.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.lastpage']}" />
+													</f:facet>
+													<f:facet name="previous">
+														<ice:graphicImage id="previouspage_1"
+															url="#{styleBean.imageDirectory}arrow-previous.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.previouspage']}" />
+													</f:facet>
+													<f:facet name="next">
+														<ice:graphicImage id="nextpage_1"
+															url="#{styleBean.imageDirectory}arrow-next.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.nextpage']}" />
+													</f:facet>
+													<f:facet name="fastforward">
+														<ice:graphicImage id="fastforward_1"
+															url="#{styleBean.imageDirectory}arrow-ff.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastforward']}" />
+													</f:facet>
+													<f:facet name="fastrewind">
+														<ice:graphicImage id="fastrewind_1"
+															url="#{styleBean.imageDirectory}arrow-fr.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastbackward']}" />
+													</f:facet>
+												</ice:dataPaginator>
+											</center>
+										</ice:panelGroup>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table> 	
+			</td>
+		</tr>
+	</table>		
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{roleBean.rendererCreateNewRole}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputText style="float: left;" value="#{roleBean.role.id > 0 ? 'Modfy Role' : 'Create new Role'}"/></td>
+		       			<td><ice:commandButton style="float: right;" 
+		       								   actionListener="#{roleBean.closeCreateNewRolePopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>		       				
+							<ice:commandButton style="float: right;"
+		       								   actionListener="#{roleBean.validate}" 
+											   value="Save" 
+											   title="Save"
+											   styleClass="iconPopup"
+											   image="/images/IndiKtor2.0/Buttons/saveSmall.png"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+	    	  <ice:panelGrid id="UpdateRole">
+				<ui:include src="/jsp/security/updateRole.jspx"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+	
+</ice:form>
+<ui:include src="/jsp/util/errorMessage.jspx"/>
+</ice:panelGrid>
+</ice:panelGrid>
+</ui:define>
+</ui:composition>

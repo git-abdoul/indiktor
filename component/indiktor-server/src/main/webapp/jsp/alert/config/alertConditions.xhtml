@@ -1,0 +1,139 @@
+<f:subview id="alertConditions" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component"> 
+          
+<ice:form>
+	<table id="pageAlertDefinitionFull">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft">
+							<div class="topMenuBarLeftAB2">
+									<ice:commandButton
+										image="/images/IndiKtor2.0/Content/AlertBoardOFF.png"
+										title="Board" value="#{alertCenterBean.menus['alertBoard']}"
+										actionListener="#{alertCenterBean.navigate}">
+										<f:attribute name="to" value="alertBoard" />
+									</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftAD2">
+									<ice:commandButton
+										image="/images/IndiKtor2.0/Content/AlertDefinitionON.png"
+										title="Definition"
+										value="#{alertCenterBean.menus['alertDefinitionList']}"
+										actionListener="#{alertCenterBean.navigate}">
+										<f:attribute name="to" value="alertDefinitionList" />
+									</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>										
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/save.png"
+														   title="Save"
+														   value="Save"
+														   actionListener="#{alertCenterBean.checkAlertValidity}">
+											<f:attribute name="currentAction" value="alertDefinitionConditions"/>
+											<f:attribute name="nextAction" value="alertDefinitionConfig"/>		   
+										</ice:commandButton>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+												   		   image="/images/IndiKtor2.0/Buttons/cancel.png"
+														   title="Cancel"
+														   value="Cancel"
+														   actionListener="#{alertCenterBean.navigate}">
+											<f:attribute name="to" value="alertDefinitionConfig"/> 
+											<f:attribute name="isNew" value="false"/> 
+										</ice:commandButton>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+														   title="Help" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td width="10px"></td>
+						<td class="alertConditionLeft">
+							<table class="alertProperties">
+								<tr>
+									<td>
+										<ice:panelGroup>
+											<ui:include src="/jsp/ikrComponent/metricSelector.xhtml/>
+										</ice:panelGroup>
+									</td>
+								</tr>
+							</table>
+						</td>				
+						<td class="alertConditionRight">
+							<ice:panelGroup scrollHeight="500px" scrollWidth="670px">
+								<table border="1" frame="box" rules="rows" cellpadding="10" width="650px">
+									<tr bgcolor="#7bb7cf" style="font-size: 11px; font-weight: bold">
+										<td width="50px"></td>
+										<td width="200px"><ice:outputLabel value="Metric Description"/></td>
+										<td width="150px"><ice:outputLabel value="Operator"/></td>
+										<td width="200px"><ice:outputLabel value="Condition Value"/></td>
+									</tr>
+									<ui:repeat var="conditionBean" value="#{alertDefinitionModificationBean.alertConditionBeans}">
+										<tr valign="middle">
+											<td align="center">
+												<ice:commandLink value="(-)"
+													     			 actionListener="#{alertDefinitionModificationBean.removeCondition}"
+													     			 title="Remove this Condition">
+												     <f:attribute name="obj" value="#{conditionBean}"/>
+												</ice:commandLink>
+												<ice:commandLink value="(+)"
+													     			 actionListener="#{alertDefinitionModificationBean.duplicateCondition}" 
+													     			 title="Duplicate this Condition" >
+												     <f:attribute name="obj" value="#{conditionBean}"/>
+												</ice:commandLink>
+												<ice:outputText value="&#160;&#160;&#160;&#160;"/>	
+											</td>	
+											<td>
+												<ice:outputText id="linkHeader" value="#{conditionBean.ikrMetricLabel} (#{conditionBean.ikrCategory.label})" style="font-size: 10px;"/>
+												<ice:outputText value="&#160;&#160;"/>
+											</td>
+											<td>
+												<ice:selectOneMenu value="#{conditionBean.operator}" style="width:140px; font-size: 10px;">
+													<f:selectItems value="#{conditionBean.operators}"/>
+												</ice:selectOneMenu>
+											</td>
+											<td>
+												<ice:inputText  value="#{conditionBean.value}" 
+																valueChangeListener="#{conditionBean.updateValue}" 
+																partialSubmit="true" style="font-size: 10px;"/>
+												<ice:selectOneMenu value="#{conditionBean.unit}" 
+																   rendered="#{conditionBean.unitsRendered}"
+																   valueChangeListener="#{conditionBean.updateUnit}"
+																   partialSubmit="true" style="font-size: 10px;">
+													<f:selectItems value="#{conditionBean.units}"/>
+												</ice:selectOneMenu>
+											</td>
+										</tr>
+									</ui:repeat>
+								</table>
+							</ice:panelGroup>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</ice:form>
+</f:subview>

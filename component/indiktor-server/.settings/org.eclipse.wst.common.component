@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+	<wb-module deploy-name="IndiktorServer">
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/alertBoard"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/jaxme"/>
+<wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/icefaces-patches"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/distrib/jaxme/java"/>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/compute-server/compute-server">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/publisher/publisher">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/persistency/persistency">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/foundation/foundation">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/framework-base/framework-base">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+		<property name="java-output-path"/>
+<property name="context-root" value="indiktor"/>
+	</wb-module>
+</project-modules>

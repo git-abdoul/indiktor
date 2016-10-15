@@ -1,0 +1,58 @@
+<f:subview id="DefinitionChartConfig" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+        
+        <ice:panelGrid columns="2" style="margin: 0px; padding: 0px; text-align: center;">
+        	<ice:panelGroup style="border: 1px solid #336699; width: 545px; height: 520px;"
+        					rendered="#{dashboardSelectMainConfigBean.addMetricPanelVisible}"
+        					scrollHeight="555" scrollWidth="615px">
+				<ice:commandButton image="/images/i/cal_off.gif"
+								   style="float: right; margin-right: 2px; margin-top: 2px;"
+								   actionListener="#{dashboardSelectMainConfigBean.closeAddPanel}"
+								   title="Close panel"/>
+				<ui:include src="/jsp/ikrComponent/metricSelector.jspx"/>
+			</ice:panelGroup>
+			<ice:panelGrid columns="1">
+				<ice:panelGroup style="text-align: center; border: 1px solid #336699; width: 475px; height: 165px;">
+					<ice:panelGrid columns="2">
+						<ice:outputLabel value="Chart Title:"/>
+						<ice:inputText size="50" value="#{definitionChartConfigBean.definitionChart.title}" style="#{definitionChartConfigBean.chartTitleStyle}"/>
+						<ice:outputLabel value="" rendered="#{definitionChartConfigBean.errorDefinitionChartTitleVisible}"/>
+						<ice:outputLabel value="Mandatory" style="color: red; font-size: 10px;"
+			 							 rendered="#{definitionChartConfigBean.errorDefinitionChartTitleVisible}"/>
+						<ice:outputLabel value="" rendered="#{dashboardSelectMainConfigBean.titleAlreadyExists}"/>
+						<ice:outputLabel value="Title already exists! Please, choose another title." style="color: red; font-size: 10px;"
+			 							 rendered="#{dashboardSelectMainConfigBean.titleAlreadyExists}"/>
+						<ice:outputLabel value="Height:"/>
+						<ice:inputText size="50" value="#{definitionChartConfigBean.definitionChart.height}" />
+						<ice:outputLabel value="Width:"/>
+						<ice:inputText size="50" value="#{definitionChartConfigBean.definitionChart.width}" />
+						<ice:outputLabel value="Max Slot (Minutes):" rendered="#{definitionChartConfigBean.renderedMaxTimeSlot}"/>
+						<!-- <ice:inputText size="50" valueChangeListener="#{definitionChartConfigBean.maxSlotValueChanged}" value="#{definitionChartConfigBean.maxSlot}" rendered="#{definitionChartConfigBean.renderedMaxTimeSlot}"/> -->
+						<ice:inputText size="50" value="#{definitionChartConfigBean.definitionChart.maxSlot}" rendered="#{definitionChartConfigBean.renderedMaxTimeSlot}"/>
+						<ice:outputLabel value="Chart Type:"/>
+						<ice:selectOneMenu value="#{definitionChartConfigBean.definitionChart.type}"
+										   valueChangeListener="#{definitionChartConfigBean.onChangeChartTypeSelected}"
+										   partialSubmit="true">
+							<f:selectItems value="#{definitionChartConfigBean.typeItems}"/>
+						</ice:selectOneMenu>
+					</ice:panelGrid>
+				</ice:panelGroup>
+				<ice:panelGroup style="#{definitionChartConfigBean.chartPanelStyle}" rendered="#{definitionChartConfigBean.listRenderer}">
+					<ui:include src="/jsp/ikrComponent/ikrSelectorDataTableSelection.jspx"/>
+				</ice:panelGroup>
+				<ice:panelGroup style="#{definitionChartConfigBean.chartPanelStyle}" rendered="#{!definitionChartConfigBean.listRenderer}">
+					<ice:outputLabel value="No metrics has been configured. Click on the "/>
+					<ice:graphicImage url="/images/IndiKtor2.0/Buttons/expandPanelSmall.png"/>
+					<ice:outputLabel value=" icon to add metrics"/>
+					<BR/><BR/>
+					<ice:outputText value="Definition list cannot be empty"
+							  		rendered="#{definitionChartConfigBean.errorDefinitionlistVisible}"
+							  		style="color: red;"/>
+				</ice:panelGroup>	
+			</ice:panelGrid>
+			
+        </ice:panelGrid>  	
+</f:subview>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<DEFAULT_ALERT_DEFS>
+
+	<ALERT_DEF type="JAVA_PROCESS" name="%JAVA_PROCESS_NAME% - Risk Of Out Of Memory" group="PROCESS" domain="LOW PERFORMANCE" subDomain="LOW PERFORMANCE" active="true" description="%JAVA_PROCESS_NAME% - Risk Of Out Of Memory">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="COMPUTED - Heap Memory Ratio" ikrInstance="%JAVA_PROCESS_NAME%" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" value="70" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="COMPUTED - Heap Memory Ratio" ikrInstance="%JAVA_PROCESS_NAME%" context="COMPUTED" compute="RT" operator="LESS_THAN" value="85" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="COMPUTED - Heap Memory Ratio" ikrInstance="%JAVA_PROCESS_NAME%" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="85" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="COMPUTED - Heap Memory Ratio" ikrInstance="%JAVA_PROCESS_NAME%" context="COMPUTED" compute="RT" operator="LESS_THAN" value="95" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="COMPUTED - Heap Memory Ratio" ikrInstance="%JAVA_PROCESS_NAME%" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="95" active="true"/>			
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="JAVA_PROCESS" name="%JAVA_PROCESS_NAME% - Thread Deadlock detected" group="PROCESS" domain="DEADLOCK" subDomain="DEADLOCK" active="true" description="%JAVA_PROCESS_NAME% - Thread Deadlock detected">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="Thread Deadlock" ikrInstance="%JAVA_PROCESS_NAME%" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" value="1" unitType="NUMBER" unit="NUMBER" active="true"/>			
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="3" cause="C1" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="SYSTEM_PROCESS" name="%PROCESS_NAME% - Cpu Usage Issue" group="PROCESS" domain="LOW PERFORMANCE" subDomain="LOW PERFORMANCE" active="true" description="%PROCESS_NAME% - Cpu Usage Issue">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="Process Cpu Usage" ikrInstance="%INSTANCE_NAME%" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" value="30" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="Process Cpu Usage" ikrInstance="%INSTANCE_NAME%" context="%CONTEXT1%" compute="RT" operator="LESS_THAN" value="55" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="Process Cpu Usage" ikrInstance="%INSTANCE_NAME%" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="55" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="Process Cpu Usage" ikrInstance="%INSTANCE_NAME%" context="%CONTEXT1%" compute="RT" operator="LESS_THAN" value="85" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="Process Cpu Usage" ikrInstance="%INSTANCE_NAME%" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="85" active="true"/>			
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="SYSTEM_PROCESS" name="%PROCESS_NAME% - Memory Usage Issue" group="PROCESS" domain="LOW PERFORMANCE" subDomain="LOW PERFORMANCE" active="true" description="%PROCESS_NAME% - Memory Usage Issue">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="Process Memory Used" ikrInstance="%INSTANCE_NAME%" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" value="100" unitType="STORAGE" unit="MEGABYTE" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="Process Memory Used" ikrInstance="%INSTANCE_NAME%" context="%CONTEXT1%" compute="RT" operator="LESS_THAN" value="150" unitType="STORAGE" unit="MEGABYTE" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="Process Memory Used" ikrInstance="%INSTANCE_NAME%" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="STORAGE" unit="MEGABYTE" value="150" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="Process Memory Used" ikrInstance="%INSTANCE_NAME%" context="%CONTEXT1%" compute="RT" operator="LESS_THAN" value="250" unitType="STORAGE" unit="MEGABYTE" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="Process Memory Used" ikrInstance="%INSTANCE_NAME%" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="STORAGE" unit="MEGABYTE" value="250" active="true"/>			
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="SYSTEM_PROCESS" name="%PROCESS_NAME% - Availability" group="PROCESS" domain="AVAILABILITY" subDomain="AVAILABILITY" active="true" description="%PROCESS_NAME% - Availability">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="Process Availability" ikrInstance="%INSTANCE_NAME%" context="%CONTEXT1%" compute="RT" operator="EQUAL_TO" value="false" unitType="BOOLEAN" unit="BOOLEAN" active="true"/>			
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="100" cause="C1" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="CALYPSO_DS_CACHE" name="DataServer - %CACHE_NAME% Cache Issue" group="CALYPSO" domain="DATASERVER" subDomain="CACHE" active="true" description="DataServer - %CACHE_NAME% Cache Issue">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="COMPUTED - Cache Count Ratio"	ikrInstance="Cache[%CACHE_NAME%]" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="20" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="COMPUTED - Cache Count Ratio"	ikrInstance="Cache[%CACHE_NAME%]" context="COMPUTED" compute="RT" operator="LESS_THAN" value="35" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="COMPUTED - Cache Count Ratio"	ikrInstance="Cache[%CACHE_NAME%]" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="65" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="COMPUTED - Cache Count Ratio"	ikrInstance="Cache[%CACHE_NAME%]" context="COMPUTED" compute="RT" operator="LESS_THAN" value="80" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="COMPUTED - Cache Count Ratio"	ikrInstance="Cache[%CACHE_NAME%]" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="10" active="true"/>
+			<CONDITION id="6" 	ikrCategoryValue="COMPUTED - Cache Count Ratio"	ikrInstance="Cache[%CACHE_NAME%]" context="COMPUTED" compute="RT" operator="LESS_THAN" value="20" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="7" 	ikrCategoryValue="COMPUTED - Cache Count Ratio"	ikrInstance="Cache[%CACHE_NAME%]" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="80" active="true"/>
+			<CONDITION id="8" 	ikrCategoryValue="COMPUTED - Cache Count Ratio"	ikrInstance="Cache[%CACHE_NAME%]" context="COMPUTED" compute="RT" operator="LESS_THAN" value="90" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="9" 	ikrCategoryValue="COMPUTED - Cache Count Ratio"	ikrInstance="Cache[%CACHE_NAME%]" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="0" active="true"/>
+			<CONDITION id="10" 	ikrCategoryValue="COMPUTED - Cache Count Ratio"	ikrInstance="Cache[%CACHE_NAME%]" context="COMPUTED" compute="RT" operator="LESS_THAN" value="10" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="11" 	ikrCategoryValue="COMPUTED - Cache Count Ratio"	ikrInstance="Cache[%CACHE_NAME%]" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="90" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="(C1 AND C2) OR (C3 AND C4)" active="true"/>
+			<COMPUTE severity="2" cause="(C5 AND C6) OR (C7 AND C8)" active="true"/>
+			<COMPUTE severity="3" cause="(C9 AND C10) OR C11" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="CALYPSO_DATASERVER" name="DataServer is on Batch Mode" group="CALYPSO" domain="DATASERVER" subDomain="EVENT POOL BUFFER" active="true" description="DataServer is on Batch Mode">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="DS Event Buffer Count"		ikrInstance="dataserver" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN" unitType="NUMBER" unit="NUMBER" value="1500" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="DS Event Buffer Limit"	ikrInstance="dataserver" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN" unitType="NUMBER" unit="NUMBER" value="0" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="3" cause="C1 AND C2" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="CALYPSO_DATASERVER" name="DataServer - DB Connections Used Too high" group="CALYPSO" domain="DATASERVER" subDomain="CONNECTIONS OVERLOAD" active="true" description="DataServer - DB Connections Used Too high">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="COMPUTED - DS Used Db Connections Ratio"	ikrInstance="dataserver" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="20" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="COMPUTED - DS Used Db Connections Ratio"	ikrInstance="dataserver" context="COMPUTED" compute="RT" operator="LESS_THAN" value="50" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="COMPUTED - DS Used Db Connections Ratio"	ikrInstance="dataserver" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="50" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="COMPUTED - DS Used Db Connections Ratio"	ikrInstance="dataserver" context="COMPUTED" compute="RT" operator="LESS_THAN" value="85" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="COMPUTED - DS Used Db Connections Ratio"	ikrInstance="dataserver" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="85" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="CALYPSO_DATASERVER" name="DataServer - Number Of Connected Clients Too high" group="CALYPSO" domain="DATASERVER" subDomain="CONNECTIONS OVERLOAD" active="true" description="DataServer - Number Of Connected Clients Too high">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="DS Connected Clients"	ikrInstance="dataserver" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" value="12" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="DS Connected Clients"	ikrInstance="dataserver" context="%CONTEXT1%" compute="RT" operator="LESS_THAN" value="24" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="DS Connected Clients"	ikrInstance="dataserver" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" value="24" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="DS Connected Clients"	ikrInstance="dataserver" context="%CONTEXT1%" compute="RT" operator="LESS_THAN" value="48" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="DS Connected Clients"	ikrInstance="dataserver" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" value="48" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="CALYPSO_DATASERVER" name="DataServer - Event Pool Count Too Big" group="CALYPSO" domain="DATASERVER" subDomain="EVENT POOL BUFFER" active="true" description="DataServer - Event Pool Count Too Big">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="COMPUTED - DS Event Buffer Ratio"	ikrInstance="dataserver" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="20" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="COMPUTED - DS Event Buffer Ratio"	ikrInstance="dataserver" context="COMPUTED" compute="RT" operator="LESS_THAN" value="45" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="COMPUTED - DS Event Buffer Ratio"	ikrInstance="dataserver" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="45" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="COMPUTED - DS Event Buffer Ratio"	ikrInstance="dataserver" context="COMPUTED" compute="RT" operator="LESS_THAN" value="75" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="COMPUTED - DS Event Buffer Ratio"	ikrInstance="dataserver" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="75" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="CALYPSO_EVENTSERVER" name="EventServer - Event Pool Count Too Big" group="CALYPSO" domain="EVENTSERVER" subDomain="EVENT POOL BUFFER" active="true" description="EventServer - Event Pool Count Too Big">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="COMPUTED - EventServer Pool Ratio"	ikrInstance="eventserver" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="50" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="COMPUTED - EventServer Pool Ratio"	ikrInstance="eventserver" context="COMPUTED" compute="RT" operator="LESS_THAN" value="75" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="COMPUTED - EventServer Pool Ratio"	ikrInstance="eventserver" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="75" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="COMPUTED - EventServer Pool Ratio"	ikrInstance="eventserver" context="COMPUTED" compute="RT" operator="LESS_THAN" value="90" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="COMPUTED - EventServer Pool Ratio"	ikrInstance="eventserver" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="90" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="CALYPSO_ENGINE" name="%ENGINE_NAME% is on Batch Mode " group="CALYPSO" domain="ENGINE" subDomain="BATCH MODE" active="true" description="%ENGINE_NAME% is on Batch Mode">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="Engine EventPool Count"	ikrInstance="%ENGINE_NAME%" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN" unitType="NUMBER" unit="NUMBER" value="1500" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="Engine EventPool Limit"	ikrInstance="%ENGINE_NAME%" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN" unitType="NUMBER" unit="NUMBER" value="0" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="3" cause="C1 AND C2" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="CALYPSO_ENGINE" name="%ENGINE_NAME% - Pool Count Too Big" group="CALYPSO" domain="ENGINE" subDomain="EVENT POOL BUFFER" active="true" description="%ENGINE_NAME% - Pool Count Too Big">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="COMPUTED - Engine Pool Ratio"	ikrInstance="%ENGINE_NAME%" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="50" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="COMPUTED - Engine Pool Ratio"	ikrInstance="%ENGINE_NAME%" context="COMPUTED" compute="RT" operator="LESS_THAN" value="75" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="COMPUTED - Engine Pool Ratio"	ikrInstance="%ENGINE_NAME%" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="75" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="COMPUTED - Engine Pool Ratio"	ikrInstance="%ENGINE_NAME%" context="COMPUTED" compute="RT" operator="LESS_THAN" value="90" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="COMPUTED - Engine Pool Ratio"	ikrInstance="%ENGINE_NAME%" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="90" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="CALYPSO_ENGINE" name="%ENGINE_NAME% - Stuck Events Too High" group="CALYPSO" domain="ENGINE" subDomain="STUCK EVENTS" active="true" description="%ENGINE_NAME% - Stuck Events Too High">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="COMPUTED - Engine Unconsumed Events Ratio"	ikrInstance="%ENGINE_NAME%" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="20" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="COMPUTED - Engine Unconsumed Events Ratio"	ikrInstance="%ENGINE_NAME%" context="COMPUTED" compute="RT" operator="LESS_THAN" value="50" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="COMPUTED - Engine Unconsumed Events Ratio"	ikrInstance="%ENGINE_NAME%" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="50" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="COMPUTED - Engine Unconsumed Events Ratio"	ikrInstance="%ENGINE_NAME%" context="COMPUTED" compute="RT" operator="LESS_THAN" value="85" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="COMPUTED - Engine Unconsumed Events Ratio"	ikrInstance="%ENGINE_NAME%" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="85" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="CALYPSO_ENGINE" name="%ENGINE_NAME% is Idle" group="PROCESS" domain="LOW PERFORMANCE" subDomain="LOW PERFORMANCE" active="true" description="%ENGINE_NAME% is Idle">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="COMPUTED - Engine Unconsumed Events Ratio"	ikrInstance="%ENGINE_NAME%" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="20" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="COMPUTED - Threads Type Status Ratio"	ikrInstance="%ENGINE_NAME%[EngineThread,RUNNABLE]" context="COMPUTED" compute="RT" operator="LESS_THAN" unitType="RATE" unit="PERCENT" value="50" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="COMPUTED - Threads Type Status Ratio"	ikrInstance="%ENGINE_NAME%[BatchThread,RUNNABLE]" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="50" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="3" cause="(C1 AND C2) OR (C1 AND C3)" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="TRANSACTION" name="%CONTEXT1% - Pending Trades" group="TRADE PROCESSING" domain="TRADE PROCESSING" subDomain="TRADE" active="true" description="%CONTEXT1% - Pending Trades">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="COMPUTED - Trade Count Ratio"	ikrInstance="Trade[PENDING]" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="2" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="COMPUTED - Trade Count Ratio"	ikrInstance="Trade[PENDING]" context="COMPUTED" compute="RT" operator="LESS_THAN" value="10" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="COMPUTED - Trade Count Ratio"	ikrInstance="Trade[PENDING]" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="10" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="COMPUTED - Trade Count Ratio"	ikrInstance="Trade[PENDING]" context="COMPUTED" compute="RT" operator="LESS_THAN" value="30" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="COMPUTED - Trade Count Ratio"	ikrInstance="Trade[PENDING]" context="COMPUTED" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="30" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="CALYPSO_QUEUE" name="%ENGINE_NAME% - %EVENT_CLASS% stuck in queue for more than %PENDING_TIME% minutes" group="CALYPSO" domain="ENGINE" subDomain="STUCK EVENTS" active="true" description="%ENGINE_NAME% - %EVENT_CLASS% stuck in queue for more than %PENDING_TIME% minutes">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="Unconsumed Events Pending Time" ikrInstance="%ENGINE_NAME%[%EVENT_CLASS%]" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="DURATION" unit="MINUTE" value="%PENDING_TIME%" active="true"/>
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="3" cause="C1" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="SYSTEM" name="%HOSTNAME% - Cpu Usage Issue" group="SYSTEM" domain="LOW PERFORMANCE" subDomain="LOW PERFORMANCE" active="true" description="%HOSTNAME% - Cpu Usage Issue">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="Server Cpu Usage" ikrInstance="cpu[total]" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" value="30" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="Server Cpu Usage" ikrInstance="cpu[total]" context="%CONTEXT1%" compute="RT" operator="LESS_THAN" value="55" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="Server Cpu Usage" ikrInstance="cpu[total]" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="55" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="Server Cpu Usage" ikrInstance="cpu[total]" context="%CONTEXT1%" compute="RT" operator="LESS_THAN" value="85" unitType="RATE" unit="PERCENT" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="Server Cpu Usage" ikrInstance="cpu[total]" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="RATE" unit="PERCENT" value="85" active="true"/>			
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+	<ALERT_DEF type="SYSTEM" name="%HOSTNAME% - Memory Usage Issue" group="SYSTEM" domain="LOW PERFORMANCE" subDomain="LOW PERFORMANCE" active="true" description="%HOSTNAME% - Memory Usage Issue">
+		<CONDITIONS>
+			<CONDITION id="1" 	ikrCategoryValue="Server Memory Used" ikrInstance="memory" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" value="100" unitType="STORAGE" unit="MEGABYTE" active="true"/>
+			<CONDITION id="2" 	ikrCategoryValue="Server Memory Used" ikrInstance="memory" context="%CONTEXT1%" compute="RT" operator="LESS_THAN" value="150" unitType="STORAGE" unit="MEGABYTE" active="true"/>
+			<CONDITION id="3" 	ikrCategoryValue="Server Memory Used" ikrInstance="memory" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="STORAGE" unit="MEGABYTE" value="150" active="true"/>
+			<CONDITION id="4" 	ikrCategoryValue="Server Memory Used" ikrInstance="memory" context="%CONTEXT1%" compute="RT" operator="LESS_THAN" value="250" unitType="STORAGE" unit="MEGABYTE" active="true"/>
+			<CONDITION id="5" 	ikrCategoryValue="Server Memory Used" ikrInstance="memory" context="%CONTEXT1%" compute="RT" operator="GREATER_THAN_OR_EQUAL_TO" unitType="STORAGE" unit="MEGABYTE" value="250" active="true"/>			
+		</CONDITIONS>
+		<COMPUTES>
+			<COMPUTE severity="1" cause="C1 AND C2" active="true"/>
+			<COMPUTE severity="2" cause="C3 AND C4" active="true"/>
+			<COMPUTE severity="3" cause="C5" active="true"/>
+		</COMPUTES>
+	</ALERT_DEF>
+	
+</DEFAULT_ALERT_DEFS>

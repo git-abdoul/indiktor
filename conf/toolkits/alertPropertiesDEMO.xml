@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<DEFAULT_ALERT_PROPS>
+
+	<ALERT_PROP type="JAVA_PROCESS">		
+		<ALERT_VAR_DEF>
+			<VAR name="JAVA_PROCESS_NAME" value="DataServer"/>
+			<VAR name="CONTEXT1" value="DataServer JVM Activity"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="JAVA_PROCESS_NAME" value="EventServer"/>
+			<VAR name="CONTEXT1" value="EventServer JVM Activity"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="JAVA_PROCESS_NAME" value="MessageEngine"/>
+			<VAR name="CONTEXT1" value="MessageEngine JVM Activity"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="JAVA_PROCESS_NAME" value="AccountingEngine"/>
+			<VAR name="CONTEXT1" value="AccountingEngine JVM Activity"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="JAVA_PROCESS_NAME" value="TransferEngine"/>
+			<VAR name="CONTEXT1" value="TransferEngine JVM Activity"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="JAVA_PROCESS_NAME" value="TaskEngine"/>
+			<VAR name="CONTEXT1" value="TaskEngine JVM Activity"/>
+		</ALERT_VAR_DEF>
+	</ALERT_PROP>
+	
+	<ALERT_PROP type="SYSTEM_PROCESS">
+		<ALERT_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="DataServer"/>
+			<VAR name="INSTANCE_NAME" value="StartDataServer"/>
+			<VAR name="CONTEXT1" value="Calypso Processes @ petrus"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="EventServer"/>
+			<VAR name="INSTANCE_NAME" value="StartEventServer"/>
+			<VAR name="CONTEXT1" value="Calypso Processes @ petrus"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="MessageEngine"/>
+			<VAR name="INSTANCE_NAME" value="StartMessageEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Processes @ petrus"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="AccountingEngine"/>
+			<VAR name="INSTANCE_NAME" value="StartAccountingEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Processes @ petrus"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="TransferEngine"/>
+			<VAR name="INSTANCE_NAME" value="StartTransferEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Processes @ petrus"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="TaskEngine"/>
+			<VAR name="INSTANCE_NAME" value="StartTaskEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Processes @ petrus"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="LiquidationEngine"/>
+			<VAR name="INSTANCE_NAME" value="StartLiquidationEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Processes @ petrus"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="PositionEngine"/>
+			<VAR name="INSTANCE_NAME" value="StartPositionEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Processes @ petrus"/>
+		</ALERT_VAR_DEF>
+	</ALERT_PROP>
+	
+	<ALERT_PROP type="CALYPSO_DS_CACHE">
+		<ALERT_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Trade"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Transfer"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Message"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Posting"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Global"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Task"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Product"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+	</ALERT_PROP>
+	
+	<ALERT_PROP type="CALYPSO_DATASERVER">
+		<ALERT_VAR_DEF>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+	</ALERT_PROP>
+	
+	<ALERT_PROP type="CALYPSO_EVENTSERVER">
+		<ALERT_VAR_DEF>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+	</ALERT_PROP>
+	
+	<ALERT_PROP type="CALYPSO_ENGINE">
+		<ALERT_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="MessageEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+			<VAR name="CONTEXT2" value="JVM - MessageEngine"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="AccountingEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+			<VAR name="CONTEXT2" value="JVM - AccountingEngine"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="TransferEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+			<VAR name="CONTEXT2" value="JVM - TransferEngine"/>
+		</ALERT_VAR_DEF>
+	</ALERT_PROP>
+	
+	<ALERT_PROP type="CALYPSO_QUEUE">
+		<ALERT_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="TransferEngine"/>
+			<VAR name="EVENT_CLASS" value="PSEventTrade"/>
+			<VAR name="PENDING_TIME" value="60"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+		<ALERT_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="TransferEngine"/>
+			<VAR name="EVENT_CLASS" value="PSEventMessage"/>
+			<VAR name="PENDING_TIME" value="60"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+	</ALERT_PROP>
+	
+	<ALERT_PROP type="TRANSACTION">
+		<ALERT_VAR_DEF>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</ALERT_VAR_DEF>
+	</ALERT_PROP>
+	
+	<ALERT_PROP type="SYSTEM">
+		<ALERT_VAR_DEF>
+			<VAR name="HOSTNAME" value="petrus"/>
+			<VAR name="CONTEXT1" value="Server Activity @ petrus"/>
+		</ALERT_VAR_DEF>
+	</ALERT_PROP>
+
+</DEFAULT_ALERT_PROPS>

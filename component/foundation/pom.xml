@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<project>
+	<parent>
+		<groupId>indiktor</groupId>
+		<artifactId>indiktor-suite</artifactId>
+		<version>1.5.3</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>foundation</artifactId>
+	<name>Foundation Component</name>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>  
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<path id="distrib.dir">
+									<pathelement location="../../"/>
+								</path>				
+								<pathconvert property="distribDir" refid="distrib.dir"/>								
+								<copy file="${basedir}\distrib\${project.artifactId}-${project.version}.jar" todir="${distribDir}\ikr-lib" overwrite="true"/>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>  
+ 
+	<dependencies>  
+		<dependency>
+			<groupId>indiktor</groupId>
+			<artifactId>framework-base</artifactId>
+			<version>${project.version}</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.0.1</version>
+			<scope>compile</scope>
+		</dependency>  	  	
+		<dependency>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>2.0</version>
+		</dependency>		
+	</dependencies>
+</project>

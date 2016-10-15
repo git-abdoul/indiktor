@@ -1,0 +1,113 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.xhtml
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+<ui:param name="pageTitle" value="Default Monitors Setup" />
+<ui:define name="content">
+	<ice:form>
+		<ice:panelGrid columns="1" cellspacing="10" columnClasses="colVTop,colVTop">
+			<ice:panelGroup>
+				<table border="1px" bordercolor="#336699" width="100%">
+					<tr bgcolor="#336699" height="30px">
+						<th align="left">
+							<ice:outputLabel value="Download Monitors Configuration Template File" style="font-size: 12px; color: #FFF; font-weight: bold;"/>
+						</th>				
+					</tr>
+					<tr bordercolor="#FFFFFF" align="center">
+						<td>
+							<br/>	
+							<ice:outputResource 
+									label="Download"
+									resource="#{defaultMonitorBean.resource}" 
+					                mimeType="application/vnd.ms-excel"
+					                fileName="#{defaultMonitorBean.filename}"
+					                attachment="true"
+					                type="button"/>
+						</td>
+					</tr>
+				</table>
+			</ice:panelGroup>
+			<ice:panelGroup>
+				<table  border="1px" bordercolor="#336699" width="100%">
+					<tr bgcolor="#336699" height="30px">
+						<th align="left">
+							<ice:outputLabel value="Setup Default Monitors" style="font-size: 12px; color: #FFF; font-weight: bold;"/>
+						</th>				
+					</tr>
+					<tr bordercolor="#FFFFFF">
+						<td align="left">
+							<br/>
+							<ice:panelGrid>	
+								<ice:outputLabel value="Upload Excel Configuration file" />
+								<ice:inputFile label="Upload"
+							        			width="600"
+							        			progressListener="#{defaultMonitorBean.fileUploadProgress}"
+							               		actionListener="#{defaultMonitorBean.uploadFile}"
+							               		action="#{defaultMonitorBean.action}"/>
+						         <ice:message  for="inputFileComponent" />
+						         <ice:outputProgress value="#{defaultMonitorBean.fileProgress}"/>
+	                    	</ice:panelGrid>	
+						</td>
+					</tr>
+					<tr bordercolor="#FFFFFF">
+						<td align="left">
+							<br/>
+							<ice:panelGrid columns="1">
+								<ice:outputLabel value="Setup Monitors" />
+								<ice:panelGrid columns="2">
+									<ice:outputLabel value="Monitor Env: "/>
+									<ice:inputText value="#{defaultMonitorBean.monitorEnv}"/>
+									<ice:commandButton
+							       			value="Delete "
+											actionListener="#{defaultMonitorBean.deleteToggleModal}"
+											action="#{defaultMonitorBean.action}"/>
+									<ice:commandButton
+							       			value="Create "
+											actionListener="#{defaultMonitorBean.createToggleModal}"
+											action="#{defaultMonitorBean.action}"/>
+								</ice:panelGrid>								
+							</ice:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</ice:panelGroup>
+		</ice:panelGrid>
+		
+		<ice:panelPopup id="modalPnlPop"
+		            draggable="false" modal="true"
+		            visible="#{defaultMonitorBean.withConfirmation}"
+		            autoCentre="true"
+		            style="width: 300px;">
+	    	<f:facet name="header">
+		     	<ice:panelGroup>
+		     		<ice:panelGrid columns="1" style="align: center;">
+		     			<ice:outputLabel value="Are you sure to #{defaultMonitorBean.whatToDo} #{defaultMonitorBean.monitorEnv} ?"/>
+		     			<ice:outputLabel binding="#{defaultMonitorBean.resetConfirmationOutPut}" value="All previous monitors will be deleted"/>
+		     		</ice:panelGrid> 
+		    	</ice:panelGroup>
+	    	</f:facet>
+	    	<f:facet name="body">
+		        <ice:panelGroup>
+					<table width="100%" border="0">
+						<tr>
+							<td align="center">
+								<ice:commandButton
+											value="Ok"
+				    						actionListener="#{defaultMonitorBean.resetMonitors}"
+				    						action="#{defaultMonitorBean.action}"
+				    						style="width:75px;"/>
+								<ice:commandButton 
+											value="Cancel"
+				         					actionListener="#{defaultMonitorBean.toggleModal}"
+				         					style="width:75px;"/>
+							</td>									
+						</tr>
+					</table>
+		    	</ice:panelGroup>  
+	    	</f:facet>
+		</ice:panelPopup>
+	</ice:form>
+</ui:define>
+</ui:composition>
+

@@ -1,0 +1,107 @@
+.box {
+  border: 1px solid #000000;
+  color: #000000;
+  padding: 0px;
+  position: absolute;
+}
+
+.bar {
+  background-color: #008080;
+  color: #ffffff;
+  cursor: move;
+  font-weight: bold;
+  padding: 2px 1em 2px 1em;
+}
+
+.content {
+
+}
+
+.ikrSelectorCB {
+	text-align: center;
+}
+
+
+.ikrSelectorInstance, .ikrSelectorContext {
+	text-align: left;
+}
+
+.colVTop {
+ 	vertical-align:top;
+}
+ 
+.titiStyle { 
+ 	text-align: center;
+}
+
+.selectedNodetrue { 
+    font-weight: bold;
+}
+
+.alertColor-1 {
+    border-left: 1px solid #d9d9d9;
+}
+
+.alertColor0 {
+    background: green;
+    border-left: 1px solid #d9d9d9;
+}
+
+.alertColor1 {
+    background: yellow;
+    border-left: 1px solid #d9d9d9;
+}
+
+.alertColor2 {
+    background: brown;
+    border-left: 1px solid #d9d9d9;
+}
+
+.alertColor3 {
+    background: red;
+    border-left: 1px solid #d9d9d9;
+}
+
+.ikrCategoryGroupCol {
+    width: 150px;
+    margin: 2px;
+}
+
+.ikrCategoryCol {
+    width: 350px;
+    margin: 2px;
+}
+
+.iceMnuBarSubMenu { /* was iceSubMenu */
+    position: absolute;
+    background-color: #EFEFEF;
+    width: 360px;
+    border-top: 1px solid #999999;
+    border-left: 1px solid #999999;
+    border-bottom: 1px solid #999999;
+    border-right: 1px solid #999999;
+    padding: 1px;
+    height: auto;
+    display: block;
+    z-index: 1000;
+}
+
+/*Colors for BatchBoard*/
+.BatchBoardSUCCESS {
+	background-color: #58ab27;
+}
+.BatchBoardFAILED {
+	background-color: #F06161;
+}
+.BatchBoardIN_PROGRESS {
+	background-color: white;
+}
+.BatchBoardNOT_STARTED {
+	background-color: #EAEAEA;
+}
+.BatchBoardDELAYED {
+	background-color: #f39402;
+}
+.BatchBoardSTATUSNULL {
+	background-color: white;
+}

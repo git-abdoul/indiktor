@@ -1,0 +1,46 @@
+<f:subview id="alertTimeSlot" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">   
+<ice:panelGrid columns="1" width="900" style="text-align: center;" >
+<ice:outputLabel value="Alert TimeSlot" style="font-size: 14px; font-weight: bold"/>
+<HR/>
+<br/>
+<ice:form>
+	<table border="0px" width="100%">
+		<tr>
+			<td align="center">
+				<ice:panelGroup>
+					<table border="1" frame="box" rules="all" cellpadding="10">
+						<tr bgcolor="#7bb7cf" style="font-size: 15px;">
+							<td><ice:outputLabel value="Alert Raising Delay:"/></td>
+							<td>
+								<ice:inputText value="#{alertDefinitionModificationBean.alertDefinition.raisingDelay}" size="40" title="The amount of time in second an alert must be UP before being raised"/>
+								<ice:outputLabel value="&#160;&#160;sec"/>
+							</td>
+						</tr>
+					</table>
+				</ice:panelGroup>
+				<br/><br/>
+			</td>
+		</tr>
+		<tr>
+			<td align="center">
+				<ice:panelGrid columns="2">
+					<ice:commandButton value="Save" 
+								   actionListener="#{alertCenterBean.checkAlertValidity}">
+						<f:attribute name="currentAction" value="alertDefinitionTimeSlot"/>
+						<f:attribute name="nextAction" value="alertDefinitionConfig"/>		   
+					</ice:commandButton>
+					<ice:commandButton value="Cancel" actionListener="#{alertCenterBean.navigate}">
+						<f:attribute name="to" value="alertDefinitionConfig"/> 
+						<f:attribute name="isNew" value="false"/>
+					</ice:commandButton>
+				</ice:panelGrid>
+			</td>
+		</tr>
+	</table>
+</ice:form>
+</ice:panelGrid> 
+</f:subview>

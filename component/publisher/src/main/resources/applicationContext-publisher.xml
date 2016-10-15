@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+	"-//SPRING//DTD BEAN//EN"
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>	
+
+	<bean id="alertMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host">
+			<value>${smtp.hostname}</value>
+		</property>
+		<property name="port">
+			<value>${smtp.port}</value>
+		</property>		
+		<property name="username">
+			<value>${smtp.username}</value>
+		</property>
+		<property name="password">
+			<value>${smtp.password}</value>
+		</property>
+	</bean>
+
+	<bean id="emailPublisher" class="com.fsi.publisher.email.EmailPublisher">
+		<property name="sender"><ref bean="alertMailSender"/></property>
+		<property name="smtpAuthRequired">
+			<value>${smtp.authRequired}</value>
+		</property>
+		<property name="smtpSecurityRequired">
+			<value>${smtp.securityRequired}</value>
+		</property>
+		<property name="from">
+			<value>${smtp.alertSender}</value>
+		</property>
+		<property name="useSendmail">
+			<value>${smtp.useSendmail}</value>
+		</property>
+	</bean>
+	
+	<bean id="SMSPublisher" class="com.fsi.publisher.sms.SMSPublisher">
+		<property name="smtpEnable">
+			<value>${sms.smtpEnable}</value>
+		</property>
+		<property name="smtpSecurityEnable">
+			<value>${sms.smtpSecurityEnable}</value>
+		</property>
+		<property name="smtpUser">
+			<value>${sms.smtpUser}</value>
+		</property>
+		<property name="smtpPassword">
+			<value>${sms.smtpPassword}</value>
+		</property>
+		<property name="smtpHost">
+			<value>${sms.smtpHost}</value>
+		</property>
+		<property name="smtpFrom">
+			<value>${sms.smtpFrom}</value>
+		</property>
+	</bean>
+	
+	<bean id="snmpPublisher" class="com.fsi.publisher.snmp.SnmpPublisher">
+	</bean>
+	
+	<bean id="snmpDefaultConfig" class="com.fsi.publisher.snmp.SnmpDefaultConfig">
+		<property name="MIBFile">
+			<value>${snmp.mibFile}</value>
+		</property>
+		<property name="timeout">
+			<value>5</value>
+		</property>
+		<property name="retries">
+			<value>1</value>
+		</property>
+		<property name="maxRepetition">
+			<value>5</value>
+		</property>
+		<property name="nonRepeaters">
+			<value>0</value>
+		</property>
+	</bean>
+	
+	<bean id="snmpGenericTypeOID" class="com.fsi.publisher.snmp.SnmpGenericTypeOID">
+		<property name="genericTypeIODs">
+			<map>
+				<entry>
+					<key><value>ColdStart</value></key>
+					<value>.1.3.6.1.2.1.1.2.0</value>
+				</entry>
+				<entry>
+					<key><value>WarmStart</value></key>
+					<value>.1.3.6.1.2.1.1.2.1</value>
+				</entry>
+				<entry>
+					<key><value>LinkDown</value></key>
+					<value>.1.3.6.1.2.1.1.2.2</value>
+				</entry>
+				<entry>
+					<key><value>LinkUp</value></key>
+					<value>.1.3.6.1.2.1.1.2.3</value>
+				</entry>
+				<entry>
+					<key><value>AuthenticationFailure</value></key>
+					<value>.1.3.6.1.2.1.1.2.4</value>
+				</entry>
+				<entry>
+					<key><value>egpNeighborLoss</value></key>
+					<value>.1.3.6.1.2.1.1.2.5</value>
+				</entry>
+				<entry>
+					<key><value>Enterprise</value></key>
+					<value>.1.3.6.1.2.1.1.2.6</value>
+				</entry>
+			</map>
+		</property>	
+	</bean>	
+	
+	<bean id="alertSnmpOID" class="com.fsi.publisher.snmp.AlertSnmpOID">
+		<property name="alertName">
+			<value>.1.3.6.1.2.1.1.5.0</value>
+		</property>
+		<property name="alertSeverity">
+			<value>.1.3.6.1.2.1.1.5.1</value>
+		</property>
+		<property name="alertState">
+			<value>.1.3.6.1.2.1.1.5.2</value>
+		</property>
+		<property name="alertDescription">
+			<value>.1.3.6.1.2.1.1.5.3</value>
+		</property>
+		<property name="alertDate">
+			<value>.1.3.6.1.2.1.1.5.4</value>
+		</property>
+		<property name="alertIdentifier">
+			<value>.1.3.6.1.2.1.1.5.5</value>
+		</property>
+	</bean>	
+</beans>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+	"-//SPRING//DTD BEAN//EN"
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="jmsConnectionFactory"
+       class="${jms.factoryClassname}">
+       <property name="brokerURL" value="${jms.brokerUrl}"/>
+    </bean>	
+	<bean id="jmsProcessorFactory"
+    	  class="com.fsi.monitoring.jms.JmsProcessorFactory"
+		  singleton="true"
+		  init-method="initFactory">
+		<property name="jmsConnection" ref="jmsConnectionFactory"/>
+		<property name="jmsDestinations">
+			<map>
+				<entry>
+					<key><value>ALERT</value></key>
+					<value>${jms.alertTopic}</value>
+				</entry>
+				<entry>
+					<key><value>IKR_VALUE</value></key>
+					<value>${jms.ikrValueTopic}</value>
+				</entry>
+				<entry>
+					<key><value>EVENT_LOG</value></key>
+					<value>${jms.adminEventTopic}</value>
+				</entry>
+				<entry>
+					<key><value>ADMIN_REQUEST</value></key>
+					<value>${jms.adminRequestTopic}</value>
+				</entry>
+				<entry>
+					<key><value>HEARTBEAT_CONNECTOR</value></key>
+					<value>${jms.adminRequestTopic}.CONNECTOR</value>
+				</entry>
+				<entry>
+					<key><value>HEARTBEAT_COLLECTOR</value></key>
+					<value>${jms.adminRequestTopic}.COLLECTOR</value>
+				</entry>
+				<entry>
+					<key><value>HEARTBEAT_JOB_TASK</value></key>
+					<value>${jms.adminRequestTopic}.JOB_TASK</value>
+				</entry>
+			</map>
+		</property>	
+	</bean>	
+	<!--
+	<bean id="alertJmsConnectionConfig"
+    	  class="com.fsi.monitoring.jms.JmsConnectionConfig">
+    	  <property name="jmsConnectionFactory" ref="jmsFactoryClass"/>
+    	  <property name="destination" value="${jms.alertTopic}"/>
+	</bean>	
+	
+	<bean id="ikrValueJmsConnectionConfig"
+    	  class="com.fsi.monitoring.jms.JmsConnectionConfig">
+    	  <property name="jmsConnectionFactory" ref="jmsFactoryClass"/>
+    	  <property name="destination" value="${jms.ikrValueTopic}"/>
+	</bean>	
+	
+	<bean id="eventLogJmsConnectionConfig"
+    	  class="com.fsi.monitoring.jms.JmsConnectionConfig">
+    	  <property name="jmsConnectionFactory" ref="jmsFactoryClass"/>
+    	  <property name="destination" value="${jms.adminEventTopic}"/>
+	</bean>	
+	
+	<bean id="adminRequestJmsConnectionConfig"
+    	  class="com.fsi.monitoring.jms.JmsConnectionConfig">
+    	  <property name="jmsConnectionFactory" ref="jmsFactoryClass"/>
+    	  <property name="destination" value="${jms.adminRequestTopic}"/>
+	</bean>	
+	
+	<bean id="jmsAdminRequestProducer"
+    	  class="com.fsi.monitoring.jms.JmsPubSubProcessor"
+		  singleton="true">
+    	  <property name="jmsConnectionConfig" ref="adminRequestJmsConnectionConfig"/>
+	</bean>	
+	
+	<bean id="jmsAdminRequestConsumer"
+    	  class="com.fsi.monitoring.jms.JmsPubSubListener"
+		  singleton="true">
+    	  <property name="jmsConnectionConfig" ref="adminRequestJmsConnectionConfig"/>
+	</bean>	
+	
+	<bean id="jmsEventLogConsumer"
+    	  class="com.fsi.monitoring.jms.JmsPubSubListener"
+		  singleton="true">
+    	  <property name="jmsConnectionConfig" ref="eventLogJmsConnectionConfig"/>
+	</bean>	
+	
+	<bean id="jmsEventLogProducer"
+    	  class="com.fsi.monitoring.jms.JmsPubSubProcessor"
+		  singleton="true">
+    	  <property name="jmsConnectionConfig" ref="eventLogJmsConnectionConfig"/>
+	</bean>	
+	
+	<bean id="jmsIkrValueConsumer"
+    	  class="com.fsi.monitoring.jms.JmsPubSubListener"
+		  singleton="true">
+    	  <property name="jmsConnectionConfig" ref="ikrValueJmsConnectionConfig"/>
+	</bean>	
+	
+	<bean id="jmsIkrValueProducer"
+    	  class="com.fsi.monitoring.jms.JmsPubSubProcessor"
+		  singleton="true">
+    	  <property name="jmsConnectionConfig" ref="ikrValueJmsConnectionConfig"/>
+	</bean>	
+	
+	<bean id="jmsAlertConsumer"
+    	  class="com.fsi.monitoring.jms.JmsPubSubListener"
+		  singleton="true">
+    	  <property name="jmsConnectionConfig" ref="alertJmsConnectionConfig"/>
+	</bean>	
+	
+	<bean id="jmsAlertProducer"
+    	  class="com.fsi.monitoring.jms.JmsPubSubProcessor"
+		  singleton="true">
+    	  <property name="jmsConnectionConfig" ref="alertJmsConnectionConfig"/>
+	</bean>	
+	
+	<bean id="jmsHeartBeatProducer"
+    	  class="com.fsi.monitoring.jms.JmsPTPProcessor"
+		  singleton="true">
+		<property name="jmsConnectionFactory" ref="jmsFactoryClass"/>
+		<property name="jmsQueueConfigs">
+			<map>
+				<entry>
+					<key><value>CONNECTOR</value></key>
+					<value>${jms.adminRequestTopic}.CONNECTOR</value>
+				</entry>
+				<entry>
+					<key><value>COLLECTOR</value></key>
+					<value>${jms.adminRequestTopic}.COLLECTOR</value>
+				</entry>
+				<entry>
+					<key><value>JOB_TASK</value></key>
+					<value>${jms.adminRequestTopic}.JOB_TASK</value>
+				</entry>
+			</map>
+		</property>	
+	</bean>	
+	<bean id="jmsConnectorHeartBeatConsumer"
+    	  class="com.fsi.monitoring.jms.JmsPTPListener"
+		  singleton="true">
+    	  <property name="jmsConnectionFactory" ref="jmsFactoryClass"/>
+		  <property name="jmsQueueName" value="${jms.adminRequestTopic}.CONNECTOR"/>			
+	</bean>		
+	<bean id="jmsCollectorHeartBeatConsumer"
+    	  class="com.fsi.monitoring.jms.JmsPTPListener"
+		  singleton="true">
+    	  <property name="jmsConnectionFactory" ref="jmsFactoryClass"/>
+		  <property name="jmsQueueName" value="${jms.adminRequestTopic}.COLLECTOR"/>			
+	</bean>		
+	<bean id="jmsJobTaskHeartBeatConsumer"
+    	  class="com.fsi.monitoring.jms.JmsPTPListener"
+		  singleton="true">
+    	  <property name="jmsConnectionFactory" ref="jmsFactoryClass"/>
+		  <property name="jmsQueueName" value="${jms.adminRequestTopic}.JOB_TASK"/>			
+	</bean>	
+	-->
+</beans>

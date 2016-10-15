@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+		
+	<bean
+		id="reportDAO"
+		class="com.fsi.monitoring.report.dao.impl.OracleReportDAO"
+		scope="singleton">
+		<property name="dataSource">
+			<ref bean="pooledDS"/>
+		</property>             
+	</bean>
+
+	<bean
+		id="histoDAO"
+		class="com.fsi.monitoring.histo.dao.impl.OracleHistoDAO"
+		scope="singleton">
+		<property name="cpmsDS">
+			<ref bean="cpmsDS"/>
+		</property>      
+		<property name="dataSource">
+			<ref bean="pooledDS"/>
+		</property>             
+	</bean>		
+	
+	<bean
+		id="monitorDAO"
+		class="com.fsi.monitoring.indiktor.dao.impl.OracleMonitorDAO"
+		scope="singleton">
+		<property name="cpmsDS">
+			<ref bean="cpmsDS"/>
+		</property>           
+		<property name="dataSource">
+			<ref bean="pooledDS"/>
+		</property>             
+	</bean>
+	
+	<bean
+		id="dataModelDAO"
+		class="com.fsi.monitoring.indiktor.dao.impl.OracleDataModelDAO"
+		scope="singleton">
+		<property name="dataSource">
+			<ref bean="pooledDS"/>
+		</property>             
+	</bean>
+	
+	<bean
+		id="userDAO"
+		class="com.fsi.monitoring.user.dao.impl.OracleUserDAO"
+		scope="singleton">
+		<property name="dataSource">
+			<ref bean="pooledDS"/>
+		</property>             
+	</bean>	
+	
+	<bean
+		id="alertDAO"
+		class="com.fsi.monitoring.alert.dao.impl.OracleAlertDAO"
+		scope="singleton">
+		<property name="dataSource">
+			<ref bean="pooledDS"/>
+		</property>             
+	</bean>
+	
+	<bean
+		id="queryDAO"
+		class="com.fsi.monitoring.query.dao.impl.OracleQueryDAO"
+		scope="singleton">
+		<property name="dataSource">
+			<ref bean="pooledDS"/>
+		</property>             
+	</bean>
+	
+	<bean
+		id="globalDAO"
+		class="com.fsi.monitoring.global.dao.impl.OracleGlobalDAO"
+		scope="singleton">
+		<property name="dataSource">
+			<ref bean="pooledDS"/>
+		</property>             
+	</bean>	
+</beans>

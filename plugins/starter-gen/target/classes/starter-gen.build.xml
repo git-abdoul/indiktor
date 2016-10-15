@@ -1,0 +1,270 @@
+<project>
+
+  <target name="windows">			 
+ 
+	<path id="distrib.path">
+      <pathelement location="../.." />
+    </path>
+	<pathconvert targetos="windows" property="distribPath" refid="distrib.path"/>
+ 
+	<path id="appCtx.path">
+      <pathelement location="conf/local/applicationContext.xml" />
+    </path>
+	<pathconvert targetos="windows" property="appCtx" refid="appCtx.path"/>
+
+	<path id="classpath.path">
+      <pathelement location="bin/classpath.bat" />
+    </path>
+	<pathconvert targetos="windows" property="classpathPath" refid="classpath.path"/>	
+
+	<path id="classpath.custo.path">
+      <pathelement location="bin/classpath%1%.bat" />
+    </path>
+	<pathconvert targetos="windows" property="classpathCustoPath" refid="classpath.custo.path"/>
+	
+	<path id="jar.path">
+      <pathelement location="distrib/${name}-${version}.jar" />
+    </path>
+	<pathconvert targetos="windows" property="jarPath" refid="jar.path"/>
+		
+	<path id="foundation.path">
+      <pathelement location="../foundation/distrib/foundation-${version}.jar" />
+    </path>
+	<pathconvert targetos="windows" property="foundationPath" refid="foundation.path"/>		
+
+	<path id="log.config.path">
+      <pathelement location="conf/local/log4j.xml" />
+    </path>
+	<pathconvert targetos="windows" property="logConfigPath" refid="log.config.path"/>		
+	
+	<copy file="bin/start-${name}.bat" toFile="../../bin/start-${name}.bat" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="JAR" value="${jarPath}"/>
+			<filter token="FOUNDATION" value="${foundationPath}"/>
+			<filter token="LOG_CONFIGURATION" value="${logConfigPath}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+			<filter token="CLASSPATH_CUSTO" value="${classpathCustoPath}"/>
+		</filterset>
+	</copy>
+  </target>
+  
+  <target name="unix">
+	<path id="distrib.path">
+      <pathelement location="../.." />
+    </path>
+	<pathconvert targetos="unix" property="distribPath" refid="distrib.path"/>
+ 
+	<path id="appCtx.path">
+      <pathelement location="conf/local/applicationContext.xml" />
+    </path>
+	<pathconvert targetos="unix" property="appCtx" refid="appCtx.path"/>
+
+	<path id="classpath.path">
+      <pathelement location="bin/classpath.sh" />
+    </path>
+	<pathconvert targetos="unix" property="classpathPath" refid="classpath.path"/>	
+
+	<path id="classpath.custo.path">
+      <pathelement location="bin/classpath$1.sh" />
+    </path>
+	<pathconvert targetos="unix" property="classpathCustoPath" refid="classpath.custo.path"/>
+	
+	<path id="jar.path">
+      <pathelement location="distrib/${name}-${version}.jar" />
+    </path>
+	<pathconvert targetos="unix" property="jarPath" refid="jar.path"/>
+		
+	<path id="foundation.path">
+      <pathelement location="../foundation/distrib/foundation-${version}.jar" />
+    </path>
+	<pathconvert targetos="unix" property="foundationPath" refid="foundation.path"/>		
+
+	<path id="log.config.path">
+      <pathelement location="conf/local/log4j.xml" />
+    </path>
+	<pathconvert targetos="unix" property="logConfigPath" refid="log.config.path"/>		
+	
+	<copy file="bin/start-${name}.sh" toFile="../../bin/start-${name}.sh" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="JAR" value="${jarPath}"/>
+			<filter token="FOUNDATION" value="${foundationPath}"/>
+			<filter token="LOG_CONFIGURATION" value="${logConfigPath}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+			<filter token="CLASSPATH_CUSTO" value="${classpathCustoPath}"/>
+		</filterset>
+	</copy>
+	<chmod file="../../bin/start-${name}.sh" perm="ugo+x"/>		
+	<copy file="bin/stop-${name}.sh" toFile="../../bin/stop-${name}.sh" overwrite="true"/>
+	<chmod file="../../bin/stop-${name}.sh" perm="ugo+x"/>
+
+
+  </target>  
+  
+  <target name="jnlp-windows">			 
+ 
+	<path id="distrib.path">
+      <pathelement location="../.." />
+    </path>
+	<pathconvert targetos="windows" property="distribPath" refid="distrib.path"/>
+ 
+	<path id="appCtx.path">
+      <pathelement location="conf/local/applicationContext.xml" />
+    </path>
+	<pathconvert targetos="windows" property="appCtx" refid="appCtx.path"/>
+
+	<path id="classpath.path">
+      <pathelement location="bin/classpath.bat" />
+    </path>
+	<pathconvert targetos="windows" property="classpathPath" refid="classpath.path"/>
+	<copy file="bin/classpath-builder.bat" toFile="../../bin/${name}-classpath-builder.bat" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+		</filterset>
+	</copy>
+  </target>
+  
+  <target name="toolkits-windows"> 
+	<path id="distrib.path">
+      <pathelement location="../.." />
+    </path>
+	<pathconvert targetos="windows" property="distribPath" refid="distrib.path"/> 
+	
+	<path id="appCtx.path">
+      <pathelement location="conf/local/applicationContext.xml" />
+    </path>
+	<pathconvert targetos="windows" property="appCtx" refid="appCtx.path"/>
+	
+	<path id="log.config.path">
+      <pathelement location="conf/local/log4j.xml" />
+    </path>
+	<pathconvert targetos="windows" property="logConfigPath" refid="log.config.path"/>
+	
+	<path id="classpath.path">
+      <pathelement location="bin/classpath.bat" />
+    </path>
+	<pathconvert targetos="windows" property="classpathPath" refid="classpath.path"/>
+	<copy file="bin/start-staticdomain-feeder.bat" toFile="launcher/start-staticdomain-feeder.bat" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="LOG_CONFIGURATION" value="${logConfigPath}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+		</filterset>
+	</copy>
+	<copy file="bin/start-data-collection-feeder.bat" toFile="launcher/start-data-collection-feeder.bat" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="LOG_CONFIGURATION" value="${logConfigPath}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+		</filterset>
+	</copy>
+	<copy file="bin/build-default-alerts.bat" toFile="launcher/build-default-alerts.bat" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="LOG_CONFIGURATION" value="${logConfigPath}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+		</filterset>
+	</copy>
+	<copy file="bin/build-default-computes.bat" toFile="launcher/build-default-computes.bat" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="LOG_CONFIGURATION" value="${logConfigPath}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+		</filterset>
+	</copy>
+  </target>
+  
+   <target name="toolkits-unix">
+	<path id="distrib.path">
+      <pathelement location="../.." />
+    </path>
+	<pathconvert targetos="unix" property="distribPath" refid="distrib.path"/> 
+	
+	<path id="appCtx.path">
+      <pathelement location="conf/local/applicationContext.xml" />
+    </path>
+	<pathconvert targetos="unix" property="appCtx" refid="appCtx.path"/>
+	
+	<path id="log.config.path">
+      <pathelement location="conf/local/log4j.xml" />
+    </path>
+	<pathconvert targetos="unix" property="logConfigPath" refid="log.config.path"/>	
+	
+	<path id="classpath.path">
+      <pathelement location="bin/classpath.sh" />
+    </path>
+	<pathconvert targetos="unix" property="classpathPath" refid="classpath.path"/>	
+	<copy file="bin/start-staticdomain-feeder.sh" toFile="launcher/start-staticdomain-feeder.sh" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="LOG_CONFIGURATION" value="${logConfigPath}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+		</filterset>
+	</copy>
+	<chmod file="launcher/start-staticdomain-feeder.sh" perm="ugo+x"/>
+	<copy file="bin/start-data-collection-feeder.sh" toFile="launcher/start-data-collection-feeder.sh" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="LOG_CONFIGURATION" value="${logConfigPath}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+		</filterset>
+	</copy>
+	<chmod file="launcher/start-data-collection-feeder.sh" perm="ugo+x"/>
+	<copy file="bin/build-default-alerts.sh" toFile="launcher/build-default-alerts.sh" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="LOG_CONFIGURATION" value="${logConfigPath}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+		</filterset>
+	</copy>
+	<chmod file="launcher/build-default-alerts.sh" perm="ugo+x"/>
+	<copy file="bin/build-default-computes.sh" toFile="launcher/build-default-computes.sh" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="LOG_CONFIGURATION" value="${logConfigPath}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+		</filterset>
+	</copy>
+	<chmod file="launcher/build-default-computes.sh" perm="ugo+x"/>
+  </target>  
+  
+  <target name="jnlp-unix">
+	<path id="distrib.path">
+      <pathelement location="../.." />
+    </path>
+	<pathconvert targetos="unix" property="distribPath" refid="distrib.path"/>
+ 
+	<path id="appCtx.path">
+      <pathelement location="conf/local/applicationContext.xml" />
+    </path>
+	<pathconvert targetos="unix" property="appCtx" refid="appCtx.path"/>
+
+	<path id="classpath.path">
+      <pathelement location="bin/classpath.sh" />
+    </path>
+	<pathconvert targetos="unix" property="classpathPath" refid="classpath.path"/>	
+
+	<copy file="bin/classpath-builder.sh" toFile="../../bin/${name}-classpath-builder.sh" overwrite="true">
+		<filterset>
+			<filter token="DISTRIB" value="${distribPath}"/>
+			<filter token="APPLICATION_CONTEXT" value="${appCtx}"/>
+			<filter token="CLASSPATH" value="${classpathPath}"/>
+		</filterset>
+	</copy>
+	<chmod file="../../bin/${name}-classpath-builder.sh" perm="ugo+x"/>
+  </target>  
+
+</project>

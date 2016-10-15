@@ -1,0 +1,268 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+<ui:param name="pageTitle" value="Security configuration" />
+<ui:define name="content">
+<ice:form>
+<div>
+	<BR/>
+	<table width="100%" border="0">
+		<tr>
+			<td align="center">
+				<ice:outputLabel styleClass="pageTitle" value="Administration Panel"/>
+			</td>
+		</tr>
+	</table>
+	<BR/><BR/><BR/><BR/><BR/>
+	<table width="75%" border="0">
+		<tr>
+			<td align="center" style="border: 0px solid black">
+				<ice:panelGrid columns="2" style="vertical-align: middle;">
+					<ice:commandButton value="Dashboard Home"
+								       title="Dashboard Management - New Dashboard / Update Dashboard"
+									   image="/images/IndiKtor2.0/AdminPanel/Dashboard_Icon.png"
+									   actionListener="#{dashboardMainConfigBean.initUpdate}" 
+									   action="#{dashboardMainConfigBean.action}" />
+					<!-- <ice:commandButton value="Dashboard Home"
+								       title="Dashboard Management - New Dashboard / Update Dashboard"
+									   image="/images/IndiKtor2.0/AdminPanel/Dashboard_Icon.png"
+									   actionListener="#{adminBean.handleDashBoardMenu}"/>
+					<ice:panelGrid columns="1" rendered="#{adminBean.dashBoardMenuVisible}">
+						<ice:commandLink actionListener="#{dashboardMainConfigBean.initCreate}" 
+									 	 action="#{dashboardMainConfigBean.action}" 
+									 	 value="New"
+						 				 style="font-weight: bold; font-style: italic;"/>
+						<ice:commandLink actionListener="#{dashboardMainConfigBean.initUpdate}" 
+									 	 action="#{dashboardMainConfigBean.action}" 
+									 	 value="Update"
+						 				 style="font-weight: bold; font-style: italic;"/>
+					</ice:panelGrid> -->							
+				</ice:panelGrid>
+			</td>
+			<td align="center" style="border: 0px solid black">				
+				<ice:panelGrid columns="2" style="vertical-align: middle;">
+					<ice:commandButton value="Data Collection Home"
+									   title="Data Management - Logical Environments / Connectors / Collectors"
+									   image="/images/IndiKtor2.0/AdminPanel/Data_Collection_Icon.png"
+									   actionListener="#{adminBean.handleDataCollectionMenu}"/>
+					<ice:panelGrid columns="1" rendered="#{adminBean.dataCollectionMenuVisible}">
+						<ice:commandLink actionListener="#{adminBean.openLogicalEnvView}" 
+						 				 value="Logical Environment"
+						 				 action="#{logicalEnvConfigBean.action}"
+						 				 style="font-weight: bold; font-style: italic;"/>
+						<ice:commandLink actionListener="#{connectorConfigBean.init}" 
+						 				 action="#{connectorConfigBean.action}" 
+						 				 value="Connectors"
+						 				 style="font-weight: bold; font-style: italic;"/>
+						<ice:commandLink actionListener="#{monitorSelectionBean.init}" 
+						 				 action="#{monitorSelectionBean.action}" 
+						 				 value="Collectors"
+						 				 style="font-weight: bold; font-style: italic;"/>		
+						<ice:commandLink actionListener="#{jobSchedulerSelectionBean.init}" 
+						 				 action="#{jobSchedulerSelectionBean.action}" 
+						 				 value="Job Schedulers"
+						 				 style="font-weight: bold; font-style: italic;"/>
+						 		 				 						 
+						 <ice:commandLink action="chartDemo" 
+						 				  value="Chart Demo"
+						 				  style="font-weight: bold; font-style: italic;"/>
+				
+					</ice:panelGrid>							
+				</ice:panelGrid>
+			</td>
+			<td align="center" style="border: 0px solid black">
+				<ice:panelGrid columns="2" style="vertical-align: middle;">
+					<ice:commandButton value="Security Home"
+									   title="Security Manager - User / Role"
+								   	   image="/images/IndiKtor2.0/AdminPanel/Security_Icon.png"
+								   	   actionListener="#{adminBean.handleSecurityMenu}"/>
+					<ice:panelGrid columns="1" rendered="#{adminBean.securityMenuVisible}">
+						<!--  
+						<ice:commandLink value="Access perm"
+						 				 style="font-weight: bold; font-style: italic;"/>
+						-->
+						<ice:commandLink actionListener="#{roleBean.init}" 
+					  				 	 action="#{roleBean.action}" 
+									 	 value="Role"
+						 				 style="font-weight: bold; font-style: italic;"/>
+						<ice:commandLink actionListener="#{userBean.init}" 
+								 	 	 action="#{userBean.action}" 
+								 	 	 value="User"
+						 				 style="font-weight: bold; font-style: italic;"/>							 				 
+					</ice:panelGrid>							
+				</ice:panelGrid>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" style="border: 0px solid black">
+				<ice:panelGrid columns="2" style="vertical-align: middle;">
+					<ice:commandButton value="SNMP"
+									   title="Third Party Manager - SNMP"
+									   image="/images/IndiKtor2.0/AdminPanel/ThirdParty_Icon.png"
+									   actionListener="#{adminBean.handleThirdPartyMenu}"/>
+					<ice:panelGrid columns="1" rendered="#{adminBean.thirdPartyMenuVisible}">
+						<ice:commandLink actionListener="#{snmpConfigurationBean.init}"
+										 action="#{snmpConfigurationBean.action}" 
+										 value="SNMP"
+						 				 style="font-weight: bold; font-style: italic;"/>
+						<!--
+						<ice:commandLink actionListener="#{smtpConfigurationBean.init}"
+										 action="#{smtpConfigurationBean.action}" 
+										 value="SMTP"
+						 				 style="font-weight: bold; font-style: italic;"/>
+						 -->
+					</ice:panelGrid>							
+				</ice:panelGrid>
+			</td>
+			<td align="center" style="border: 0px solid black">
+				<ice:panelGrid columns="2" style="vertical-align: middle;">
+					<ice:commandButton value="Metric Domain Config"
+									   title="Extensions Manager - Metric Domain Config"
+								   	   image="/images/IndiKtor2.0/AdminPanel/Extensions_Icon.png"
+								       actionListener="#{adminBean.handleExtensionsMenu}"/>
+					<ice:panelGrid columns="1" rendered="#{adminBean.extensionsMenuVisible}">
+						<ice:commandLink actionListener="#{metricDomainConfigSelectionBean.init}"
+									     action="#{metricDomainConfigSelectionBean.action}"
+										 value="Metric Domain Config"
+						 				 style="font-weight: bold; font-style: italic;"/>
+						<ice:commandLink actionListener="#{metricDomainResourceSelectionBean.init}"
+									     action="#{metricDomainResourceSelectionBean.action}"
+									     value="Metric Domain Resource"
+						 				 style="font-weight: bold; font-style: italic;"/>
+					</ice:panelGrid>							
+				</ice:panelGrid>
+			</td>		
+			<td align="center" style="border: 0px solid black">
+				<ice:panelGrid columns="2" style="vertical-align: middle;">
+					<ice:commandButton title="Metric Domain"
+								   	   image="/images/IndiKtor2.0/AdminPanel/Metric_Domain_Icon.png"
+								       actionListener="#{staticDomainBean.navigate}"
+								       action="#{staticDomainBean.action}"/>
+				</ice:panelGrid>
+			</td>	
+		</tr>
+	</table>
+</div>
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" style="width: 385px; height: 270px;" rendered="#{adminBean.rendererLogicalEnv}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td>
+			       			<ice:outputText 	style="float: left;" value="Logical Environment Manager"/>
+			       			<ice:commandButton 	style="float: right;" 
+			       								actionListener="#{adminBean.closeLogicalEnvView}"
+			       								image="/images/i/cal_off.gif"
+			       								alt="Close"/>
+			       			<!-- 
+			       			<ice:commandButton 	style="float: right;" 
+											   	image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+										   	   	alt="Delete selected logical environment"
+										   	   	panelConfirmation="#{logicalEnvConfigBean.selectedLogicalEnv == null ? false : 'deleteConfirmPanel'}" 
+										   	   	rendered="#{logicalEnvConfigBean.panelStack == 'LOGICAL_ENV_LIST'}"
+										   	   	actionListener="#{logicalEnvConfigBean.delete}"
+		       								   styleClass="iconPopup"/>
+							<ice:commandButton 	style="float: right;" 
+											   	image="/images/IndiKtor2.0/Buttons/editSmall.png"
+										   	   	alt="Edit selected logical environment"
+										   	   	rendered="#{logicalEnvConfigBean.panelStack == 'LOGICAL_ENV_LIST'}"
+										   	   	actionListener="#{logicalEnvConfigBean.edit}"
+		       								   styleClass="iconPopup"/>
+		       				 -->
+							<ice:commandButton 	style="float: right;" 
+											   	image="/images/IndiKtor2.0/Buttons/saveSmall.png"
+										   	   	alt="Save"
+										   	   	rendered="#{logicalEnvConfigBean.panelStack == 'LOGICAL_ENV_UPDATE'}"
+										   	   	actionListener="#{logicalEnvConfigBean.save}"
+		       								   styleClass="iconPopup"/>
+			       			<ice:commandButton 	style="float: right;" 
+											   	image="/images/IndiKtor2.0/Buttons/addSmall.png"
+										   	   	alt="Add new logical environment"
+										   	   	rendered="#{logicalEnvConfigBean.panelStack == 'LOGICAL_ENV_LIST'}"
+										   	   	actionListener="#{logicalEnvConfigBean.createNewLogicalEnv}"
+		       								   styleClass="iconPopup"/>
+			       			<ice:commandButton 	style="float: right;" 
+			       								actionListener="#{logicalEnvConfigBean.backToList}"
+			       								image="/images/IndiKtor2.0/Buttons/cancelSmall.png"
+			       								rendered="#{logicalEnvConfigBean.panelStack == 'LOGICAL_ENV_UPDATE'}"
+			       								alt="Back To List"
+		       								    styleClass="iconPopup"/>	       			
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+	    	<ice:panelGroup style="width: 365px;">
+		    	<ice:panelStack selectedPanel="#{logicalEnvConfigBean.panelStack}">
+	    			<ice:panelGrid id="LOGICAL_ENV_LIST">
+	    				<ice:dataTable var="logicalEnvBean" 
+									   value="#{logicalEnvConfigBean.logicalEnvBeans}"
+									   columnWidths="270, 40"
+									   scrollable="true" scrollHeight="160">
+							<ice:column>
+								 <!-- <ice:rowSelector
+			                		value="#{logicalEnvBean.selected}"
+			                        selectionListener="#{logicalEnvConfigBean.rowSelectionListener}"
+			                        preStyleOnSelection="true"
+			                        selectedClass="tableRowSelSelected"
+									mouseOverClass="tableRowSelMouseOver"
+									selectedMouseOverClass="tableRowSelSelectedMouseOver"
+									multiple="false"
+					               	immediate="false" 
+					               	styleClass="iceRowSel-Dis"/> -->
+								<f:facet name="header">
+					                <ice:outputLabel value="Name"/>
+					            </f:facet>
+					            <ice:outputText value="#{logicalEnvBean.logicalEnv.name}"/>
+							</ice:column>
+							 <ice:column style="text-align: center;">
+					  			<f:facet name="header">
+					   			</f:facet>
+								<ice:commandButton 	image="/images/IndiKtor2.0/Buttons/editSmall.png"
+											   	   	actionListener="#{logicalEnvConfigBean.edit}">
+									<f:attribute name="logicalEnvBean" value="#{logicalEnvBean}"/>
+								</ice:commandButton>
+								<ice:commandButton 	image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+											   	   	panelConfirmation="deleteConfirmPanel" 
+											   	   	actionListener="#{logicalEnvConfigBean.delete}"
+											   	    style="margin-left: 10px;"
+											   	    rendered="#{logicalEnvConfigBean.renderedDeleteButton}">
+									<f:attribute name="logicalEnvBean" value="#{logicalEnvBean}"/>
+								</ice:commandButton>
+					  		</ice:column>
+						</ice:dataTable>
+	    			</ice:panelGrid>
+	    			<ice:panelGrid id="LOGICAL_ENV_UPDATE" columns="2" >
+						<ice:outputLabel value="Name :"/>
+						<ice:inputText value="#{logicalEnvConfigBean.selectedLogicalEnv.logicalEnv.name}" style="#{logicalEnvConfigBean.nameStyle}"/>
+						<ice:outputLabel value="" rendered="#{logicalEnvConfigBean.nameMandatory}"/>
+						<ice:outputLabel value="Mandatory" style="color: red; font-size: 10px;"
+			 							 rendered="#{logicalEnvConfigBean.nameMandatory}"/>
+			 			<ice:outputLabel value="" rendered="#{logicalEnvConfigBean.nameAlreadyExists}"/>
+						<ice:outputLabel value="This name is already used !" style="color: red; font-size: 10px;"
+			 							 rendered="#{logicalEnvConfigBean.nameAlreadyExists}"/>
+			 			<ice:outputLabel value="" rendered="#{logicalEnvConfigBean.nameAlreadyExists}"/>
+						<ice:outputLabel value="Please, choose another name." style="color: red; font-size: 10px;"
+			 							 rendered="#{logicalEnvConfigBean.nameAlreadyExists}"/>
+			 							 
+						<ice:outputLabel value="Description :"/>
+						<ice:inputTextarea value="#{logicalEnvConfigBean.selectedLogicalEnv.logicalEnv.description}"
+									       style="font-size: 10px; width: 265px; height: 150px"/>			
+					</ice:panelGrid>
+	    		</ice:panelStack>
+	    	</ice:panelGroup>
+	    </f:facet>
+	</ice:panelPopup>
+	<ice:panelConfirmation 	id="deleteConfirmPanel" 
+							message="Are you sure to delete the Logical Env - #{logicalEnvConfigBean.selectedLogicalEnv.logicalEnv.name} -?"
+	                   		acceptLabel="Delete" 
+	                   		rendered="true"
+	                   		autoCentre="true"/>
+</ice:form>
+<ui:include src="/jsp/util/errorMessage.jspx"/>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<CROSS_COMPUTES_PROPS>
+
+	<COMPUTE_PROP domainType="JVM" metricDomain="JVM_ACTIVITY" metricCategory="Heap Memory Ratio">
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="DataServer"/>
+			<VAR name="CONTEXT1" value="DataServer JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="EventServer"/>
+			<VAR name="CONTEXT1" value="EventServer JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="MessageEngine"/>
+			<VAR name="CONTEXT1" value="MessageEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="AccountingEngine"/>
+			<VAR name="CONTEXT1" value="AccountingEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="TransferEngine"/>
+			<VAR name="CONTEXT1" value="TransferEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="TaskEngine"/>
+			<VAR name="CONTEXT1" value="TaskEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+	</COMPUTE_PROP>
+	
+	<COMPUTE_PROP domainType="JVM" metricDomain="THREAD_ACTIVITY" metricCategory="Threads Type Status Ratio">
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="MessageEngine"/>
+			<VAR name="THREAD_TYPE" value="EngineThread"/>
+			<VAR name="THREAD_STATUS" value="RUNNABLE"/>
+			<VAR name="CONTEXT1" value="MessageEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="AccountingEngine"/>
+			<VAR name="THREAD_TYPE" value="EngineThread"/>
+			<VAR name="THREAD_STATUS" value="RUNNABLE"/>
+			<VAR name="CONTEXT1" value="AccountingEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="TransferEngine"/>
+			<VAR name="THREAD_TYPE" value="EngineThread"/>
+			<VAR name="THREAD_STATUS" value="RUNNABLE"/>
+			<VAR name="CONTEXT1" value="TransferEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="TaskEngine"/>
+			<VAR name="THREAD_TYPE" value="EngineThread"/>
+			<VAR name="THREAD_STATUS" value="RUNNABLE"/>
+			<VAR name="CONTEXT1" value="TaskEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="MessageEngine"/>
+			<VAR name="THREAD_TYPE" value="Batch Thread"/>
+			<VAR name="THREAD_STATUS" value="RUNNABLE"/>
+			<VAR name="CONTEXT1" value="MessageEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="AccountingEngine"/>
+			<VAR name="THREAD_TYPE" value="Batch Thread"/>
+			<VAR name="THREAD_STATUS" value="RUNNABLE"/>
+			<VAR name="CONTEXT1" value="AccountingEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="TransferEngine"/>
+			<VAR name="THREAD_TYPE" value="Batch Thread"/>
+			<VAR name="THREAD_STATUS" value="RUNNABLE"/>
+			<VAR name="CONTEXT1" value="TransferEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="TaskEngine"/>
+			<VAR name="THREAD_TYPE" value="Batch Thread"/>
+			<VAR name="THREAD_STATUS" value="RUNNABLE"/>
+			<VAR name="CONTEXT1" value="TaskEngine JVM Activity"/>
+		</COMPUTE_VAR_DEF>
+	</COMPUTE_PROP>
+	
+	<COMPUTE_PROP domainType="CALYPSO" metricDomain="CALYPSO_DS_CACHE" metricCategory="Cache Count Ratio">
+		<COMPUTE_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Global"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Trade"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Transfer"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Message"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Posting"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Task"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="CACHE_NAME" value="Product"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+	</COMPUTE_PROP>
+	
+	<COMPUTE_PROP domainType="CALYPSO" metricDomain="CALYPSO_DATASERVER" metricCategory="DS Total Db Connections">
+		<COMPUTE_VAR_DEF>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+	</COMPUTE_PROP>
+	
+	<COMPUTE_PROP domainType="CALYPSO" metricDomain="CALYPSO_DATASERVER" metricCategory="DS Used Db Connections Ratio">
+		<COMPUTE_VAR_DEF>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+	</COMPUTE_PROP>
+	
+	<COMPUTE_PROP domainType="CALYPSO" metricDomain="CALYPSO_DATASERVER" metricCategory="DS Event Buffer Ratio">
+		<COMPUTE_VAR_DEF>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+	</COMPUTE_PROP>
+	
+	<COMPUTE_PROP domainType="CALYPSO" metricDomain="CALYPSO_EVENTSERVER" metricCategory="EventServer Pool Ratio">
+		<COMPUTE_VAR_DEF>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+	</COMPUTE_PROP>
+	
+	<COMPUTE_PROP domainType="CALYPSO" metricDomain="CALYPSO_ENGINE" metricCategory="Engine Pool Ratio">
+		<COMPUTE_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="MessageEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="TransferEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="AccountingEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="TaskEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+	</COMPUTE_PROP>
+	
+	<COMPUTE_PROP domainType="CALYPSO" metricDomain="CALYPSO_ENGINE" metricCategory="Engine Unconsumed Events Ratio">
+		<COMPUTE_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="MessageEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="TransferEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="AccountingEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="ENGINE_NAME" value="TaskEngine"/>
+			<VAR name="CONTEXT1" value="Calypso Activity @ PETRUS_CAL_ORA_100003"/>
+		</COMPUTE_VAR_DEF>
+	</COMPUTE_PROP>
+
+</CROSS_COMPUTES_PROPS>

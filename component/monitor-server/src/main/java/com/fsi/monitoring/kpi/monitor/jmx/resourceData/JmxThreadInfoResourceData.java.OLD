@@ -1,0 +1,158 @@
+package com.fsi.monitoring.kpi.monitor.jmx.resourceData;
+
+import java.lang.management.ThreadInfo;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fsi.monitoring.kpi.monitor.IkrResourceData;
+
+public class JmxThreadInfoResourceData extends IkrResourceData {
+
+	private Map<String, ThreadInfo> threadStats;
+	private long[] deadlocks;
+	private  String processName;
+
+	public JmxThreadInfoResourceData(Map<String, ThreadInfo> threadStats, long[] deadlocks, String processName, Date captureTime){
+		super(captureTime);
+		this.threadStats = threadStats;
+		this.deadlocks = deadlocks;
+		this.processName = processName;
+	}
+	
+	public Map<String, String> getBlockedCount() {
+		Map<String, String> values = new HashMap<String, String>();
+		if (threadStats!=null) {
+			for (String name : threadStats.keySet()) {
+				values.put(processName+"["+name+"]", String.valueOf(threadStats.get(name).getBlockedCount()));
+			}
+		}
+		return values;
+	}
+	
+	public Map<String, String> getBlockTime() {
+		Map<String, String> values = new HashMap<String, String>();
+		if (threadStats!=null) {
+			for (String name : threadStats.keySet()) {
+				values.put(processName+"["+name+"]", String.valueOf(threadStats.get(name).getBlockedTime()));
+			}
+		}
+		return values;
+	}
+	
+	public Map<String, String> getLockName() {
+		Map<String, String> values = new HashMap<String, String>();
+		if (threadStats!=null) {
+			for (String name : threadStats.keySet()) {
+				values.put(processName+"["+name+"]", String.valueOf(threadStats.get(name).getLockName()));
+			}
+		}
+		return values;
+	}
+	
+	public Map<String, String> getLockOwner() {
+		Map<String, String> values = new HashMap<String, String>();
+		if (threadStats!=null) {
+			for (String name : threadStats.keySet()) {
+				values.put(processName+"["+name+"]", String.valueOf(threadStats.get(name).getLockOwnerName()));
+			}
+		}
+		return values;
+	}
+	
+	public Map<String, String> getState() {
+		Map<String, String> values = new HashMap<String, String>();
+		if (threadStats!=null) {
+			for (String name : threadStats.keySet()) {
+				boolean involvedInDeadlock = isInvolvedInDeadlock(threadStats.get(name));
+				values.put(processName+"["+name+"]", String.valueOf((involvedInDeadlock) ? "DEADLOCK" : threadStats.get(name).getThreadState().name()));
+			}
+		}
+		return values;
+	}
+	
+	public Map<String, String> getWaitedCount() {
+		Map<String, String> values = new HashMap<String, String>();
+		if (threadStats!=null) {
+			for (String name : threadStats.keySet()) {
+				values.put(processName+"["+name+"]", String.valueOf(threadStats.get(name).getWaitedCount()));
+			}
+		}
+		return values;
+	}
+	
+	public Map<String, String> getWaitedTime() {
+		Map<String, String> values = new HashMap<String, String>();
+		if (threadStats!=null) {
+			for (String name : threadStats.keySet()) {
+				values.put(processName+"["+name+"]", String.valueOf(threadStats.get(name).getWaitedTime()));
+			}
+		}
+		return values;
+	}
+	
+	public Map<String, String> getSuspended() {
+		Map<String, String> values = new HashMap<String, String>();
+		if (threadStats!=null) {
+			for (String name : threadStats.keySet()) {
+				values.put(processName+"["+name+"]", String.valueOf(threadStats.get(name).isSuspended()));
+			}
+		}
+		return values;
+	}
+	
+	public Map<String, String> getInNative() {
+		Map<String, String> values = new HashMap<String, String>();
+		if (threadStats!=null) {
+			for (String name : threadStats.keySet()) {
+				values.put(processName+"["+name+"]", String.valueOf(threadStats.get(name).isInNative()));
+			}
+		}
+		return values;
+	}
+	
+	public Map<String, String> getStacktrace() {
+		Map<String, String> values = new HashMap<String, String>();
+		if (threadStats!=null) {
+			for (String name : threadStats.keySet()) {
+				values.put(processName+"["+name+"]", String.valueOf(getStackTrace(threadStats.get(name))));
+			}
+		}
+		return values;	
+	}
+	
+	public Map<String, String> getInvolvedInDeadlock() {
+		Map<String, String> values = new HashMap<String, String>();
+		if (threadStats!=null) {
+			for (String name : threadStats.keySet()) {
+				values.put(processName+"["+name+"]", String.valueOf(isInvolvedInDeadlock(threadStats.get(name))));
+			}
+		}
+		return values;
+	}
+	
+	private String getStackTrace(ThreadInfo info) {
+		String stacktrace = "";
+		for (StackTraceElement stack : info.getStackTrace()) {
+			int line = stack.getLineNumber();
+			String filename = (line > 0) ? (stack.getFileName() + ":" + line)
+					: "Native Method";
+			String trace = stack.getClassName() + "."
+					+ stack.getMethodName() + "(" + filename + ")";
+			stacktrace = stacktrace
+					+ (stacktrace.length() != 0 ? "\n" : "") + trace;
+		}
+		return stacktrace;
+	}
+	
+	private boolean isInvolvedInDeadlock(ThreadInfo info) {
+		boolean isInvolvedInDeadlock = false;
+		for (long id : deadlocks) {
+			if (id == info.getThreadId()) {
+				isInvolvedInDeadlock = true;
+				break;
+			}
+		}
+		return isInvolvedInDeadlock;
+	}	
+}

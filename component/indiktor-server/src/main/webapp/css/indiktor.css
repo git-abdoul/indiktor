@@ -1,0 +1,129 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	color: #000;
+	font-style: normal;
+	background-color: #FFF;
+	background-repeat: repeat-x;
+	background-attachment:scroll;
+}
+
+a:Hover {
+	text-decoration: underline;
+}
+
+img {
+	border: 0;
+}
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+p {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.white label {
+	color: #FFF;
+}
+
+.white a {
+	color: #FFF;
+}
+
+.red {
+	background-color: #F06161;
+	font-size: 11px;
+}
+.orange {
+	background-color: #f39402;
+	font-size: 11px;
+}
+.yellow {
+	background-color: #ffe400;
+	font-size: 11px;
+}
+.green {
+	background-color: #58ab27;
+	font-size: 11px;
+}
+
+ul.square {
+	list-style-type:square
+}
+
+div.boardComponent {
+	border: 1px solid black;
+	margin: 0px;
+	padding: 0px;
+	width: 400px;
+}
+
+div.boardComponentNavigationBoard {
+	border: 1px solid black;
+	margin: 0px;
+	padding: 0px;
+	width: 200px;
+}
+
+div.boardComponentBatchBoard {
+	border: 1px solid black;
+	margin: 0px;
+	padding: 0px;
+	width: 600px;
+}
+
+div.boardComponentAlertBoard {
+	border: 1px solid black;
+	margin: 0px;
+	padding: 0px;
+	width: 400px;
+	/*height: 325px;*/
+}
+
+div.navBoardItem {
+	float: left;
+	/* background-color: #ffffff; */
+	/* width: 100px; */
+	/* height: 100px; */
+	text-align: center;
+	margin: 3px 3px 3px 3px;
+	padding: 5px;
+}
+div.navBoardItem label {
+	display: block;
+	/* background-color: #7bb7cf; */
+	line-height: 2em;
+	/* height: 42px; */
+	vertical-align: middle;
+	font-size: 12px;
+}
+div.navBoardItem img {
+/*	padding: 5px;
+	height: 60px; */
+}
+
+div.alertItem {
+	float: left;
+	border: 0px solid #CCC;
+	/* width: 70px; */
+	/* height: 100px; */
+	text-align: center;
+	margin: 3px 3px 3px 3px;
+	padding: 5px;
+}
+div.alertItem label {
+	display: block;
+	/* background-color: #7bb7cf; */
+	line-height: 2em;
+	/* height: 42px; */
+	vertical-align: middle;
+	font-size: 12px;
+}
+div.alertItem img {
+/*	padding: 5px;*/
+	height: 30px;
+}	

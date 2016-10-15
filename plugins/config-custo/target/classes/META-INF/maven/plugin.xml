@@ -1,0 +1,136 @@
+<plugin>
+  <description></description>
+  <groupId>indiktor.plugins</groupId>
+  <artifactId>config-custo-plugin</artifactId>
+  <version>1.0</version>
+  <goalPrefix>config-custo</goalPrefix>
+  <isolatedRealm>false</isolatedRealm>
+  <inheritedByDefault>true</inheritedByDefault>
+  <mojos>
+    <mojo>
+      <goal>unix</goal>
+      <description></description>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>false</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>false</inheritedByDefault>
+      <implementation>/config-custo.build.xml:unix</implementation>
+      <language>ant-mojo</language>
+      <configurator>map-oriented</configurator>
+      <composer>map-oriented</composer>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>env</name>
+          <type>java.lang.String</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>name</name>
+          <type>java.lang.String</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>version</name>
+          <type>java.lang.String</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>basedir</name>
+          <alias>ant.basedir</alias>
+          <type>java.io.File</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>The base directory from which to execute the Ant script.</description>
+        </parameter>
+        <parameter>
+          <name>messageLevel</name>
+          <alias>ant.messageLevel</alias>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The message-level used to tune the verbosity of Ant logging.</description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <env implementation="java.lang.String">${env}</env>
+        <messageLevel implementation="java.lang.String" default-value="info">${antMessageLevel}</messageLevel>
+        <basedir implementation="java.io.File" default-value="${basedir}">${antBasedir}</basedir>
+        <name implementation="java.lang.String" default-value="${project.artifactId}"/>
+        <version implementation="java.lang.String" default-value="${project.version}"/>
+      </configuration>
+    </mojo>
+    <mojo>
+      <goal>windows</goal>
+      <description></description>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>false</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>false</inheritedByDefault>
+      <implementation>/config-custo.build.xml:windows</implementation>
+      <language>ant-mojo</language>
+      <configurator>map-oriented</configurator>
+      <composer>map-oriented</composer>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>env</name>
+          <type>java.lang.String</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>name</name>
+          <type>java.lang.String</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>version</name>
+          <type>java.lang.String</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>basedir</name>
+          <alias>ant.basedir</alias>
+          <type>java.io.File</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>The base directory from which to execute the Ant script.</description>
+        </parameter>
+        <parameter>
+          <name>messageLevel</name>
+          <alias>ant.messageLevel</alias>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The message-level used to tune the verbosity of Ant logging.</description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <env implementation="java.lang.String">${env}</env>
+        <messageLevel implementation="java.lang.String" default-value="info">${antMessageLevel}</messageLevel>
+        <basedir implementation="java.io.File" default-value="${basedir}">${antBasedir}</basedir>
+        <name implementation="java.lang.String" default-value="${project.artifactId}"/>
+        <version implementation="java.lang.String" default-value="${project.version}"/>
+      </configuration>
+    </mojo>
+  </mojos>
+  <dependencies/>
+</plugin>

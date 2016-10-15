@@ -1,0 +1,387 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="dashBoard">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="alertBoards" maxOccurs="1"
+    				minOccurs="0">
+    				<xs:complexType>
+    					<xs:sequence>
+    						<xs:element name="alertBoard"
+    							type="alertBoardType" minOccurs="0" maxOccurs="unbounded">
+    						</xs:element>
+    					</xs:sequence>
+    				</xs:complexType>
+    			</xs:element>
+    			
+    			<xs:element name="alertBoardGrids" maxOccurs="1"
+    				minOccurs="0">
+    				<xs:complexType>
+    					<xs:sequence>
+    						<xs:element name="alertBoardGrid"
+    							type="alertBoardGridType" minOccurs="0" maxOccurs="unbounded">
+    						</xs:element>
+    					</xs:sequence>
+    				</xs:complexType>
+    			</xs:element>
+
+    			<xs:element name="navigationBoards" maxOccurs="1"
+    				minOccurs="0">
+    				<xs:complexType>
+
+    					<xs:sequence>
+    						<xs:element name="navigationBoard"
+    							type="navigationBoardType" maxOccurs="unbounded"
+    							minOccurs="0">
+    						</xs:element>
+    					</xs:sequence>
+    				</xs:complexType>
+    			</xs:element>
+    			<xs:element name="infoBoards" maxOccurs="1"
+    				minOccurs="0">
+    				<xs:complexType>
+    					<xs:sequence>
+    						<xs:element name="infoBoard"
+    							type="infoBoardType" maxOccurs="unbounded" minOccurs="0">
+    						</xs:element>
+    					</xs:sequence>
+    				</xs:complexType>
+    			</xs:element>
+    			<xs:element name="batchBoards" maxOccurs="1"
+    				minOccurs="0">
+    				<xs:complexType>
+    					<xs:sequence>
+    						<xs:element name="batchBoard"
+    							type="batchBoardType" maxOccurs="unbounded" minOccurs="0">
+    						</xs:element>
+    					</xs:sequence>
+    				</xs:complexType>
+    			</xs:element>
+    			<xs:element name="charts" maxOccurs="1" minOccurs="0">
+    				<xs:complexType>
+    					<xs:sequence>
+    						<xs:element name="definitionChart"
+    							type="definitionChartType" maxOccurs="unbounded"
+    							minOccurs="0">
+    						</xs:element>
+    						<xs:element name="categoryChart"
+    							type="categoryChartType" maxOccurs="unbounded"
+    							minOccurs="0">
+    						</xs:element>
+    					</xs:sequence>
+    				</xs:complexType>
+    			</xs:element>
+    			<xs:element name="thread" maxOccurs="1" minOccurs="0">
+    				<xs:complexType>
+    					<xs:sequence>
+    						<xs:element name="detail" maxOccurs="1"
+    							minOccurs="1">
+    							<xs:complexType>
+    								<xs:attribute name="x"
+    									type="xs:int">
+    								</xs:attribute>
+    								<xs:attribute name="y"
+    									type="xs:int">
+    								</xs:attribute>
+    								<xs:attribute name="title"
+    									type="xs:string">
+    								</xs:attribute>
+    								<xs:attribute name="rendered"
+    									type="xs:boolean">
+    								</xs:attribute>
+    							</xs:complexType>
+    						</xs:element>
+    						<xs:element name="method" maxOccurs="1"
+    							minOccurs="1">
+    							<xs:complexType>
+    								<xs:attribute name="x"
+    									type="xs:int">
+    								</xs:attribute>
+    								<xs:attribute name="y"
+    									type="xs:int">
+    								</xs:attribute>
+    								<xs:attribute name="title"
+    									type="xs:string">
+    								</xs:attribute>
+    								<xs:attribute name="rendered"
+    									type="xs:boolean">
+    								</xs:attribute>
+    							</xs:complexType>
+    						</xs:element>
+    						<xs:element name="status" maxOccurs="1"
+    							minOccurs="1">
+    							<xs:complexType>
+    								<xs:attribute name="x"
+    									type="xs:int">
+    								</xs:attribute>
+    								<xs:attribute name="y"
+    									type="xs:int">
+    								</xs:attribute>
+    								<xs:attribute name="title"
+    									type="xs:string">
+    								</xs:attribute>
+    								<xs:attribute name="rendered"
+    									type="xs:boolean">
+    								</xs:attribute>
+    							</xs:complexType>
+    						</xs:element>
+    						<xs:element name="type" maxOccurs="1"
+    							minOccurs="1">
+    							<xs:complexType>
+    								<xs:attribute name="x"
+    									type="xs:int">
+    								</xs:attribute>
+    								<xs:attribute name="y"
+    									type="xs:int">
+    								</xs:attribute>
+    								<xs:attribute name="title"
+    									type="xs:string">
+    								</xs:attribute>
+    								<xs:attribute name="rendered"
+    									type="xs:boolean">
+    								</xs:attribute>
+    							</xs:complexType>
+    						</xs:element>
+    						<xs:element name="stackTrace" maxOccurs="1"
+    							minOccurs="1">
+    							<xs:complexType>
+    								<xs:attribute name="x"
+    									type="xs:int">
+    								</xs:attribute>
+    								<xs:attribute name="y"
+    									type="xs:int">
+    								</xs:attribute>
+    								<xs:attribute name="title"
+    									type="xs:string">
+    								</xs:attribute>
+    								<xs:attribute name="rendered"
+    									type="xs:boolean">
+    								</xs:attribute>
+    							</xs:complexType>
+    						</xs:element>
+
+    					</xs:sequence>
+    					<xs:attribute name="hostname"
+    						type="xs:string">
+    					</xs:attribute>
+    					<xs:attribute name="process" type="xs:string">
+    					</xs:attribute>
+    					<xs:attribute name="title"
+    						type="xs:string">
+    					</xs:attribute>
+    				</xs:complexType>
+    			</xs:element>
+    		</xs:sequence>
+    		<xs:attribute name="env" type="xs:string"></xs:attribute>
+    		<xs:attribute name="type" type="xs:string"></xs:attribute>
+    		<xs:attribute name="title" type="xs:string"></xs:attribute>
+    	</xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="alertBoardType">
+    	<xs:sequence>
+    		<xs:element name="alertItem" minOccurs="1"
+    			maxOccurs="unbounded">
+    			<xs:complexType>
+    				<xs:sequence>
+    					<xs:element name="alert" minOccurs="1"
+    						maxOccurs="unbounded">
+    						<xs:complexType>
+    							<xs:attribute name="env"
+    								type="xs:string">
+    							</xs:attribute>
+    							<xs:attribute name="label"
+    								type="xs:string">
+    							</xs:attribute>
+    						</xs:complexType>
+    					</xs:element>
+    				</xs:sequence>
+    				<xs:attribute name="title" type="xs:string">
+    				</xs:attribute>
+    				<xs:attribute name="type" type="xs:string">
+    				</xs:attribute>
+    			</xs:complexType>
+    		</xs:element>
+
+    	</xs:sequence>
+    	<xs:attribute name="id" type="xs:string"></xs:attribute>
+    	<xs:attribute name="title" type="xs:string"></xs:attribute>
+    	<xs:attribute name="x" type="xs:int"></xs:attribute>
+    	<xs:attribute name="y" type="xs:int"></xs:attribute>
+    	<xs:attribute name="type" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+	<xs:complexType name="alertBoardGridType">
+    	<xs:sequence>
+    		<xs:element name="alertGridItem" minOccurs="1"
+    			maxOccurs="unbounded">
+    			<xs:complexType>
+    				<xs:attribute name="env" type="xs:string">
+    				</xs:attribute>
+    			</xs:complexType>
+    		</xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="id" type="xs:string"></xs:attribute>
+    	<xs:attribute name="title" type="xs:string"></xs:attribute>
+    	<xs:attribute name="x" type="xs:int"></xs:attribute>
+    	<xs:attribute name="y" type="xs:int"></xs:attribute>
+		<xs:attribute name="up" type="xs:boolean"></xs:attribute>
+		<xs:attribute name="down" type="xs:boolean"></xs:attribute>
+		<xs:attribute name="ack" type="xs:boolean"></xs:attribute>
+		<xs:attribute name="low" type="xs:boolean"></xs:attribute>
+		<xs:attribute name="medium" type="xs:boolean"></xs:attribute>
+		<xs:attribute name="high" type="xs:boolean"></xs:attribute>
+		<xs:attribute name="notRunning" type="xs:boolean"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="navigationBoardType">
+    	<xs:sequence>
+    		<xs:element name="navigationItem" maxOccurs="unbounded"
+    			minOccurs="1">
+    			<xs:complexType>
+    				<xs:attribute name="env" type="xs:string">
+    				</xs:attribute>
+    				<xs:attribute name="type" type="xs:string">
+    				</xs:attribute>
+    				<xs:attribute name="title" type="xs:string">
+    				</xs:attribute>
+    			</xs:complexType>
+    		</xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="title" type="xs:string"></xs:attribute>
+    	<xs:attribute name="id" type="xs:string"></xs:attribute>
+    	<xs:attribute name="x" type="xs:int"></xs:attribute>
+    	<xs:attribute name="y" type="xs:int"></xs:attribute>
+    </xs:complexType>
+
+
+
+    <xs:complexType name="infoBoardType">
+    	<xs:sequence>
+    		<xs:element name="infoItem" maxOccurs="unbounded"
+    			minOccurs="1">
+    			<xs:complexType>
+
+    				<xs:sequence>
+
+    				</xs:sequence>
+    				<xs:attribute name="ikrCategoryValue"
+    					type="xs:string">
+    				</xs:attribute>
+    				<xs:attribute name="context" type="xs:string">
+    				</xs:attribute>
+    				<xs:attribute name="ikrInstance" type="xs:string">
+    				</xs:attribute>
+    				<xs:attribute name="logicalEnv" type="xs:string">
+    				</xs:attribute>					<xs:attribute name="label" type="xs:string">
+    				</xs:attribute>
+    			</xs:complexType>
+    		</xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="id" type="xs:string"></xs:attribute>
+    	<xs:attribute name="title" type="xs:string"></xs:attribute>
+    	<xs:attribute name="x" type="xs:int"></xs:attribute>
+    	<xs:attribute name="y" type="xs:int"></xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="batchBoardType">
+    	<xs:sequence>
+    		<xs:element name="batchItem" maxOccurs="unbounded"
+    			minOccurs="0">
+    			<xs:complexType>
+    				<xs:attribute name="label" type="xs:string"></xs:attribute>
+					<xs:attribute name="ikrInstance" type="xs:string"></xs:attribute>
+    			</xs:complexType>
+    		</xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="id" type="xs:string"></xs:attribute>
+    	<xs:attribute name="title" type="xs:string"></xs:attribute>
+    	<xs:attribute name="x" type="xs:int"></xs:attribute>
+    	<xs:attribute name="y" type="xs:int"></xs:attribute>
+    	<xs:attribute name="logicalEnv" type="xs:string"></xs:attribute>
+    	<xs:attribute name="context" type="xs:string"></xs:attribute>
+    	<xs:attribute name="autoDiscovery" type="xs:boolean"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="definitionChartType">
+    	<xs:sequence>
+    		<xs:element name="definition" maxOccurs="unbounded"
+    			minOccurs="1">
+    			<xs:complexType>
+
+    				<xs:attribute name="ikrCategoryValue"
+    					type="xs:string">
+    				</xs:attribute>
+    				<xs:attribute name="context" type="xs:string">
+    				</xs:attribute>
+    				<xs:attribute name="ikrInstance" type="xs:string">
+    				</xs:attribute>
+    				<xs:attribute name="logicalEnv" type="xs:string">
+    				</xs:attribute>					<xs:attribute name="label" type="xs:string">
+    				</xs:attribute>
+    			</xs:complexType>
+    		</xs:element>
+
+    	</xs:sequence>
+    	<xs:attribute name="id" type="xs:string"></xs:attribute>
+    	<xs:attribute name="title" type="xs:string"></xs:attribute>
+    	<xs:attribute name="x" type="xs:int"></xs:attribute>
+    	<xs:attribute name="y" type="xs:int"></xs:attribute>
+    	<xs:attribute name="width" type="xs:int"></xs:attribute>
+    	<xs:attribute name="height" type="xs:int"></xs:attribute>
+    	<xs:attribute name="maxSlot" type="xs:int"></xs:attribute>
+		<xs:attribute name="type">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:enumeration value="line"></xs:enumeration>
+    				<xs:enumeration value="pie2D"></xs:enumeration>
+					<xs:enumeration value="pie3D"></xs:enumeration>
+    				<xs:enumeration value="area"></xs:enumeration>
+					<xs:enumeration value="areastacked"></xs:enumeration>
+    				<xs:enumeration value="bar"></xs:enumeration>
+					<xs:enumeration value="barstacked"></xs:enumeration>
+    				<xs:enumeration value="barclustered"></xs:enumeration>
+					<xs:enumeration value="point"></xs:enumeration>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="categoryChartType">
+    	<xs:sequence>
+    		<xs:element name="metric" maxOccurs="unbounded"
+    			minOccurs="1">
+    			<xs:complexType>
+    				<xs:attribute name="ikrCategoryValue"
+    					type="xs:string">
+    				</xs:attribute>
+    				<xs:attribute name="context" type="xs:string">
+    				</xs:attribute>
+    				<xs:attribute name="logicalEnv"
+    					type="xs:string">
+    				</xs:attribute>
+					<xs:attribute name="domainView"
+    					type="xs:string">
+    				</xs:attribute>
+    			</xs:complexType>
+    		</xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="id" type="xs:string"></xs:attribute>
+    	<xs:attribute name="title" type="xs:string"></xs:attribute>
+    	<xs:attribute name="x" type="xs:int"></xs:attribute>
+    	<xs:attribute name="y" type="xs:int"></xs:attribute>
+    	<xs:attribute name="maxSlot" type="xs:int"></xs:attribute>
+    	<xs:attribute name="width" type="xs:int"></xs:attribute>
+    	<xs:attribute name="height" type="xs:int"></xs:attribute>
+    	<xs:attribute name="type">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:enumeration value="timeseries"></xs:enumeration>
+    				<xs:enumeration value="pie"></xs:enumeration>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    </xs:complexType>
+
+</xs:schema>

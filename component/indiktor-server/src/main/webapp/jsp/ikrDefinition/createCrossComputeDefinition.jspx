@@ -1,0 +1,557 @@
+<f:subview id="createCrossComputeDefinition" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">  
+        
+        
+<ice:form>
+	<table id="pageUpdateCrossCompute">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft2">
+							<div class="topMenuBarLeftAnalysis2">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/AnalysisOFF.png"
+								   				   title="Analysis"
+								   				   value="#{dataCenterBean.menus['analysis']}"
+								   				   actionListener="#{dataCenterBean.navigate}">		
+									<f:attribute name="to" value="analysis"/> 
+								</ice:commandButton>
+							</div>
+							<!-- <div class="topMenuBarLeftDomain">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/DomainOFFLeft.png"
+												   title="Metric Domain"
+												   value="#{dataCenterBean.menus['ikrStaticDomain']}"
+												   actionListener="#{dataCenterBean.navigate}">		
+									<f:attribute name="to" value="ikrStaticDomain"/> 
+								</ice:commandButton>
+							</div> -->
+							<div class="topMenuBarLeftCC2">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/CrossComputeON.png"
+								   				   title="Cross Compute"
+								   				   value="#{dataCenterBean.menus['crossComputeDefinitionSelection']}"
+								   				   actionListener="#{dataCenterBean.navigate}">		
+									<f:attribute name="to" value="crossComputeDefinitionSelection"/>
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftSD">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/StaticDataOFF.png"
+												   title="Static Data"
+												   value="#{dataCenterBean.menus['staticDataConfig']}"
+												   actionListener="#{dataCenterBean.navigate}">			
+									<f:attribute name="to" value="staticDataConfig"/> 
+								</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<ice:selectBooleanCheckbox value="#{crossComputeDefinitionCreationBean.activated}"/>
+									</td>
+									<td>
+										<ice:outputLabel value="Activated"/>
+									</td>
+									<td width="10px"></td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/save.png"
+													   	   title="Save"
+													   	   value="Save"
+													   	   actionListener="#{dataCenterBean.saveCrossCompute}"/>
+									</td>
+									<!-- <td>
+										<ice:commandButton panelConfirmation="deleteConfirmPanel"
+														   styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/delete.png"
+														   actionListener="#{dataCenterBean.deleteCrossCompute}"
+														   binding="#{crossComputeDefinitionCreationBean.deleteCommand}"
+														   value="Delete"
+														   title="Delete"/>
+										<ice:panelConfirmation 	id="deleteConfirmPanel" 
+																message="Are you sure to delete this cross compute?"
+									                       		acceptLabel="Delete" 
+									                       		rendered="true"
+									                       		autoCentre="true"/>
+									</td> -->
+									<td>
+										<ice:commandButton value="Cancel"
+														   actionListener="#{dataCenterBean.navigate}"
+														   title="Cancel"
+														   styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/cancel.png">
+											<f:attribute name="to" value="crossComputeDefinitionSelection"/>
+										</ice:commandButton>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+													   	   title="Help"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentLeftPanelCrossCompute">
+							<table>
+								<tr>
+									<td class="panelTitleCrossCompute">
+										 <ice:outputLabel value="Metric Category"/>
+									</td>
+								</tr>
+								<tr height="20px"><td></td></tr>	
+								<tr>
+									<td style="padding-left: 25px">																						
+										<ice:outputLabel value="Logical Env"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+										<ice:outputText value="#{crossComputeDefinitionCreationBean.logicalEnvSelectionBean.logicalEnvName}" rendered="#{crossComputeDefinitionCreationBean.update}"/>
+										<ice:selectOneMenu rendered="#{crossComputeDefinitionCreationBean.update == false}"
+										 				   value="#{crossComputeDefinitionCreationBean.logicalEnvSelectionBean.logicalEnvId}"
+										 				   valueChangeListener="#{crossComputeDefinitionCreationBean.logicalEnvSelectionBean.onChangeLogicalEnv}"
+														   partialSubmit="true">
+											<f:selectItems value="#{crossComputeDefinitionCreationBean.logicalEnvSelectionBean.logicalEnvItems}"/>
+										</ice:selectOneMenu>	
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+									    <ice:outputLabel value="Domain Type"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+									    <ice:outputText value="#{ikrStaticDomainSelectorBean.domainType.label}" rendered="#{crossComputeDefinitionCreationBean.update}"/>
+										<ice:selectOneMenu value="#{ikrStaticDomainSelectorBean.domainTypeId}"
+														   valueChangeListener="#{ikrStaticDomainSelectorBean.onChangeDomainType}"
+														   rendered="#{crossComputeDefinitionCreationBean.update == false}"
+														   partialSubmit="true" style="width:250px">
+											<f:selectItems value="#{ikrStaticDomainSelectorBean.domainTypeItems}"/>
+										</ice:selectOneMenu>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+									    <ice:outputLabel value="Metric Domain"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+									    <ice:outputText value="#{ikrStaticDomainSelectorBean.metricDomain.label}" rendered="#{crossComputeDefinitionCreationBean.update}"/>
+									    <ice:selectOneMenu value="#{ikrStaticDomainSelectorBean.metricDomainId}"
+									    				   valueChangeListener="#{ikrStaticDomainSelectorBean.onChangeMetricDomain}"
+									    				   rendered="#{!crossComputeDefinitionCreationBean.update}"
+														   partialSubmit="true" style="width:250px">
+											<f:selectItems value="#{ikrStaticDomainSelectorBean.metricDomainItems}"/>
+										</ice:selectOneMenu>			
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+										<ice:outputLabel value="Metric Category"/> 
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+										<ice:outputText value="#{ikrStaticDomainSelectorBean.metricCategory.label}" rendered="#{crossComputeDefinitionCreationBean.update}"/>
+										<ice:panelGrid columns="2" rendered="#{!crossComputeDefinitionCreationBean.update and !crossComputeDefinitionCreationBean.newMetricCategory}">
+											<ice:selectOneMenu 	value="#{ikrStaticDomainSelectorBean.metricCategoryId}"
+										    				   	valueChangeListener="#{ikrStaticDomainSelectorBean.onChangeMetricCategory}"
+										    				   	partialSubmit="true" style="width:250px">
+												<f:selectItems value="#{ikrStaticDomainSelectorBean.metricCategoryItems}"/>
+											</ice:selectOneMenu>
+											<ice:commandButton 	image="/images/IndiKtor2.0/Buttons/addSmall.png"
+																value="New" 
+																actionListener="#{crossComputeDefinitionCreationBean.addNewMetricCategory}"/>
+										</ice:panelGrid>	
+										<ice:inputText 	value="#{crossComputeDefinitionCreationBean.metricCategoryLabel}" 
+														style="width:250px"
+														rendered="#{!crossComputeDefinitionCreationBean.update and crossComputeDefinitionCreationBean.newMetricCategory}"/>	
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+										<ice:outputLabel value="UnitType"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+								       	<ice:selectOneMenu 	value="#{crossComputeDefinitionCreationBean.ikrUnitType}"
+								       						valueChangeListener="#{crossComputeDefinitionCreationBean.onChangeIkrUnitType}"
+												   			partialSubmit="true"
+												   			style="width:250px">
+											<f:selectItems value="#{crossComputeDefinitionCreationBean.ikrUnitTypes}"/>
+										</ice:selectOneMenu>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+										<ice:outputLabel value="Unit" rendered="#{crossComputeDefinitionCreationBean.unitsRendered}"/>	
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px"> 
+								        <ice:selectOneMenu value="#{crossComputeDefinitionCreationBean.ikrUnit}"
+												   		   valueChangeListener="#{crossComputeDefinitionCreationBean.onChangeIkrUnit}"
+												   		   style="width:250px"
+												   		   rendered="#{crossComputeDefinitionCreationBean.unitsRendered}">
+											<f:selectItems value="#{crossComputeDefinitionCreationBean.units}"/>
+										</ice:selectOneMenu>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+										<ice:outputLabel value="Threshold:" rendered="#{crossComputeDefinitionCreationBean.rendererThreshold}"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+				           				<ice:inputText value="#{crossComputeDefinitionCreationBean.threshold}" 
+				           							   style="width:250px"
+				           							   rendered="#{crossComputeDefinitionCreationBean.rendererThreshold}"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+										<ice:outputLabel value="Description:"/>
+									</td>
+								</tr> 
+								<tr>
+									<td style="padding-left: 25px">
+				           				<ice:inputTextarea value="#{crossComputeDefinitionCreationBean.description}" 
+					           								   style="width:250px; height: 80px"/>
+									</td>
+								</tr>	
+								<tr>
+									<td style="padding-left: 25px">
+										<ice:outputLabel value="Persistent"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+				           				<ice:selectOneMenu value="#{crossComputeDefinitionCreationBean.persistent}"
+												    	   partialSubmit="true" style="width:250px">
+									       	<f:selectItems value="#{crossComputeDefinitionCreationBean.booleanSelection}"/>
+									    </ice:selectOneMenu> 
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+										<ice:outputLabel value="Archive"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+				           				<ice:selectOneMenu value="#{crossComputeDefinitionCreationBean.archive}"
+												    	   disabled="#{!crossComputeDefinitionCreationBean.enableArchive}" partialSubmit="true" style="width:250px">
+									       	<f:selectItems value="#{crossComputeDefinitionCreationBean.booleanSelection}"/>
+									    </ice:selectOneMenu> 
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+				           				<ice:outputLabel value="Search Indexes :" title="Each Item is Separated par :"/>
+								    </td>
+								</tr>
+								<tr>
+									<td style="padding-left: 25px">
+				           				<ice:inputText  value="#{crossComputeDefinitionCreationBean.searchIndexes}" style="width:250px" title="Each Item is Separated par :"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="12px"></td>
+						<td class="contentRightPanel">
+							<table>
+								<tr height="8px"><td></td></tr>
+								<tr>
+									<td class="panelTitleCrossCompute2">
+										 <ice:outputLabel value="Metric Definition" style="padding-right:665px;"/>
+										 <!-- 
+										 <ice:commandButton image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+														   title="Delete checked IKR"
+														   style="margin-right:5px;"
+														   value="OK" 
+														   actionListener="#{metricSelectorBean.removeItems}"/>
+										 -->
+										 <ice:commandButton image="/images/IndiKtor2.0/Buttons/addSmall.png"
+														   title="Add metric" 
+														   value="Metric Selector"
+														   actionListener="#{dataCenterBean.openMetricSelectorPopup}"/>
+									</td>
+								</tr>
+								<tr height="5px"><td></td></tr>
+								<tr>
+									<td style="text-align: center;">
+										<!--  
+										<ui:include src="/jsp/ikrComponent/ikrSelectorDataTableSelection.jspx"/>
+										-->
+										<ice:panelGroup scrollHeight="250px">
+							   	  			<ice:outputLabel rendered="#{crossComputeDefinitionCreationBean.selectedMetricSize==0}"
+														 value="No Metrics Added. Click on the plus icon (+) to add Metrics."/>
+											<BR/>
+											<ice:outputLabel rendered="#{crossComputeDefinitionCreationBean.selectedMetricSize==0}"
+														 value="Add at least one Metric to create a new Formula."/>
+							   	  			<ice:dataTable id="selectedMetrics"
+							   	  						   value="#{crossComputeDefinitionCreationBean.selectedBeans}"
+						                				   var="filesRecord"
+						                				   cellpadding="0"
+						                				   rendered="#{crossComputeDefinitionCreationBean.selectedMetricSize!=0}"
+						                				   width="794px"
+						                				   columnWidths="40, 100, 225, 100, 200, 45">
+						                		<ice:column>						      
+								        			<f:facet name="header">
+								             			<ice:outputText value="Id"/>
+								         			</f:facet>
+								             			<ice:outputText value="M#{filesRecord.metricGroupBean.id}"/>
+								        		</ice:column>
+								        		<ice:column>
+								        			<f:facet name="header">
+								             			<ice:outputText value="Logical Env"/>
+								         			</f:facet>
+								             			<ice:outputText value="#{filesRecord.metricGroupBean.logicalEnv.name}"/>
+								        		</ice:column>
+								        		<ice:column>
+								        			<f:facet name="header">
+								             			<ice:outputText value="Category"/>
+								         			</f:facet>
+								             			<ice:outputText value="#{filesRecord.metricGroupBean.ikrCategory.label}"/>
+								        		</ice:column>
+								        		<ice:column>
+								        			<f:facet name="header">
+								             			<ice:outputText value="Instance"/>
+								         			</f:facet>
+								             			<ice:outputText value="#{filesRecord.metricGroupBean.fullIkrInstance}"/>
+								        		</ice:column>
+								        		<ice:column>
+								        			<f:facet name="header">
+								             			<ice:outputText value="Context"/>
+								         			</f:facet>
+								             			<ice:outputText value="#{filesRecord.metricGroupBean.context}"/>
+								        		</ice:column>
+								        		<ice:column style="width: 40px;">
+			                						<f:facet name="header">
+														<ice:commandButton panelConfirmation="removeConfirmPanel"
+																		   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+					                									   alt="Remove all metrics from the list"
+					                									   style="float: right;"
+					                									   actionListener="#{crossComputeDefinitionCreationBean.removeAllMetricFromList}">
+													    	<f:attribute name="obj" value="#{filesRecord}"/>
+														</ice:commandButton>
+								         			</f:facet>
+			                					<ice:commandButton image="/images/IndiKtor2.0/Buttons/validateSmall.png"
+			                									   alt="Add this metric to the formula"
+			                									   style="float: left;"
+												     			   actionListener="#{crossComputeDefinitionCreationBean.addMetricToFormula}">
+											    	<f:attribute name="obj" value="#{filesRecord}"/>
+												</ice:commandButton>
+												<ice:commandButton panelConfirmation="removeConfirmPanel"
+																   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+			                									   alt="Remove this metric from the list"
+			                									   style="float: right;"
+			                									   actionListener="#{crossComputeDefinitionCreationBean.removeMetricFromList}">
+											    	<f:attribute name="obj" value="#{filesRecord}"/>
+												</ice:commandButton>													
+			                				</ice:column>		 		
+								  			</ice:dataTable>
+								  		</ice:panelGroup>	
+									</td>									
+								</tr>												   
+								<tr height="77px"><td></td></tr>  
+								<tr>
+									<td align="left">
+										<table>
+											<tr> 
+												<td style="padding-top: 40px">
+													<table style="margin-left: 21px">
+														<tr>
+															<td>
+																<ice:outputLabel style="font-size: 16px;" value="Metric Name"/>
+															</td>
+														</tr>
+														<tr>
+															<td>
+															<!-- 
+														        <ice:inputText value="#{crossComputeDefinitionCreationBean.crossComputeDefinition.ikrInstance}" 
+														            		   size="75"/>
+														     -->
+														     <ice:inputText value="#{crossComputeDefinitionCreationBean.ikrInstance}" 
+														            		   size="75"/>
+															</td>
+														</tr>
+														<tr>
+															<td>	
+																<ice:outputLabel value="Computation Formula"/>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<ice:inputText value="#{crossComputeDefinitionCreationBean.crossComputeDefinition.crossComputation}" 
+																			   size="75" style="height: 50px"
+																			   valueChangeListener="#{crossComputeDefinitionCreationBean.onInputValue}"/>   														            		   
+														    </td>
+														</tr>
+													</table>
+												</td>
+												<td width="85px"></td>
+												<td align="left" style="padding-top: 17px">
+													<table>
+														<tr>	
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/7.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.sevenListener}"
+																				   styleClass="calculator"/>
+															</td>		
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/8.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.eightListener}"
+																				   styleClass="calculator"/>
+															</td>	
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/9.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.nineListener}"
+																				   styleClass="calculator"/>
+															</td>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/div.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.divideListener}"
+																				   styleClass="calculator"/>
+															</td>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/ce.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.clearEntryListener}"
+																				   styleClass="calculator"/>
+															</td>
+														</tr>
+														<tr>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/4.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.fourListener}"
+																				   styleClass="calculator"/>
+															</td>		
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/5.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.fiveListener}"
+																				   styleClass="calculator"/>
+															</td>	
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/6.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.sixListener}"
+																				   styleClass="calculator"/>
+															</td>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/x.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.multiplyListener}"
+																				   styleClass="calculator"/>
+															</td>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/c.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.clearListener}"
+																				   styleClass="calculator"/>
+															</td>
+														</tr>
+														<tr>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/1.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.oneListener}"
+																				   styleClass="calculator"/>
+															</td>		
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/2.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.twoListener}"
+																				   styleClass="calculator"/>
+															</td>	
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/3.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.threeListener}"
+																				   styleClass="calculator"/>
+															</td>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/-.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.substractListener}"
+																				   styleClass="calculator"/>
+															</td>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/back.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.backspaceListener}"
+																				   styleClass="calculator"/>
+															</td>
+														</tr>
+														<tr>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/0.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.zeroListener}"
+																				   styleClass="calculator"/>
+															</td>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/(.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.openParenthesisListener}"
+																				   styleClass="calculator"/>
+															</td>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/).png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.closeParenthesisListener}"
+																				   styleClass="calculator"/>
+															</td>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/+.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.sumListener}"
+																				   styleClass="calculator"/>
+															</td>
+															<td width="33px" style="float: left; text-align: left; padding: 6px">
+																<ice:commandButton image="/images/IndiKtor2.0/CrossComputeButtons/comma.png"
+																				   actionListener="#{crossComputeDefinitionCreationBean.commaListener}"
+																				   styleClass="calculator"/>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="20px"></td>
+					</tr>
+				</table>	
+			</td>
+		</tr>
+	</table>
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" style="width: 625px; height: 575px;"
+					rendered="#{dataCenterBean.rendererMetricSelector}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputText style="float: left;" value="Metric Selector"/></td>
+		       			<td><ice:commandButton style="float: right;" 
+		       								   actionListener="#{dataCenterBean.closeMetricSelectorPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGrid align="center" cellpadding="0" cellspacing="0">
+				<ui:include src="/jsp/ikrComponent/metricSelector.jspx"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+		
+</ice:form>
+</f:subview>

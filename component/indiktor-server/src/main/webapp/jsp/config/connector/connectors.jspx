@@ -1,0 +1,353 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ui:param name="pageTitle" value="Connectors configuration" />
+<ui:define name="content">
+
+<ice:panelGrid>
+<ice:panelGrid>
+<ice:form>
+	<table id="pageConnectors">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft2">
+							<div class="topMenuBarLeftAnalysis">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/DataCollection/ConnectorsON.png"
+												   title="Connectors"
+												   value="Connectors"
+												   action="#{connectorConfigBean.action}"
+												   actionListener="#{connectorConfigBean.init}">
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftCC">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/DataCollection/CollectorsOFFRight.png"
+								   				   title="Collectors"
+								   				   value="Collectors"
+								   				   action="#{monitorSelectionBean.action}"
+								   				   actionListener="#{monitorSelectionBean.init}">
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftSD">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/DataCollection/JobSchedulerOFF.png"
+												   title="Jobs Schedulers"
+												   value="Jobs Schedulers"
+												   action="#{jobSchedulerSelectionBean.action}"
+												   actionListener="#{jobSchedulerSelectionBean.init}">	
+								</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<ice:panelGrid columns="2">
+										 	<ice:outputLabel value="Search"/>
+										 	<ice:inputText value="#{connectorConfigBean.searchQuery}"
+										 				   valueChangeListener="#{connectorConfigBean.searchMonitorQuery}"	
+										 				   style="width:200px; font-size: 10px; margin-right: 30px;"									 	
+										 	/>
+										 </ice:panelGrid>
+									</td>
+									<td></td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   value="Add new connector" 
+														   image="/images/IndiKtor2.0/Buttons/add.png"
+													   	   title="Add new connector"
+													   	   actionListener="#{connectorConfigBean.initForConfig}"/>
+									</td>
+									<td> 
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   panelConfirmation="#{connectorConfigBean.connectorConfigsSelected == 0 ? false : 'deleteConfirmPanel'}"
+														   value="Delete"
+														   image="/images/IndiKtor2.0/Buttons/delete.png"
+													   	   title="Delete selected connectors"
+													   	   actionListener="#{connectorConfigBean.deleteSelectedConnectors}"
+													   	   rendered="#{connectorConfigBean.connectorConfigsSelected != 0}">	   
+										</ice:commandButton>
+										<ice:panelConfirmation 	id="deleteConfirmPanel" 
+																message="#{connectorConfigBean.deleteMessage}"
+										                   		acceptLabel="Delete"
+										                   		autoCentre="true"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Return to administration panel"
+														   image="/images/IndiKtor2.0/Buttons/cancel.png"
+													   	   title="Return to administration panel"
+													   	   actionListener="#{adminBean.init}"
+													   	   action="#{adminBean.action}"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+													   	   title="Help"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentFullPanelConnectors">
+							<table>								
+								<tr>
+									<td>
+										<ice:panelGroup style="text-align:center;" rendered="#{connectorConfigBean.listRendered}">
+											<ice:dataPaginator id="ConnectorConfigTableScroll_2" for="ConnectorConfigTable"
+												rowsCountVar="rowsCount"
+												displayedRowsCountVar="displayedRowsCountVar"
+												firstRowIndexVar="firstRowIndex"
+												lastRowIndexVar="lastRowIndex" pageCountVar="pageCount"
+												pageIndexVar="pageIndex">
+												<ice:outputFormat
+													value="{0} Connectors found,  displaying {1} Connectors,  from {2} to {3}. Page {4} / {5}."
+													style="font-weight: bold;" styleClass="standard">
+													<f:param value="#{rowsCount}" />
+													<f:param value="#{displayedRowsCountVar}" />
+													<f:param value="#{firstRowIndex}" />
+													<f:param value="#{lastRowIndex}" />
+													<f:param value="#{pageIndex}" />
+													<f:param value="#{pageCount}" />
+												</ice:outputFormat>
+											</ice:dataPaginator>
+										</ice:panelGroup>
+									</td>
+								</tr>
+								<tr height="10px"><td></td></tr>
+								<tr>
+									<td align="center"> 
+										<ice:panelGrid columns="1" style="text-align: center;" width="1150px">
+											<ice:outputLabel value="No Connector has been configured. Click on the plus icon (+) to add Connectors."
+															 rendered="#{!connectorConfigBean.listRendered}"/>
+										</ice:panelGrid>
+										<ice:panelGroup rendered="#{connectorConfigBean.listRendered}">	
+										    <ice:dataTable  id="ConnectorConfigTable"
+										    		  	    value="#{connectorConfigBean.connectorConfigs}"
+										                	var="configBean"		
+										                	sortColumn="#{connectorConfigBean.sortColumnName}"	
+															sortAscending="#{connectorConfigBean.ascending}"						   
+															columnWidths="20, 380, 250, 380, 65"
+										                	cellpadding="0"
+										                	rows="#{connectorConfigBean.rowsByPage}">	
+													<ice:column>													
+														<f:facet name="header">
+													       	<ice:selectBooleanCheckbox value="#{connectorConfigBean.selectAll}" 
+													       							   valueChangeListener="#{connectorConfigBean.handleSelectAllConnectors}"	
+													       							   partialSubmit="true"
+													       							   style="text-align: center;"/>
+														</f:facet>
+												       	<ice:selectBooleanCheckbox value="#{configBean.selected}" 
+												       							   valueChangeListener="#{connectorConfigBean.handleSelectedConnector}"	
+												       							   partialSubmit="true"
+												       							   style="text-align: center;">
+												       		<f:attribute name="configBean" value="#{configBean}"/> 							   
+												       	</ice:selectBooleanCheckbox>
+													</ice:column>
+									        		<ice:column style="text-align: left;">
+									        			<!-- <ice:rowSelector value="#{configBean.selected}" 
+																		selectedClass="tableRowSelSelected"
+																		mouseOverClass="tableRowSelMouseOver"
+																		selectedMouseOverClass="tableRowSelSelectedMouseOver"
+																		enhancedMultiple="true"  
+														               	styleClass="iceRowSel-Dis"
+														                selectionListener="#{connectorConfigBean.rowSelectionListener}"/> -->
+									        			<f:facet name="header">
+									             			<ice:commandSortHeader columnName="#{connectorConfigBean.nameColumnName}" arrow="true" >
+												                <ice:outputText value="#{connectorConfigBean.nameColumnName}"/>
+												            </ice:commandSortHeader>
+									         			</f:facet>
+									         			<ice:panelGroup>
+									         				<ice:outputText value="#{configBean.connectorConfig.name}"/>
+									         			</ice:panelGroup>
+									        		</ice:column>	                	
+									        		<ice:column style="text-align: left;">
+									        			<f:facet name="header">
+									             			<ice:commandSortHeader columnName="#{connectorConfigBean.typeColumnName}" arrow="true" >
+												                <ice:outputText value="#{connectorConfigBean.typeColumnName}"/>
+												            </ice:commandSortHeader>
+									         			</f:facet>
+									         			<ice:panelGroup>
+									         				<ice:outputText value="#{configBean.connectorConfig.type}"/>
+									         			</ice:panelGroup>
+									        		</ice:column>
+									        		<ice:column style="text-align: left;">
+									        			<f:facet name="header">
+									             			<ice:outputText value="Description"/>
+									         			</f:facet>
+									         			<ice:panelGroup>
+									         				<ice:outputText value="#{configBean.connectorConfig.description}"/>
+									         			</ice:panelGroup>
+									        		</ice:column> 
+									        		<ice:column>
+														<f:facet name="header">
+														</f:facet>
+														<ice:commandButton actionListener="#{connectorConfigBean.initForUpdate}"
+																		   image="/images/IndiKtor2.0/Buttons/editSmall.png"
+																		   title="Edit this connector">
+															<f:attribute name="configBean" value="#{configBean}"/>
+														</ice:commandButton>
+														<ice:commandButton image="/images/IndiKtor2.0/Buttons/duplicateSmall.png"
+																	   	   title="Duplicate this connector"
+																	   	   actionListener="#{connectorConfigBean.duplicate}"
+																	   	   style="margin-left: 10px;">
+															<f:attribute name="configBean" value="#{configBean}"/>
+														</ice:commandButton>
+														<ice:commandButton panelConfirmation="deleteNoSelectionConfirmPanel"
+																		   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+																		   actionListener="#{connectorConfigBean.deleteConnector}"
+																		   title="Delete this connector"
+																	   	   style="margin-left: 10px;">
+															<f:attribute name="configBean" value="#{configBean}"/>	
+														</ice:commandButton>
+														<ice:panelConfirmation 	id="deleteNoSelectionConfirmPanel"
+																				message="Are you sure to delete this connector : #{configBean.connectorConfig.name}"
+																				type="normal"
+																				acceptLabel="Delete"
+																				rendered="true"
+																				autoCentre="true"/>							
+													</ice:column>       		
+										    </ice:dataTable> 
+										</ice:panelGroup>
+									</td>
+								</tr>   
+								<tr>
+									<td>
+										<ice:panelGroup style="float:center;"
+														visible="#{connectorConfigBean.paginationVisible}"
+														rendered="#{connectorConfigBean.listRendered}">
+											<center>
+												<ice:dataPaginator id="ConnectorConfigTableScroll_1" for="ConnectorConfigTable"
+													fastStep="3" paginator="true" paginatorMaxPages="4" actionListener="#{connectorConfigBean.pageChangeListener}">
+													<f:facet name="first">
+														<ice:graphicImage id="firstpage_1"
+															url="#{styleBean.imageDirectory}arrow-first.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.firstpage']}" />
+													</f:facet>
+													<f:facet name="last">
+														<ice:graphicImage id="lastpage_1"
+															url="#{styleBean.imageDirectory}arrow-last.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.lastpage']}" />
+													</f:facet>
+													<f:facet name="previous">
+														<ice:graphicImage id="previouspage_1"
+															url="#{styleBean.imageDirectory}arrow-previous.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.previouspage']}" />
+													</f:facet>
+													<f:facet name="next">
+														<ice:graphicImage id="nextpage_1"
+															url="#{styleBean.imageDirectory}arrow-next.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.nextpage']}" />
+													</f:facet>
+													<f:facet name="fastforward">
+														<ice:graphicImage id="fastforward_1"
+															url="#{styleBean.imageDirectory}arrow-ff.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastforward']}" />
+													</f:facet>
+													<f:facet name="fastrewind">
+														<ice:graphicImage id="fastrewind_1"
+															url="#{styleBean.imageDirectory}arrow-fr.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastbackward']}" />
+													</f:facet>
+												</ice:dataPaginator>
+											</center>
+										</ice:panelGroup>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table> 	
+			</td>
+		</tr>
+	</table>
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{connectorConfigBean.rendererConnectorConfig}"
+					style="width: 375px;">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px; width: 375px">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputLabel style="float: left;" value="Add new connector"/></td>
+		       			<td>
+		       				<ice:commandButton style="float: right;" 
+		       								   actionListener="#{connectorConfigBean.closeConnectorConfigPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+							<ice:commandButton style="float: right;"
+											   actionListener="#{connectorConfigBean.validate}"
+											   image="/images/IndiKtor2.0/Buttons/saveSmall.png"
+							    			   value="Save"
+							    			   title="Save"
+		       								   styleClass="iconPopup"/>	
+							<ice:commandButton style="float: right;"
+											   rendered="#{connectorConfigBean.backConnectorConfigVisible}"
+											   actionListener="#{connectorConfigBean.handleConnectorConfig}"
+											   image="/images/IndiKtor2.0/Buttons/cancelSmall.png"
+							    			   value="Back to Type"
+							    			   title="Back to Type"
+		       								   styleClass="iconPopup"/>	       								   		       								   
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGrid id="ConnectorConfig" style="text-align: left;">
+				<ui:include src="/jsp/config/connector/connectorConfig.jspx"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{connectorConfigBean.rendererConnectorConfigUpdate}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputLabel style="float: left;" value="#{connectorConfigBean.connectorConfig.id==0?'Duplicate Connector' : 'Update Connector'}"/></td>
+		       			<td>
+		       				<ice:commandButton style="float: right;" 
+		       								   actionListener="#{connectorConfigBean.closeConnectorConfigUpdatePopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+							<ice:commandButton style="float: right;"
+											   actionListener="#{connectorConfigBean.validate}"
+											   image="/images/IndiKtor2.0/Buttons/saveSmall.png"
+							    			   value="Save"
+							    			   title="Save"
+		       								   styleClass="iconPopup"/>	       								   		       								   
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGrid id="ConnectorConfig">
+				<ui:include src="/jsp/config/connector/connectorConfig.jspx"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+			
+</ice:form>
+<ui:include src="/jsp/util/errorMessage.jspx"/>
+</ice:panelGrid>
+</ice:panelGrid>
+</ui:define>
+</ui:composition>

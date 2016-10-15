@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	
+	<bean id="cpmsDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+	
+	<import resource="classpath:applicationContext-persistency-${ikr.jdbc.databaseType}.xml"/>	
+	
+    <bean id="pool" class="org.apache.commons.pool.impl.GenericObjectPool">
+		<property name="maxActive"><value>50</value></property>
+		<property name="maxWait"><value>60000</value></property>
+        <property name="minEvictableIdleTimeMillis"><value>300000</value></property>
+        <property name="timeBetweenEvictionRunsMillis"><value>60000</value></property>
+    </bean>
+
+    <bean id="dsConnectionFactory" class="org.apache.commons.dbcp.DataSourceConnectionFactory">
+        <constructor-arg><ref bean="cpmsDS"/></constructor-arg>
+    </bean>
+
+    <bean id="poolableConnectionFactory" class="org.apache.commons.dbcp.PoolableConnectionFactory">
+        <constructor-arg index="0"><ref bean="dsConnectionFactory"/></constructor-arg>
+        <constructor-arg index="1"><ref bean="pool"/></constructor-arg>
+        <constructor-arg index="2"><null/></constructor-arg>
+        <constructor-arg index="3"><null/></constructor-arg>
+        <constructor-arg index="4"><value>false</value></constructor-arg>
+        <constructor-arg index="5"><value>true</value></constructor-arg>
+    </bean>
+
+    <bean id="pooledDS" class="org.apache.commons.dbcp.PoolingDataSource" 
+		  depends-on="poolableConnectionFactory"
+		  scope="singleton">
+        <constructor-arg><ref bean="pool"/></constructor-arg>
+    </bean>
+	
+	<bean id="cacheLoaderFactory"
+		  class="com.fsi.monitoring.cache.StandardCacheLoaderFactory">   
+		<property name="cacheLoaders">
+			<map>
+				<entry>
+					<key><value>IkrCategoryCacheLoader</value></key>
+					<ref bean="ikrCategoryCacheLoader"/>
+				</entry>
+				<entry>
+					<key><value>IkrValueCacheLoader</value></key>
+					<ref bean="ikrValueCacheLoader"/>
+				</entry>		
+				<entry>
+					<key><value>IkrDefinitionCacheLoader</value></key>
+					<ref bean="ikrDefinitionCacheLoader"/>
+				</entry>    
+				<entry>
+					<key><value>ScheduledTaskCacheLoader</value></key>
+					<ref bean="scheduledTaskCacheLoader"/>
+				</entry>		
+				<entry>
+					<key><value>MonitorCacheLoader</value></key>
+					<ref bean="monitorCacheLoader"/>
+				</entry>
+				<entry>
+					<key><value>ConnectorCacheLoader</value></key>
+					<ref bean="connectorCacheLoader"/>
+				</entry>
+				<entry>
+					<key><value>AlertDefinitionCacheLoader</value></key>
+					<ref bean="alertDefinitionCacheLoader"/>
+				</entry>
+				<!--
+				<entry>
+					<key><value>QueryCacheLoader</value></key>
+					<ref bean="queryCacheLoader"/>
+				</entry>
+				-->		
+			</map>
+		</property>
+	</bean>	
+
+	<bean id="ehCacheMBeanRegistration" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+	  <property name="staticMethod"  value="net.sf.ehcache.management.ManagementService.registerMBeans"/>
+	  <property name="arguments">
+		<list>
+		  <ref bean="cacheManager"/>
+		  <ref bean="mbeanServer"/>
+		  <value>true</value>
+		  <value>true</value>
+		  <value>true</value>
+		  <value>true</value>
+		</list>
+	  </property>
+	</bean>
+	
+	<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+	  <property name="locateExistingServerIfPossible" value="true"/>
+	</bean>
+	
+	
+	<bean
+		id="monitorCacheLoader"
+		class="com.fsi.monitoring.indiktor.cacheLoader.MonitorCacheLoader">
+		<property name="dataModelDAO">
+			<ref bean="dataModelDAO"/>
+		</property>  
+	</bean>		
+	
+	<bean
+		id="connectorCacheLoader"
+		class="com.fsi.monitoring.indiktor.cacheLoader.ConnectorCacheLoader">
+		<property name="dataModelDAO">
+			<ref bean="dataModelDAO"/>
+		</property>  
+	</bean>		
+	
+	<bean
+		id="scheduledTaskCacheLoader"
+		class="com.fsi.monitoring.indiktor.cacheLoader.ScheduledTaskCacheLoader">
+		<property name="dataModelDAO">
+			<ref bean="dataModelDAO"/>
+		</property>  
+	</bean>		
+	
+	<bean
+		id="ikrDefinitionCacheLoader"
+		class="com.fsi.monitoring.indiktor.cacheLoader.IkrDefinitionCacheLoader">
+		<property name="monitorDAO">
+			<ref bean="monitorDAO"/>
+		</property> 
+	</bean>
+
+	<bean
+		id="ikrValueCacheLoader"
+		class="com.fsi.monitoring.indiktor.cacheLoader.IkrValueCacheLoader">
+		<property name="monitorDAO">
+			<ref bean="monitorDAO"/>
+		</property> 
+	</bean>		
+	
+	<bean
+		id="ikrCategoryCacheLoader"
+		class="com.fsi.monitoring.indiktor.cacheLoader.IkrCategoryCacheLoader">
+		<property name="dataModelDAO">
+			<ref bean="dataModelDAO"/>
+		</property> 		
+	</bean>			
+	
+	<bean
+		id="alertDefinitionCacheLoader"
+		class="com.fsi.monitoring.alert.cacheLoader.AlertDefinitionCacheLoader">
+		<property name="alertDAO">
+			<ref bean="alertDAO"/>
+		</property> 
+	</bean>
+<!--
+	<bean
+		id="queryCacheLoader"
+		class="com.fsi.monitoring.query.cacheLoader.QueryCacheLoader">
+		<property name="queryDAO">
+			<ref bean="queryDAO"/>
+		</property> 
+	</bean>
+-->	
+	<bean id="reportPM"
+    	  class="com.fsi.monitoring.report.ReportPMFactory"
+    	  scope="singleton"> 
+		<property name="reportDAO">
+			<ref bean="reportDAO"/>
+		</property>   
+	</bean>
+	
+	<bean id="histoPM"
+    	  class="com.fsi.monitoring.histo.HistoPMFactory"
+    	  scope="singleton"> 
+		<property name="histoDAO">
+			<ref bean="histoDAO"/>
+		</property>   
+	</bean>	
+
+	<bean id="userPM"
+    	  class="com.fsi.monitoring.user.UserPMFactory"
+    	  scope="singleton"> 
+		<property name="userDAO">
+			<ref bean="userDAO"/>
+		</property>
+		<property name="userIdGenerator">
+			<ref bean="userIdGenerator"/>
+		</property>
+	</bean>
+
+	<bean id="monitoringPM"
+    	  class="com.fsi.monitoring.indiktor.MonitoringPMFactory"
+    	  scope="singleton">
+		<property name="cacheManager">
+			<ref bean="cacheManager"/>
+		</property>   
+		<property name="monitorDAO">
+			<ref bean="monitorDAO"/>
+		</property>	
+	</bean>
+	
+	<bean id="dataModelPM"
+    	  class="com.fsi.monitoring.indiktor.DataModelPMFactory"
+    	  scope="singleton">
+		<property name="cacheManager">
+			<ref bean="cacheManager"/>
+		</property>   
+		<property name="dataModelDAO">
+			<ref bean="dataModelDAO"/>
+		</property>
+		<property name="connectorIdGenerator">
+			<ref bean="connectorIdGenerator"/>
+		</property>
+		<property name="metricDomainConfigIdGenerator">
+			<ref bean="metricDomainConfigIdGenerator"/>
+		</property>		
+		<property name="staticDataIdGenerator">
+			<ref bean="staticDataIdGenerator"/>
+		</property>	
+		<property name="staticDomainIdGenerator">
+			<ref bean="staticDomainIdGenerator"/>
+		</property>			
+		<property name="metricDomainResourceIdGenerator">
+			<ref bean="metricDomainResourceIdGenerator"/>
+		</property>			
+		<property name="ikrCategoryResourceIdGenerator">
+			<ref bean="ikrCategoryResourceIdGenerator"/>
+		</property>	
+	</bean>
+	
+	<bean id="alertPM"
+    	  class="com.fsi.monitoring.alert.AlertPMFactory"
+    	  scope="singleton">
+		<property name="cacheManager">
+			<ref bean="cacheManager"/>
+		</property>   
+		<property name="alertDAO">
+			<ref bean="alertDAO"/>
+		</property>
+		<property name="alertDefIdGenerator">
+			<ref bean="alertDefinitionIdGenerator"/>
+		</property>
+		<property name="alertEventIdGenerator">
+			<ref bean="alertEventIdGenerator"/>
+		</property>
+	</bean>	
+	
+    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+       <property name="scopes">
+          <map>
+            <entry key="thread" value="com.fsi.fwk.tx.ThreadScope"/>
+          </map>
+       </property>
+    </bean>
+	
+	<bean id="ikrValueIdGenerator"
+    	  class="com.fsi.monitoring.global.IdGenerator"
+    	  scope="thread">
+		<property name="globalDAO">
+			<ref bean="globalDAO"/>
+		</property>
+		<property name="batchSize"><value>10000</value></property>
+		<property name="objectType"><value>IkrValue</value></property>
+	</bean>	
+	
+	<bean id="ikrValueArchiveIdGenerator"
+    	  class="com.fsi.monitoring.global.IdGenerator"
+    	  scope="thread">
+		<property name="globalDAO">
+			<ref bean="globalDAO"/>
+		</property>
+		<property name="batchSize"><value>10000</value></property>
+		<property name="objectType"><value>IkrValueArchive</value></property>
+	</bean>	
+	
+	<bean id="connectorIdGenerator"
+    	  class="com.fsi.monitoring.global.IdGenerator"
+    	  scope="thread">
+		<property name="globalDAO">
+			<ref bean="globalDAO"/>
+		</property>
+		<property name="batchSize"><value>5</value></property>
+		<property name="objectType"><value>Connector</value></property>
+	</bean>		
+	
+	<bean id="alertDefinitionIdGenerator"
+    	  class="com.fsi.monitoring.global.IdGenerator"
+    	  scope="thread">
+		<property name="globalDAO">
+			<ref bean="globalDAO"/>
+		</property>
+		<property name="batchSize"><value>1000</value></property>
+		<property name="objectType"><value>AlertDefinition</value></property>
+	</bean>
+	
+	<bean id="alertEventIdGenerator"
+    	  class="com.fsi.monitoring.global.IdGenerator"
+    	  scope="thread">
+		<property name="globalDAO">
+			<ref bean="globalDAO"/>
+		</property>
+		<property name="batchSize"><value>1000</value></property>
+		<property name="objectType"><value>AlertEvent</value></property>
+	</bean>
+	
+	<bean id="staticDataIdGenerator"
+    	  class="com.fsi.monitoring.global.IdGenerator"
+    	  scope="thread">
+		<property name="globalDAO">
+			<ref bean="globalDAO"/>
+		</property>
+		<property name="batchSize"><value>5</value></property>
+		<property name="objectType"><value>StaticData</value></property>
+	</bean>	
+	
+	<bean id="userIdGenerator"
+    	  class="com.fsi.monitoring.global.IdGenerator"
+    	  scope="thread">
+		<property name="globalDAO">
+			<ref bean="globalDAO"/>
+		</property>
+		<property name="batchSize"><value>100</value></property>
+		<property name="objectType"><value>User</value></property>
+	</bean>							
+
+	<bean id="metricDomainConfigIdGenerator"
+    	  class="com.fsi.monitoring.global.IdGenerator"
+    	  scope="thread">
+		<property name="globalDAO">
+			<ref bean="globalDAO"/>
+		</property>
+		<property name="batchSize"><value>20</value></property>
+		<property name="objectType"><value>MetricDomainConfig</value></property>
+	</bean>		
+
+	<bean id="staticDomainIdGenerator"
+    	  class="com.fsi.monitoring.global.IdGenerator"
+    	  scope="thread">
+		<property name="globalDAO">
+			<ref bean="globalDAO"/>
+		</property>
+		<property name="batchSize"><value>20</value></property>
+		<property name="objectType"><value>StaticDomain</value></property>
+	</bean>	
+	
+	<bean id="metricDomainResourceIdGenerator"
+    	  class="com.fsi.monitoring.global.IdGenerator"
+    	  scope="thread">
+		<property name="globalDAO">
+			<ref bean="globalDAO"/>
+		</property>
+		<property name="batchSize"><value>20</value></property>
+		<property name="objectType"><value>MetricDomainResource</value></property>
+	</bean>	
+	
+	<bean id="ikrCategoryResourceIdGenerator"
+    	  class="com.fsi.monitoring.global.IdGenerator"
+    	  scope="thread">
+		<property name="globalDAO">
+			<ref bean="globalDAO"/>
+		</property>
+		<property name="batchSize"><value>20</value></property>
+		<property name="objectType"><value>IkrCategoryResource</value></property>
+	</bean>	
+</beans>

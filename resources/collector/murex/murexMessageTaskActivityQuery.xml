@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<CONFIG>
+	<QUERY_CONFIG connector="" query="select count(*) as NB, XMLFLOW_STATUS FROM MUREXDB.STPDOC_ENTRY_TABLE WHERE STATUS_DATE in (SELECT convert(char(12),M_DATE) from TRN_PC_DBF) group by XMLFLOW_STATUS">
+		<QUERY_ITEM itemType="INSTANCE" item="XmlFlowStatus" queryField="XMLFLOW_STATUS" datatype="STRING"/>
+		<QUERY_ITEM itemType="METRIC" item="count" queryField="NB" datatype="INTEGER"/>
+	</QUERY_CONFIG>
+</CONFIG>

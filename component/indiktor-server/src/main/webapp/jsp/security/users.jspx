@@ -1,0 +1,359 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ui:param name="pageTitle" value="Security configuration" />
+<ui:define name="content">
+
+<ice:panelGrid>
+<ice:panelGrid>
+<ice:form>
+	<table id="pageSecurityUser">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft">
+							<div class="topMenuBarLeftAnalysis2">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/Security/RoleOFF.png"
+								   				   title="Role"
+								   				   value="Role"
+										 	       actionListener="#{roleBean.init}" 
+							  				 	   action="#{roleBean.action}">
+								</ice:commandButton>
+							</div>	
+							<div class="topMenuBarLeftDomain2">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/Security/UserON.png"
+								   				   title="User"
+								   				   value="User"
+								   				   actionListener="#{userBean.init}" 
+										 	       action="#{userBean.action}">
+								</ice:commandButton>
+							</div>	
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Create New User"
+														   image="/images/IndiKtor2.0/Buttons/add.png"
+													   	   title="Add new user"
+													   	   actionListener="#{userBean.openCreateNewUserPopup}"/>
+									</td>
+									<!-- 
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   actionListener="#{userBean.openUpdateUserPopup}"
+														   image="/images/IndiKtor2.0/Buttons/edit.png"
+														   title="Edit selected user"
+														   value="Edit selected user"/>
+									</td>
+									<td> 
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/duplicate.png"
+													   	   title="Duplicate selected user"
+													   	   actionListener="#{userBean.duplicate}"/>
+									</td>
+									
+									 -->
+									<td> 
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   panelConfirmation="#{userBean.userItemsSelected == 0 ? false : 'deleteConfirmPanel'}"
+														   image="/images/IndiKtor2.0/Buttons/delete.png"
+													   	   title="Delete selected users"
+													   	   actionListener="#{userBean.deleteSelectedUsers}"
+													   	   rendered="#{userBean.userItemsSelected != 0}"/>
+										<ice:panelConfirmation 	id="deleteConfirmPanel" 
+																message="#{userBean.deleteMessage}"
+										                   		acceptLabel="Delete"
+										                   		autoCentre="true"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Return to administration panel"
+														   image="/images/IndiKtor2.0/Buttons/cancel.png"
+													   	   title="Return to administration panel"
+													   	   actionListener="#{adminBean.init}"
+													   	   action="#{adminBean.action}"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+													   	   title="Help"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentFullPanelUsers">
+							<table>
+								<tr>
+									<td>
+										<ice:panelGroup style="text-align:center;" rendered="#{userBean.listRendered}">
+											<ice:dataPaginator id="userSelectionScroll_2" for="userSelection"
+												rowsCountVar="rowsCount"
+												displayedRowsCountVar="displayedRowsCountVar"
+												firstRowIndexVar="firstRowIndex"
+												lastRowIndexVar="lastRowIndex" pageCountVar="pageCount"
+												pageIndexVar="pageIndex">
+												<ice:outputFormat
+													value="{0} Users found,  displaying {1} Users  from {2} to {3}. Page {4} / {5}."
+													style="font-weight: bold;" styleClass="standard">
+													<f:param value="#{rowsCount}" />
+													<f:param value="#{displayedRowsCountVar}" />
+													<f:param value="#{firstRowIndex}" />
+													<f:param value="#{lastRowIndex}" />
+													<f:param value="#{pageIndex}" />
+													<f:param value="#{pageCount}" />
+												</ice:outputFormat>
+											</ice:dataPaginator>
+										</ice:panelGroup>
+									</td>
+								</tr>
+								<tr height="10px"><td></td></tr>
+								<tr>
+									<td align="center">
+										<ice:panelGrid columns="1" style="text-align: center;" width="1150px">
+											<ice:outputLabel value="No User has been configured. Click on the plus icon (+) to add Users."
+															 rendered="#{!userBean.listRendered}"/>
+										</ice:panelGrid>
+										<ice:panelGroup rendered="#{userBean.listRendered}">
+									    	<ice:dataTable id="userSelection"
+									    		  	       value="#{userBean.userItems}"
+									                	   var="userItem"
+									                	   sortColumn="#{userBean.sortColumnName}"	
+														   sortAscending="#{userBean.ascending}"			
+									                	   cellpadding="0"
+									                	   rows="#{userBean.rowsByPage}"
+									                	   columnWidths="20, 191, 191, 191, 230, 191, 65">	
+												<ice:column>													
+													<f:facet name="header">
+												       	<ice:selectBooleanCheckbox value="#{userBean.selectAll}" 
+												       							   valueChangeListener="#{userBean.handleSelectAllUsers}"	
+												       							   partialSubmit="true"
+												       							   style="text-align: center;"/>
+													</f:facet>
+											       	<ice:selectBooleanCheckbox value="#{userItem.selected}" 
+											       							   valueChangeListener="#{userBean.handleSelectedUser}"	
+											       							   partialSubmit="true"
+											       							   style="text-align: center;">
+											       		<f:attribute name="UserItem" value="#{userItem}"/> 							   
+											       	</ice:selectBooleanCheckbox>
+												</ice:column>
+								        		<ice:column>
+								        			<!-- <ice:rowSelector value="#{userItem.selected}"
+											                         selectionListener="#{userBean.rowSelectionListener}"
+											                         preStyleOnSelection="true"
+											                         selectedClass="tableRowSelSelected"
+																	 mouseOverClass="tableRowSelMouseOver"
+																	 selectedMouseOverClass="tableRowSelSelectedMouseOver"
+																	 enhancedMultiple="true"  
+													               	 styleClass="iceRowSel-Dis"/> -->
+								        			<f:facet name="header">
+								             			<ice:commandSortHeader columnName="#{userBean.loginColumnName}" arrow="true" >
+											                <ice:outputText value="#{userBean.loginColumnName}"/>
+											            </ice:commandSortHeader>
+								         			</f:facet>
+								         			<ice:panelGroup>
+								         				<ice:outputText value="#{userItem.login}" style="text-align: left;"/>
+								         			</ice:panelGroup>
+								        		</ice:column>
+								        		<ice:column>
+								        			<f:facet name="header">
+								             			<ice:commandSortHeader columnName="#{userBean.firstnameColumnName}" arrow="true" >
+											                <ice:outputText value="#{userBean.firstnameColumnName}"/>
+											            </ice:commandSortHeader>
+								         			</f:facet>
+								         			<ice:panelGroup>
+								         				<ice:outputText value="#{userItem.user.firstName}" style="text-align: left;"/>
+								         			</ice:panelGroup>
+								        		</ice:column>
+								        		<ice:column>
+								        			<f:facet name="header">
+								             			<ice:commandSortHeader columnName="#{userBean.lastnameColumnName}" arrow="true" >
+											                <ice:outputText value="#{userBean.lastnameColumnName}"/>
+											            </ice:commandSortHeader>
+								         			</f:facet>
+								         			<ice:panelGroup>
+								         				<ice:outputText value="#{userItem.user.lastName}" style="text-align: left;"/>
+								         			</ice:panelGroup>
+								        		</ice:column>
+								        		<ice:column>
+								        			<f:facet name="header">
+								             			<ice:commandSortHeader columnName="#{userBean.emailColumnName}" arrow="true" >
+											                <ice:outputText value="#{userBean.emailColumnName}"/>
+											            </ice:commandSortHeader>
+								         			</f:facet>
+								         			<ice:panelGroup>
+								         				<ice:outputText value="#{userItem.user.email}" style="text-align: left;"/>
+								         			</ice:panelGroup>
+								        		</ice:column>
+								        		<ice:column>
+								        			<f:facet name="header">
+								             			<ice:outputText value="Access Level"/>
+								         			</f:facet>
+								         			<ice:panelGroup>
+								         				<ice:outputText value="#{userItem.roles}" style="text-align: left;"/>
+								         			</ice:panelGroup>
+								        		</ice:column>
+								        		<ice:column>
+													<f:facet name="header">
+													</f:facet>	
+													<ice:commandButton actionListener="#{userBean.openUpdateUserPopup}"
+																	   image="/images/IndiKtor2.0/Buttons/editSmall.png"
+																	   title="Edit this user">
+														<f:attribute name="UserItem" value="#{userItem}"/>
+													</ice:commandButton>
+													<ice:commandButton image="/images/IndiKtor2.0/Buttons/duplicateSmall.png"
+																   	   title="Duplicate this user"
+																   	   actionListener="#{userBean.duplicate}"
+																   	   style="margin-left: 10px;">
+														<f:attribute name="UserItem" value="#{userItem}"/>
+													</ice:commandButton>
+													<ice:commandButton panelConfirmation="deleteNoSelectionConfirmPanel"
+																	   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+																	   actionListener="#{userBean.deleteUser}"
+																	   title="Delete this user"
+																   	   style="margin-left: 10px;">
+														<f:attribute name="UserItem" value="#{userItem}"/>	
+													</ice:commandButton>
+															
+													<ice:panelConfirmation 	id="deleteNoSelectionConfirmPanel"
+																			message="Are you sure to delete this user : #{userItem.user.firstName} #{userItem.user.lastName}"
+																			type="normal"
+																			acceptLabel="Delete"
+																			rendered="true"
+																			autoCentre="true"/>							
+												</ice:column>
+									     	</ice:dataTable>
+						     			</ice:panelGroup>
+						     		</td>
+						     	</tr>
+								<tr>
+									<td>
+										<ice:panelGroup style="float:center;"
+														visible="#{userBean.paginationVisible}"
+														rendered="#{userBean.listRendered}">
+											<center>
+												<ice:dataPaginator id="userSelectionScroll_1" for="userSelection"
+													fastStep="3" paginator="true" paginatorMaxPages="4" actionListener="#{userBean.pageChangeListener}">
+													<f:facet name="first">
+														<ice:graphicImage id="firstpage_1"
+															url="#{styleBean.imageDirectory}arrow-first.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.firstpage']}" />
+													</f:facet>
+													<f:facet name="last">
+														<ice:graphicImage id="lastpage_1"
+															url="#{styleBean.imageDirectory}arrow-last.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.lastpage']}" />
+													</f:facet>
+													<f:facet name="previous">
+														<ice:graphicImage id="previouspage_1"
+															url="#{styleBean.imageDirectory}arrow-previous.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.previouspage']}" />
+													</f:facet>
+													<f:facet name="next">
+														<ice:graphicImage id="nextpage_1"
+															url="#{styleBean.imageDirectory}arrow-next.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.nextpage']}" />
+													</f:facet>
+													<f:facet name="fastforward">
+														<ice:graphicImage id="fastforward_1"
+															url="#{styleBean.imageDirectory}arrow-ff.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastforward']}" />
+													</f:facet>
+													<f:facet name="fastrewind">
+														<ice:graphicImage id="fastrewind_1"
+															url="#{styleBean.imageDirectory}arrow-fr.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastbackward']}" />
+													</f:facet>
+												</ice:dataPaginator>
+											</center>
+										</ice:panelGroup>
+									</td>
+								</tr>
+						     </table>
+						</td>
+					</tr>
+				</table> 	
+			</td>
+		</tr>
+	</table>
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{userBean.rendererCreateNewUser}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputText style="float: left;" value="#{userBean.user.id > 0 ? 'Modfy User' : 'Create new User'}"/></td>
+		       			<td><ice:commandButton style="float: right;" 
+		       								   actionListener="#{userBean.closeCreateNewUserPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+		       				<ice:commandButton style="float: right;"
+		       								   actionListener="#{userBean.validate}" 
+											   value="Save" 
+											   title="Save"
+											   styleClass="iconPopup"
+											   image="/images/IndiKtor2.0/Buttons/saveSmall.png"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+	    	  <ice:panelGrid id="UpdateUser">
+				<ui:include src="/jsp/security/updateUser.jspx"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+			
+</ice:form>
+<ui:include src="/jsp/util/errorMessage.jspx"/>
+</ice:panelGrid>
+</ice:panelGrid>
+</ui:define>
+</ui:composition>
+
+
+<!-- <ice:form>
+		<ice:panelGrid border="0" columns="1" columnClasses="colVTop,colVTop">
+	    	<ice:dataTable id="userSelection"
+	    		  	    value="#{userBean.userItems}"
+	                	var="userItem"
+	                	cellpadding="0">
+        		<ice:column>
+        			<f:facet name="header">
+             			<ice:outputText value="Name"/>
+         			</f:facet>
+         			<ice:panelGroup>
+         				<ice:commandLink style="width: 100%;" action="#{userItem.select}" value="#{userItem.user.lastName} #{userItem.user.firstName}" />
+         			</ice:panelGroup>
+        		</ice:column>
+	     	</ice:dataTable>  
+	     	<br/>
+     		<ice:panelGroup style="width: 280px;">
+        		<ice:commandButton action="#{userBean.initNewUser}" 
+        						   value="Create New User" />
+        	</ice:panelGroup>	     		  		
+		</ice:panelGrid>
+	</ice:form>
+</ui:define>
+</ui:composition> -->

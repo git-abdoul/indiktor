@@ -1,0 +1,197 @@
+<f:subview id="navigationBoardComponentConfig" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+ 
+<ice:panelGrid columns="2" style="margin: 0px; padding: 0px; text-align: center;">
+	<ice:panelGroup style="border: 1px solid #336699;" rendered="#{dashboardSelectMainConfigBean.addDashboardPanelVisible}">
+		<ice:panelGrid columns="2">
+			<ice:outputText style="padding-right: 300px;" value="Select an existing Dashboard"/>
+			<ice:commandButton image="/images/i/cal_off.gif"
+						   	   style="float: right;"
+							   title="Close panel"
+						       actionListener="#{dashboardSelectMainConfigBean.closeAddPanel}"/>
+		</ice:panelGrid>
+		<ice:panelGroup style="text-align: center;">
+			<ice:dataTable 	var="dashboard"
+	                   		value="#{navigationBoardConfigBean.dashboards}"
+	                   		columnWidths="20, 125, 125, 125"
+	                   		scrollable="true"
+	                   		scrollHeight="283"
+                      		sortColumn="#{navigationBoardConfigBean.columnName}"	
+						    sortAscending="#{navigationBoardConfigBean.ascending}">	
+				<ice:column style="text-align: center;">													
+					<f:facet name="header">
+						<ice:commandButton actionListener="#{navigationBoardConfigBean.addAllDashboards}"
+										   image="/images/IndiKtor2.0/Buttons/addSmall.png"
+										   title="Add all dashboards to the list"/>
+					</f:facet>
+					<ice:commandButton actionListener="#{navigationBoardConfigBean.addDashboard}"
+									   image="/images/IndiKtor2.0/Buttons/addSmall.png"
+									   title="Add this dashboard to the list">
+						<f:attribute name="dashboard" value="#{dashboard}"/>
+					</ice:commandButton>
+				</ice:column>
+	               <ice:column>
+	                <f:facet name="header">
+	                	<ice:commandSortHeader columnName="#{navigationBoardConfigBean.envColumnName}" arrow="true" >
+	                    	<ice:outputText value="#{navigationBoardConfigBean.envColumnName}"/>
+	                    </ice:commandSortHeader>
+	                </f:facet>
+	                <ice:outputText style="text-align: left;" value="#{dashboard.env}"/>
+	            </ice:column>		
+	            <ice:column>
+	                <f:facet name="header">
+	                	<ice:commandSortHeader columnName="#{navigationBoardConfigBean.typeColumnName}" arrow="true" >
+	                    	<ice:outputText value="#{navigationBoardConfigBean.typeColumnName}"/>
+	                    </ice:commandSortHeader>
+	                </f:facet>
+	                <ice:outputText style="text-align: left;" value="#{dashboard.type}"/>
+	            </ice:column>
+	            <ice:column>
+	                <f:facet name="header">
+	                	<ice:commandSortHeader columnName="#{navigationBoardConfigBean.titleColumnName}" arrow="true" >
+	                    	<ice:outputText value="#{navigationBoardConfigBean.titleColumnName}"/>
+	                    </ice:commandSortHeader>
+	                </f:facet>
+	                <ice:outputText style="text-align: left;" value="#{dashboard.title}"/>
+	            </ice:column>	
+	        </ice:dataTable>
+	    </ice:panelGroup>
+        
+        <!-- 
+		<ice:panelGrid columns="2" style="margin-top: 10px;">
+			<ice:outputLabel value="Environment: " style="font-size: 10px; font-weight: bold"/>
+			<ice:selectOneMenu value="#{navigationBoardConfigBean.navItem.environment}"
+							   valueChangeListener="#{navigationBoardConfigBean.navItem.onChangeEnvironment}"
+							   partialSubmit="true"
+							   style="width: 150px">
+				<f:selectItems value="#{navigationBoardConfigBean.navItem.environmentItems}"/>
+			</ice:selectOneMenu>	
+			<ice:outputLabel value="Type: " style="font-size: 10px; font-weight: bold"/>
+			<ice:selectOneMenu value="#{navigationBoardConfigBean.navItem.type}"
+							   valueChangeListener="#{navigationBoardConfigBean.navItem.onChangeType}"
+							   partialSubmit="true"
+							   style="width: 150px">		   
+				<f:selectItems value="#{navigationBoardConfigBean.navItem.typeItems}"/>
+			</ice:selectOneMenu>		
+			<ice:outputLabel value="Title " style="font-size: 10px; font-weight: bold"/>
+			<ice:selectOneMenu value="#{navigationBoardConfigBean.navItem.title}"
+							   valueChangeListener="#{navigationBoardConfigBean.navItem.onChangeTitle}"
+							   partialSubmit="true"
+							   style="width: 150px">
+					<f:selectItems value="#{navigationBoardConfigBean.navItem.titleItems}"/>	
+			</ice:selectOneMenu>
+		</ice:panelGrid>
+		<br/>
+		<ice:commandButton value="Add" 
+	  	  				   actionListener="#{navigationBoardConfigBean.addItem}"/>
+	  	-->
+	  	
+	</ice:panelGroup>
+	
+	<ice:panelGrid columns="1" style="width: 470px;">
+		<ice:panelGroup style="text-align: center; border: 1px solid #336699; height: 50px;">
+			<ice:panelGrid columns="2">
+				<ice:outputLabel value="Component Title:"/>
+				<ice:inputText size="40" value="#{navigationBoardConfigBean.navigationBoard.title}" style="#{navigationBoardConfigBean.navigationTitleStyle}"/>
+				<ice:outputLabel value="" rendered="#{navigationBoardConfigBean.errorNavigationBoardTitleVisible}"/>
+				<ice:outputLabel value="Mandatory" style="color: red; font-size: 10px;"
+	 							 rendered="#{navigationBoardConfigBean.errorNavigationBoardTitleVisible}"/>
+				<ice:outputLabel value="" rendered="#{dashboardSelectMainConfigBean.titleAlreadyExists}"/>
+				<ice:outputLabel value="Title already exists! Please, choose another title." style="color: red; font-size: 10px;"
+	 							 rendered="#{dashboardSelectMainConfigBean.titleAlreadyExists}"/>
+			</ice:panelGrid>
+		</ice:panelGroup>
+		
+		<ice:panelGroup style="#{navigationBoardConfigBean.navigationPanelStyle}" rendered="#{navigationBoardConfigBean.listRenderer}">
+			<ice:dataTable 	var="item"
+	                   		value="#{navigationBoardConfigBean.navigationItems}"
+	                   		columnWidths="125, 125, 125, 20"
+	                   		scrollable="true"
+	                   		scrollHeight="247">	
+				<ice:column>													
+					<f:facet name="header">
+						<ice:outputText value="Environment" style="font-size: 12px; font-weight: bold"/>
+					</f:facet>
+					<ice:outputText value="#{item.navigationItem.env}" style="font-size: 10px"/>
+				</ice:column>
+               	<ice:column>
+	                <f:facet name="header">
+	                	<ice:outputText value="Type" style="font-size: 12px; font-weight: bold"/>
+	                </f:facet>
+	                <ice:outputText value="#{item.navigationItem.type}" style="font-size: 10px"/>
+	            </ice:column>		
+	            <ice:column>
+	                <f:facet name="header">
+	                	<ice:outputText value="Title" style="font-size: 12px; font-weight: bold"/>
+	                </f:facet>
+	                <ice:outputText value="#{item.navigationItem.title}" style="font-size: 10px"/>
+	            </ice:column>
+	            <ice:column style="text-align: center;">
+	                <f:facet name="header">
+	                	<ice:commandButton actionListener="#{navigationBoardConfigBean.removeAllDashboards}"
+										   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+										   title="Remove all dashboards from the list"/>
+	                </f:facet>
+	                <ice:commandButton actionListener="#{navigationBoardConfigBean.removeDashboard}"
+									   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+									   title="Remove this dashboard from the list">
+						<f:attribute name="item" value="#{item}"/>
+					</ice:commandButton>
+	            </ice:column>	
+	        </ice:dataTable>
+	    </ice:panelGroup>
+	    <ice:panelGroup style="#{navigationBoardConfigBean.navigationPanelStyle}" rendered="#{!navigationBoardConfigBean.listRenderer}">
+	    	<ice:outputLabel value="No dashboards has been configured. Click on the "/>
+			<ice:graphicImage url="/images/IndiKtor2.0/Buttons/expandPanelSmall.png"/>
+			<ice:outputLabel value=" icon to add dashboards"/>
+			<BR/><BR/>
+			<ice:outputText value="Dashboard List cannot be empty"
+						    rendered="#{navigationBoardConfigBean.errorDashboardListVisible}"
+						    style="color: red;"/>
+	    </ice:panelGroup>
+	    
+	    <!-- 
+		<ice:panelGroup style="border: 1px solid #336699; text-align: center;">
+			<ice:panelGroup scrollHeight="250px" scrollWidth="350px">
+		  		<table width="100%">
+		  			<tr>
+			  			<td align="center"><ice:outputText value="Environment" style="font-size: 12px; font-weight: bold"/></td>
+			  			<td align="center"><ice:outputText value="Type" style="font-size: 12px; font-weight: bold"/></td>
+			  			<td align="center"><ice:outputText value="Title" style="font-size: 12px; font-weight: bold"/></td>	
+			  			<td width="20px" align="center">
+			  				<ice:commandButton actionListener="#{navigationBoardConfigBean.removeAllDashboards}"
+											   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+											   title="Remove all dashboards from the list"/>
+				        </td>			  			
+			  		</tr>		  			
+					<ui:repeat var="item" value="#{navigationBoardConfigBean.navigationItems}">
+						<tr valign="middle">
+							<td align="center"><ice:outputText value="#{item.navigationItem.env}" style="font-size: 10px"/></td>
+							<td align="center"><ice:outputText value="#{item.navigationItem.type}" style="font-size: 10px"/></td>
+							<td align="center"><ice:outputText value="#{item.navigationItem.title}" style="font-size: 10px"/></td>
+				  			<td width="20px" align="center">
+				  				<ice:commandButton actionListener="#{navigationBoardConfigBean.removeDashboard}"
+												   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+												   title="Remove this dashboard from the list">
+									<f:attribute name="item" value="#{item}"/>
+								</ice:commandButton>
+					        </td>
+						</tr>
+					</ui:repeat>
+				</table>
+		  	</ice:panelGroup>
+		  	<HR/>
+			<ice:panelGrid columns="3">
+				<ice:outputText style="font-size:10px;" value="Delete checked DashBoards"/>
+				<ice:outputText style="font-size:10px;" value="      "/>
+				<ice:commandButton style="font-size:8px;"
+		 						   value="OK" 
+		 	  			  	  	   actionListener="#{navigationBoardConfigBean.removeItems}"/>
+			</ice:panelGrid>
+		</ice:panelGroup> -->	
+	</ice:panelGrid>
+</ice:panelGrid> 
+</f:subview>

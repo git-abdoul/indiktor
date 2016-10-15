@@ -1,0 +1,3072 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+             		
+<ui:param name="pageTitle" value="#{boardBeanManager.components.summary.title} - #{boardBeanManager.components.summary.env}"/>	
+
+<ui:define name="menu"/>
+<ui:define name="menuOnRight"/>
+<ui:define name="K_Indiktor_Banner"/>
+
+<!-- <ui:define name="nav">
+ <ice:form>
+	<ice:panelGroup style="text-align: center; margin-top: 5px; margin-left: 5px;">
+		<ice:commandLink value="Save and Back to Configuration" 
+					     actionListener="#{boardBeanManager.save}"
+						 action="#{boardBeanManager.action}"
+						 style="margin-left: 5px; margin-top: 5px;">
+			<f:attribute name="boardId" value="#{boardBean.components.summary.boardId}"/>	
+		</ice:commandLink>
+		<ice:commandButton value="Save and Back to Configuration"
+						   title="Save and Back to Configuration" 
+					       actionListener="#{boardBeanManager.save}"
+						   action="#{boardBeanManager.action}"
+						   image="/images/IndiKtor2.0/Buttons/save.png"
+						   style="margin-left: 5px; margin-top: 5px;">
+			<f:attribute name="boardId" value="#{boardBean.components.summary.boardId}"/>
+		</ice:commandButton>
+	</ice:panelGroup>	 
+ </ice:form>
+</ui:define> -->
+
+
+<ui:define name="content">
+
+<ice:form>	
+	<ice:panelGroup style="text-align: center;" rendered="#{!boardBeanManager.noAccessDashboardVisualization}">
+		<ice:outputText value="#{dashboardMainConfigBean.dashBoardSummaryComponent.title}" style="font-size: 20px; font-weight: bold;"/>
+		<!-- <ice:commandLink value="Save and Back to Configuration" 
+					     actionListener="#{boardBeanManager.save}"
+						 action="#{boardBeanManager.action}">
+			<f:attribute name="boardId" value="#{boardBean.components.summary.boardId}"/>	
+		</ice:commandLink>
+		<ice:commandButton value="Save and Back to Configuration"
+						   title="Save and Back to Configuration" 
+					       actionListener="#{boardBeanManager.save}"
+						   action="#{boardBeanManager.action}"
+						   image="/images/IndiKtor2.0/Buttons/save.png"
+						   style="margin-left: 5px;">
+			<f:attribute name="boardId" value="#{boardBean.components.summary.boardId}"/>
+		</ice:commandButton>
+		<ice:commandButton value="Save and Back to Configuration"
+						   title="Save and Back to Configuration" 
+					       actionListener="#{boardBeanManager.save}"
+						   action="#{boardBeanManager.action}"
+						   image="/images/IndiKtor2.0/Buttons/saveDashboard.png"
+						   style="margin-left: 25px; float: left;">
+			<f:attribute name="boardId" value="#{boardBean.components.summary.boardId}"/>
+		</ice:commandButton> -->
+	</ice:panelGroup>
+	
+	<ice:panelGroup rendered="#{boardBeanManager.noAccessDashboardVisualization}" style="margin-top: 20px;">
+		<ice:outputText value="Access Denied" style="color: red; font-size: 20px; font-weight: bold;"/>
+	</ice:panelGroup>
+		
+	<ice:panelGroup style="#{boardBeanManager.navigationBoardMap['navBoard0'].style};cursor: move;" 
+					styleClass="boardComponentNavigationBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.navigationBoardMap['navBoard0']}"
+					rendered="#{boardBeanManager.navigationBoardMap['navBoard0'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.navigationBoardMap['navBoard0'].title}"/>
+		</ice:panelGroup>
+		<ui:repeat var="summary" value="#{boardBeanManager.navigationBoardMap['navBoard0'].summaries}">
+			<div class="alertItem">
+				<ice:graphicImage url="#{summary.url}" />
+				<ice:outputLabel value="#{summary.title}"/>
+			</div>
+		</ui:repeat>		
+	</ice:panelGroup>
+	
+	<ice:panelGroup style="#{boardBeanManager.navigationBoardMap['navBoard1'].style};cursor: move;" 
+					styleClass="boardComponentNavigationBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.navigationBoardMap['navBoard1']}"
+					rendered="#{boardBeanManager.navigationBoardMap['navBoard1'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.navigationBoardMap['navBoard1'].title}"/>
+		</ice:panelGroup>
+		<ui:repeat var="summary" value="#{boardBeanManager.navigationBoardMap['navBoard1'].summaries}">
+			<div class="alertItem">
+				<ice:graphicImage url="#{summary.url}" />
+				<ice:outputLabel value="#{summary.title}"/>
+			</div>
+		</ui:repeat>		
+	</ice:panelGroup>	  	
+   	
+	<ice:panelGroup style="#{boardBeanManager.navigationBoardMap['navBoard2'].style};cursor: move;" 
+					styleClass="boardComponentNavigationBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.navigationBoardMap['navBoard2']}"
+					rendered="#{boardBeanManager.navigationBoardMap['navBoard2'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.navigationBoardMap['navBoard2'].title}"/>
+		</ice:panelGroup>
+		<ui:repeat var="summary" value="#{boardBeanManager.navigationBoardMap['navBoard2'].summaries}">
+			<div class="alertItem">
+				<ice:graphicImage url="#{summary.url}" />
+				<ice:outputLabel value="#{summary.title}"/>
+			</div>
+		</ui:repeat>		
+	</ice:panelGroup>
+   	
+	<ice:panelGroup style="#{boardBeanManager.navigationBoardMap['navBoard3'].style};cursor: move;" 
+					styleClass="boardComponentNavigationBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.navigationBoardMap['navBoard3']}"
+					rendered="#{boardBeanManager.navigationBoardMap['navBoard3'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.navigationBoardMap['navBoard3'].title}"/>
+		</ice:panelGroup>
+		<ui:repeat var="summary" value="#{boardBeanManager.navigationBoardMap['navBoard3'].summaries}">
+			<div class="alertItem">
+				<ice:graphicImage url="#{summary.url}" />
+				<ice:outputLabel value="#{summary.title}"/>
+			</div>
+		</ui:repeat>
+	</ice:panelGroup>
+	
+	<ice:panelGroup style="#{boardBeanManager.navigationBoardMap['navBoard4'].style};cursor: move;" 
+					styleClass="boardComponentNavigationBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.navigationBoardMap['navBoard4']}"
+					rendered="#{boardBeanManager.navigationBoardMap['navBoard4'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.navigationBoardMap['navBoard4'].title}"/>
+		</ice:panelGroup>
+		<ui:repeat var="summary" value="#{boardBeanManager.navigationBoardMap['navBoard4'].summaries}">
+			<div class="alertItem">
+				<ice:graphicImage url="#{summary.url}" />
+				<ice:outputLabel value="#{summary.title}"/>
+			</div>
+		</ui:repeat>
+	</ice:panelGroup> 	
+	
+	<ice:panelGroup style="#{boardBeanManager.navigationBoardMap['navBoard5'].style};cursor: move;" 
+					styleClass="boardComponentNavigationBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.navigationBoardMap['navBoard5']}"
+					rendered="#{boardBeanManager.navigationBoardMap['navBoard5'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.navigationBoardMap['navBoard5'].title}"/>
+		</ice:panelGroup>
+		<ui:repeat var="summary" value="#{boardBeanManager.navigationBoardMap['navBoard5'].summaries}">
+			<div class="alertItem">
+				<ice:graphicImage url="#{summary.url}" />
+				<ice:outputLabel value="#{summary.title}"/>
+			</div>
+		</ui:repeat>
+	</ice:panelGroup> 			
+	
+	<ice:panelGroup style="#{boardBeanManager.navigationBoardMap['navBoard6'].style};cursor: move;" 
+					styleClass="boardComponentNavigationBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.navigationBoardMap['navBoard6']}"
+					rendered="#{boardBeanManager.navigationBoardMap['navBoard6'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.navigationBoardMap['navBoard6'].title}"/>
+		</ice:panelGroup>
+		<ui:repeat var="summary" value="#{boardBeanManager.navigationBoardMap['navBoard6'].summaries}">
+			<div class="alertItem">
+				<ice:graphicImage url="#{summary.url}" />
+				<ice:outputLabel value="#{summary.title}"/>
+			</div>
+		</ui:repeat>
+	</ice:panelGroup> 			
+	
+	<ice:panelGroup style="#{boardBeanManager.navigationBoardMap['navBoard7'].style};cursor: move;" 
+					styleClass="boardComponentNavigationBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.navigationBoardMap['navBoard7']}"
+					rendered="#{boardBeanManager.navigationBoardMap['navBoard7'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.navigationBoardMap['navBoard7'].title}"/>
+		</ice:panelGroup>
+		<ui:repeat var="summary" value="#{boardBeanManager.navigationBoardMap['navBoard7'].summaries}">
+			<div class="alertItem">
+				<ice:graphicImage url="#{summary.url}" />
+				<ice:outputLabel value="#{summary.title}"/>
+			</div>
+		</ui:repeat>
+	</ice:panelGroup> 			
+	
+	<ice:panelGroup style="#{boardBeanManager.navigationBoardMap['navBoard8'].style};cursor: move;" 
+					styleClass="boardComponentNavigationBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.navigationBoardMap['navBoard8']}"
+					rendered="#{boardBeanManager.navigationBoardMap['navBoard8'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.navigationBoardMap['navBoard8'].title}"/>
+		</ice:panelGroup>
+		<ui:repeat var="summary" value="#{boardBeanManager.navigationBoardMap['navBoard8'].summaries}">
+			<div class="alertItem">
+				<ice:graphicImage url="#{summary.url}" />
+				<ice:outputLabel value="#{summary.title}"/>
+			</div>
+		</ui:repeat>
+	</ice:panelGroup> 			
+	
+	<ice:panelGroup style="#{boardBeanManager.navigationBoardMap['navBoard9'].style};cursor: move;" 
+					styleClass="boardComponentNavigationBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.navigationBoardMap['navBoard9']}"
+					rendered="#{boardBeanManager.navigationBoardMap['navBoard9'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.navigationBoardMap['navBoard9'].title}"/>
+		</ice:panelGroup>
+		<ui:repeat var="summary" value="#{boardBeanManager.navigationBoardMap['navBoard9'].summaries}">
+			<div class="alertItem">
+				<ice:graphicImage url="#{summary.url}" />
+				<ice:outputLabel value="#{summary.title}"/>
+			</div>
+		</ui:repeat>
+	</ice:panelGroup> 			
+   	
+	<ice:panelGroup style="#{boardBeanManager.alertBoardMap['alertBoard0'].style};cursor: move;"
+					styleClass="boardComponentAlertBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardMap['alertBoard0']}"
+					rendered="#{boardBeanManager.alertBoardMap['alertBoard0'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardMap['alertBoard0'].title}"/>
+		</ice:panelGroup>	
+		<ice:dataTable value="#{boardBeanManager.alertBoardMap['alertBoard0'].alertLeafs}"
+	                   var="alertItem"
+	                   cellpadding="0" cellspacing="0"
+	                   style="margin: 1px 1px 1px 1px;"
+	                   columnWidths="180, 180"
+	                   scrollable="true"
+	                   scrollHeight="#{boardBeanManager.alertBoardMap['alertBoard0'].scrollHeightOnPreview}">
+	 		<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->	                   
+	 		<ice:column style="text-align: center;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Category"/>
+	         	</f:facet>
+				<ice:outputText value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"/>
+	        </ice:column>
+	 		<ice:column style="text-align: left;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Alerts"/>
+	         	</f:facet>
+	         	<ice:panelGroup>
+	         		<table>
+	         		 <ui:repeat value="#{alertItem.allAlertBeans}"
+	                   			var="alertBean">
+	                	<tr>
+	                	 <td>
+	                	   <ice:graphicImage url="#{alertBean.url}" width="20px"/>
+	                	 </td>
+	                	 <td>
+	         				<ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/>
+	         			</td>
+	        		  </tr>
+	         		</ui:repeat>
+	         		</table>
+	         	</ice:panelGroup> 
+	        </ice:column>	        
+ 		</ice:dataTable>
+ 	</ice:panelGroup>	
+	  
+	<ice:panelGroup style="#{boardBeanManager.alertBoardMap['alertBoard1'].style};cursor: move;"
+					styleClass="boardComponentAlertBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardMap['alertBoard1']}"
+					rendered="#{boardBeanManager.alertBoardMap['alertBoard1'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardMap['alertBoard1'].title}"/>
+		</ice:panelGroup>	
+		<ice:dataTable value="#{boardBeanManager.alertBoardMap['alertBoard1'].alertLeafs}"
+	                   var="alertItem"
+	                   cellpadding="0" cellspacing="0"
+	                   style="margin: 1px 1px 1px 1px;"
+	                   columnWidths="180, 180"
+	                   scrollable="true"
+	                   scrollHeight="#{boardBeanManager.alertBoardMap['alertBoard1'].scrollHeightOnPreview}">
+	 		<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->	                   
+	 		<ice:column style="text-align: center;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Category"/>
+	         	</f:facet>
+				<ice:outputText value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"/>
+	        </ice:column>
+	 		<ice:column style="text-align: left;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Alerts"/>
+	         	</f:facet>
+	         	<ice:panelGroup>
+	         		<table>
+	         		 <ui:repeat value="#{alertItem.allAlertBeans}"
+	                   			var="alertBean">
+	                	<tr>
+	                	 <td>
+	                	   <ice:graphicImage url="#{alertBean.url}" width="20px"/>
+	                	 </td>
+	                	 <td>
+	         				<ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/>
+	         			</td>
+	        		  </tr>
+	         		</ui:repeat>
+	         		</table>
+	         	</ice:panelGroup> 
+	        </ice:column>	        
+ 		</ice:dataTable>
+ 	</ice:panelGroup>	  
+ 	
+	<ice:panelGroup style="#{boardBeanManager.alertBoardMap['alertBoard2'].style};cursor: move;"
+					styleClass="boardComponentAlertBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardMap['alertBoard2']}"
+					rendered="#{boardBeanManager.alertBoardMap['alertBoard2'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardMap['alertBoard2'].title}"/>
+		</ice:panelGroup>	
+		<ice:dataTable value="#{boardBeanManager.alertBoardMap['alertBoard2'].alertLeafs}"
+	                   var="alertItem"
+	                   cellpadding="0" cellspacing="0"
+	                   style="margin: 1px 1px 1px 1px;"
+	                   columnWidths="180, 180"
+	                   scrollable="true"
+	                   scrollHeight="#{boardBeanManager.alertBoardMap['alertBoard2'].scrollHeightOnPreview}">
+	 		<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column>	 -->                   
+	 		<ice:column style="text-align: center;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Category"/>
+	         	</f:facet>
+				<ice:outputText value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"/>
+	        </ice:column>
+	 		<ice:column style="text-align: left;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Alerts"/>
+	         	</f:facet>
+	         	<ice:panelGroup>
+	         		<table>
+	         		 <ui:repeat value="#{alertItem.allAlertBeans}"
+	                   			var="alertBean">
+	                	<tr>
+	                	 <td>
+	                	   <ice:graphicImage url="#{alertBean.url}" width="20px"/>
+	                	 </td>
+	                	 <td>
+	         				<ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/>
+	         			</td>
+	        		  </tr>
+	         		</ui:repeat>
+	         		</table>
+	         	</ice:panelGroup> 
+	        </ice:column>	        
+ 		</ice:dataTable>
+ 	</ice:panelGroup>
+ 	
+	<ice:panelGroup style="#{boardBeanManager.alertBoardMap['alertBoard3'].style};cursor: move;"
+					styleClass="boardComponentAlertBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardMap['alertBoard3']}"
+					rendered="#{boardBeanManager.alertBoardMap['alertBoard3'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardMap['alertBoard3'].title}"/>
+		</ice:panelGroup>	
+		<ice:dataTable value="#{boardBeanManager.alertBoardMap['alertBoard3'].alertLeafs}"
+	                   var="alertItem"
+	                   cellpadding="0" cellspacing="0"
+	                   style="margin: 1px 1px 1px 1px;"
+	                   columnWidths="180, 180"
+	                   scrollable="true"
+	                   scrollHeight="#{boardBeanManager.alertBoardMap['alertBoard3'].scrollHeightOnPreview}">
+	 		<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->	                   
+	 		<ice:column style="text-align: center;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Category"/>
+	         	</f:facet>
+				<ice:outputText value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"/>
+	        </ice:column>
+	 		<ice:column style="text-align: left;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Alerts"/>
+	         	</f:facet>
+	         	<ice:panelGroup>
+	         		<table>
+	         		 <ui:repeat value="#{alertItem.allAlertBeans}"
+	                   			var="alertBean">
+	                	<tr>
+	                	 <td>
+	                	   <ice:graphicImage url="#{alertBean.url}" width="20px"/>
+	                	 </td>
+	                	 <td>
+	         				<ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/>
+	         			</td>
+	        		  </tr>
+	         		</ui:repeat>
+	         		</table>
+	         	</ice:panelGroup> 
+	        </ice:column>	        
+ 		</ice:dataTable>
+ 	</ice:panelGroup> 	 	
+	  
+	<ice:panelGroup style="#{boardBeanManager.alertBoardMap['alertBoard4'].style};cursor: move;"
+					styleClass="boardComponentAlertBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardMap['alertBoard4']}"
+					rendered="#{boardBeanManager.alertBoardMap['alertBoard4'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardMap['alertBoard4'].title}"/>
+		</ice:panelGroup>	
+		<ice:dataTable value="#{boardBeanManager.alertBoardMap['alertBoard4'].alertLeafs}"
+	                   var="alertItem"
+	                   cellpadding="0" cellspacing="0"
+	                   style="margin: 1px 1px 1px 1px;"
+	                   columnWidths="180, 180"
+	                   scrollable="true"
+	                   scrollHeight="#{boardBeanManager.alertBoardMap['alertBoard4'].scrollHeightOnPreview}">
+	 		<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->	                   
+	 		<ice:column style="text-align: center;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Category"/>
+	         	</f:facet>
+				<ice:outputText value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"/>
+	        </ice:column>
+	 		<ice:column style="text-align: left;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Alerts"/>
+	         	</f:facet>
+	         	<ice:panelGroup>
+	         		<table>
+	         		 <ui:repeat value="#{alertItem.allAlertBeans}"
+	                   			var="alertBean">
+	                	<tr>
+	                	 <td>
+	                	   <ice:graphicImage url="#{alertBean.url}" width="20px"/>
+	                	 </td>
+	                	 <td>
+	         				<ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/>
+	         			</td>
+	        		  </tr>
+	         		</ui:repeat>
+	         		</table>
+	         	</ice:panelGroup> 
+	        </ice:column>	        
+ 		</ice:dataTable>
+ 	</ice:panelGroup> 	
+ 	
+ 	<ice:panelGroup style="#{boardBeanManager.alertBoardMap['alertBoard5'].style};cursor: move;"
+					styleClass="boardComponentAlertBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardMap['alertBoard5']}"
+					rendered="#{boardBeanManager.alertBoardMap['alertBoard5'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardMap['alertBoard5'].title}"/>
+		</ice:panelGroup>	
+		<ice:dataTable value="#{boardBeanManager.alertBoardMap['alertBoard5'].alertLeafs}"
+	                   var="alertItem"
+	                   cellpadding="0" cellspacing="0"
+	                   style="margin: 1px 1px 1px 1px;"
+	                   columnWidths="180, 180"
+	                   scrollable="true"
+	                   scrollHeight="#{boardBeanManager.alertBoardMap['alertBoard5'].scrollHeightOnPreview}">
+	 		<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->	                   
+	 		<ice:column style="text-align: center;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Category"/>
+	         	</f:facet>
+				<ice:outputText value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"/>
+	        </ice:column>
+	 		<ice:column style="text-align: left;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Alerts"/>
+	         	</f:facet>
+	         	<ice:panelGroup>
+	         		<table>
+	         		 <ui:repeat value="#{alertItem.allAlertBeans}"
+	                   			var="alertBean">
+	                	<tr>
+	                	 <td>
+	                	   <ice:graphicImage url="#{alertBean.url}" width="20px"/>
+	                	 </td>
+	                	 <td>
+	         				<ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/>
+	         			</td>
+	        		  </tr>
+	         		</ui:repeat>
+	         		</table>
+	         	</ice:panelGroup> 
+	        </ice:column>	        
+ 		</ice:dataTable>
+ 	</ice:panelGroup> 	
+ 	
+ 	<ice:panelGroup style="#{boardBeanManager.alertBoardMap['alertBoard6'].style};cursor: move;"
+					styleClass="boardComponentAlertBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardMap['alertBoard6']}"
+					rendered="#{boardBeanManager.alertBoardMap['alertBoard6'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardMap['alertBoard6'].title}"/>
+		</ice:panelGroup>	
+		<ice:dataTable value="#{boardBeanManager.alertBoardMap['alertBoard6'].alertLeafs}"
+	                   var="alertItem"
+	                   cellpadding="0" cellspacing="0"
+	                   style="margin: 1px 1px 1px 1px;"
+	                   columnWidths="180, 180"
+	                   scrollable="true"
+	                   scrollHeight="#{boardBeanManager.alertBoardMap['alertBoard6'].scrollHeightOnPreview}">
+	 		<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->	                   
+	 		<ice:column style="text-align: center;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Category"/>
+	         	</f:facet>
+				<ice:outputText value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"/>
+	        </ice:column>
+	 		<ice:column style="text-align: left;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Alerts"/>
+	         	</f:facet>
+	         	<ice:panelGroup>
+	         		<table>
+	         		 <ui:repeat value="#{alertItem.allAlertBeans}"
+	                   			var="alertBean">
+	                	<tr>
+	                	 <td>
+	                	   <ice:graphicImage url="#{alertBean.url}" width="20px"/>
+	                	 </td>
+	                	 <td>
+	         				<ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/>
+	         			</td>
+	        		  </tr>
+	         		</ui:repeat>
+	         		</table>
+	         	</ice:panelGroup> 
+	        </ice:column>	        
+ 		</ice:dataTable>
+ 	</ice:panelGroup> 	    
+ 	
+ 	<ice:panelGroup style="#{boardBeanManager.alertBoardMap['alertBoard7'].style};cursor: move;"
+					styleClass="boardComponentAlertBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardMap['alertBoard7']}"
+					rendered="#{boardBeanManager.alertBoardMap['alertBoard7'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardMap['alertBoard7'].title}"/>
+		</ice:panelGroup>	
+		<ice:dataTable value="#{boardBeanManager.alertBoardMap['alertBoard7'].alertLeafs}"
+	                   var="alertItem"
+	                   cellpadding="0" cellspacing="0"
+	                   style="margin: 1px 1px 1px 1px;"
+	                   columnWidths="180, 180"
+	                   scrollable="true"
+	                   scrollHeight="#{boardBeanManager.alertBoardMap['alertBoard7'].scrollHeightOnPreview}">
+	 		<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->	                   
+	 		<ice:column style="text-align: center;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Category"/>
+	         	</f:facet>
+				<ice:outputText value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"/>
+	        </ice:column>
+	 		<ice:column style="text-align: left;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Alerts"/>
+	         	</f:facet>
+	         	<ice:panelGroup>
+	         		<table>
+	         		 <ui:repeat value="#{alertItem.allAlertBeans}"
+	                   			var="alertBean">
+	                	<tr>
+	                	 <td>
+	                	   <ice:graphicImage url="#{alertBean.url}" width="20px"/>
+	                	 </td>
+	                	 <td>
+	         				<ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/>
+	         			</td>
+	        		  </tr>
+	         		</ui:repeat>
+	         		</table>
+	         	</ice:panelGroup> 
+	        </ice:column>	        
+ 		</ice:dataTable>
+ 	</ice:panelGroup> 	  
+ 	
+ 		<ice:panelGroup style="#{boardBeanManager.alertBoardMap['alertBoard8'].style};cursor: move;"
+					styleClass="boardComponentAlertBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardMap['alertBoard8']}"
+					rendered="#{boardBeanManager.alertBoardMap['alertBoard8'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardMap['alertBoard8'].title}"/>
+		</ice:panelGroup>	
+		<ice:dataTable value="#{boardBeanManager.alertBoardMap['alertBoard8'].alertLeafs}"
+	                   var="alertItem"
+	                   cellpadding="0" cellspacing="0"
+	                   style="margin: 1px 1px 1px 1px;"
+	                   columnWidths="180, 180"
+	                   scrollable="true"
+	                   scrollHeight="#{boardBeanManager.alertBoardMap['alertBoard8'].scrollHeightOnPreview}">
+	 		<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->	                   
+	 		<ice:column style="text-align: center;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Category"/>
+	         	</f:facet>
+				<ice:outputText value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"/>
+	        </ice:column>
+	 		<ice:column style="text-align: left;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Alerts"/>
+	         	</f:facet>
+	         	<ice:panelGroup>
+	         		<table>
+	         		 <ui:repeat value="#{alertItem.allAlertBeans}"
+	                   			var="alertBean">
+	                	<tr>
+	                	 <td>
+	                	   <ice:graphicImage url="#{alertBean.url}" width="20px"/>
+	                	 </td>
+	                	 <td>
+	         				<ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/>
+	         			</td>
+	        		  </tr>
+	         		</ui:repeat>
+	         		</table>
+	         	</ice:panelGroup> 
+	        </ice:column>	        
+ 		</ice:dataTable>
+ 	</ice:panelGroup> 	    
+ 	
+ 	<ice:panelGroup style="#{boardBeanManager.alertBoardMap['alertBoard9'].style};cursor: move;"
+					styleClass="boardComponentAlertBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardMap['alertBoard9']}"
+					rendered="#{boardBeanManager.alertBoardMap['alertBoard9'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardMap['alertBoard9'].title}"/>
+		</ice:panelGroup>	
+		<ice:dataTable value="#{boardBeanManager.alertBoardMap['alertBoard9'].alertLeafs}"
+	                   var="alertItem"
+	                   cellpadding="0" cellspacing="0"
+	                   style="margin: 1px 1px 1px 1px;"
+	                   columnWidths="180, 180"
+	                   scrollable="true"
+	                   scrollHeight="#{boardBeanManager.alertBoardMap['alertBoard9'].scrollHeightOnPreview}">
+	 		<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->	                   
+	 		<ice:column style="text-align: center;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Category"/>
+	         	</f:facet>
+				<ice:outputText value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"/>
+	        </ice:column>
+	 		<ice:column style="text-align: left;">
+	        	<f:facet name="header">
+	            	<ice:outputText value="Alerts"/>
+	         	</f:facet>
+	         	<ice:panelGroup>
+	         		<table>
+	         		 <ui:repeat value="#{alertItem.allAlertBeans}"
+	                   			var="alertBean">
+	                	<tr>
+	                	 <td>
+	                	   <ice:graphicImage url="#{alertBean.url}" width="20px"/>
+	                	 </td>
+	                	 <td>
+	         				<ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/>
+	         			</td>
+	        		  </tr>
+	         		</ui:repeat>
+	         		</table>
+	         	</ice:panelGroup> 
+	        </ice:column>	        
+ 		</ice:dataTable>
+ 	</ice:panelGroup> 	      
+	  
+	<ice:panelGroup style="#{boardBeanManager.infoBoardMap['infoBoard0'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.infoBoardMap['infoBoard0']}"
+					rendered="#{boardBeanManager.infoBoardMap['infoBoard0'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.infoBoardMap['infoBoard0'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.infoBoardMap['infoBoard0'].infoDetails}"
+			            var="infoDetail" style="font-size: 11px"
+                   		columnWidths="290, 80"
+						scrollable="true"
+						scrollHeight="#{boardBeanManager.infoBoardMap['infoBoard0'].scrollHeight}">
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Name" />
+				</f:facet>
+				<ice:outputLabel value="#{infoDetail.label}"/>
+			</ice:column>			      
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Value" />
+				</f:facet>
+		        <ice:outputText value="#{infoDetail.value}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup>
+	
+	<ice:panelGroup style="#{boardBeanManager.infoBoardMap['infoBoard1'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.infoBoardMap['infoBoard1']}"
+					rendered="#{boardBeanManager.infoBoardMap['infoBoard1'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.infoBoardMap['infoBoard1'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.infoBoardMap['infoBoard1'].infoDetails}"
+			            var="infoDetail" style="font-size: 11px"
+                   		columnWidths="290, 80"
+						scrollable="true"
+						scrollHeight="#{boardBeanManager.infoBoardMap['infoBoard1'].scrollHeight}">
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Name" />
+				</f:facet>
+				<ice:outputLabel value="#{infoDetail.label}"/>
+			</ice:column>			      
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Value" />
+				</f:facet>
+		        <ice:outputText value="#{infoDetail.value}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 
+	
+	<ice:panelGroup style="#{boardBeanManager.infoBoardMap['infoBoard2'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.infoBoardMap['infoBoard2']}"
+					rendered="#{boardBeanManager.infoBoardMap['infoBoard2'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.infoBoardMap['infoBoard2'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.infoBoardMap['infoBoard2'].infoDetails}"
+			            var="infoDetail" style="font-size: 11px"
+                   		columnWidths="290, 80"
+						scrollable="true"
+						scrollHeight="#{boardBeanManager.infoBoardMap['infoBoard2'].scrollHeight}">
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Name" />
+				</f:facet>
+				<ice:outputLabel value="#{infoDetail.label}"/>
+			</ice:column>			      
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Value" />
+				</f:facet>
+		        <ice:outputText value="#{infoDetail.value}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 		
+	  
+	<ice:panelGroup style="#{boardBeanManager.infoBoardMap['infoBoard3'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.infoBoardMap['infoBoard3']}"
+					rendered="#{boardBeanManager.infoBoardMap['infoBoard3'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.infoBoardMap['infoBoard3'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.infoBoardMap['infoBoard3'].infoDetails}"
+			            var="infoDetail" style="font-size: 11px"
+                   		columnWidths="290, 80"
+						scrollable="true"
+						scrollHeight="#{boardBeanManager.infoBoardMap['infoBoard3'].scrollHeight}">
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Name" />
+				</f:facet>
+				<ice:outputLabel value="#{infoDetail.label}"/>
+			</ice:column>			      
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Value" />
+				</f:facet>
+		        <ice:outputText value="#{infoDetail.value}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup>
+	
+	<ice:panelGroup style="#{boardBeanManager.infoBoardMap['infoBoard4'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.infoBoardMap['infoBoard4']}"
+					rendered="#{boardBeanManager.infoBoardMap['infoBoard4'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.infoBoardMap['infoBoard4'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.infoBoardMap['infoBoard4'].infoDetails}"
+			            var="infoDetail" style="font-size: 11px"
+                   		columnWidths="290, 80"
+						scrollable="true"
+						scrollHeight="#{boardBeanManager.infoBoardMap['infoBoard4'].scrollHeight}">
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Name" />
+				</f:facet>
+				<ice:outputLabel value="#{infoDetail.label}"/>
+			</ice:column>			      
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Value" />
+				</f:facet>
+		        <ice:outputText value="#{infoDetail.value}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 	 	
+	
+	<ice:panelGroup style="#{boardBeanManager.infoBoardMap['infoBoard5'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.infoBoardMap['infoBoard5']}"
+					rendered="#{boardBeanManager.infoBoardMap['infoBoard5'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.infoBoardMap['infoBoard5'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.infoBoardMap['infoBoard5'].infoDetails}"
+			            var="infoDetail" style="font-size: 11px"
+                   		columnWidths="290, 80"
+						scrollable="true"
+						scrollHeight="#{boardBeanManager.infoBoardMap['infoBoard5'].scrollHeight}">
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Name" />
+				</f:facet>
+				<ice:outputLabel value="#{infoDetail.label}"/>
+			</ice:column>			      
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Value" />
+				</f:facet>
+		        <ice:outputText value="#{infoDetail.value}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 	 	
+	
+	<ice:panelGroup style="#{boardBeanManager.infoBoardMap['infoBoard6'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.infoBoardMap['infoBoard6']}"
+					rendered="#{boardBeanManager.infoBoardMap['infoBoard6'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.infoBoardMap['infoBoard6'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.infoBoardMap['infoBoard6'].infoDetails}"
+			            var="infoDetail" style="font-size: 11px"
+                   		columnWidths="290, 80"
+						scrollable="true"
+						scrollHeight="#{boardBeanManager.infoBoardMap['infoBoard6'].scrollHeight}">
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Name" />
+				</f:facet>
+				<ice:outputLabel value="#{infoDetail.label}"/>
+			</ice:column>			      
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Value" />
+				</f:facet>
+		        <ice:outputText value="#{infoDetail.value}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 	 	
+	
+	<ice:panelGroup style="#{boardBeanManager.infoBoardMap['infoBoard7'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.infoBoardMap['infoBoard7']}"
+					rendered="#{boardBeanManager.infoBoardMap['infoBoard7'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.infoBoardMap['infoBoard7'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.infoBoardMap['infoBoard7'].infoDetails}"
+			            var="infoDetail" style="font-size: 11px"
+                   		columnWidths="290, 80"
+						scrollable="true"
+						scrollHeight="#{boardBeanManager.infoBoardMap['infoBoard7'].scrollHeight}">
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Name" />
+				</f:facet>
+				<ice:outputLabel value="#{infoDetail.label}"/>
+			</ice:column>			      
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Value" />
+				</f:facet>
+		        <ice:outputText value="#{infoDetail.value}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 	 	
+	
+	<ice:panelGroup style="#{boardBeanManager.infoBoardMap['infoBoard8'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.infoBoardMap['infoBoard8']}"
+					rendered="#{boardBeanManager.infoBoardMap['infoBoard8'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.infoBoardMap['infoBoard8'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.infoBoardMap['infoBoard8'].infoDetails}"
+			            var="infoDetail" style="font-size: 11px"
+                   		columnWidths="290, 80"
+						scrollable="true"
+						scrollHeight="#{boardBeanManager.infoBoardMap['infoBoard8'].scrollHeight}">
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Name" />
+				</f:facet>
+				<ice:outputLabel value="#{infoDetail.label}"/>
+			</ice:column>			      
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Value" />
+				</f:facet>
+		        <ice:outputText value="#{infoDetail.value}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 	 	
+	
+	<ice:panelGroup style="#{boardBeanManager.infoBoardMap['infoBoard9'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.infoBoardMap['infoBoard9']}"
+					rendered="#{boardBeanManager.infoBoardMap['infoBoard9'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.infoBoardMap['infoBoard9'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.infoBoardMap['infoBoard9'].infoDetails}"
+			            var="infoDetail" style="font-size: 11px"
+                   		columnWidths="290, 80"
+						scrollable="true"
+						scrollHeight="#{boardBeanManager.infoBoardMap['infoBoard9'].scrollHeight}">
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Name" />
+				</f:facet>
+				<ice:outputLabel value="#{infoDetail.label}"/>
+			</ice:column>			      
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+						<ice:outputText value="Value" />
+				</f:facet>
+		        <ice:outputText value="#{infoDetail.value}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 
+	
+	<ice:panelGroup style="#{boardBeanManager.batchBoardMap['batchBoard0'].style};cursor: move;" 
+					styleClass="boardComponentBatchBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.batchBoardMap['batchBoard0']}"
+					rendered="#{boardBeanManager.batchBoardMap['batchBoard0'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.batchBoardMap['batchBoard0'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.batchBoardMap['batchBoard0'].batchBoardDetails}"
+			            var="batchDetail" style="font-size: 11px" columnWidths="240, 65, 65, 65, 45, 50">
+			 <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Name" arrow="true">
+							<ice:outputText value="Name"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.label}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Scheduled Time" arrow="true">
+							<ice:outputText value="Scheduled Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.scheduledTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Start Time" arrow="true">
+							<ice:outputText value="Start Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.startTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="End Time" arrow="true">
+							<ice:outputText value="End Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.endTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Uptime" arrow="true">
+							<ice:outputText value="Uptime"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.uptime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Status" arrow="true">
+							<ice:outputText value="Status"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.status}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <!-- <ice:column>
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Output" arrow="true">
+							<ice:outputText value="Output"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.output}"/>
+		     </ice:column> -->
+		</ice:dataTable>
+	</ice:panelGroup>	 
+	
+	<ice:panelGroup style="#{boardBeanManager.batchBoardMap['batchBoard1'].style};cursor: move;" 
+					styleClass="boardComponentBatchBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.batchBoardMap['batchBoard1']}"
+					rendered="#{boardBeanManager.batchBoardMap['batchBoard1'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.batchBoardMap['batchBoard1'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.batchBoardMap['batchBoard1'].batchBoardDetails}"
+			            var="batchDetail" style="font-size: 11px" columnWidths="240, 65, 65, 65, 45, 50">
+			 <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Name" arrow="true">
+							<ice:outputText value="Name"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.label}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Scheduled Time" arrow="true">
+							<ice:outputText value="Scheduled Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.scheduledTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Start Time" arrow="true">
+							<ice:outputText value="Start Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.startTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="End Time" arrow="true">
+							<ice:outputText value="End Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.endTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Uptime" arrow="true">
+							<ice:outputText value="Uptime"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.uptime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Status" arrow="true">
+							<ice:outputText value="Status"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.status}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <!-- <ice:column>
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Output" arrow="true">
+							<ice:outputText value="Output"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.output}"/>
+		     </ice:column> -->
+		</ice:dataTable>
+	</ice:panelGroup> 
+	
+	<ice:panelGroup style="#{boardBeanManager.batchBoardMap['batchBoard2'].style};cursor: move;" 
+					styleClass="boardComponentBatchBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.batchBoardMap['batchBoard2']}"
+					rendered="#{boardBeanManager.batchBoardMap['batchBoard2'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.batchBoardMap['batchBoard2'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.batchBoardMap['batchBoard2'].batchBoardDetails}"
+			            var="batchDetail" style="font-size: 11px" columnWidths="240, 65, 65, 65, 45, 50">
+			 <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Name" arrow="true">
+							<ice:outputText value="Name"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.label}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Scheduled Time" arrow="true">
+							<ice:outputText value="Scheduled Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.scheduledTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Start Time" arrow="true">
+							<ice:outputText value="Start Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.startTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="End Time" arrow="true">
+							<ice:outputText value="End Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.endTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Uptime" arrow="true">
+							<ice:outputText value="Uptime"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.uptime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Status" arrow="true">
+							<ice:outputText value="Status"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.status}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <!-- <ice:column>
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Output" arrow="true">
+							<ice:outputText value="Output"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.output}"/>
+		     </ice:column> -->
+		</ice:dataTable>
+	</ice:panelGroup> 
+	
+	<ice:panelGroup style="#{boardBeanManager.batchBoardMap['batchBoard3'].style};cursor: move;" 
+					styleClass="boardComponentBatchBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.batchBoardMap['batchBoard3']}"
+					rendered="#{boardBeanManager.batchBoardMap['batchBoard3'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.batchBoardMap['batchBoard3'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.batchBoardMap['batchBoard3'].batchBoardDetails}"
+			            var="batchDetail" style="font-size: 11px" columnWidths="240, 65, 65, 65, 45, 50">
+			 <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Name" arrow="true">
+							<ice:outputText value="Name"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.label}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Scheduled Time" arrow="true">
+							<ice:outputText value="Scheduled Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.scheduledTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Start Time" arrow="true">
+							<ice:outputText value="Start Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.startTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="End Time" arrow="true">
+							<ice:outputText value="End Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.endTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Uptime" arrow="true">
+							<ice:outputText value="Uptime"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.uptime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Status" arrow="true">
+							<ice:outputText value="Status"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.status}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <!-- <ice:column>
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Output" arrow="true">
+							<ice:outputText value="Output"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.output}"/>
+		     </ice:column> -->
+		</ice:dataTable>
+	</ice:panelGroup> 
+	
+	<ice:panelGroup style="#{boardBeanManager.batchBoardMap['batchBoard4'].style};cursor: move;" 
+					styleClass="boardComponentBatchBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.batchBoardMap['batchBoard4']}"
+					rendered="#{boardBeanManager.batchBoardMap['batchBoard4'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.batchBoardMap['batchBoard4'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.batchBoardMap['batchBoard4'].batchBoardDetails}"
+			            var="batchDetail" style="font-size: 11px" columnWidths="240, 65, 65, 65, 45, 50">
+			 <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Name" arrow="true">
+							<ice:outputText value="Name"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.label}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Scheduled Time" arrow="true">
+							<ice:outputText value="Scheduled Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.scheduledTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Start Time" arrow="true">
+							<ice:outputText value="Start Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.startTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="End Time" arrow="true">
+							<ice:outputText value="End Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.endTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Uptime" arrow="true">
+							<ice:outputText value="Uptime"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.uptime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Status" arrow="true">
+							<ice:outputText value="Status"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.status}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <!-- <ice:column>
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Output" arrow="true">
+							<ice:outputText value="Output"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.output}"/>
+		     </ice:column> -->
+		</ice:dataTable>
+	</ice:panelGroup> 
+	
+	<ice:panelGroup style="#{boardBeanManager.batchBoardMap['batchBoard5'].style};cursor: move;" 
+					styleClass="boardComponentBatchBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.batchBoardMap['batchBoard5']}"
+					rendered="#{boardBeanManager.batchBoardMap['batchBoard5'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.batchBoardMap['batchBoard5'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.batchBoardMap['batchBoard5'].batchBoardDetails}"
+			            var="batchDetail" style="font-size: 11px" columnWidths="240, 65, 65, 65, 45, 50">
+			 <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Name" arrow="true">
+							<ice:outputText value="Name"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.label}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Scheduled Time" arrow="true">
+							<ice:outputText value="Scheduled Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.scheduledTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Start Time" arrow="true">
+							<ice:outputText value="Start Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.startTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="End Time" arrow="true">
+							<ice:outputText value="End Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.endTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Uptime" arrow="true">
+							<ice:outputText value="Uptime"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.uptime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Status" arrow="true">
+							<ice:outputText value="Status"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.status}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <!-- <ice:column>
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Output" arrow="true">
+							<ice:outputText value="Output"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.output}"/>
+		     </ice:column> -->
+		</ice:dataTable>
+	</ice:panelGroup> 
+	
+	<ice:panelGroup style="#{boardBeanManager.batchBoardMap['batchBoard6'].style};cursor: move;" 
+					styleClass="boardComponentBatchBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.batchBoardMap['batchBoard6']}"
+					rendered="#{boardBeanManager.batchBoardMap['batchBoard6'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.batchBoardMap['batchBoard6'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.batchBoardMap['batchBoard6'].batchBoardDetails}"
+			            var="batchDetail" style="font-size: 11px" columnWidths="240, 65, 65, 65, 45, 50">
+			 <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Name" arrow="true">
+							<ice:outputText value="Name"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.label}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Scheduled Time" arrow="true">
+							<ice:outputText value="Scheduled Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.scheduledTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Start Time" arrow="true">
+							<ice:outputText value="Start Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.startTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="End Time" arrow="true">
+							<ice:outputText value="End Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.endTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Uptime" arrow="true">
+							<ice:outputText value="Uptime"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.uptime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Status" arrow="true">
+							<ice:outputText value="Status"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.status}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <!-- <ice:column>
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Output" arrow="true">
+							<ice:outputText value="Output"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.output}"/>
+		     </ice:column> -->
+		</ice:dataTable>
+	</ice:panelGroup> 
+	
+	<ice:panelGroup style="#{boardBeanManager.batchBoardMap['batchBoard7'].style};cursor: move;" 
+					styleClass="boardComponentBatchBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.batchBoardMap['batchBoard7']}"
+					rendered="#{boardBeanManager.batchBoardMap['batchBoard7'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.batchBoardMap['batchBoard7'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.batchBoardMap['batchBoard7'].batchBoardDetails}"
+			            var="batchDetail" style="font-size: 11px" columnWidths="240, 65, 65, 65, 45, 50">
+			 <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Name" arrow="true">
+							<ice:outputText value="Name"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.label}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Scheduled Time" arrow="true">
+							<ice:outputText value="Scheduled Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.scheduledTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Start Time" arrow="true">
+							<ice:outputText value="Start Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.startTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="End Time" arrow="true">
+							<ice:outputText value="End Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.endTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Uptime" arrow="true">
+							<ice:outputText value="Uptime"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.uptime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Status" arrow="true">
+							<ice:outputText value="Status"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.status}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <!-- <ice:column>
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Output" arrow="true">
+							<ice:outputText value="Output"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.output}"/>
+		     </ice:column> -->
+		</ice:dataTable>
+	</ice:panelGroup> 
+	
+	<ice:panelGroup style="#{boardBeanManager.batchBoardMap['batchBoard8'].style};cursor: move;" 
+					styleClass="boardComponentBatchBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.batchBoardMap['batchBoard8']}"
+					rendered="#{boardBeanManager.batchBoardMap['batchBoard8'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.batchBoardMap['batchBoard8'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.batchBoardMap['batchBoard8'].batchBoardDetails}"
+			            var="batchDetail" style="font-size: 11px" columnWidths="240, 65, 65, 65, 45, 50">
+			 <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Name" arrow="true">
+							<ice:outputText value="Name"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.label}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Scheduled Time" arrow="true">
+							<ice:outputText value="Scheduled Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.scheduledTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Start Time" arrow="true">
+							<ice:outputText value="Start Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.startTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="End Time" arrow="true">
+							<ice:outputText value="End Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.endTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Uptime" arrow="true">
+							<ice:outputText value="Uptime"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.uptime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Status" arrow="true">
+							<ice:outputText value="Status"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.status}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <!-- <ice:column>
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Output" arrow="true">
+							<ice:outputText value="Output"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.output}"/>
+		     </ice:column> -->
+		</ice:dataTable>
+	</ice:panelGroup> 
+	
+	<ice:panelGroup style="#{boardBeanManager.batchBoardMap['batchBoard9'].style};cursor: move;" 
+					styleClass="boardComponentBatchBoard"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.batchBoardMap['batchBoard9']}"
+					rendered="#{boardBeanManager.batchBoardMap['batchBoard9'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.batchBoardMap['batchBoard9'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.batchBoardMap['batchBoard9'].batchBoardDetails}"
+			            var="batchDetail" style="font-size: 11px" columnWidths="240, 65, 65, 65, 45, 50">
+			 <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Name" arrow="true">
+							<ice:outputText value="Name"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.label}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Scheduled Time" arrow="true">
+							<ice:outputText value="Scheduled Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.scheduledTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Start Time" arrow="true">
+							<ice:outputText value="Start Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.startTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: center;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="End Time" arrow="true">
+							<ice:outputText value="End Time"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.endTime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Uptime" arrow="true">
+							<ice:outputText value="Uptime"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.uptime}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <ice:column style="text-align: left;">
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Status" arrow="true">
+							<ice:outputText value="Status"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.status}" style="font-size: 9px;"/>
+		     </ice:column>
+		     <!-- <ice:column>
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Output" arrow="true">
+							<ice:outputText value="Output"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+		         <ice:outputLabel value="#{batchDetail.output}"/>
+		     </ice:column> -->
+		</ice:dataTable>
+	</ice:panelGroup> 
+			  
+	<!--  
+   	<ice:panelGroup style="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart0'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart0']}"
+					rendered="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart0'] != null}">
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable">
+				<tr>
+					<td class="title"><b><h:outputLabel value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart0'].title}"/></b></td>
+				</tr>
+				<tr>
+					<td width="100%">
+						<applet codebase="#{facesContext.externalContext.requestContextPath}/appletJars/"
+								archive="jfreechart-1.0.13.jar, 
+					  					 jcommon-1.0.16.jar,
+					  					 foundation-#{version}.jar,
+					  					 compute-server-#{version}.jar,
+					  					 framework-base-#{version}.jar,
+					  					 persistency-#{version}.jar,
+					  					 jsf-api-1.2.jar,
+					  					 jsf-impl-1.2.jar,
+					  					 log4j-1.2.12.jar,
+					  					 indiktor.jar"
+					  			code="com.fsi.monitoring.applet.IkCategoryRTChartApplet"
+					  			width="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart0'].width}" height="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart0'].height}"
+					  			alt="You should see an applet, not this text.">
+					  		<param name="chartType" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart0'].type}"/>
+					  		<param name="maxSlot" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart0'].maxSlot}"/>
+					  		<param name="chartUnits" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart0'].chartUnits}"/>
+					  		<param name="chartData" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart0'].chartData}"/>
+					  	</applet> 
+					</td>
+				</tr>
+			</table>
+   	</ice:panelGroup>
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart1'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart1']}"
+					rendered="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart1'] != null}">
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable">
+				<tr>
+					<td class="title"><b><h:outputLabel value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart1'].title}"/></b></td>
+				</tr>
+				<tr>
+					<td width="100%">
+						<applet codebase="#{facesContext.externalContext.requestContextPath}/appletJars/"
+								archive="jfreechart-1.0.13.jar, 
+					  					 jcommon-1.0.16.jar,
+					  					 foundation-#{version}.jar,
+					  					 compute-server-#{version}.jar,
+					  					 framework-base-#{version}.jar,
+					  					 persistency-#{version}.jar,
+					  					 jsf-api-1.2.jar,
+					  					 jsf-impl-1.2.jar,
+					  					 log4j-1.2.12.jar,
+					  					 indiktor.jar"
+					  			code="com.fsi.monitoring.applet.IkCategoryRTChartApplet"
+					  			width="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart1'].width}" height="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart1'].height}"
+					  			alt="You should see an applet, not this text.">
+					  		<param name="chartType" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart1'].type}"/>
+					  		<param name="maxSlot" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart1'].maxSlot}"/>
+					  		<param name="chartUnits" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart1'].chartUnits}"/>
+					  		<param name="chartData" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart1'].chartData}"/>
+					  	</applet> 
+					</td>
+				</tr>
+			</table>
+   	</ice:panelGroup>
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart2'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart2']}"
+					rendered="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart2'] != null}">
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable">
+				<tr>
+					<td class="title"><b><h:outputLabel value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart2'].title}"/></b></td>
+				</tr>
+				<tr>
+					<td width="100%">
+						<applet codebase="#{facesContext.externalContext.requestContextPath}/appletJars/"
+								archive="jfreechart-1.0.13.jar, 
+					  					 jcommon-1.0.16.jar,
+					  					 foundation-#{version}.jar,
+					  					 compute-server-#{version}.jar,
+					  					 framework-base-#{version}.jar,
+					  					 persistency-#{version}.jar,
+					  					 jsf-api-1.2.jar,
+					  					 jsf-impl-1.2.jar,
+					  					 log4j-1.2.12.jar,
+					  					 indiktor.jar"
+					  			code="com.fsi.monitoring.applet.IkCategoryRTChartApplet"
+					  			width="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart2'].width}" height="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart2'].height}"
+					  			alt="You should see an applet, not this text.">
+					  		<param name="chartType" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart2'].type}"/>
+					  		<param name="maxSlot" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart2'].maxSlot}"/>
+					  		<param name="chartUnits" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart2'].chartUnits}"/>
+					  		<param name="chartData" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart2'].chartData}"/>
+					  	</applet> 
+					</td>
+				</tr>
+			</table>
+   	</ice:panelGroup>
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart3'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart3']}"
+					rendered="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart3'] != null}">
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable">
+				<tr>
+					<td class="title"><b><h:outputLabel value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart3'].title}"/></b></td>
+				</tr>
+				<tr>
+					<td width="100%">
+						<applet codebase="#{facesContext.externalContext.requestContextPath}/appletJars/"
+								archive="jfreechart-1.0.13.jar, 
+					  					 jcommon-1.0.16.jar,
+					  					 foundation-#{version}.jar,
+					  					 compute-server-#{version}.jar,
+					  					 framework-base-#{version}.jar,
+					  					 persistency-#{version}.jar,
+					  					 jsf-api-1.2.jar,
+					  					 jsf-impl-1.2.jar,
+					  					 log4j-1.2.12.jar,
+					  					 indiktor.jar"
+					  			code="com.fsi.monitoring.applet.IkCategoryRTChartApplet"
+					  			width="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart3'].width}" height="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart3'].height}"
+					  			alt="You should see an applet, not this text.">
+					  		<param name="chartType" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart3'].type}"/>
+					  		<param name="maxSlot" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart3'].maxSlot}"/>
+					  		<param name="chartUnits" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart3'].chartUnits}"/>
+					  		<param name="chartData" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart3'].chartData}"/>
+					  	</applet> 
+					</td>
+				</tr>
+			</table>
+   	</ice:panelGroup>   
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart4'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart4']}"
+					rendered="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart4'] != null}">
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable">
+				<tr>
+					<td class="title"><b><h:outputLabel value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart4'].title}"/></b></td>
+				</tr>
+				<tr>
+					<td width="100%">
+						<applet codebase="#{facesContext.externalContext.requestContextPath}/appletJars/"
+								archive="jfreechart-1.0.13.jar, 
+					  					 jcommon-1.0.16.jar,
+					  					 foundation-#{version}.jar,
+					  					 compute-server-#{version}.jar,
+					  					 framework-base-#{version}.jar,
+					  					 persistency-#{version}.jar,
+					  					 jsf-api-1.2.jar,
+					  					 jsf-impl-1.2.jar,
+					  					 log4j-1.2.12.jar,
+					  					 indiktor.jar"
+					  			code="com.fsi.monitoring.applet.IkCategoryRTChartApplet"
+					  			width="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart4'].width}" height="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart4'].height}"
+					  			alt="You should see an applet, not this text.">
+					  		<param name="chartType" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart4'].type}"/>
+					  		<param name="maxSlot" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart4'].maxSlot}"/>
+					  		<param name="chartUnits" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart4'].chartUnits}"/>
+					  		<param name="chartData" value="#{boardBeanManager.ikrCategoryChartMap['ikrCategoryChart4'].chartData}"/>
+					  	</applet> 
+					</td>
+				</tr>
+			</table>
+   	</ice:panelGroup>     		   	   	
+  -->   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].style};cursor: move;" 
+   					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0']}"
+					rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'] != null}">
+			<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].title}"/>
+			</ice:panelGroup>
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable" bgcolor="#CBCBCB">
+				<tr>
+					<td width="100%">
+						<ice:outputChart type="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].type}"
+										 chartTitle="  "
+										 xaxisTitle="  "
+										 yaxisTitle="  "
+					                     xaxisLabels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].chartAxisTimes}"
+					                     labels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].chartLabels}"
+					                     colors="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].chartColors}"
+					                     data="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].pieChart?boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].pieChartData:boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].chartData}"
+					                     legendColumns="2"
+					                     legendPlacement="none"
+						                 renderOnSubmit="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].renderOnSubmit}"
+						                 actionListener="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].imageClicked}"
+						                 width="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].width}" 
+						                 height="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].height}"
+						                 horizontal="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart0'].horizontal}"/>
+					</td>
+				</tr>
+			</table>
+			<ice:panelGroup style="margin: 1px 1px 1px 1px; height: 25px;"/>
+   	</ice:panelGroup>
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].style};cursor: move;" 
+   					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1']}"
+					rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'] != null}">
+			<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].title}"/>
+			</ice:panelGroup>
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable" bgcolor="#CBCBCB">
+				<tr>
+					<td width="100%">
+						<ice:outputChart type="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].type}"
+										 chartTitle="  "
+										 xaxisTitle="  "
+										 yaxisTitle="  "
+					                     xaxisLabels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].chartAxisTimes}"
+					                     labels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].chartLabels}"
+					                     colors="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].chartColors}"
+					                     data="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].pieChart?boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].pieChartData:boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].chartData}"
+					                     legendColumns="2"
+					                     legendPlacement="none"
+						                 renderOnSubmit="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].renderOnSubmit}"
+						                 actionListener="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].imageClicked}"
+						                 width="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].width}" 
+						                 height="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].height}"
+						                 horizontal="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart1'].horizontal}"/>
+					</td>
+				</tr>
+			</table>
+			<ice:panelGroup style="margin: 1px 1px 1px 1px; height: 25px;"/>
+   	</ice:panelGroup>   
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].style};cursor: move;" 
+   					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2']}"
+					rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'] != null}">
+			<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].title}"/>
+			</ice:panelGroup>
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable" bgcolor="#CBCBCB">
+				<tr>
+					<td width="100%">
+						<ice:outputChart type="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].type}"
+										 chartTitle="  "
+										 xaxisTitle="  "
+										 yaxisTitle="  "
+					                     xaxisLabels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].chartAxisTimes}"
+					                     labels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].chartLabels}"
+					                     colors="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].chartColors}"
+					                     data="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].pieChart?boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].pieChartData:boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].chartData}"
+					                     legendColumns="2"
+					                     legendPlacement="none"
+						                 renderOnSubmit="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].renderOnSubmit}"
+						                 actionListener="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].imageClicked}"
+						                 width="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].width}" 
+						                 height="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].height}"
+						                 horizontal="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart2'].horizontal}"/>
+					</td>
+				</tr>
+			</table>
+			<ice:panelGroup style="margin: 1px 1px 1px 1px; height: 25px;"/>
+   	</ice:panelGroup>   
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].style};cursor: move;" 
+   					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3']}"
+					rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'] != null}">
+			<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].title}"/>
+			</ice:panelGroup>
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable" bgcolor="#CBCBCB">
+				<tr>
+					<td width="100%">
+						<ice:outputChart type="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].type}"
+										 chartTitle="  "
+										 xaxisTitle="  "
+										 yaxisTitle="  "
+					                     xaxisLabels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].chartAxisTimes}"
+					                     labels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].chartLabels}"
+					                     colors="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].chartColors}"
+					                     data="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].pieChart?boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].pieChartData:boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].chartData}"
+					                     legendColumns="2"
+					                     legendPlacement="none"
+						                 renderOnSubmit="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].renderOnSubmit}"
+						                 actionListener="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].imageClicked}"
+						                 width="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].width}" 
+						                 height="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].height}"
+						                 horizontal="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart3'].horizontal}"/>
+					</td>
+				</tr>
+			</table>
+			<ice:panelGroup style="margin: 1px 1px 1px 1px; height: 25px;"/>
+   	</ice:panelGroup>   
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].style};cursor: move;" 
+   					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4']}"
+					rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'] != null}">
+			<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].title}"/>
+			</ice:panelGroup>
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable" bgcolor="#CBCBCB">
+				<tr>
+					<td width="100%">
+						<ice:outputChart type="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].type}"
+										 chartTitle="  "
+										 xaxisTitle="  "
+										 yaxisTitle="  "
+					                     xaxisLabels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].chartAxisTimes}"
+					                     labels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].chartLabels}"
+					                     colors="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].chartColors}"
+					                     data="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].pieChart?boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].pieChartData:boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].chartData}"
+					                     legendColumns="2"
+					                     legendPlacement="none"
+						                 renderOnSubmit="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].renderOnSubmit}"
+						                 actionListener="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].imageClicked}"
+						                 width="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].width}" 
+						                 height="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].height}"
+						                 horizontal="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart4'].horizontal}"/>
+					</td>
+				</tr>
+			</table>
+			<ice:panelGroup style="margin: 1px 1px 1px 1px; height: 25px;"/>
+   	</ice:panelGroup>   
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].style};cursor: move;" 
+   					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5']}"
+					rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'] != null}">
+			<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].title}"/>
+			</ice:panelGroup>
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable" bgcolor="#CBCBCB">
+				<tr>
+					<td width="100%">
+						<ice:outputChart type="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].type}"
+										 chartTitle="  "
+										 xaxisTitle="  "
+										 yaxisTitle="  "
+					                     xaxisLabels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].chartAxisTimes}"
+					                     labels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].chartLabels}"
+					                     colors="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].chartColors}"
+					                     data="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].pieChart?boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].pieChartData:boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].chartData}"
+					                     legendColumns="2"
+					                     legendPlacement="none"
+						                 renderOnSubmit="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].renderOnSubmit}"
+						                 actionListener="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].imageClicked}"
+						                 width="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].width}" 
+						                 height="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].height}"
+						                 horizontal="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart5'].horizontal}"/>
+					</td>
+				</tr>
+			</table>
+			<ice:panelGroup style="margin: 1px 1px 1px 1px; height: 25px;"/>
+   	</ice:panelGroup>  
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].style};cursor: move;" 
+   					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6']}"
+					rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'] != null}">
+			<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].title}"/>
+			</ice:panelGroup>
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable" bgcolor="#CBCBCB">
+				<tr>
+					<td width="100%">
+						<ice:outputChart type="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].type}"
+										 chartTitle="  "
+										 xaxisTitle="  "
+										 yaxisTitle="  "
+					                     xaxisLabels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].chartAxisTimes}"
+					                     labels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].chartLabels}"
+					                     colors="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].chartColors}"
+					                     data="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].pieChart?boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].pieChartData:boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].chartData}"
+					                     legendColumns="2"
+					                     legendPlacement="none"
+						                 renderOnSubmit="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].renderOnSubmit}"
+						                 actionListener="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].imageClicked}"
+						                 width="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].width}" 
+						                 height="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].height}"
+						                 horizontal="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart6'].horizontal}"/>
+					</td>
+				</tr>
+			</table>
+			<ice:panelGroup style="margin: 1px 1px 1px 1px; height: 25px;"/>
+   	</ice:panelGroup>    
+	
+	<ice:panelGroup style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].style};cursor: move;" 
+   					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7']}"
+					rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'] != null}">
+			<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].title}"/>
+			</ice:panelGroup>
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable" bgcolor="#CBCBCB">
+				<tr>
+					<td width="100%">
+						<ice:outputChart type="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].type}"
+										 chartTitle="  "
+										 xaxisTitle="  "
+										 yaxisTitle="  "
+					                     xaxisLabels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].chartAxisTimes}"
+					                     labels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].chartLabels}"
+					                     colors="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].chartColors}"
+					                     data="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].pieChart?boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].pieChartData:boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].chartData}"
+					                     legendColumns="2"
+					                     legendPlacement="none"
+						                 renderOnSubmit="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].renderOnSubmit}"
+						                 actionListener="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].imageClicked}"
+						                 width="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].width}" 
+						                 height="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].height}"
+						                 horizontal="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart7'].horizontal}"/>
+					</td>
+				</tr>
+			</table>
+			<ice:panelGroup style="margin: 1px 1px 1px 1px; height: 25px;"/>
+   	</ice:panelGroup>   
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].style};cursor: move;" 
+   					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8']}"
+					rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'] != null}">
+			<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].title}"/>
+			</ice:panelGroup>
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable" bgcolor="#CBCBCB">
+				<tr>
+					<td width="100%">
+						<ice:outputChart type="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].type}"
+										 chartTitle="  "
+										 xaxisTitle="  "
+										 yaxisTitle="  "
+					                     xaxisLabels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].chartAxisTimes}"
+					                     labels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].chartLabels}"
+					                     colors="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].chartColors}"
+					                     data="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].pieChart?boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].pieChartData:boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].chartData}"
+					                     legendColumns="2"
+					                     legendPlacement="none"
+						                 renderOnSubmit="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].renderOnSubmit}"
+						                 actionListener="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].imageClicked}"
+						                 width="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].width}" 
+						                 height="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].height}"
+						                 horizontal="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart8'].horizontal}"/>
+					</td>
+				</tr>
+			</table>
+			<ice:panelGroup style="margin: 1px 1px 1px 1px; height: 25px;"/>
+   	</ice:panelGroup> 
+   	
+   	<ice:panelGroup style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].style};cursor: move;" 
+   					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9']}"
+					rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'] != null}">
+			<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].title}"/>
+			</ice:panelGroup>
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable" bgcolor="#CBCBCB">
+				<tr>
+					<td width="100%">
+						<ice:outputChart type="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].type}"
+										 chartTitle="  "
+										 xaxisTitle="  "
+										 yaxisTitle="  "
+					                     xaxisLabels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].chartAxisTimes}"
+					                     labels="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].chartLabels}"
+					                     colors="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].chartColors}"
+					                     data="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].pieChart?boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].pieChartData:boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].chartData}"
+					                     legendColumns="2"
+					                     legendPlacement="none"
+						                 renderOnSubmit="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].renderOnSubmit}"
+						                 actionListener="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].imageClicked}"
+						                 width="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].width}" 
+						                 height="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].height}"
+						                 horizontal="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].horizontal}"/>
+					</td>
+				</tr>
+			</table>
+			<ice:panelGroup style="margin: 1px 1px 1px 1px; height: 25px;"/>
+   	</ice:panelGroup> 
+   	
+   	<ice:panelGroup style="#{boardBeanManager.alertBoardGridMap['alertBoardGrid0'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardGridMap['alertBoardGrid0']}"
+					rendered="#{boardBeanManager.alertBoardGridMap['alertBoardGrid0'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid0'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid0'].alertBeans}"
+			            var="alertBoardGridDetail" style="font-size: 11px"
+						columnWidths="80, 50, 140, 80"
+						scrollable="true"
+						scrollHeight="270px">
+			 <ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="State"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertState}"
+								 style="font-size: 9px;">
+					<f:converter converterId="DisplayConverter"/>
+				</ice:outputLabel>		
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+	                <ice:outputText value="Date"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alert.alertEvent.eventDate}"
+								 style="font-size: 9px;">
+					<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+				</ice:outputLabel>
+			</ice:column>	
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Label"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+			
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Environment"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.logicalEnv.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 
+   	
+   	<ice:panelGroup style="#{boardBeanManager.alertBoardGridMap['alertBoardGrid1'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardGridMap['alertBoardGrid1']}"
+					rendered="#{boardBeanManager.alertBoardGridMap['alertBoardGrid1'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid1'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid1'].alertBeans}"
+			            var="alertBoardGridDetail" style="font-size: 11px"
+			            columnWidths="80, 50, 140, 80"
+						scrollable="true"
+						scrollHeight="270px">
+			 <ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="State"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertState}"
+								 style="font-size: 9px;">
+					<f:converter converterId="DisplayConverter"/>
+				</ice:outputLabel>		
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+	                <ice:outputText value="Date"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alert.alertEvent.eventDate}"
+								 style="font-size: 9px;">
+					<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+				</ice:outputLabel>
+			</ice:column>	
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Label"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+			
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Environment"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.logicalEnv.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 
+   	
+   	<ice:panelGroup style="#{boardBeanManager.alertBoardGridMap['alertBoardGrid2'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardGridMap['alertBoardGrid2']}"
+					rendered="#{boardBeanManager.alertBoardGridMap['alertBoardGrid2'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid2'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid2'].alertBeans}"
+			            var="alertBoardGridDetail" style="font-size: 11px"
+			            columnWidths="80, 50, 140, 80"
+						scrollable="true"
+						scrollHeight="270px">
+			 <ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="State"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertState}"
+								 style="font-size: 9px;">
+					<f:converter converterId="DisplayConverter"/>
+				</ice:outputLabel>		
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+	                <ice:outputText value="Date"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alert.alertEvent.eventDate}"
+								 style="font-size: 9px;">
+					<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+				</ice:outputLabel>
+			</ice:column>	
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Label"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+			
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Environment"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.logicalEnv.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 
+   	
+   	<ice:panelGroup style="#{boardBeanManager.alertBoardGridMap['alertBoardGrid3'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardGridMap['alertBoardGrid3']}"
+					rendered="#{boardBeanManager.alertBoardGridMap['alertBoardGrid3'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid3'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid3'].alertBeans}"
+			            var="alertBoardGridDetail" style="font-size: 11px"
+			            columnWidths="80, 50, 140, 80"
+						scrollable="true"
+						scrollHeight="270px">
+			 <ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="State"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertState}"
+								 style="font-size: 9px;">
+					<f:converter converterId="DisplayConverter"/>
+				</ice:outputLabel>		
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+	                <ice:outputText value="Date"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alert.alertEvent.eventDate}"
+								 style="font-size: 9px;">
+					<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+				</ice:outputLabel>
+			</ice:column>	
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Label"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+			
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Environment"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.logicalEnv.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 
+   	
+   	<ice:panelGroup style="#{boardBeanManager.alertBoardGridMap['alertBoardGrid4'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardGridMap['alertBoardGrid4']}"
+					rendered="#{boardBeanManager.alertBoardGridMap['alertBoardGrid4'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid4'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid4'].alertBeans}"
+			            var="alertBoardGridDetail" style="font-size: 11px"
+			            columnWidths="80, 50, 140, 80"
+						scrollable="true"
+						scrollHeight="270px">
+			 <ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="State"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertState}"
+								 style="font-size: 9px;">
+					<f:converter converterId="DisplayConverter"/>
+				</ice:outputLabel>		
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+	                <ice:outputText value="Date"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alert.alertEvent.eventDate}"
+								 style="font-size: 9px;">
+					<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+				</ice:outputLabel>
+			</ice:column>	
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Label"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+			
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Environment"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.logicalEnv.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 
+   	
+   	<ice:panelGroup style="#{boardBeanManager.alertBoardGridMap['alertBoardGrid5'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardGridMap['alertBoardGrid5']}"
+					rendered="#{boardBeanManager.alertBoardGridMap['alertBoardGrid5'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid5'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid5'].alertBeans}"
+			            var="alertBoardGridDetail" style="font-size: 11px"
+			            columnWidths="80, 50, 140, 80"
+						scrollable="true"
+						scrollHeight="270px">
+			 <ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="State"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertState}"
+								 style="font-size: 9px;">
+					<f:converter converterId="DisplayConverter"/>
+				</ice:outputLabel>		
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+	                <ice:outputText value="Date"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alert.alertEvent.eventDate}"
+								 style="font-size: 9px;">
+					<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+				</ice:outputLabel>
+			</ice:column>	
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Label"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+			
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Environment"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.logicalEnv.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 
+   	
+   	<ice:panelGroup style="#{boardBeanManager.alertBoardGridMap['alertBoardGrid6'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardGridMap['alertBoardGrid6']}"
+					rendered="#{boardBeanManager.alertBoardGridMap['alertBoardGrid6'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid6'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid6'].alertBeans}"
+			            var="alertBoardGridDetail" style="font-size: 11px"
+			            columnWidths="80, 50, 140, 80"
+						scrollable="true"
+						scrollHeight="270px">
+			 <ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="State"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertState}"
+								 style="font-size: 9px;">
+					<f:converter converterId="DisplayConverter"/>
+				</ice:outputLabel>		
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+	                <ice:outputText value="Date"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alert.alertEvent.eventDate}"
+								 style="font-size: 9px;">
+					<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+				</ice:outputLabel>
+			</ice:column>	
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Label"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+			
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Environment"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.logicalEnv.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 
+   	
+   	<ice:panelGroup style="#{boardBeanManager.alertBoardGridMap['alertBoardGrid7'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardGridMap['alertBoardGrid7']}"
+					rendered="#{boardBeanManager.alertBoardGridMap['alertBoardGrid7'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid7'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid7'].alertBeans}"
+			            var="alertBoardGridDetail" style="font-size: 11px"
+			            columnWidths="80, 50, 140, 80"
+						scrollable="true"
+						scrollHeight="270px">
+			 <ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="State"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertState}"
+								 style="font-size: 9px;">
+					<f:converter converterId="DisplayConverter"/>
+				</ice:outputLabel>		
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+	                <ice:outputText value="Date"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alert.alertEvent.eventDate}"
+								 style="font-size: 9px;">
+					<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+				</ice:outputLabel>
+			</ice:column>	
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Label"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+			
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Environment"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.logicalEnv.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 
+   	
+   	<ice:panelGroup style="#{boardBeanManager.alertBoardGridMap['alertBoardGrid8'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardGridMap['alertBoardGrid8']}"
+					rendered="#{boardBeanManager.alertBoardGridMap['alertBoardGrid8'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid8'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid8'].alertBeans}"
+			            var="alertBoardGridDetail" style="font-size: 11px"
+			            columnWidths="80, 50, 140, 80"
+						scrollable="true"
+						scrollHeight="270px">
+			 <ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="State"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertState}"
+								 style="font-size: 9px;">
+					<f:converter converterId="DisplayConverter"/>
+				</ice:outputLabel>		
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+	                <ice:outputText value="Date"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alert.alertEvent.eventDate}"
+								 style="font-size: 9px;">
+					<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+				</ice:outputLabel>
+			</ice:column>	
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Label"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+			
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Environment"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.logicalEnv.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup> 
+   	
+   	<ice:panelGroup style="#{boardBeanManager.alertBoardGridMap['alertBoardGrid9'].style};cursor: move;" 
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.alertBoardGridMap['alertBoardGrid9']}"
+					rendered="#{boardBeanManager.alertBoardGridMap['alertBoardGrid9'] != null}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+				<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid9'].title}"/>
+		</ice:panelGroup>			
+		<ice:dataTable 	value="#{boardBeanManager.alertBoardGridMap['alertBoardGrid9'].alertBeans}"
+			            var="alertBoardGridDetail" style="font-size: 11px"
+			            columnWidths="80, 50, 140, 80"
+						scrollable="true"
+						scrollHeight="270px">
+			 <ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="State"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertState}"
+								 style="font-size: 9px;">
+					<f:converter converterId="DisplayConverter"/>
+				</ice:outputLabel>		
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+	                <ice:outputText value="Date"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alert.alertEvent.eventDate}"
+								 style="font-size: 9px;">
+					<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+				</ice:outputLabel>
+			</ice:column>	
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Label"/>
+		        </f:facet>
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+			
+			<ice:column style="text-align: left;">
+				<f:facet name="header">
+	                <ice:outputText value="Environment"/>
+		        </f:facet>	
+				<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.logicalEnv.name}"
+								 style="font-size: 9px;"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup>    
+   	
+	<ice:panelGroup style="#{boardBeanManager.components.threadAnalysisComponent.details.threadComponent.style};cursor: move;"
+					rendered="#{boardBeanManager.components.threadAnalysisComponent.details.threadComponent.rendered}"
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.components.threadAnalysisComponent.details.threadComponent}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.components.threadAnalysisComponent.details.threadComponent.title}"/>
+		</ice:panelGroup>
+		<ice:dataTable value="#{boardBeanManager.components.threadAnalysisComponent.details.beans}"
+				       sortColumn="#{boardBeanManager.components.threadAnalysisComponent.details.sortColumnName}"
+        			   sortAscending="#{boardBeanManager.components.threadAnalysisComponent.details.ascending}"
+				       var="threadDetailBean"
+					   styleClass="threadDetails"
+					   cellspacing="0" cellpadding="0" border="0"
+					   rowClasses="oddRow,evenRow"
+					   columnClasses="name,state,time,time"
+					   headerClass="big big big big">
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+                   		columnName="#{boardBeanManager.components.threadAnalysisComponent.details.nameColumnName}"
+                   		arrow="true" >
+               			<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.details.nameColumnName}"/>
+       				 </ice:commandSortHeader>
+       			</f:facet>
+				<ice:commandLink value="#{threadDetailBean.threadName}"
+								 actionListener="#{boardBeanManager.components.threadAnalysisComponent.rowSelectionListener}">
+						<f:attribute name="details" value="#{threadDetailBean}" />
+				</ice:commandLink>
+			</ice:column>	 	
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+           				columnName="#{boardBeanManager.components.threadAnalysisComponent.details.stateColumnName}"
+           				arrow="true" >
+           				<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.details.stateColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>
+				<ice:outputLabel value="#{threadDetailBean.state}"/>
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+           				columnName="#{boardBeanManager.components.threadAnalysisComponent.details.blockedTimeColumnName}"
+           				arrow="true" >
+           				<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.details.blockedTimeColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>	
+				<ice:outputLabel value="#{threadDetailBean.blockedTime}"/>
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+               			columnName="#{boardBeanManager.components.threadAnalysisComponent.details.waitedTimeColumnName}"
+               			arrow="true" >
+               			<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.details.waitedTimeColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>
+				<ice:outputLabel value="#{threadDetailBean.waitedTime}"/>
+			</ice:column>		 	 		        	
+		</ice:dataTable>
+	</ice:panelGroup>
+	
+	<ice:panelGroup style="#{boardBeanManager.components.threadAnalysisComponent.statuses.threadComponent.style};cursor: move;"
+					rendered="#{boardBeanManager.components.threadAnalysisComponent.statuses.threadComponent.rendered}"
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.components.threadAnalysisComponent.statuses.threadComponent}">					
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.components.threadAnalysisComponent.statuses.threadComponent.title}"/>
+		</ice:panelGroup>					
+		<ice:dataTable value="#{boardBeanManager.components.threadAnalysisComponent.statuses.beans}"
+			   	       sortColumn="#{boardBeanManager.components.threadAnalysisComponent.statuses.sortColumnName}"
+        			   sortAscending="#{boardBeanManager.components.threadAnalysisComponent.statuses.ascending}"
+					   var="threadStatsBean"
+				       styleClass="threadAnalysis"
+				  	   cellspacing="0" cellpadding="0" border="0"
+					   rowClasses="oddRow,evenRow"
+					   columnClasses="name,data,data"
+				  	   headerClass="big big big">
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+               			columnName="#{boardBeanManager.components.threadAnalysisComponent.statuses.nameColumnName}"
+               			arrow="true" >
+               			<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.statuses.nameColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>
+				<ice:outputLabel value="#{threadStatsBean.status}"/>
+			</ice:column>	 	
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+               			columnName="#{boardBeanManager.components.threadAnalysisComponent.statuses.nbColumnName}"
+               			arrow="true" >
+               			<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.statuses.nbColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>
+				<ice:outputLabel value="#{threadStatsBean.value}"/>
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+               			columnName="#{boardBeanManager.components.threadAnalysisComponent.statuses.percentColumnName}"
+               			arrow="true" >
+               			<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.statuses.percentColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>
+			  	<ice:outputLabel value="#{threadStatsBean.percentage}"/>
+			</ice:column>	     	
+		</ice:dataTable> 		     			
+	</ice:panelGroup>
+	
+	<ice:panelGroup style="#{boardBeanManager.components.threadAnalysisComponent.methods.threadComponent.style};cursor: move;"
+					rendered="#{boardBeanManager.components.threadAnalysisComponent.methods.threadComponent.rendered}"
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.components.threadAnalysisComponent.methods.threadComponent}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.components.threadAnalysisComponent.methods.threadComponent.title}"/>
+		</ice:panelGroup>					
+		<ice:dataTable value="#{boardBeanManager.components.threadAnalysisComponent.methods.beans}"
+			   	       sortColumn="#{boardBeanManager.components.threadAnalysisComponent.methods.sortColumnName}"
+        			   sortAscending="#{boardBeanManager.components.threadAnalysisComponent.methods.ascending}"			   	      
+					   var="threadStatsBean"
+				       styleClass="threadAnalysis"
+				  	   cellspacing="0" cellpadding="0" border="0"
+					   rowClasses="oddRow,evenRow"
+					   columnClasses="name,data,data"
+				  	   headerClass="big big big">
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+               			columnName="#{boardBeanManager.components.threadAnalysisComponent.methods.nameColumnName}"
+               			arrow="true" >
+               			<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.methods.nameColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>
+				<ice:outputLabel value="#{threadStatsBean.status}"/>
+			</ice:column>	 	
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+               			columnName="#{boardBeanManager.components.threadAnalysisComponent.methods.nbColumnName}"
+               			arrow="true" >
+               			<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.methods.nbColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>
+				<ice:outputLabel value="#{threadStatsBean.value}"/>
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+               			columnName="#{boardBeanManager.components.threadAnalysisComponent.methods.percentColumnName}"
+               			arrow="true" >
+               			<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.methods.percentColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>
+			  	<ice:outputLabel value="#{threadStatsBean.percentage}"/>
+			</ice:column>	     	
+		</ice:dataTable> 		     			
+	</ice:panelGroup>
+	
+	<ice:panelGroup style="#{boardBeanManager.components.threadAnalysisComponent.types.threadComponent.style};cursor: move;"
+					rendered="#{boardBeanManager.components.threadAnalysisComponent.types.threadComponent.rendered}"
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.components.threadAnalysisComponent.types.threadComponent}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.components.threadAnalysisComponent.types.threadComponent.title}"/>
+		</ice:panelGroup>					
+		<ice:dataTable value="#{boardBeanManager.components.threadAnalysisComponent.types.beans}"
+			   	       sortColumn="#{boardBeanManager.components.threadAnalysisComponent.types.sortColumnName}"
+        			   sortAscending="#{boardBeanManager.components.threadAnalysisComponent.types.ascending}"  
+					   var="threadStatsBean"
+				       styleClass="threadAnalysis"
+				  	   cellspacing="0" cellpadding="0" border="0"
+					   rowClasses="oddRow,evenRow"
+					   columnClasses="name,data,data"
+				  	   headerClass="big big big">
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+               			columnName="#{boardBeanManager.components.threadAnalysisComponent.types.nameColumnName}"
+               			arrow="true" >
+               			<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.types.nameColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>
+				<ice:outputLabel value="#{threadStatsBean.status}"/>
+			</ice:column>	 	
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+               			columnName="#{boardBeanManager.components.threadAnalysisComponent.types.nbColumnName}"
+               			arrow="true" >
+               			<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.types.nbColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>
+				<ice:outputLabel value="#{threadStatsBean.value}"/>
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+           			<ice:commandSortHeader
+               			columnName="#{boardBeanManager.components.threadAnalysisComponent.types.percentColumnName}"
+               			arrow="true" >
+               			<ice:outputText value="#{boardBeanManager.components.threadAnalysisComponent.types.percentColumnName}"/>
+       			 	</ice:commandSortHeader>
+       			</f:facet>
+			  	<ice:outputLabel value="#{threadStatsBean.percentage}"/>
+			</ice:column>	     	
+		</ice:dataTable> 		     			
+	</ice:panelGroup>	
+	
+	<ice:panelGroup style="#{boardBeanManager.components.threadAnalysisComponent.style};cursor: move;"
+					rendered="#{boardBeanManager.components.threadAnalysisComponent.rendered}"
+					styleClass="boardComponent"
+					draggable="true" 
+					dragListener="#{boardBeanManager.dragListener}"
+					dragMask="hover_start, dragging, hover_end"
+					dragValue="#{boardBeanManager.components.threadAnalysisComponent}">
+		<ice:panelGroup style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+			<ice:outputLabel styleClass="dashboardTitle" value="#{boardBeanManager.components.threadAnalysisComponent.title}"/>
+		</ice:panelGroup>			
+		<ice:panelGroup>
+			<ice:outputLabel value="#{boardBeanManager.components.threadAnalysisComponent.selectedThreadDetails.stackTrace}"/>
+		</ice:panelGroup>	
+	</ice:panelGroup> 
+   
+</ice:form>
+</ui:define>
+</ui:composition>

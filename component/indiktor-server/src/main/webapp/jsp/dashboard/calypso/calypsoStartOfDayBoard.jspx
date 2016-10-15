@@ -1,0 +1,49 @@
+<f:subview id="calypsoStartOfDay" 
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    	<ice:panelGrid border="0" columns="1" cellspacing="0" cellpadding="0" width="200" visible="true" style="top: auto; position: relative">	
+			<ice:panelCollapsible expanded="false">	
+				<f:facet name="header">
+			        <ice:panelGroup style="font-size:14px; font-weight:bold; font-family:verdana; text-align: center;">
+			            <ice:outputText value="Start Of Day"/>
+			        </ice:panelGroup>
+			    </f:facet>
+			    <ice:panelGrid style="width: 100%; height: 100%">
+			        <ice:panelGrid columns="2" style="width: 100%; height: 100%">
+			        	<ice:dataTable value="#{calypsoGlobalBoardManager.sod}"
+					                   var="scheduledTaskTableRecordBean"
+					                   cellpadding="0"
+					                   resizable="true">
+					    	<ice:column >
+					    		<ice:panelGroup styleClass="#{scheduledTaskTableRecordBean.indentStyleClass}">
+			                		<!-- Render the expand/contract if there is an image -->
+			                		<ice:commandLink actionListener="#{scheduledTaskTableRecordBean.toggleSubGroupAction}">
+			                			<ice:graphicImage value="#{scheduledTaskTableRecordBean.expandContractImage}" style="border: 0px solid;"/>
+			                		</ice:commandLink>
+			            		</ice:panelGroup>
+			        		</ice:column>			                   
+					        <ice:column>			       		
+					        	<f:facet name="header">
+					            	<ice:outputText value="Task" style="font-size:12px; font-weight:bold; font-family:verdana;"/>
+					         	</f:facet>
+					         	<ice:panelGroup styleClass="#{scheduledTaskTableRecordBean.rowStyleClass}"
+					                         style="width: 160px; font-size:10p">
+					             	<ice:outputText value="#{scheduledTaskTableRecordBean.taskName}"/>
+					         	</ice:panelGroup>
+						   	</ice:column>
+						  	<ice:column>
+					        	<f:facet name="header">
+					            	<ice:outputText value="Status" style="font-size:12px; font-weight:bold; font-family:verdana;"/>
+					         	</f:facet>
+					         	<ice:panelGroup styleClass="#{scheduledTaskTableRecordBean.rowStyleClass}" style="width: 40px; vertical-align: middle">
+					                <ice:graphicImage url="#{scheduledTaskTableRecordBean.alert.url}" height="20"/>
+					         	</ice:panelGroup>
+						   	</ice:column>
+				    	</ice:dataTable>
+			        </ice:panelGrid>
+			    </ice:panelGrid>
+			</ice:panelCollapsible>
+		</ice:panelGrid>
+</f:subview>

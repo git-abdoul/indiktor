@@ -1,0 +1,10 @@
+#!/bin/bash
+
+JSTATD_RMI_PORT=3535
+ACTIVATE_JSTATD="true"
+
+JAVA_HOME="/usr/jdk1.5.0_17"
+
+HOSTNAME=`hortus`
+
+SYSTEM_AGENT_JVM_ARGS="-Xmx256m -Xms128m"

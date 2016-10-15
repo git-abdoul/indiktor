@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<CROSS_COMPUTES_PROPS>
+
+	<COMPUTE_PROP domainType="JVM" metricDomain="JVM_ACTIVITY" metricCategory="Heap Memory Ratio">
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="DataServer"/>
+			<VAR name="CONTEXT1" value="JVM - DataServer"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="EventServer"/>
+			<VAR name="CONTEXT1" value="JVM - EventServer"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="MessageEngine"/>
+			<VAR name="CONTEXT1" value="JVM - MessageEngine"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="AccountingEngine"/>
+			<VAR name="CONTEXT1" value="JVM - AccountingEngine"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="TransferEngine"/>
+			<VAR name="CONTEXT1" value="JVM - TransferEngine"/>
+		</COMPUTE_VAR_DEF>
+		<COMPUTE_VAR_DEF>
+			<VAR name="PROCESS_NAME" value="TaskEngine"/>
+			<VAR name="CONTEXT1" value="JVM - TaskEngine"/>
+		</COMPUTE_VAR_DEF>
+	</COMPUTE_PROP>
+
+</CROSS_COMPUTES_PROPS>

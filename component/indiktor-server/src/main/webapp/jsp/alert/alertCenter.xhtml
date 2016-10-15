@@ -1,0 +1,42 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ui:param name="pageTitle" value="Alert Center" />
+<ui:define name="content">	
+	<ice:panelStack selectedPanel="#{alertCenterBean.selectedMenu}">
+		<ice:panelGrid id="alertBoard">
+			<ui:include src="/jsp/alert/manager/alertManager.xhtml"/>
+		</ice:panelGrid>		
+		<ice:panelGrid id="alertDefinitionList">
+			<ui:include src="/jsp/alert/config/alertConfig.xhtml"/>
+		</ice:panelGrid>
+		<ice:panelGrid id="alertDefinitionConfig">
+			<ui:include src="/jsp/alert/config/alertProperties.xhtml"/>
+		</ice:panelGrid>
+		<!-- 
+		<ice:panelGrid id="alertDefinitionConditions">
+			<ui:include src="/jsp/alert/config/alertConditions.xhtml"/>
+		</ice:panelGrid>
+		<ice:panelGrid id="alertDefinitionComputations">
+			<ui:include src="/jsp/alert/config/alertComputation.xhtml"/>
+		</ice:panelGrid>
+		<ice:panelGrid id="alertDefinitionTimeSlot">
+			<ui:include src="/jsp/alert/config/alertTimeSlot.xhtml"/>
+		</ice:panelGrid>
+		<ice:panelGrid id="alertDefinitionActions">
+			<ui:include src="/jsp/alert/config/alertActions.xhtml"/>
+		</ice:panelGrid>
+		<ice:panelGrid id="alertPreview">
+			<ui:include src="/jsp/alert/config/alertPreview.xhtml"/>
+		</ice:panelGrid>
+		 -->
+		<ice:panelGrid id="alertDetail">
+			<ui:include src="/jsp/alert/manager/alertDetail.xhtml"/>
+		</ice:panelGrid>
+	</ice:panelStack>
+	<ui:include src="/jsp/util/errorMessage.xhtml"/>
+</ui:define>	
+</ui:composition>

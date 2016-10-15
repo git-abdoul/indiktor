@@ -1,0 +1,1024 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                                  http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
+
+	<component>
+		<component-type>ikrCommandLink</component-type>
+		<component-class>com.fsi.monitoring.custom.ui.AlertBoardUI</component-class>
+	</component>
+
+    <application>
+        <locale-config>
+            <default-locale>en_ZA</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+    </application>
+  	
+	<application>
+    	<el-resolver>
+			org.springframework.web.jsf.el.SpringBeanFacesELResolver
+    	</el-resolver>
+  	</application>
+	
+    <converter>
+        <converter-id>MonitorTypeConverter</converter-id>
+        <converter-class>
+            com.fsi.monitoring.util.converter.MonitorTypeConverter
+         </converter-class>
+    </converter> 
+    
+    <converter>
+        <converter-id>DisplayConverter</converter-id>
+        <converter-class>
+            com.fsi.monitoring.util.converter.DisplayConverter
+         </converter-class>
+    </converter>     
+    
+    <converter>
+        <converter-id>IkrValueBeanConverter</converter-id>
+        <converter-class>
+            com.fsi.monitoring.util.converter.IkrValueBeanConverter
+         </converter-class>
+    </converter>        
+    
+    <converter>
+        <converter-id>numberConverter</converter-id>
+        <converter-class>
+            com.fsi.monitoring.util.converter.NumberConverter
+         </converter-class>
+    </converter>     
+    
+    <converter>
+        <converter-id>AgentTypeConverter</converter-id>
+        <converter-class>
+            com.fsi.monitoring.util.converter.AgentTypeConverter
+         </converter-class>
+    </converter>
+	
+    <converter>
+ 	    <converter-id>alertActionTypeConverter</converter-id>
+		<converter-class>com.fsi.monitoring.alert.converter.AlertActionTypeConverter</converter-class>
+	</converter>
+	
+	<!-- ___________________________________________________________________________________________________________ -->
+	<!-- Test Layout Bean-->  	
+  	 <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>testLayoutBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.ikrStaticDomain.metricDomainResource.TestLayoutBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean> 
+	
+	<!-- Panel Positioned Bean-->
+	<managed-bean>
+  		<managed-bean-name>panelPositioned</managed-bean-name> 
+ 		<managed-bean-class>com.fsi.monitoring.dashboard.config.PositionedPanelBean</managed-bean-class> 
+ 		<managed-bean-scope>session</managed-bean-scope> 
+  	</managed-bean>
+  	
+  	<!-- Drag and Drop Bean-->
+    <managed-bean>
+        <managed-bean-name>dragDrop</managed-bean-name>
+        <managed-bean-class>com.fsi.monitoring.dashboard.config.DragAndDropPageTestBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	
+	<!-- Dual List Bean-->
+	<managed-bean>
+  		<managed-bean-name>dualList</managed-bean-name> 
+ 		<managed-bean-class>com.fsi.monitoring.user.DualList</managed-bean-class> 
+ 		<managed-bean-scope>session</managed-bean-scope> 
+  	</managed-bean>
+  	
+	<!-- ___________________________________________________________________________________________________________ -->
+	
+	<managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>chartBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.test.ChartDemoBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>	 
+    
+    <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>userBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.user.UserBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>roleBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.user.RoleBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean> 
+    
+    <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>crossComputeDefinitionCreationBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.ikrDefinition.CrossComputeDefinitionCreationBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>          
+
+    <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>crossComputeDefinitionSelectionBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.ikrDefinition.CrossComputeDefinitionSelectionBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>  
+
+    <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>monitorSelectionBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.monitor.MonitorSelectionBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
+    
+     <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>logicalEnvConfigBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.monitor.LogicalEnvConfigBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
+    
+     <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>jobSchedulerSelectionBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.jobScheduler.JobSchedulerSelectionBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
+    
+    <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>metricDomainConfigSelectionBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.ikrStaticDomain.metricDomainConfig.MetricDomainConfigSelectionBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
+    
+    <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>metricDomainResourceSelectionBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.ikrStaticDomain.metricDomainResource.MetricDomainResourceSelectionBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>  
+   
+   <!--  
+    <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>logicalEnvSelectionBean</managed-bean-name>
+        <managed-bean-class>com.fsi.monitoring.datamodel.logicalEnvironment.LogicalEnvSelectionBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>	
+  -->  
+     <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>jobSchedulerStaticDomainSelectionBean</managed-bean-name>
+        <managed-bean-class>com.fsi.monitoring.datamodel.jobScheduler.selection.JobSchedulerStaticDomainSelectionBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>	
+	
+	<managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>ikrDomainController</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.ikrStaticDomain.IkrDomainTreeController
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	
+	<managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>ikrMonitorConfigFieldController</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.tree.IkrMonitorConfigFieldTreeController
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>panelStack</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.selection.PanelStackBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+
+    <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>ikrStaticDomainSelectorBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.ikrStaticDomain.selection.IkrStaticDomainSelectorBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	
+	<managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>staticDomainBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.ikrStaticDomain.IkrStaticDomainCreateBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
+	<managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>ikrCategoryConfigBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.ikrStaticDomain.IkrCategoryConfigBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean> 
+    
+	<managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>metricDomainConfigCreationBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.ikrStaticDomain.metricDomainConfig.MetricDomainConfigCreationBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>         
+	
+	<managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>ikrMonitorServiceBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.bean.IkrMonitorServiceBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>  
+	
+	<managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>ikrMonitorConfigFieldBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.bean.IkrMonitorConfigFieldBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>     
+	
+  
+	
+	 <managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>defaultMonitorBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.bean.DefaultMonitorBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean> 
+	
+	<managed-bean>
+        <description>
+        </description>
+        <managed-bean-name>defaultAlertDefinitionBean</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.bean.DefaultAlertDefinitionBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean> 
+    
+    <managed-bean>
+        <managed-bean-name>ikrDefinitionsManager</managed-bean-name>
+        <managed-bean-class>
+            com.fsi.monitoring.datamodel.ikrDefinition.expandableTable.IkrDefinitionTableRecordsManager
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>   
+
+	<managed-bean>
+		<managed-bean-name>allAlertDefinitionBean</managed-bean-name>
+		<managed-bean-class>com.fsi.monitoring.alert.config.AllAlertDefinitionBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>alertCenterBean</managed-bean-name>
+		<managed-bean-class>com.fsi.monitoring.alert.AlertCenterBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>dataCenterBean</managed-bean-name>
+		<managed-bean-class>com.fsi.monitoring.workSpace.DataCenterBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+        <managed-bean-name>popupBean</managed-bean-name>
+        <managed-bean-class>com.fsi.monitoring.util.PopupBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>dialogMessageBean</managed-bean-name>
+        <managed-bean-class>com.fsi.monitoring.util.DialogMessageBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+	
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>accessDenied</from-outcome>
+             <to-view-id>/sec/accessDenied.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>loginError</from-outcome>
+             <to-view-id>/sec/loginError.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>chartDemo</from-outcome>
+             <to-view-id>/jsp/test/chartDemo.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>    
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>login</from-outcome>
+             <to-view-id>/sec/login.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>    
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>logout</from-outcome>
+             <to-view-id>/sec/logout.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>    
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>home</from-outcome>
+             <to-view-id>/jsp/home.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>adminHome</from-outcome>
+             <to-view-id>/jsp/admin/adminHome.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>dashboardHome</from-outcome>
+             <to-view-id>/jsp/admin/dashboardHome.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>dataCollectionHome</from-outcome>
+             <to-view-id>/jsp/admin/dataCollectionHome.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>securityHome</from-outcome>
+             <to-view-id>/jsp/admin/securityHome.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+   
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>createCrossComputeDefinition</from-outcome>
+             <to-view-id>/jsp/ikrDefinition/createCrossComputeDefinition.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>    
+   
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>createMonitor</from-outcome>
+             <to-view-id>/jsp/monitor/createMonitor.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>logicalEnvConfig</from-outcome>
+             <to-view-id>/jsp/monitor/logicalEnvConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>createJobScheduler</from-outcome>
+             <to-view-id>/jsp/jobScheduler/createJobScheduler.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>ikrDefinitionsUpdate</from-outcome>
+             <to-view-id>/jsp/ikrDefinition/ikrDefinitionsUpdate.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>    
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>monitorSelection</from-outcome>
+             <to-view-id>/jsp/monitor/monitorSelection.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>   
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>jobSchedulerSelection</from-outcome>
+             <to-view-id>/jsp/jobScheduler/jobSchedulerSelection.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>   
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>crossComputeDefinitionSelection</from-outcome>
+             <to-view-id>/jsp/ikrDefinition/crossComputeDefinitionSelection.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>       	
+	
+	 <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>ikrDomainConfig</from-outcome>
+             <to-view-id>/jsp/ikrStaticDomain/ikrStaticDomainCreation.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+	 <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>createMetricDomainConfig</from-outcome>
+             <to-view-id>/jsp/ikrStaticDomain/metricDomainConfig/metricDomainConfigCreation.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>metricDomainConfigSelection</from-outcome>
+             <to-view-id>/jsp/ikrStaticDomain/metricDomainConfig/metricDomainConfigSelection.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>     
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>metricDomainResourceSelection</from-outcome>
+             <to-view-id>/jsp/ikrStaticDomain/metricDomainResource/metricDomainResourceSelection.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule> 
+	
+	<navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>ikrMonitorService</from-outcome>
+             <to-view-id>/jsp/system/ikrMonitorService.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+	
+	<navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>defaultMonitorSetup</from-outcome>
+             <to-view-id>/jsp/system/defaultMonitorSetup.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+	
+	<navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>defaultAlertDefSetup</from-outcome>
+             <to-view-id>/jsp/system/defaultAlertDefSetup.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+	
+	<navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>ikrMonitorConfigField</from-outcome>
+             <to-view-id>/jsp/system/ikrMonitorConfigField.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>updateRole</from-outcome>
+             <to-view-id>/jsp/security/updateRole.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>roles</from-outcome>
+             <to-view-id>/jsp/security/roles.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+   
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>users</from-outcome>
+             <to-view-id>/jsp/security/users.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+	
+	<navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>changeMyPwd</from-outcome>
+             <to-view-id>/jsp/security/changeMyPwd.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>updateUser</from-outcome>
+             <to-view-id>/jsp/security/updateUser.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>                
+
+	<navigation-rule>
+		<display-name></display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>		
+			<from-outcome>staticDataConfig</from-outcome>
+			<to-view-id>/jsp/staticData/config/staticDataConfig.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule> 
+	
+	<navigation-rule>
+		<display-name></display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>		
+			<from-outcome>updateStaticData</from-outcome>
+			<to-view-id>/jsp/staticData/config/updateStaticData.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule> 
+	
+	<!-- ___________________________________________________________________________________________________________ -->
+	<!-- Test Layout --> 	
+	<navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>testLayout</from-outcome>
+             <to-view-id>/jsp/ikrStaticDomain/metricDomainResource/testLayout.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    <!-- ___________________________________________________________________________________________________________ -->
+    
+	<!-- Alert -->    
+	<navigation-rule>
+		<display-name></display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>alertProperties</from-outcome>
+			<to-view-id>/jsp/alert/config/alertProperties.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name></display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>		
+			<from-outcome>alertConditions</from-outcome>
+			<to-view-id>/jsp/alert/config/alertConditions.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name></display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>		
+			<from-outcome>alertTimeSlot</from-outcome>
+			<to-view-id>/jsp/alert/config/alertTimeSlot.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>	
+	
+	<navigation-rule>
+		<display-name></display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>		
+			<from-outcome>alertComputation</from-outcome>
+			<to-view-id>/jsp/alert/config/alertComputation.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>	
+	
+	<navigation-rule>
+		<display-name></display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>		
+			<from-outcome>alertActions</from-outcome>
+			<to-view-id>/jsp/alert/config/alertActions.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>	
+	
+	<navigation-rule>
+		<display-name></display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>		
+			<from-outcome>alertPreview</from-outcome>
+			<to-view-id>/jsp/alert/config/alertPreview.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>		
+	
+	<navigation-rule>
+		<display-name></display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>		
+			<from-outcome>alertConfig</from-outcome>
+			<to-view-id>/jsp/alert/config/alertConfig.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>    
+    
+	<navigation-rule>
+		<display-name></display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>snmpConfig</from-outcome>
+			<to-view-id>/jsp/alert/config/snmpConfig.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>  
+	
+	<navigation-rule>
+		<display-name></display-name>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>smtpConfig</from-outcome>
+			<to-view-id>/jsp/alert/config/smtpConfig.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>  
+	
+	<navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>adminConsole</from-outcome>
+             <to-view-id>/jsp/admin/adminConsole.jsf</to-view-id>
+             <redirect/>  
+       </navigation-case>
+    </navigation-rule> 
+	
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>alertManager</from-outcome>
+             <to-view-id>/jsp/alert/manager/alertManager.jsf</to-view-id>
+             <redirect/>  
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>alertCenter</from-outcome>
+             <to-view-id>/jsp/alert/alertCenter.jsf</to-view-id>
+             <redirect/>  
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>dataCenter</from-outcome>
+             <to-view-id>/jsp/workSpace/dataCenter.jsf</to-view-id>
+             <redirect/>  
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>alertDetail</from-outcome>
+             <to-view-id>/jsp/alert/manager/alertDetail.jsf</to-view-id>
+             <redirect/>  
+       </navigation-case>
+    </navigation-rule>   
+    
+    <!-- Dashboard -->  
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>alertBoard</from-outcome>
+         <to-view-id>/jsp/alert/board/alertBoard.jsf</to-view-id>
+         <redirect/>
+       </navigation-case>
+    </navigation-rule>   
+	
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>board</from-outcome>
+             <to-view-id>/jsp/dashboard/board.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>boardUpdate</from-outcome>
+             <to-view-id>/jsp/dashboard/boardUpdate.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>	     
+    
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>reportGeneration</from-outcome>
+             <to-view-id>/jsp/report/reportGeneration.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>visokioReportGeneration</from-outcome>
+             <to-view-id>/jsp/report/visokioReportGeneration.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>alertReportGeneration</from-outcome>
+             <to-view-id>/jsp/report/alertReportGeneration.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>schedulerGeneration</from-outcome>
+             <to-view-id>/jsp/report/schedulerGeneration.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>dashboardMainConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/dashboardMainConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule> 
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>dashboardCreateMainConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/dashboardCreateMainConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>dashboardSelectMainConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/dashboardSelectMainConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>           
+    
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>alertBoardConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/alertBoardConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>           
+    
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>alertBoardGridConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/alertBoardGridConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule> 
+    
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>alertBoardItemConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/alertBoardItemConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>                 
+
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>navigationBoardConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/navigationBoardConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>definitionChartConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/definitionChartConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>categoryChartConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/categoryChartConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>infoBoardConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/infoBoardConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>threadConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/threadConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>   
+
+     <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>batchBoardConfig</from-outcome>
+             <to-view-id>/jsp/config/dashboard/batchBoardConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule> 
+
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>ikrWorkSpace</from-outcome>
+             <to-view-id>/jsp/workSpace/wsGeneration.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>connectors</from-outcome>
+             <to-view-id>/jsp/config/connector/connectors.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>connectorConfig</from-outcome>
+             <to-view-id>/jsp/config/connector/connectorConfig.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>          
+    
+    <navigation-rule>
+      <from-view-id>*</from-view-id>
+      <navigation-case>
+         <from-outcome>testChart</from-outcome>
+             <to-view-id>/jsp/util/testChart.jsf</to-view-id>
+             <redirect/>
+       </navigation-case>
+    </navigation-rule>          
+</faces-config>
