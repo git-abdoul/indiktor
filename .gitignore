@@ -10,6 +10,7 @@
 /component/persistency/distrib
 /component/monitor-server/monitor-server.iml
 /component/monitor-server/distrib
+/component/indiktor-server/src/main/webapp/appletJars
 /component/krysalis-jCharts/krysalis-jCharts.iml
 /component/krysalis-jCharts/distrib
 /component/indiktor-server/indiktor-server.iml
