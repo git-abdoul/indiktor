@@ -47,11 +47,11 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<copy file="../../../libs/jfree/jcommon/1.0.16/jcommon-1.0.16.jar" todir="src/main/webapp/appletJars"/>
-								<copy file="../../../libs/jfree/jfreechart/1.0.13/jfreechart-1.0.13.jar" todir="src/main/webapp/appletJars"/>
-								<copy file="../../../libs/javax/faces/jsf-api/1.2/jsf-api-1.2.jar" todir="src/main/webapp/appletJars"/>
-								<copy file="../../../libs/javax/faces/jsf-impl/1.2/jsf-impl-1.2.jar" todir="src/main/webapp/appletJars"/>
-								<copy file="../../../libs/log4j/log4j/1.2.12/log4j-1.2.12.jar" todir="src/main/webapp/appletJars"/>
+								<copy file="../../../repo/jfree/jcommon/1.0.16/jcommon-1.0.16.jar" todir="src/main/webapp/appletJars"/>
+								<copy file="../../../repo/jfree/jfreechart/1.0.13/jfreechart-1.0.13.jar" todir="src/main/webapp/appletJars"/>
+								<copy file="../../../repo/javax/faces/jsf-api/1.2/jsf-api-1.2.jar" todir="src/main/webapp/appletJars"/>
+								<copy file="../../../repo/javax/faces/jsf-impl/1.2/jsf-impl-1.2.jar" todir="src/main/webapp/appletJars"/>
+								<copy file="../../../repo/log4j/log4j/1.2.12/log4j-1.2.12.jar" todir="src/main/webapp/appletJars"/>
 								<copy file="../compute-server/distrib/compute-server-${project.version}.jar" todir="src/main/webapp/appletJars"/>
 								<copy file="../framework-base/distrib/framework-base-${project.version}.jar" todir="src/main/webapp/appletJars"/>
 								<copy file="../foundation/distrib/foundation-${project.version}.jar" todir="src/main/webapp/appletJars"/>
@@ -244,7 +244,7 @@
 					<groupId>javax.servlet</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>indiktor</groupId>
 			<artifactId>krysalis-jCharts</artifactId>

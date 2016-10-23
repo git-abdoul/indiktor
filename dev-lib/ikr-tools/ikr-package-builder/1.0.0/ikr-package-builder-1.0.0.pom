@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ikr-tools</groupId>
+	<artifactId>ikr-package-builder</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+
+	<name>ikr-package-builder</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<build>
+		<directory>distrib</directory>      
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>  
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<path id="distrib.path">
+									<pathelement location="../indiktor-suite" />
+								</path>
+								<pathconvert property="distribPath" refid="distrib.path"/>
+								<pathconvert property="win_runtime_classpath" refid="maven.runtime.classpath" pathsep=";^&#13;&#10;">
+									<map from="${basedir}\distrib\classes" to="SET CLASSPATH=%IPB_HOME%\${project.artifactId}-${project.version}.jar"/>
+									<map from="${distribPath}" to="%distrib%"/>
+								</pathconvert>
+								<echo file="bin/classpath.bat" message="${win_runtime_classpath}"/>
+								<pathconvert property="unix_runtime_classpath" refid="maven.runtime.classpath" pathsep=":">
+									<map from="${basedir}/distrib/classes" to="CLASSPATH=${IPB_HOME}/${project.artifactId}-${project.version}.jar"/>
+									<map from="${distribPath}" to="${DISTRIB}"/>
+								</pathconvert>
+								<echo file="bin/${project.artifactId}_classpath.sh" message="${unix_runtime_classpath}"/>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.1</version>
+		</dependency>		
+	</dependencies>	
+</project>

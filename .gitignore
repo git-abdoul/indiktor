@@ -1,0 +1,26 @@
+/indiktor-suite.iml
+/component/toolkits/toolkits.iml
+/component/toolkits/distrib
+/component/system-agent/distrib
+/component/scheduler-server/scheduler-server.iml
+/component/scheduler-server/distrib
+/component/publisher/publisher.iml
+/component/publisher/distrib
+/component/persistency/persistency.iml
+/component/persistency/distrib
+/component/monitor-server/monitor-server.iml
+/component/monitor-server/distrib
+/component/krysalis-jCharts/krysalis-jCharts.iml
+/component/krysalis-jCharts/distrib
+/component/indiktor-server/indiktor-server.iml
+/component/indiktor-server/distrib
+/component/framework-base/framework-base.iml
+/component/framework-base/distrib
+/component/foundation/foundation.iml
+/component/foundation/distrib
+/component/compute-server/compute-server.iml
+/component/compute-server/distrib
+/logs
+/ikr-lib
+/.idea
+# Created by .ignore support plugin (hsz.mobi)

@@ -43,6 +43,7 @@
 								<echo file="${basedir}/bin/classpath.bat" message="${runtime_classpath}"/>
 								<copy file="${basedir}\distrib\${project.artifactId}-${project.version}.jar" todir="${distribDir}\ikr-lib" overwrite="true"/>
 								<copy file="${basedir}\distrib\${project.artifactId}-${project.version}.jar" todir="${basedir}\ikr-lib" overwrite="true"/>
+								<!--
 								<java classname="com.fsi.tools.mvn.IkrClasspathLibBuilder">
 									<arg value="${distribDir}"/>
 									<arg value="${basedir}"/>
@@ -53,6 +54,7 @@
 										<pathelement location="${distribDir}\dev-lib\commons-io\commons-io\2.1\commons-io-2.1.jar"/>
 									</classpath>
 								</java>
+								-->
 							</tasks>
 						</configuration>
 					</execution>

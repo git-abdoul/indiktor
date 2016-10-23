@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<groupId>indiktor</groupId>
 		<artifactId>indiktor-suite</artifactId>
@@ -41,6 +43,7 @@
 								</pathconvert>
 								<echo file="${distribDir}/bin/classpath/${project.artifactId}-classpath.bat" message="${runtime_classpath}"/>
 								<copy file="${basedir}\distrib\${project.artifactId}-${project.version}.jar" todir="${distribDir}\ikr-lib" overwrite="true"/>
+								<!--
 								<java classname="com.fsi.tools.mvn.IkrClasspathLibBuilder">
 									<arg value="${distribDir}"/>
 									<arg value=""/>
@@ -51,6 +54,7 @@
 										<pathelement location="${distribDir}\dev-lib\commons-io\commons-io\2.1\commons-io-2.1.jar"/>
 									</classpath>
 								</java>
+								-->
 							</tasks>
 						</configuration>
 					</execution>
