@@ -171,10 +171,13 @@
 		<profile>
 			<id>${project.artifactId}-package-unix</id>
 			<activation>
+				<!--
 				<property>
 					<name>package-unix</name>
 					<value>true</value>
 				</property>
+				-->
+				<activeByDefault>true</activeByDefault>
 			</activation>
 			<build>
 				<plugins>	
@@ -189,7 +192,8 @@
 								</goals>
 								<configuration>
 									<tasks>
-										<tar destfile="${project.parent.basedir}/../indiktor-release-${project.version}-unix.tar"
+										<mkdir dir="${project.parent.basedir}/distrib"/>
+										<tar destfile="${project.parent.basedir}/distrib/indiktor-release-${project.version}-unix.tar"
 											 basedir="${project.parent.basedir}"											 
 											 includes="conf/default.properties
 													   conf/ehcache/**,
@@ -208,8 +212,8 @@
 													   ext-lib/oracle*,
 													   ext-lib/sybase*,
 													   resources/mydashboard**"/>
-										<tar destfile="${project.parent.basedir}/../system-agent-${project.version}-unix.tar"
-											 basedir="${project.parent.basedir}/component/system-agent"											 
+										<tar destfile="${project.parent.basedir}/distrib/system-agent-${project.version}-unix.tar"
+											 basedir="${project.parent.basedir}/component/system-agent"
 											 includes="conf/**,
 													   bin/**,
 													   ext-lib/**,

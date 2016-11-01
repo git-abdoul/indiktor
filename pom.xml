@@ -47,6 +47,9 @@
 						<fileset>
 							<directory>ikr-lib</directory>
 						</fileset>
+						<fileset>
+							<directory>distrib</directory>
+						</fileset>
 				</filesets>
 			</configuration>
 		  </plugin>
