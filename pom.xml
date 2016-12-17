@@ -2,57 +2,49 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>indiktor</groupId>
 	<artifactId>indiktor-suite</artifactId>
-	<version>1.5.3</version>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
 	<name>Indiktor Monitoring Suite</name>
-	<packaging>pom</packaging> 
   
 	<modules>
-		<module>component/foundation</module>
-		<module>component/persistency</module>	
-		<module>component/framework-base</module>
-		<module>component/krysalis-jCharts</module>
-		<module>component/publisher</module>
-		<module>component/system-agent</module>
-		<module>component/compute-server</module>	
-		<module>component/monitor-server</module>	
-		<module>component/scheduler-server</module>	
-		<module>component/toolkits</module>		
-		<module>component/indiktor-server</module>
+		<module>components/framework-base</module>
+		<module>components/foundation</module>
+		<module>components/persistency</module>
+		<module>components/krysalis-jCharts</module>
+		<module>components/publisher</module>
+		<module>system-agent</module>
+		<module>components/compute-server</module>
+		<module>components/monitor-server</module>
+		<module>components/scheduler-server</module>
+		<module>components/toolkits</module>
+		<module>components/indiktor-server</module>
+		<module>ikr-package</module>
 	</modules>
   
 	<build>
-		<directory>distrib</directory>  
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.0.2</version>
+				<version>3.5.1</version>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>  
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.2</version>
+				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<filesets>
-						<fileset>
-							<directory>ext-lib</directory>
-						</fileset>
-						<fileset>
-							<directory>ikr-lib</directory>
-						</fileset>
-						<fileset>
-							<directory>distrib</directory>
-						</fileset>
-				</filesets>
-			</configuration>
-		  </plugin>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
   

@@ -1,0 +1,9 @@
+%IKR_HOME%/components/system-agent/target/classes;^
+%IKR_HOME%/components/framework-base/target/framework-base-1.0.0-SNAPSHOT.jar;^
+/Users/soulmatazz/workspace/repo/org/springframework/spring/2.5.6/spring-2.5.6.jar;^
+/Users/soulmatazz/workspace/repo/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar;^
+/Users/soulmatazz/workspace/repo/org/apache/geronimo/specs/geronimo-jms_1.1_spec/1.1.1/geronimo-jms_1.1_spec-1.1.1.jar;^
+/Users/soulmatazz/workspace/repo/log4j/log4j/1.2.12/log4j-1.2.12.jar;^
+/Users/soulmatazz/workspace/repo/hyperic/sigar/1.6.3.0/sigar-1.6.3.0.jar;^
+/Users/soulmatazz/workspace/repo/commons-io/commons-io/1.3.1/commons-io-1.3.1.jar;^
+/Users/soulmatazz/workspace/repo/com/sun/tools/1.5.0_15/tools-1.5.0_15.jar
