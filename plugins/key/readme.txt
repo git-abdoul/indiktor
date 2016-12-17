@@ -1,1 +1,0 @@
-keytool -genkey -alias IndiKtor < keystore.conf
