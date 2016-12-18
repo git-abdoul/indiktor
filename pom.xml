@@ -18,13 +18,14 @@
 		<module>components/persistency</module>
 		<module>components/krysalis-jCharts</module>
 		<module>components/publisher</module>
+		<module>components/indiktor</module>
 		<module>system-agent</module>
-		<module>components/compute-server</module>
-		<module>components/monitor-server</module>
-		<module>components/scheduler-server</module>
+		<module>compute-server</module>
+		<module>monitor-server</module>
+		<module>scheduler-server</module>
 		<module>components/toolkits</module>
-		<module>components/indiktor-server</module>
-		<module>ikr-package</module>
+		<module>web-server</module>
+		<module>ikr-distrib</module>
 	</modules>
   
 	<build>
@@ -61,5 +62,6 @@
 			<url>http://repository.primefaces.org</url>  
 			<layout>default</layout>  
 		</repository>
-	</repositories> 
+	</repositories>
+
 </project>

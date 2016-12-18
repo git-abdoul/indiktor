@@ -1,3 +1,9 @@
+/scheduler-server/target
+/monitor-server/target
+/components/indiktor/target
+/ikr-distrib/target
+/web-server/target
+/compute-server/target
 /ikr-package/target
 /components/toolkits/target
 /components/scheduler-server/target
