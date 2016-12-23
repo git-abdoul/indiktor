@@ -1,0 +1,57 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+             	
+<ui:param name="pageTitle" value="Test Charts"/>
+
+<ui:define name="content">
+<ice:form>	
+	<ice:panelGrid columns="2" style="width: 400px;">
+    	<ice:panelGroup>
+        	<h4>
+           		<ice:outputText id="chartTitle" value="Chart Type:"/>
+        	</h4>
+            <ice:selectOneMenu value="#{chartBean.type}" partialSubmit="true"
+                               valueChangeListener="#{chartBean.chartChanged}">
+                <f:selectItems value="#{chartBean.chartList}"/>
+            </ice:selectOneMenu>
+		</ice:panelGroup>
+        <!--
+            panelGroup displayed when chart type is bar or barclustered to
+            toggle horizontal or vertical chart orientation.
+        -->
+        <ice:panelGroup rendered="#{chartBean.orientationChange}">
+            <h4>
+                <ice:outputText value="Chart Orientation:"/>
+            </h4>
+            <ice:selectOneRadio value="false"
+                                valueChangeListener="#{chartBean.selectOrientation}"
+                                partialSubmit="true">
+                <f:selectItem itemValue="true"
+                              itemLabel="Horizontal"/>
+                <f:selectItem itemValue="false"
+                              itemLabel="Vertical"/>
+            </ice:selectOneRadio>
+        </ice:panelGroup>
+	</ice:panelGrid>
+    <br/>
+    <ice:outputText value="#{chartBean.clickedValue}"/>
+    <br/>                
+    <ice:outputChart id="axisOutputChart"
+                     type="#{chartBean.type}"
+                     chartTitle="#{chartBean.type} Chart"
+                     yaxisTitle="#{chartBean.titleY}"
+                     xaxisTitle="#{chartBean.titleX}"
+                     xaxisLabels="#{chartBean.labels}"
+                     labels="#{chartBean.legendLabels}"
+                     colors="#{chartBean.paints}"
+                     data="#{chartBean.data}"
+                     actionListener="#{chartBean.imageClicked}"
+                     renderOnSubmit="#{chartBean.newChart}"
+                     horizontal="#{chartBean.horizontal}" />
+</ice:form>
+</ui:define>
+</ui:composition>

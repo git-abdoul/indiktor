@@ -35,21 +35,20 @@
 package org.krysalis.jcharts.encoders;
 
 
-//import java.awt.image.BufferedImage;
-//import java.awt.image.BufferedImageOp;
-//import java.awt.image.ConvolveOp;
-//import java.awt.image.Kernel;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.IOException;
 import java.io.OutputStream;
 
-//import com.sun.image.codec.jpeg.JPEGCodec;
-//import com.sun.image.codec.jpeg.JPEGEncodeParam;
-//import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import org.krysalis.jcharts.Chart;
 import org.krysalis.jcharts.chartData.ChartDataException;
 import org.krysalis.jcharts.properties.PropertyException;
 
-
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 
 /*************************************************************************************
@@ -85,7 +84,7 @@ public class JPEGEncoder13
 										float quality,
 										OutputStream outputStream ) throws ChartDataException, PropertyException, IOException
 	{
-		/*BufferedImage bufferedImage = BinaryEncoderUtil.render( chart );
+		BufferedImage bufferedImage = BinaryEncoderUtil.render( chart );
 
 		float[] sharpKernel = {0.0f, -1.0f, 0.0f,
 									  -1.0f, 5.0f, -1.0f,
@@ -101,7 +100,7 @@ public class JPEGEncoder13
 		JPEGImageEncoder jpeg = JPEGCodec.createJPEGEncoder( outputStream, jpegParam );
 
 		//---encode the BufferedImage.
-		jpeg.encode( bufferedImage );*/
+		jpeg.encode( bufferedImage );
 
 	}
 }

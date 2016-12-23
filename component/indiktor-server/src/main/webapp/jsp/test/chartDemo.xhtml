@@ -1,0 +1,37 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ace="http://www.icefaces.org/icefaces/components"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:param name="pageTitle" value="Primefaces chart Demo" />	
+	<ui:define name="content">
+		<br/><br/><br/><br/><br/><br/>
+		<ice:outputLabel value="My Primefaces Chart With Icefaces Tags"/>
+		<br/><br/>
+		<h:form id="form">			
+			<p:poll interval="5" listener="#{chartBean.updateValue}" update="liveChart" />
+			<p:lineChart id="liveChart" value="#{chartBean.liveModel}"
+				legendPosition="e" showMarkers="false" 
+				style="height:300px;width:300px;" />	
+		</h:form>
+		<br/><br/><br/>
+		<ice:form>
+		<ice:panelGroup draggable="true" style="cursor:move;height:300px;width:300px;">
+			<p:lineChart id="linear" value="#{chartBean.linearModel}"
+				legendPosition="e" showMarkers="false"
+				style="height:300px;width:300px;" />
+		</ice:panelGroup>
+		</ice:form>
+		<br/><br/><br/>
+		<ice:form>
+		<ice:panelGroup draggable="true" style="cursor:move;height:300px;width:300px;">
+			<p:lineChart id="category" value="#{chartBean.categoryModel}" 
+				legendPosition="e" showMarkers="false" style="height:300px;width:300px;" breakOnNull="yes"/>
+		</ice:panelGroup>
+		</ice:form>
+	</ui:define>
+</ui:composition>

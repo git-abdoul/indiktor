@@ -1,0 +1,232 @@
+<!-- <f:subview id="ikrStaticDomainCreation" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component"> -->
+<ui:composition template="/WEB-INF/template/mainTemplate.xhtml
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+             	
+<ui:param name="pageTitle" value="Metric Domain"/>
+<ui:define name="content">
+
+<ice:panelGrid>
+<ice:panelGrid>
+       
+<ice:form>
+	<table id="pageAnalysis">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft2">
+							<!-- <div class="topMenuBarLeftAnalysis2">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/AnalysisOFF.png"
+								   				   title="Analysis"
+								   				   value="#{dataCenterBean.menus['analysis']}"
+								   				   actionListener="#{dataCenterBean.navigate}">		
+									<f:attribute name="to" value="analysis"/> 
+								</ice:commandButton>
+							</div> -->
+							<div class="topMenuBarLeftDomain2">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/DomainON.png"
+												   title="Metric Domain"
+												   actionListener="#{staticDomainBean.navigate}"
+								       			   action="#{staticDomainBean.action}"/>
+							</div>
+							<!-- <div class="topMenuBarLeftCC">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/CrossComputeOFFRight.png"
+								   				   title="Cross Compute"
+								   				   value="#{dataCenterBean.menus['crossComputeDefinitionSelection']}"
+								   				   actionListener="#{dataCenterBean.navigate}">		
+									<f:attribute name="to" value="crossComputeDefinitionSelection"/>
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftSD">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/StaticDataOFF.png"
+												   title="Static Data"
+												   value="#{dataCenterBean.menus['staticDataConfig']}"
+												   actionListener="#{dataCenterBean.navigate}">			
+									<f:attribute name="to" value="staticDataConfig"/> 
+								</ice:commandButton>
+							</div> -->
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/add.png"
+														   value = "Add new domain type"
+														   title="Add new domain type"				
+														   actionListener="#{staticDomainBean.addNewDomainType}"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Return to administration panel"
+														   image="/images/IndiKtor2.0/Buttons/cancel.png"
+													   	   title="Return to administration panel"
+													   	   actionListener="#{adminBean.init}"
+													   	   action="#{adminBean.action}"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+													   	   title="Help"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td width="15px"></td>
+						<td class="contentLeftPanel3">
+							<table>
+								<tr>
+									<td>
+										<ice:outputLabel value="Domains" styleClass="panelTitleMetricDomain"/>
+									</td>
+								</tr>
+								<tr height="20px"><td></td></tr>
+								<tr>
+									<td>
+										<ice:panelGroup scrollHeight="600px" scrollWidth="318px">
+									        <ice:tree id="tree" 
+									              	  value="#{ikrDomainController.model}" 
+									              	  var="node" 
+									              	  hideRootNode="true" 
+									              	  hideNavigation="false" 
+									              	  style="width: 318px" 
+									              	  imageDir="#{styleBean.imageDirectory}">
+										        <ice:treeNode>
+											        <f:facet name="content">
+								                		<ice:panelGroup style="display: inline">
+								                    		<ice:commandLink actionListener="#{ikrDomainController.nodeSelected}">
+								                       			<f:param name="nodeObjectCode" value="#{node.userObject.id}"/>
+								                   				<ice:outputText style="color: black;"
+								                   								styleClass="selectedNode#{node.userObject eq ikrDomainController.selectedObject}"
+								                   								value="#{node.userObject.text}"/>
+								                    		</ice:commandLink>
+								                		</ice:panelGroup>
+								           			</f:facet>
+										        </ice:treeNode>
+									        </ice:tree>  
+										</ice:panelGroup>
+									</td>
+								</tr>
+							</table>    	
+						</td>	
+						<td width="15px"></td>	
+						<td class="contentRightPanel3">
+							<table width="100%">
+								<tr height="7px"><td></td></tr>
+								<tr>
+									<td style="align: left; padding-left: 0px;">
+										<ice:outputLabel value="#{staticDomainBean.selectedDomainPathShort}"
+														 styleClass="panelTitleMetricDomain2"
+														 title="#{staticDomainBean.selectedDomainPath}"/>
+									</td>
+									<td align="left">
+											<ice:commandButton 	image="/images/IndiKtor2.0/Buttons/addSmall.png"
+																value="#{staticDomainBean.addCommandName}" 
+																title="#{staticDomainBean.addCommandName}" 
+																actionListener="#{staticDomainBean.addNew}" 																		
+																rendered="#{staticDomainBean.addCommandRendered}"
+																style="margin-right: 10px;"/>
+											<ice:commandButton 	image="/images/IndiKtor2.0/Buttons/saveSmall.png"
+																title="Save"
+																value="Save"
+																actionListener="#{staticDomainBean.saveStaticDomain}"
+																style="margin-right: 10px;"/>
+											<ice:commandButton 	image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+																panelConfirmation="deleteConfirmPanel"
+																title="Delete"
+																value="Remove" 																		
+																actionListener="#{staticDomainBean.removeStaticDomain}" 
+																rendered="#{staticDomainBean.removeCommandRendered}"
+																style="margin-right: 5px;"/>	
+										  	<ice:panelConfirmation 	id="deleteConfirmPanel" 
+																	message="Are you sure to delete (#{staticDomainBean.domain.domainValue} : #{staticDomainBean.domain.id}) ?"
+										                       		acceptLabel="Delete" 
+										                       		rendered="true"
+										                       		autoCentre="true"/>									                       																											
+									</td>
+								</tr>
+								<tr height="75px"><td></td></tr>
+								<tr>
+									<td width="100%" style="text-align: center;" class="contentRightPanelMetricDomain">										
+										<ice:panelGrid columns="2">
+								            			<ice:outputLabel value="Value:"/>
+								            			<ice:inputText value="#{staticDomainBean.domain.domainValue}" 
+								            						   style="width:250px"/>
+								            			<ice:outputLabel value="Label:"/>
+								            			<ice:inputText value="#{staticDomainBean.domain.label}"
+								            						   style="width:250px"/>
+								            			<ice:outputLabel value="Description:"/>
+								            			<ice:inputTextarea value="#{staticDomainBean.domain.description}" 
+								            							   style="width:250px; height: 150px"/>            			        
+								      	</ice:panelGrid>
+								      	<ice:panelGroup>
+											<ice:panelStack selectedPanel="#{staticDomainBean.selectedPanel}">
+												<ice:panelGroup id="none"/>
+												<ice:panelGrid id="metricCategory" columns="2">							   
+													<ice:outputLabel value="Unit Type:" style="padding-right: 13px;"/>
+												    <ice:selectOneMenu value="#{ikrCategoryConfigBean.ikrUnitType}"
+												    				   valueChangeListener="#{ikrCategoryConfigBean.onChangeIkrUnitType}"
+															           partialSubmit="true" style="width:250px">
+												       	<f:selectItems value="#{ikrCategoryConfigBean.ikrUnitTypes}"/>
+												    </ice:selectOneMenu> 							 
+												    <ice:outputLabel value="Unit:" style="padding-right: 13px;" rendered="#{ikrCategoryConfigBean.unitsRendered}"/>
+												    <ice:selectOneMenu value="#{ikrCategoryConfigBean.ikrUnit}"
+												    				   valueChangeListener="#{ikrCategoryConfigBean.onChangeIkrUnit}"
+													               	    partialSubmit="true" style="width:250px"
+													               	   rendered="#{ikrCategoryConfigBean.unitsRendered}">
+												    	<f:selectItems value="#{ikrCategoryConfigBean.ikrUnits}"/>
+												    </ice:selectOneMenu> 
+												    <ice:outputLabel value="Threshold (%):" rendered="#{ikrCategoryConfigBean.rendererThreshold}" title="The threshold is the difference between the new value from the previous value. It has to be expressed in percentage. If the threshold is less than the previous value then the new value won't be saved"/>
+								            		<ice:inputText  value="#{ikrCategoryConfigBean.ikrCategory.threshold}" style="width:250px" rendered="#{ikrCategoryConfigBean.rendererThreshold}" title="The threshold is the difference between the new value from the previous value. It has to be expressed in percentage. If the threshold is less than the previous value then the new value won't be saved"/>
+								            		<ice:outputLabel value="Persistent:"/>
+								            		<ice:selectOneMenu value="#{ikrCategoryConfigBean.ikrCategory.persistent}"
+								            						   valueChangeListener="#{ikrCategoryConfigBean.onPersistentValueChanged}"
+												    				   partialSubmit="true" style="width:250px">
+												       	<f:selectItems value="#{ikrCategoryConfigBean.booleanSelection}"/>
+												    </ice:selectOneMenu> 	
+												    <ice:outputLabel value="Archive:"/>
+												     <ice:outputLabel rendered="#{!ikrCategoryConfigBean.rendererArchiveSelection}" value="#{ikrCategoryConfigBean.ikrCategory.archive}"/>
+								            		<ice:selectOneMenu value="#{ikrCategoryConfigBean.ikrCategory.archive}"
+								            						   rendered="#{ikrCategoryConfigBean.rendererArchiveSelection}"
+												    				   partialSubmit="true" style="width:250px">
+												       	<f:selectItems value="#{ikrCategoryConfigBean.booleanSelection}"/>
+												    </ice:selectOneMenu> 
+												    <ice:outputLabel value="Search Indexes :" title="Each Item is Separated par :"/>
+								            		<ice:inputText  value="#{ikrCategoryConfigBean.searchIndexes}" style="width:250px" title="Each Item is Separated by :"/>								            														    
+												</ice:panelGrid>
+											</ice:panelStack>
+								    	</ice:panelGroup>
+								    </td>
+								</tr>
+						    </table>
+						</td>
+						<td width="30px"></td>
+					</tr>
+				</table>	
+			</td>
+		</tr>
+	</table>	
+</ice:form>
+<ui:include src="/jsp/util/errorMessage.xhtml/>
+</ice:panelGrid>
+</ice:panelGrid>
+</ui:define>
+</ui:composition>
+<!-- </f:subview> -->
+

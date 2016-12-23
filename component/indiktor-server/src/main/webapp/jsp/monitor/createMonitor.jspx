@@ -1,0 +1,638 @@
+<f:subview id="updateCollector" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+        
+	<ice:panelGroup scrollHeight="700px" scrollWidth="900px">
+		<ice:panelGrid columns="2" style="width: 100%; height: 45%;">
+		
+			<ice:panelGroup style="border: 1px solid #336699; width: 437px; height: 100%; text-align: center;">
+				<ice:outputLabel value="Properties"/>
+				<ice:panelGroup scrollHeight="250px">
+					<ice:panelGrid columns="2" style="padding-top: 15px;">
+						<ice:outputLabel value="Auto Start" style="width: 100px;"/>
+						<ice:selectBooleanCheckbox partialSubmit="true" value="#{monitorCreationBean.config.autoStart}"/>
+					    
+					    <ice:outputLabel value="Domain Type:" style="width: 100px;"/>
+					    <ice:outputText value="#{ikrStaticDomainSelectorBean.domainType.label}" rendered="#{monitorCreationBean.update || monitorCreationBean.duplicate}"/>
+						<ice:selectOneMenu value="#{ikrStaticDomainSelectorBean.domainTypeId}"
+										   valueChangeListener="#{ikrStaticDomainSelectorBean.onChangeDomainType}"
+										   rendered="#{monitorCreationBean.update == false and  monitorCreationBean.duplicate == false}"
+										   partialSubmit="true" style="width:250px">
+							<f:selectItems value="#{ikrStaticDomainSelectorBean.domainTypeItems}"/>
+						</ice:selectOneMenu>
+					    
+					    <ice:outputLabel value="Metric Domain:" style="width: 100px;"/>
+					    <ice:outputText value="#{ikrStaticDomainSelectorBean.metricDomain.label}" rendered="#{monitorCreationBean.update || monitorCreationBean.duplicate}"/>
+					    <ice:selectOneMenu value="#{ikrStaticDomainSelectorBean.metricDomainId}"
+					    				   valueChangeListener="#{ikrStaticDomainSelectorBean.onChangeMetricDomain}"
+					    				   rendered="#{monitorCreationBean.update == false and  monitorCreationBean.duplicate == false}"
+										   partialSubmit="true" style="width:250px">
+							<f:selectItems value="#{ikrStaticDomainSelectorBean.metricDomainItems}"/>
+						</ice:selectOneMenu>				    
+					    
+						<ice:outputLabel value="Context:" style="width: 100px;"/>
+						<ice:inputText value="#{monitorCreationBean.config.context}"
+									   style="#{monitorCreationBean.contextStyle}"
+									   actionListener="#{monitorCreationBean.onChangeContext}"/>
+						<ice:outputLabel value="" rendered="#{monitorCreationBean.contextMandatory}"/>
+	   					<ice:outputLabel  value="Mandatory" style="color: red; font-size: 10px;"
+	   							  	rendered="#{monitorCreationBean.contextMandatory}"/>
+	   							  	
+	   					
+						<ice:outputLabel value="" rendered="#{monitorCreationBean.coupleEnvContextExist}"/>
+	   					<ice:outputLabel value="#{monitorCreationBean.coupleEnvContextErrorMsgTrim}"
+	   								     title="#{monitorCreationBean.coupleEnvContextErrorMsg}"
+	   								     style="color: red; font-size: 10px;" rendered="#{monitorCreationBean.coupleEnvContextExist}"/>
+							
+						<ice:outputLabel value="Logical Env:" style="width: 100px;"/>
+						<ice:outputText value="#{monitorCreationBean.logicalEnvSelectionBean.logicalEnvName}" rendered="#{monitorCreationBean.update}"/>
+						<ice:selectOneMenu rendered="#{monitorCreationBean.update == false}"
+										   value="#{monitorCreationBean.logicalEnvSelectionBean.logicalEnvId}"
+						 				   valueChangeListener="#{monitorCreationBean.logicalEnvSelectionBean.onChangeLogicalEnv}"
+										   partialSubmit="false"
+										   style="#{monitorCreationBean.envStyle}">
+							<f:selectItems value="#{monitorCreationBean.logicalEnvSelectionBean.logicalEnvItems}"/>
+						</ice:selectOneMenu>
+						
+					    <ice:outputLabel value="Metric Domain Config:" style="width: 120px;"/>
+					    <ice:outputText style="width: 250px;" value="#{monitorCreationBean.metricDomainConfigBean.currentMetricDomainConfig.description}" rendered="#{monitorCreationBean.update || monitorCreationBean.duplicate}"/>
+					    <ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigBean.metricDomainConfigId}"
+					                       partialSubmit="true"
+					                       valueChangeListener="#{monitorCreationBean.changeMetricDomainConfig}"
+					                       rendered="#{monitorCreationBean.update == false and  monitorCreationBean.duplicate == false}"
+					                       style="width: 250px;">
+							<f:selectItems value="#{monitorCreationBean.metricDomainConfigBean.metricDomainConfigItems}"/>
+					     </ice:selectOneMenu>
+		
+						<ice:outputLabel value="Calypso:" rendered="#{monitorCreationBean.metricDomainConfigBean.calypsoConnectorRendered}"/>
+							<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigBean.calypsoConnectorId}"
+											   rendered="#{monitorCreationBean.metricDomainConfigBean.calypsoConnectorRendered}"
+											   style="width: 250px;"
+											   disabled="#{monitorCreationBean.update || monitorCreationBean.duplicate}">
+					         	<f:selectItems value="#{monitorCreationBean.metricDomainConfigBean.calypsoConnectorItems}"/>
+					    	</ice:selectOneMenu> 
+						<ice:outputLabel value="JMX:" rendered="#{monitorCreationBean.metricDomainConfigBean.jmxConnectorRendered}"/>
+						<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigBean.jmxConnectorId}"
+					                       rendered="#{monitorCreationBean.metricDomainConfigBean.jmxConnectorRendered}"
+					                       style="width: 250px;"
+					                       disabled="#{monitorCreationBean.update || monitorCreationBean.duplicate}">
+					    	<f:selectItems value="#{monitorCreationBean.metricDomainConfigBean.jmxConnectorItems}"/>
+					    </ice:selectOneMenu>
+						<ice:outputLabel value="HTTP:" rendered="#{monitorCreationBean.metricDomainConfigBean.httpConnectorRendered}"/>
+						<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigBean.httpConnectorId}"
+										   rendered="#{monitorCreationBean.metricDomainConfigBean.httpConnectorRendered}"
+										   style="width: 250px;"
+										   disabled="#{monitorCreationBean.update || monitorCreationBean.duplicate}">
+					    	<f:selectItems value="#{monitorCreationBean.metricDomainConfigBean.httpConnectorItems}"/>
+					    </ice:selectOneMenu>
+						<ice:outputLabel value="SYSLOAD:" rendered="#{monitorCreationBean.metricDomainConfigBean.sysloadConnectorRendered}"/>
+						<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigBean.sysloadConnectorId}"
+										   rendered="#{monitorCreationBean.metricDomainConfigBean.sysloadConnectorRendered}"
+										   style="width: 250px;"
+										   disabled="#{monitorCreationBean.update || monitorCreationBean.duplicate}">
+					    	<f:selectItems value="#{monitorCreationBean.metricDomainConfigBean.sysloadConnectorItems}"/>
+					    </ice:selectOneMenu>
+					    <ice:outputLabel value="SYSTEM AGENT:" rendered="#{monitorCreationBean.metricDomainConfigBean.systemAgentConnectorRendered}"/>
+						<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigBean.systemAgentConnectorId}"
+										   rendered="#{monitorCreationBean.metricDomainConfigBean.systemAgentConnectorRendered}"
+										   style="width: 250px;"
+										   disabled="#{monitorCreationBean.update || monitorCreationBean.duplicate}">
+					    	<f:selectItems value="#{monitorCreationBean.metricDomainConfigBean.systemAgentConnectorItems}"/>
+					    </ice:selectOneMenu>
+						<ice:outputLabel value="RDBMS:" rendered="#{monitorCreationBean.metricDomainConfigBean.rdbmsConnectorRendered}"/>
+						<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigBean.rdbmsConnectorId}"
+										   rendered="#{monitorCreationBean.metricDomainConfigBean.rdbmsConnectorRendered}"
+										   style="width: 250px;"
+										   disabled="#{monitorCreationBean.update || monitorCreationBean.duplicate}">
+					     	<f:selectItems value="#{monitorCreationBean.metricDomainConfigBean.rdbmsConnectorItems}"/>
+					     </ice:selectOneMenu> 	
+					</ice:panelGrid>
+				</ice:panelGroup>
+			</ice:panelGroup>
+			
+			<ice:panelGroup style="border: 1px solid #336699; width: 447px; height: 100%; text-align: center;">
+				<ice:outputLabel value="Scheduling"/>
+				<ice:panelGrid columns="2" style="padding-top: 15px;">
+					<ice:outputLabel value="Type:"/>
+				    	<ice:selectOneMenu value="#{monitorCreationBean.monitorSchedulingConfigBean.schedulerConfig.type}"
+				                           partialSubmit="true"
+				                           valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.changeSchedulerType}"
+				                           style="width: 250px;">
+				        	<f:selectItems value="#{monitorCreationBean.monitorSchedulingConfigBean.schedulerTypeItems}"/>
+				        </ice:selectOneMenu>
+				        <ice:outputLabel value="Mode:"/>
+				        <ice:selectOneMenu value="#{monitorCreationBean.monitorSchedulingConfigBean.schedulerConfig.mode}"
+				                           partialSubmit="true"
+				                           valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.changeSchedulerMode}"
+				                           disabled="#{monitorCreationBean.monitorSchedulingConfigBean.disableSchedulerMode}"
+				                           style="width: 250px;">
+				            <f:selectItems value="#{monitorCreationBean.monitorSchedulingConfigBean.schedulerModeItems}"/>
+				        </ice:selectOneMenu>
+				        <ice:outputLabel value="Capture Delay (sec):" style="width: 100px;" title="The capture delay must be in number of second"/>
+						<ice:inputText value="#{monitorCreationBean.delay}"
+									   disabled="#{monitorCreationBean.monitorSchedulingConfigBean.disableCaptureDelay}"
+									   title="The capture delay must be in number of second" style="#{monitorCreationBean.delayStyle}"/>
+						<ice:outputLabel value="" rendered="#{monitorCreationBean.delayMandatory}"/>
+	   					<ice:outputLabel value="Mandatory" style="color: red; font-size: 10px;"
+	   							  		 rendered="#{monitorCreationBean.delayMandatory}"/>
+						<ice:outputLabel value="" rendered="#{monitorCreationBean.delayWrongFormat}"/>
+	   					<ice:outputLabel value="Wrong format, capture delay must be an integer." style="color: red; font-size: 10px;"
+	   							  	     rendered="#{monitorCreationBean.delayWrongFormat}"/>
+				</ice:panelGrid> 
+				<ice:panelGrid columns="1"> 
+					<ice:panelGrid columns="2">
+						<ice:selectBooleanCheckbox disabled="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.disableSelection}"
+												   valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.startDateValueChanged}"
+												   value="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.active}"
+												   partialSubmit="true"/>
+						<ice:outputLabel value="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.label}"
+										 style="#{monitorCreationBean.startLabelStyle}"/>											     
+					</ice:panelGrid>
+					<ice:panelGrid columns="6">
+						<ice:outputLabel value="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.dayLabel}"
+										 rendered="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.dayRendered}"/>
+					    <ice:panelGroup rendered="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.dayRendered}">
+					    	<!-- <ice:inputText value="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.day}"
+						    					rendered="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.monthlyRenderer}"
+						    					disabled="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.disableComponent}"
+						    					style="width: 50px;"/> -->
+							<ice:selectOneMenu value="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.day}"
+											   partialSubmit="true"
+											   valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.onChangeDaysOfMonthStart}"
+										 	   style="#{monitorCreationBean.dayStyle}"
+											   rendered="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.monthlyRenderer}"
+											   disabled="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.disableComponent}">
+								<f:selectItems value="#{monitorCreationBean.monitorSchedulingConfigBean.daysOfMonthItems}"/>
+							</ice:selectOneMenu>
+					        <ice:selectOneMenu value="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.day}"
+				            				   partialSubmit="true"
+				                        	   valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.onChangeStartDateWeekly}"
+				                        	   disabled="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.disableComponent}"
+				                        	   rendered="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.weeklyRenderer}"
+				                        	   style="width: 100px;">
+						    	<f:selectItems value="#{monitorCreationBean.monitorSchedulingConfigBean.daysOfWeekItems}"/>
+						    </ice:selectOneMenu>
+					    </ice:panelGroup>												    	
+						<ice:outputLabel value="Hour"/>
+						<ice:selectOneMenu value="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.hour}"
+										   partialSubmit="true"
+										   valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.onChangeHourStart}"
+										   style="#{monitorCreationBean.hourStyle}"
+										   disabled="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.disableComponent}">
+							<f:selectItems value="#{monitorCreationBean.monitorSchedulingConfigBean.hourItems}"/>
+						</ice:selectOneMenu>
+						<!-- <ice:inputText value="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.hour}"
+											disabled="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.disableComponent}"
+											style="width: 50px;"/> -->	
+						<ice:outputLabel value="min"/>
+						<ice:selectOneMenu value="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.min}"
+										   partialSubmit="true"
+										   valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.onChangeMinStart}"
+										   style="#{monitorCreationBean.minStyle}"
+										   disabled="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.disableComponent}">
+							<f:selectItems value="#{monitorCreationBean.monitorSchedulingConfigBean.minItems}"/>
+						</ice:selectOneMenu>
+						<!-- <ice:inputText value="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.min}"
+											disabled="#{monitorCreationBean.monitorSchedulingConfigBean.startDate.disableComponent}"
+											style="width: 50px;"/> -->											     
+					</ice:panelGrid>
+				</ice:panelGrid>
+				<ice:panelGrid columns="1"> 
+					<ice:panelGrid columns="2">
+	       				<ice:selectBooleanCheckbox disabled="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.disableSelection}"
+	       										   valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.endDateValueChanged}"
+	       										   value="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.active}"
+	       										   partialSubmit="true"/>
+					    <ice:outputLabel value="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.label}"
+										 style="#{monitorCreationBean.endLabelStyle}"/>											     
+					</ice:panelGrid>
+					<ice:panelGrid columns="6">
+						<ice:outputLabel value="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.dayLabel}" 
+										 rendered="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.dayRendered}"/>
+						<ice:panelGroup rendered="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.dayRendered}">
+							<!-- <ice:inputText 	value="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.day}"
+											rendered="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.monthlyRenderer}"
+											disabled="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.disableComponent}"
+											style="width: 50px;"/> -->
+							<ice:selectOneMenu value="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.day}"
+											   partialSubmit="true"
+											   valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.onChangeDaysOfMonthEnd}"
+											   style="#{monitorCreationBean.dayStyle}"
+											   rendered="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.monthlyRenderer}"
+											   disabled="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.disableComponent}">
+								<f:selectItems value="#{monitorCreationBean.monitorSchedulingConfigBean.daysOfMonthItems}"/>
+							</ice:selectOneMenu>
+							<ice:selectOneMenu value="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.day}"
+						     				   partialSubmit="true"
+						                       valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.onChangeEndDateWeekly}"
+						                       disabled="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.disableComponent}"
+						                       rendered="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.weeklyRenderer}"
+						                       style="width: 100px;">
+						   		<f:selectItems value="#{monitorCreationBean.monitorSchedulingConfigBean.daysOfWeekItems}"/>
+							</ice:selectOneMenu>
+						</ice:panelGroup>				
+						<ice:outputLabel value="Hour"/>
+						<ice:selectOneMenu value="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.hour}"
+										   partialSubmit="true"
+										   valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.onChangeHourEnd}"
+										   style="#{monitorCreationBean.hourStyle}"
+										   disabled="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.disableComponent}">
+							<f:selectItems value="#{monitorCreationBean.monitorSchedulingConfigBean.hourItems}"/>
+						</ice:selectOneMenu>
+						<!-- <ice:inputText value="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.hour}"
+											disabled="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.disableComponent}"
+											style="width: 50px;"/> -->	
+						<ice:outputLabel value="min"/>
+						<ice:selectOneMenu value="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.min}"
+										   partialSubmit="true"
+										   valueChangeListener="#{monitorCreationBean.monitorSchedulingConfigBean.onChangeMinEnd}"
+										   style="#{monitorCreationBean.minStyle}"
+										   disabled="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.disableComponent}">
+							<f:selectItems value="#{monitorCreationBean.monitorSchedulingConfigBean.minItems}"/>
+						</ice:selectOneMenu>
+						<!-- <ice:inputText value="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.min}"
+											disabled="#{monitorCreationBean.monitorSchedulingConfigBean.endDate.disableComponent}"
+											style="width: 50px;"/> -->											     
+					</ice:panelGrid>
+				</ice:panelGrid>
+				<ice:panelGrid columns="1" style="text-align: left;">
+   					<ice:outputLabel value="Start time must be active !" style="color: red; font-size: 10px;"
+   							  		 rendered="#{monitorCreationBean.startTimeMustBeActive}"/>
+   					<ice:outputLabel value="End time must be active !" style="color: red; font-size: 10px;"
+   							  		 rendered="#{monitorCreationBean.endTimeMustBeActive}"/>
+   					<ice:outputLabel value="End time cannot be before start time" style="color: red; font-size: 10px;"
+   							  		 rendered="#{monitorCreationBean.endBeforeStart}"/>
+				</ice:panelGrid>
+			</ice:panelGroup>
+		</ice:panelGrid>
+		
+		<ice:panelGrid columns="1" style="width: 897px; height: 55%;"
+				  	   rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeTabEnabled}">
+			<ice:panelGroup style="border: 1px solid #336699; width: 100%; height: 100%; text-align: center;">
+				<ice:outputLabel value="Attributes"/>
+				<BR/><BR/>
+				<ice:panelGroup scrollHeight="345px" style="padding-left: 2px;">
+					<ice:panelGrid columns="2" style="text-align: center;" 
+								   rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.domainItemsEnabled}">
+						<ice:panelGroup style="border: 1px solid #336699;">
+							<ice:outputLabel value="Metric View" style="font-size: 10px;"/>
+							<ice:panelGroup style="padding-left: 1px;">
+								<ui:include src="/jsp/monitor/metricDomainItemsDualList.jspx"/>
+							</ice:panelGroup>
+						</ice:panelGroup>
+						<ice:panelGroup style="border: 1px solid #336699; margin-left: 1px;">	
+							<ice:outputLabel value="Business Filters" style="font-size: 10px;"/>
+							<ice:panelGroup style="padding-left: 6px;">
+								<ui:include src="/jsp/monitor/monitorBusinessFilterSet.jspx"/>
+							</ice:panelGroup>
+						</ice:panelGroup>
+					</ice:panelGrid>
+					<ice:panelGroup style="vertical-align: top;" rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.sqlQueryConfigEnabled}">
+						<table>
+							<tr valign="top">
+								<td>
+									<ice:panelGroup style="border: 1px solid #336699; text-align: center; width: 100%;">
+										<ice:outputLabel value="SQL Query"/>
+										<br/><br/>
+										<ice:panelGrid columns="2" style="text-align: left;">
+											<ice:outputLabel value="Select"  style="text-align: left;"/>
+											<ice:inputText   value="#{monitorCreationBean.metricDomainConfigAttributesBean.sqlSelectClause}" title="#{monitorCreationBean.metricDomainConfigAttributesBean.sqlSelectClause}" style="width: 250px;"/>
+											<ice:outputLabel value="From"  style="text-align: left;"/>
+											<ice:inputText   value="#{monitorCreationBean.metricDomainConfigAttributesBean.sqlFromClause}"  title="#{monitorCreationBean.metricDomainConfigAttributesBean.sqlFromClause}" style="width: 250px;"/>
+											<ice:outputLabel value="Where"  style="text-align: left;"/>
+											<ice:inputTextarea   value="#{monitorCreationBean.metricDomainConfigAttributesBean.sqlWhereClause}"   title="#{monitorCreationBean.metricDomainConfigAttributesBean.sqlWhereClause}" style="width: 250px; height: 75px;"/>
+											<ice:outputLabel value="Group By"  style="text-align: left;"/>
+											<ice:inputText   value="#{monitorCreationBean.metricDomainConfigAttributesBean.sqlGroupByClause}"   title="#{monitorCreationBean.metricDomainConfigAttributesBean.sqlGroupByClause}" style="width: 250px;"/>
+											<ice:outputLabel value="Order By"  style="text-align: left;"/> 
+											<ice:inputText   value="#{monitorCreationBean.metricDomainConfigAttributesBean.sqlOrderByClause}" title="#{monitorCreationBean.metricDomainConfigAttributesBean.sqlOrderByClause}" style="width: 250px;"/>
+										</ice:panelGrid>
+									</ice:panelGroup>
+								</td>
+								<td>
+									<ice:panelGroup style="border: 1px solid #336699; text-align: center; width: 100%;">	
+										<ice:outputLabel value="Metric Category Resources"/>
+										<br/><br/>	
+										<table width="100%">
+											<tr valign="top">
+												<td>
+													<ice:panelGroup style="border: 1px solid #336699; text-align: center; width: 100%;">							
+														<ice:panelGroup style="width: 100%; text-align: center;">
+															<ice:outputLabel value="Add Ikr Category Resource"/>
+															<ice:dataTable id="MetricDomainResourceConfig"
+																		   value="#{monitorCreationBean.metricDomainConfigAttributesBean.ikrCategoriesWithNoResources}" 
+																		   var="categoryResourceBean"								   
+																		   cellspacing="0" cellpadding="0" border="0"
+																		   style="width: 100%; text-align: center; border: 0px;"
+																		   columnWidths="20, 150"
+																		   scrollable="true" scrollHeight="200px"
+																		   rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.renderIkrCatgoryResourceConfig}">	
+																<ice:column>
+																	<f:facet name="header">
+																	</f:facet>	
+																	<ice:panelGroup style="text-align: center; font-size: 11px;">
+																		<ice:commandButton style="float: center; width: 20px;" 
+																						   image="/images/IndiKtor2.0/Buttons/addSmall.png"
+																					   	   title="Add new metric category resource"														   	   
+																					   	   actionListener="#{monitorCreationBean.metricDomainConfigAttributesBean.addMetricCategoryResource}">
+																			<f:attribute name="metricCategoryResource" value="#{categoryResourceBean}"/>
+																		</ice:commandButton>
+																	</ice:panelGroup> 							
+																</ice:column>
+																<ice:column>
+																	<f:facet name="header">
+																		<ice:outputLabel value="Metric Category"/>
+																	</f:facet>	
+																	<ice:panelGroup style="text-align: left; font-size: 11px;">
+																		<ice:outputText value="#{categoryResourceBean.metricCategory}" title="#{categoryResourceBean.metricCategory}" style="font-size: 10px; width: 150px;"/>
+																	</ice:panelGroup> 							
+																</ice:column>
+															</ice:dataTable>
+															<BR/>
+													    </ice:panelGroup>										   	   
+														<ice:panelGrid columns="1" rendered="#{!monitorCreationBean.metricDomainConfigAttributesBean.renderIkrCatgoryResourceConfig}" style="width: 100%; text-align: center">
+															<br/>
+															<ice:outputLabel style="font-size: 10px; width: 100%;" value="WARNING !!!"/>
+															<ice:panelGrid style="width: 100%; text-align: left;">
+																<ice:outputText style="font-size: 10px; width: 100%;" value="No Metric Category is available for Category Resource setting."/>	
+																<ice:panelGrid columns="2" style="text-align: left;">
+																	<ice:outputText style="font-size: 10px; width: 100%;" value="To add a new Metric Category, "/>	 
+																	<ice:commandLink value="Click Here" action="#{monitorCreationBean.navigateToMetricDomainConfig}"/> 
+																</ice:panelGrid>									
+																<ice:outputText style="font-size: 10px; width: 100%;" value="After the Metric Category has been added, come back on this screen to setup the corresponding Category Resource"/>
+															</ice:panelGrid>	    
+														</ice:panelGrid>
+													</ice:panelGroup>
+												</td>
+												<td>
+													<ice:panelGroup style="border: 1px solid #336699; text-align: center; width: 100%;">
+														<ice:outputLabel value="Ikr Category Resources"/>
+														<ice:dataTable id="MetricDomainResourceList"
+																	   value="#{monitorCreationBean.metricDomainConfigAttributesBean.categoryResourceBeans}" 
+																	   var="categoryResourceBean"								   
+																	   cellspacing="0" cellpadding="0" border="0"
+																	   style="width: 100%;"
+																       scrollable="true" scrollHeight="200px"
+														  			   columnWidths="140, 165, 20">
+															<ice:column>
+																<f:facet name="header">
+																	<ice:outputLabel value="Metric Category"/>
+																</f:facet>	
+																<ice:panelGroup style="text-align: left; font-size: 11px;">
+																	<ice:outputText value="#{categoryResourceBean.metricCategory}"  title="#{categoryResourceBean.metricCategory}" style="font-size: 10px; width: 140px;"/>
+																</ice:panelGroup> 							
+															</ice:column>		
+															<ice:column>													
+																<f:facet name="header">
+																	<ice:outputLabel value="Resource"/>
+																</f:facet>	
+																<ice:panelGroup style="text-align: left; font-size: 11px;">
+																	<ice:inputText value="#{categoryResourceBean.categoryResource.name}" style="font-size: 10px; width: 165px;"/>
+																</ice:panelGroup> 							
+															</ice:column>	
+															<ice:column style="text-align: center;">
+																<f:facet name="header">
+																	<ice:commandButton image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+																				   	   title="delete all metric category resources"
+																				   	   style="width: 20px;"
+																				   	   actionListener="#{monitorCreationBean.metricDomainConfigAttributesBean.removeAllCategoryResources}">
+																	</ice:commandButton>
+																</f:facet>	
+																<ice:commandButton image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+																			   	   title="delete new metric category resource"
+																			   	    style="width: 20px;"
+																			   	   actionListener="#{monitorCreationBean.metricDomainConfigAttributesBean.removeCategoryResource}">
+																	<f:attribute name="metricCategoryResource" value="#{categoryResourceBean}"/>
+																</ice:commandButton>						
+															</ice:column>
+														</ice:dataTable>
+													</ice:panelGroup>
+												</td>
+											</tr>
+										</table>
+									</ice:panelGroup>
+								</td>
+							</tr>
+						</table>
+					</ice:panelGroup>
+					<ice:panelGroup style="vertical-align: top;">
+						<table>
+							<tr valign="top" style="font-size: 11px; font-weight: bold">
+								<td width="#{monitorCreationBean.config.metricDomainConfig.useDataSynchronization ? 430 : 0}px" >
+									<ice:panelGroup rendered="#{monitorCreationBean.config.metricDomainConfig.useDataSynchronization}" style="border: 1px solid #336699; width: 100%; text-align: center;">
+										<ice:outputLabel value="Data Synchronization" style="font-size: 11px;"/>
+										<BR/><BR/>				
+										<ice:panelGrid columns="2">
+											<!-- 
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeSyncFields['REALTIME_DATA'].label}"/>
+											<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeSyncFields['REALTIME_DATA'].booleanValue}"
+																	   valueChangeListener="#{monitorCreationBean.metricDomainConfigAttributesBean.realtimeDataValueChanged}"
+																	   partialSubmit="true"/>
+											 -->
+											<ice:outputLabel rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeSyncFields['DATA_SYNCHRONIZATION'].enabled}" value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeSyncFields['DATA_SYNCHRONIZATION'].label}"/>
+											<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeSyncFields['DATA_SYNCHRONIZATION'].booleanValue}"
+																	   rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeSyncFields['DATA_SYNCHRONIZATION'].enabled}"
+																	   partialSubmit="true"/>
+											<ice:outputLabel rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeSyncFields['STAT_FREQUENCY'].enabled}" value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeSyncFields['STAT_FREQUENCY'].label}"/>
+											<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeSyncFields['STAT_FREQUENCY'].value}"
+															rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeSyncFields['STAT_FREQUENCY'].enabled}"
+															style="width: 250px;"
+															partialSubmit="true">	
+												<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeSyncFields['STAT_FREQUENCY'].selectionItems}"/>
+											</ice:selectOneMenu>
+										</ice:panelGrid>
+									</ice:panelGroup>
+								</td>
+								<td width="430px">
+									<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributesEnabled}" style="border: 1px solid #336699; width: 100%; text-align: center;">
+										<ice:outputLabel value="Collector Attributes" style="font-size: 11px;"/>
+										<BR/><BR/>
+										<ice:panelGrid columns="2" rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributesEnabled}">
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute1'].label}"
+															 rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute1'].enabled}"/>
+											<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute1'].enabled}" style="text-align: left;">
+												<ice:inputText 	value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute1'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute1'].inputText}"
+																style="width: 250px;"/>	
+												<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute1'].booleanValue}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute1'].selectBooleanCheckbox}"
+																partialSubmit="true"/>	
+												<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute1'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute1'].selectOneMenu}"
+																style="width: 250px;"
+																partialSubmit="true">	
+													<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute1'].selectionItems}"/>
+												</ice:selectOneMenu>	
+											</ice:panelGroup>						
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute2'].label}"
+															 rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute2'].enabled}"/>
+											<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute2'].enabled}" style="text-align: left;">
+												<ice:inputText 	value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute2'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute2'].inputText}"
+																style="width: 250px;"/>	
+												<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute2'].booleanValue}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute2'].selectBooleanCheckbox}"
+																partialSubmit="true"/>	
+												<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute2'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute2'].selectOneMenu}"
+																style="width: 250px;"
+																partialSubmit="true">	
+													<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute2'].selectionItems}"/>
+												</ice:selectOneMenu>	
+											</ice:panelGroup>
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute3'].label}"
+															 rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute3'].enabled}"/>
+											<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute3'].enabled}" style="text-align: left;">
+												<ice:inputText 	value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute3'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute3'].inputText}"
+																style="width: 250px;"/>	
+												<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute3'].booleanValue}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute3'].selectBooleanCheckbox}"
+																partialSubmit="true"/>	
+												<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute3'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute3'].selectOneMenu}"
+																style="width: 250px;"
+																partialSubmit="true">	
+													<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute3'].selectionItems}"/>
+												</ice:selectOneMenu>	
+											</ice:panelGroup>
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute4'].label}"
+															 rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute4'].enabled}"/>
+											<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute4'].enabled}" style="text-align: left;">
+												<ice:inputText 	value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute4'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute4'].inputText}"
+																style="width: 250px;"/>	
+												<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute4'].booleanValue}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute4'].selectBooleanCheckbox}"
+																partialSubmit="true"/>	
+												<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute4'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute4'].selectOneMenu}"
+																style="width: 250px;"
+																partialSubmit="true">	
+													<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute4'].selectionItems}"/>
+												</ice:selectOneMenu>	
+											</ice:panelGroup>
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute5'].label}"
+															 rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute5'].enabled}"/>
+											<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute5'].enabled}" style="text-align: left;">
+												<ice:inputText 	value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute5'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute5'].inputText}"
+																style="width: 250px;"/>	
+												<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute5'].booleanValue}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute5'].selectBooleanCheckbox}"
+																partialSubmit="true"/>	
+												<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute5'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute5'].selectOneMenu}"
+																style="width: 250px;"
+																partialSubmit="true">	
+													<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute5'].selectionItems}"/>
+												</ice:selectOneMenu>	
+											</ice:panelGroup>
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute6'].label}"
+															 rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute6'].enabled}"/>
+											<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute6'].enabled}" style="text-align: left;">
+												<ice:inputText 	value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute6'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute6'].inputText}"
+																style="width: 250px;"/>	
+												<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute6'].booleanValue}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute6'].selectBooleanCheckbox}"
+																partialSubmit="true"/>	
+												<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute6'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute6'].selectOneMenu}"
+																style="width: 250px;"
+																partialSubmit="true">	
+													<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute6'].selectionItems}"/>
+												</ice:selectOneMenu>	
+											</ice:panelGroup>	
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute7'].label}"
+															 rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute7'].enabled}"/>
+											<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute7'].enabled}" style="text-align: left;">
+												<ice:inputText 	value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute7'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute7'].inputText}"
+																style="width: 250px;"/>	
+												<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute7'].booleanValue}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute7'].selectBooleanCheckbox}"
+																partialSubmit="true"/>	
+												<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute7'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute7'].selectOneMenu}"
+																style="width: 250px;"
+																partialSubmit="true">	
+													<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute7'].selectionItems}"/>
+												</ice:selectOneMenu>	
+											</ice:panelGroup>
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute8'].label}"
+															 rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute8'].enabled}"/>
+											<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute8'].enabled}" style="text-align: left;">
+												<ice:inputText 	value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute8'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute8'].inputText}"
+																style="width: 250px;"/>	
+												<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute8'].booleanValue}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute8'].selectBooleanCheckbox}"
+																partialSubmit="true"/>	
+												<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute8'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute8'].selectOneMenu}"
+																style="width: 250px;"
+																partialSubmit="true">	
+													<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute8'].selectionItems}"/>
+												</ice:selectOneMenu>	
+											</ice:panelGroup>	
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute9'].label}"
+															 rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute9'].enabled}"/>
+											<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute9'].enabled}" style="text-align: left;">
+												<ice:inputText 	value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute9'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute9'].inputText}"
+																style="width: 250px;"/>	
+												<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute9'].booleanValue}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute9'].selectBooleanCheckbox}"
+																partialSubmit="true"/>	
+												<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute9'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute9'].selectOneMenu}"
+																style="width: 250px;"
+																partialSubmit="true">	
+													<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute9'].selectionItems}"/>
+												</ice:selectOneMenu>	
+											</ice:panelGroup>
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute10'].label}"
+															 rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute10'].enabled}"/>
+											<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute10'].enabled}" style="text-align: left;">
+												<ice:inputText 	value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute10'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute10'].inputText}"
+																style="width: 250px;"/>	
+												<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute10'].booleanValue}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute10'].selectBooleanCheckbox}"
+																partialSubmit="true"/>	
+												<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute10'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute10'].selectOneMenu}"
+																style="width: 250px;"
+																partialSubmit="true">	
+													<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute10'].selectionItems}"/>
+												</ice:selectOneMenu>	
+											</ice:panelGroup>
+											<ice:outputLabel value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute11'].label}"
+															 rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute11'].enabled}"/>
+											<ice:panelGroup rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute11'].enabled}" style="text-align: left;">
+												<ice:inputText 	value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute11'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute11'].inputText}"
+																style="width: 250px;"/>	
+												<ice:selectBooleanCheckbox value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute11'].booleanValue}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute11'].selectBooleanCheckbox}"
+																partialSubmit="true"/>	
+												<ice:selectOneMenu value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute11'].value}"
+																rendered="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute11'].selectOneMenu}"
+																style="width: 250px;"
+																partialSubmit="true">	
+													<f:selectItems value="#{monitorCreationBean.metricDomainConfigAttributesBean.attributeFields['attribute11'].selectionItems}"/>
+												</ice:selectOneMenu>	
+											</ice:panelGroup>	
+										</ice:panelGrid>
+									</ice:panelGroup>
+								</td>
+							</tr>
+						</table>
+					</ice:panelGroup>
+				</ice:panelGroup>
+			</ice:panelGroup>
+		</ice:panelGrid>
+	</ice:panelGroup>
+</f:subview>

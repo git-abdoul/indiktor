@@ -1,0 +1,413 @@
+<f:subview id="staticDataConfigComponent" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">   
+        
+<ice:form>
+	<table id="pageCrossCompute">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft2">
+							<div class="topMenuBarLeftAnalysis2">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/AnalysisOFF.png"
+								   				   title="Analysis"
+								   				   value="#{dataCenterBean.menus['analysis']}"
+								   				   actionListener="#{dataCenterBean.navigate}">		
+									<f:attribute name="to" value="analysis"/> 
+								</ice:commandButton>
+							</div>
+							<!-- <div class="topMenuBarLeftDomain">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/DomainOFFLeft.png"
+												   title="Metric Domain"
+												   value="#{dataCenterBean.menus['ikrStaticDomain']}"
+												   actionListener="#{dataCenterBean.navigate}">		
+									<f:attribute name="to" value="ikrStaticDomain"/> 
+								</ice:commandButton>
+							</div> -->
+							<div class="topMenuBarLeftCC">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/CrossComputeOFFLeft.png"
+								   				   title="Cross Compute"
+								   				   value="#{dataCenterBean.menus['crossComputeDefinitionSelection']}"
+								   				   actionListener="#{dataCenterBean.navigate}">		
+									<f:attribute name="to" value="crossComputeDefinitionSelection"/>
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftSD2">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/StaticDataON.png"
+												   title="Static Data"
+												   value="#{dataCenterBean.menus['staticDataConfig']}"
+												   actionListener="#{dataCenterBean.navigate}">			
+									<f:attribute name="to" value="staticDataConfig"/> 
+								</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<!-- 
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   actionListener="#{dataCenterBean.openFilterPopup}"
+														   image="/images/IndiKtor2.0/Buttons/filter.png"
+													   	   title="Filter"/>
+										 -->
+										 <ice:panelGrid columns="2">
+										 	<ice:outputLabel value="Search"/>
+										 	<ice:inputText value="#{staticDataConfigBean.searchQuery}"
+										 				   valueChangeListener="#{staticDataConfigBean.searchStaticDataQuery}"	
+										 				   style="width:200px; font-size: 10px; margin-right: 30px;"/>
+										 </ice:panelGrid>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/add.png"
+													   	   title="Add new static data"
+													   	   value="Add new static data" 
+														   actionListener="#{dataCenterBean.showStaticData}"/>
+									</td>
+									<!-- 
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   actionListener="#{dataCenterBean.showStaticDataForUpdate}"
+														   image="/images/IndiKtor2.0/Buttons/edit.png"
+														   title="Edit selected static data"
+														   value="Edit selected static data">
+											<f:attribute name="StaticDataDefinition" value="#{staticDataConfigBean.selectedStaticDataDefinitionBean}"/>
+										</ice:commandButton>
+									</td>
+									 -->
+									<td>
+										<ice:commandButton panelConfirmation="#{staticDataConfigBean.staticDatasSelected == 0 ? false : 'deleteConfirmPanel'}"
+														   styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/delete.png"
+													   	   title="Delete selected static datas"               
+														   actionListener="#{dataCenterBean.deleteSelectedStaticDatas}"
+													       rendered="#{staticDataConfigBean.staticDatasSelected != 0}">		
+										</ice:commandButton>
+										<ice:panelConfirmation 	id="deleteConfirmPanel" 
+																message="#{staticDataConfigBean.deleteMessage}"
+									                   			acceptLabel="Delete" 
+									                   			rendered="true"
+									                   			autoCentre="true"/>													       
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+													   	   title="Help"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentFullPanelStaticData">
+							<table>
+								<tr>
+									<td>
+										<ice:panelGroup style="text-align:center;" rendered="#{staticDataConfigBean.listRendered}">
+											<ice:dataPaginator id="staticDataTableScroll_1" for="staticDataTable"
+																rowsCountVar="rowsCount"
+																displayedRowsCountVar="displayedRowsCountVar"
+																firstRowIndexVar="firstRowIndex"
+																lastRowIndexVar="lastRowIndex" pageCountVar="pageCount"
+																pageIndexVar="pageIndex">
+												<ice:outputFormat
+													value="{0} Static Data found,  displaying {1} Static Data,  from {2} to {3}. Page {4} / {5}."
+													style="font-weight: bold;" styleClass="standard">
+													<f:param value="#{rowsCount}" />
+													<f:param value="#{displayedRowsCountVar}" />
+													<f:param value="#{firstRowIndex}" />
+													<f:param value="#{lastRowIndex}" />
+													<f:param value="#{pageIndex}" />
+													<f:param value="#{pageCount}" />
+												</ice:outputFormat>
+											</ice:dataPaginator>
+										</ice:panelGroup>
+									</td>
+								</tr>
+								<tr height="10px"><td></td></tr>
+								<tr>
+									<td align="center">
+										<!-- <ice:outputLabel value="No Static Data Defined" rendered="#{!staticDataConfigBean.listRendered}" styleClass="centerNoInfos"/>
+										<ice:panelGroup rendered="#{staticDataConfigBean.listRendered}"> -->	
+										<ice:panelGrid columns="1" style="text-align: center;" width="1150px">
+											<ice:outputLabel value="No Static Data has been configured. Click on the plus icon (+) to add Static Datas."
+															 rendered="#{!staticDataConfigBean.listRendered}"/>
+										</ice:panelGrid>
+										<ice:panelGroup rendered="#{staticDataConfigBean.listRendered}">
+											<ice:dataTable id="staticDataTable" 
+												       	   sortColumn="#{staticDataConfigBean.sortColumnName}"
+							      						   sortAscending="#{staticDataConfigBean.ascending}"
+														   value="#{staticDataConfigBean.staticDatas}" 
+														   var="item"
+														   style="float:left"
+														   styleClass="dataPaginatorDataTable"
+													       cellspacing="0" cellpadding="0" border="0" width="100%"
+													       columnClasses="tableCol"
+													       rows="#{staticDataConfigBean.rowsByPage}"
+													       columnWidths="20, 185, 210, 210, 180, 110, 110, 40">
+												<ice:column>													
+													<f:facet name="header">
+												       	<ice:selectBooleanCheckbox value="#{staticDataConfigBean.selectAll}" 
+												       							   valueChangeListener="#{staticDataConfigBean.handleSelectAllSD}"	
+												       							   partialSubmit="true"
+												       							   style="text-align: center;"/>
+													</f:facet>
+											       	<ice:selectBooleanCheckbox value="#{item.selected}" 
+											       							   valueChangeListener="#{staticDataConfigBean.handleSelectedSD}"	
+											       							   partialSubmit="true"
+											       							   style="text-align: center;">
+											       		<f:attribute name="StaticDataDefinition" value="#{item}"/> 							   
+											       	</ice:selectBooleanCheckbox>
+												</ice:column>	
+											  	<ice:column style="text-align: left;">
+												  	<!-- <ice:rowSelector value="#{item.selected}" 
+															selectedClass="tableRowSelSelected"
+															mouseOverClass="tableRowSelMouseOver"
+															selectedMouseOverClass="tableRowSelSelectedMouseOver"
+															enhancedMultiple="true"
+											               	styleClass="iceRowSel-Dis"
+											                selectionListener="#{staticDataConfigBean.rowSelectionListener}"/> -->
+													<f:facet name="header">
+												    	<ice:commandSortHeader columnName="#{staticDataConfigBean.envColumnName}" arrow="true" >
+												         	<ice:outputText value="#{staticDataConfigBean.envColumnName}"/>
+												         </ice:commandSortHeader>
+												    </f:facet>
+													<ice:panelGroup style="font-size: 11px;">
+														<ice:outputText value="#{item.logicalEnv.name}"/>
+													</ice:panelGroup> 							
+												</ice:column>	
+												<ice:column style="text-align: left;">
+													<f:facet name="header">
+												    	<ice:commandSortHeader columnName="#{staticDataConfigBean.metricCategoryColumnName}" arrow="true" >
+												         	<ice:outputText value="#{staticDataConfigBean.metricCategoryColumnName}"/>
+												         </ice:commandSortHeader>
+												    </f:facet>
+													<ice:panelGroup style="font-size: 11px;">
+														<ice:outputText value="#{item.ikrCategory.label}"/>
+													</ice:panelGroup> 							
+												</ice:column>	
+												<ice:column style="text-align: left;">
+													<f:facet name="header">
+												    	<ice:commandSortHeader columnName="#{staticDataConfigBean.labelColumnName}" arrow="true" >
+												         	<ice:outputText value="#{staticDataConfigBean.labelColumnName}"/>
+												         </ice:commandSortHeader>
+												    </f:facet>					
+													<ice:outputText value="#{item.ikrDefinition.ikrInstance}" style="font-size: 11px;"></ice:outputText>
+												</ice:column>							
+												<ice:column style="text-align: left;">
+													<f:facet name="header">
+												    	<!-- <ice:commandSortHeader columnName="#{staticDataConfigBean.valueColumnName}" arrow="true" > -->
+												         	<ice:outputText value="#{staticDataConfigBean.valueColumnName}"/>
+												         <!-- </ice:commandSortHeader> -->
+												    </f:facet>					
+													<ice:outputText value="#{item.ikrDefinition.value}" style="font-size: 11px;"></ice:outputText>
+												</ice:column>	
+												<ice:column style="text-align: left;">
+													<f:facet name="header">
+												    	<ice:commandSortHeader columnName="#{staticDataConfigBean.ikrUnitTypeColumnName}" arrow="true" >
+												         	<ice:outputText value="#{staticDataConfigBean.ikrUnitTypeColumnName}"/>
+												         </ice:commandSortHeader>
+												    </f:facet>				
+													<ice:outputText value="#{item.ikrCategory.ikrUnitType}" style="font-size: 11px;"></ice:outputText>
+												</ice:column>	
+												<ice:column style="text-align: left;">
+													<f:facet name="header">
+												    	<ice:commandSortHeader columnName="#{staticDataConfigBean.ikrUnitColumnName}" arrow="true" >
+												         	<ice:outputText value="#{staticDataConfigBean.ikrUnitColumnName}"/>
+												         </ice:commandSortHeader>
+												    </f:facet>		
+													<ice:outputText value="#{item.ikrCategory.ikrUnit}" style="font-size: 11px;"></ice:outputText>
+												</ice:column>	
+												<ice:column>
+													<f:facet name="header">
+													</f:facet>	
+													<ice:commandButton actionListener="#{dataCenterBean.showStaticDataForUpdate}"
+																	   image="/images/IndiKtor2.0/Buttons/editSmall.png"
+																	   title="Edit this static data">
+														<f:attribute name="StaticDataDefinition" value="#{item}"/>
+													</ice:commandButton>
+													<ice:commandButton panelConfirmation="deleteNoSelectionConfirmPanel"
+																	   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+																	   actionListener="#{dataCenterBean.deleteStaticData}"
+																	   title="Delete this static data"
+																   	   style="margin-left: 10px;">
+														<f:attribute name="StaticDataDefinition" value="#{item}"/>	
+													</ice:commandButton>
+															
+													<ice:panelConfirmation 	id="deleteNoSelectionConfirmPanel"
+																			message="Are you sure to delete this static data : #{item.ikrDefinition.ikrInstance}"
+																			type="normal"
+																			acceptLabel="Delete"
+																			rendered="true"
+																			autoCentre="true"/>							
+												</ice:column>	
+											</ice:dataTable>
+										</ice:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<ice:panelGroup style="float:center;"
+														visible="#{staticDataConfigBean.paginationVisible}"
+														rendered="#{staticDataConfigBean.listRendered}">
+											<center>
+												<ice:dataPaginator id="staticDataTableScroll_2" for="staticDataTable"
+													fastStep="3" paginator="true" paginatorMaxPages="4" actionListener="#{staticDataConfigBean.pageChangeListener}">
+													<f:facet name="first">
+														<ice:graphicImage id="firstpage_1"
+															url="#{styleBean.imageDirectory}arrow-first.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.firstpage']}" />
+													</f:facet>
+													<f:facet name="last">
+														<ice:graphicImage id="lastpage_1"
+															url="#{styleBean.imageDirectory}arrow-last.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.lastpage']}" />
+													</f:facet>
+													<f:facet name="previous">
+														<ice:graphicImage id="previouspage_1"
+															url="#{styleBean.imageDirectory}arrow-previous.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.previouspage']}" />
+													</f:facet>
+													<f:facet name="next">
+														<ice:graphicImage id="nextpage_1"
+															url="#{styleBean.imageDirectory}arrow-next.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.nextpage']}" />
+													</f:facet>
+													<f:facet name="fastforward">
+														<ice:graphicImage id="fastforward_1"
+															url="#{styleBean.imageDirectory}arrow-ff.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastforward']}" />
+													</f:facet>
+													<f:facet name="fastrewind">
+														<ice:graphicImage id="fastrewind_1"
+															url="#{styleBean.imageDirectory}arrow-fr.gif"
+															style="border:none;"
+															title="#{msgs['page.dataScrolling.fastbackward']}" />
+													</f:facet>
+												</ice:dataPaginator>
+											</center>
+										</ice:panelGroup>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td width="15px"></td>
+					</tr>
+				</table>	
+			</td>
+		</tr>
+	</table>
+	
+	<!-- <ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{dataCenterBean.rendererFilter}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputText style="float: left;" value="Filter"/></td>
+		       			<td><ice:commandButton style="float: right;" 
+		       								   actionListener="#{dataCenterBean.closeFilterPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<table>
+				<tr>
+					<td align="center">				    
+						<ice:outputLabel value="Logical Environment"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<ice:selectOneMenu value="#{staticDataConfigBean.logicalEnvSelectionBean.logicalEnvId}"
+										   valueChangeListener="#{staticDataConfigBean.logicalEnvSelectionBean.onChangeLogicalEnv}"
+										   partialSubmit="true">
+							<f:selectItems value="#{staticDataConfigBean.logicalEnvSelectionBean.logicalEnvItems}"/>
+						</ice:selectOneMenu>
+					</td>
+				</tr>
+			</table>
+	    </f:facet>
+	</ice:panelPopup> -->
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{dataCenterBean.rendererStaticData}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td>
+		       				<ice:outputLabel style="float: left;" value="Update StaticData" rendered="#{dataCenterBean.rendererUpdateStaticData}"/>
+		       				<ice:outputLabel style="float: left;" value="Create new static data" rendered="#{dataCenterBean.rendererUpdateStaticData==false}"/>
+		       			</td>
+		       			<td>
+		       				<ice:commandButton style="float: right;" 
+		       								   actionListener="#{dataCenterBean.closeStaticDataPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+							<ice:commandButton style="float: right;" 
+											   image="/images/IndiKtor2.0/Buttons/saveSmall.png"
+										   	   title="Save"
+										   	   value="Save"
+										   	   styleClass="iconPopup"
+										   	   actionListener="#{dataCenterBean.saveStaticData}"/>		       								   
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGrid id="updateStaticData">
+				<ui:include src="/jsp/staticData/config/updateStaticData.xhtml"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+	<!-- 
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{dataCenterBean.rendererNewStaticData}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputLabel style="float: left;" value="Create new static data"/></td>
+		       			<td>
+		       				<ice:commandButton style="float: right;" 
+		       								   actionListener="#{dataCenterBean.closeNewStaticDataPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+							<ice:commandButton style="float: right;" 
+											   image="/images/IndiKtor2.0/Buttons/saveSmall.png"
+										   	   title="Save"
+										   	   value="Save"
+										   	   styleClass="iconPopup"
+										   	   actionListener="#{dataCenterBean.saveStaticData}"/>		       								   
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGrid id="updateStaticData">
+				<ui:include src="/jsp/staticData/config/updateStaticDat.xhtmlml"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+-->	
+</ice:form>
+</f:subview>
