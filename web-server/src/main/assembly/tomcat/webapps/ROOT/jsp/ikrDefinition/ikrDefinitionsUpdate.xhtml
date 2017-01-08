@@ -1,0 +1,455 @@
+<f:subview id="CollectorMetric" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+        
+<table border="0" width="100%">
+		<tr align="center" valign="top">
+			<td align="center">
+				<ice:panelGroup style="border: 1px solid #336699; text-align: center; width: 100%;">
+					<ice:outputLabel value="Ikr Definitions" style="font-size: 13px;"/>
+					<BR/><BR/>
+					<ice:dataTable id="IKR_DEFINITION_TABLE"
+						       value="#{ikrDefinitionsManager.filesGroupRecordBeans}"
+						       var="filesRecord"
+						       columnWidths="23,370,123,20"
+						       cellpadding="0" width="580"
+						       scrollable="true" scrollHeight="380px">
+						<ice:column>
+		            		<ice:panelGroup>	       
+		                		<ice:commandLink actionListener="#{filesRecord.toggleSubGroupAction}">
+		                    		<ice:graphicImage value="#{filesRecord.expandContractImage}"
+		                                      	  	  style="border: 0px solid;"/>
+		                		</ice:commandLink>
+		            		</ice:panelGroup>
+		        		</ice:column>
+		        		<ice:column>
+		        			<f:facet name="header">
+		             			<ice:outputText value="#{msgs['page.expandTable.header2']}"/>
+		         			</f:facet>
+		         			<ice:panelGroup>
+		             			<ice:inputText value="#{filesRecord.name}" style="width: 250px;" rendered="#{filesRecord.ikrDefinition != null}"/>
+		             			<ice:outputText value="#{filesRecord.name}" style="width: 250px;"  rendered="#{filesRecord.ikrDefinition == null}"/>
+		         			</ice:panelGroup> 
+		        		</ice:column>		     
+		     			<ice:column>
+		         			<f:facet name="header">
+		             			<ice:outputText value="Compute"/>
+		         			</f:facet>
+		         			<ice:panelStack selectedPanel="#{filesRecord.computePanelStack}">
+		         				<ice:panelGrid id="NO_COMPUTE">
+		         				</ice:panelGrid>
+		         				<ice:panelGrid id="COMPUTED">
+		         					<ice:outputLabel value="#{filesRecord.computedValue}"/>
+		         				</ice:panelGrid>
+			         			<ice:panelGrid columns="2" id="STATISTIC_COMPUTE">
+									<ice:selectOneMenu value="#{filesRecord.metricCompute}"
+													   partialSubmit="trues">
+	                        			<f:selectItems value="#{filesRecord.metricComputeItems}"/>
+	                				</ice:selectOneMenu>
+	                				<ice:commandButton value="+"
+	                								   actionListener="#{ikrDefinitionsManager.createNewMetricCompute}">
+	                        	 		<f:attribute name="compute" value="#{filesRecord.metricCompute}"/>
+	                        	 		<f:attribute name="ikrInstance" value="#{filesRecord.name}"/>
+	                        	 		<f:attribute name="ikrCategoryId" value="#{filesRecord.ikrCategoryId}"/>      	 					                        	 					   
+	                        	 	</ice:commandButton>		
+			         			</ice:panelGrid>
+		         			</ice:panelStack>
+		        		</ice:column>	     
+		        		<ice:column>
+		         			<f:facet name="header">
+		             			<ice:outputText value=""/>
+		         			</f:facet>
+		         			<ice:panelGroup>
+	                			<ice:selectBooleanCheckbox 
+	                               value="#{filesRecord.enable}"
+	                               valueChangeListener="#{filesRecord.select}"
+	                               partialSubmit="true"/>
+		         			</ice:panelGroup>
+		        		</ice:column>
+	     			</ice:dataTable>
+     			</ice:panelGroup>
+			</td>
+			<td align="center">
+				<ice:panelGroup style="border: 1px solid #336699; text-align: center; width: 100%;">	
+					<ice:panelGroup style="width: 100%; text-align: center;">
+						<ice:outputLabel value="Add New Ikr Definition" style="font-size: 13px;"/>
+						<BR/><BR/>
+						<ice:panelGrid columns="1" style="text-align: left;">
+							<ice:panelGrid columns="2">
+								<ice:outputLabel value="Metric Category"/>
+								<ice:selectOneMenu value="#{ikrStaticDomainSelectorBean.metricCategoryId}"
+									    		   valueChangeListener="#{ikrStaticDomainSelectorBean.onChangeMetricCategory}"
+												   partialSubmit="true" style="width:250px">
+									<f:selectItems value="#{ikrDefinitionsManager.metricCategoryItems}"/>
+								</ice:selectOneMenu>
+								<ice:outputLabel value="Metric Name"/>
+								<ice:inputText value="#{ikrDefinitionsManager.instanceToCreate}" style="width:250px" />								
+							</ice:panelGrid>	
+							<ice:commandButton value="Add new Ikr Definition" 
+												   image="/images/IndiKtor2.0/Buttons/addSmall.png"
+											   	   title="Add new Ikr Definition"
+											   	   actionListener="#{ikrDefinitionsManager.createMetric}"/>				
+						</ice:panelGrid>
+					</ice:panelGroup>
+				</ice:panelGroup>
+			</td>
+		</tr>
+	</table>
+</f:subview>
+
+
+
+
+
+
+<!-- <ui:composition template="/WEB-INF/template/mainTemplate.xhtml
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ui:param name="pageTitle" value="Collector Definition" />
+<ui:define name="content">
+<ice:panelGrid>
+<ice:panelGrid>
+<ice:panelGroup>
+<ice:form>
+	<table id="pageCollectors">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft2">		
+							<div class="topMenuBarLeftAnalysis2">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/DataCollection/LogicalEnvOFF.png"
+								   				   title="Logical Environments"
+								   				   value="Logical Environments"
+								   				   action="#{logicalEnvConfigBean.action}"
+								   				   actionListener="#{logicalEnvConfigBean.init}">
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftDomain">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/DataCollection/ConnectorsOFFLeft.png"
+												   title="Connectors"
+												   value="Connectors"
+												   action="#{connectorConfigBean.action}"
+												   actionListener="#{connectorConfigBean.init}">
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftCC2">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/DataCollection/CollectorsON.png"
+								   				   title="Collectors"
+								   				   value="Collectors"
+								   				   action="#{monitorSelectionBean.action}"
+								   				   actionListener="#{monitorSelectionBean.init}">
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftSD">
+								<ice:commandButton image="/images/IndiKtor2.0/AdminPanel/DataCollection/MonitorTasksOFF.png"
+												   title="Monitor Tasks"
+												   value="Monitor Tasks"
+												   action="#{scheduledTaskSelectionBean.action}"
+												   actionListener="#{scheduledTaskSelectionBean.init}">
+								</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   actionListener="#{monitorSelectionBean.openFilterPopup}"
+														   image="/images/IndiKtor2.0/Buttons/filter.png"
+													   	   title="Filter"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   value="Create a new Collector" 
+														   image="/images/IndiKtor2.0/Buttons/add.png"
+													   	   title="Create a new Collector"
+													   	   actionListener="#{monitorCreationBean.initForCreate}"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/edit.png"
+													   	   title="edit">
+										</ice:commandButton>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/duplicate.png"
+													   	   title="duplicate">
+										</ice:commandButton>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Delete"
+														   image="/images/IndiKtor2.0/Buttons/delete.png"
+													   	   title="Delete"/>
+									</td> -->
+									<!-- <td>
+										<ice:commandButton styleClass="topMenuBarRightIcons" 
+														   value="Cancel"
+														   image="/images/IndiKtor2.0/Buttons/cancel.png"
+													   	   title="Cancel"
+													   	   actionListener="#{adminBean.init}"
+													   	   action="#{adminBean.action}"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+													   	   title="Help"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentFullPanel">
+							<table border="0" width="100%">
+								<tr align="center" valign="top">
+									<td align="center">
+										<ice:panelGroup scrollWidth="600" scrollHeight="400">
+											<ice:dataTable id="IKR_DEFINITION_TABLE"
+												       value="#{ikrDefinitionsManager.filesGroupRecordBeans}"
+												       var="filesRecord"
+												       columnWidths="30,250,100,30"
+												       cellpadding="0" width="580">
+												<ice:column>
+								            		<ice:panelGroup>	       
+								                		<ice:commandLink actionListener="#{filesRecord.toggleSubGroupAction}">
+								                    		<ice:graphicImage value="#{filesRecord.expandContractImage}"
+								                                      	  	  style="border: 0px solid;"/>
+								                		</ice:commandLink>
+								            		</ice:panelGroup>
+								        		</ice:column>
+								 				<ice:column>
+								        			<f:facet name="header">
+								             			<ice:outputText value="#{msgs['page.expandTable.header1']}"/>
+								         			</f:facet>
+								         			<ice:panelGroup style="width: 70px;">
+								             			<ice:outputText value="#{filesRecord.id}"/>
+								         			</ice:panelGroup> 
+								        		</ice:column>
+								        		<ice:column>
+								        			<f:facet name="header">
+								             			<ice:outputText value="#{msgs['page.expandTable.header2']}"/>
+								         			</f:facet>
+								         			<ice:panelGroup>
+								             			<ice:inputText value="#{filesRecord.name}" style="width: 250px;" rendered="#{filesRecord.ikrDefinition != null}"/>
+								             			<ice:outputText value="#{filesRecord.name}" style="width: 250px;"  rendered="#{filesRecord.ikrDefinition == null}"/>
+								         			</ice:panelGroup> 
+								        		</ice:column>		     
+								     			<ice:column>
+								         			<f:facet name="header">
+								             			<ice:outputText value="Compute"/>
+								         			</f:facet>
+								         			<ice:panelStack selectedPanel="#{filesRecord.computePanelStack}">
+								         				<ice:panelGrid id="NO_COMPUTE">
+								         				</ice:panelGrid>
+								         				<ice:panelGrid id="COMPUTED">
+								         					<ice:outputLabel value="#{filesRecord.computedValue}"/>
+								         				</ice:panelGrid>
+									         			<ice:panelGrid columns="2" id="STATISTIC_COMPUTE">
+															<ice:selectOneMenu value="#{filesRecord.metricCompute}"
+																			   partialSubmit="trues">
+							                        			<f:selectItems value="#{filesRecord.metricComputeItems}"/>
+							                				</ice:selectOneMenu>
+							                				<ice:commandButton value="+"
+							                								   actionListener="#{ikrDefinitionsManager.createNewMetricCompute}"
+							                        	 					   action="#{ikrDefinitionsManager.action}">
+							                        	 		<f:attribute name="compute" value="#{filesRecord.metricCompute}"/>
+							                        	 		<f:attribute name="ikrInstance" value="#{filesRecord.name}"/>
+							                        	 		<f:attribute name="ikrCategoryId" value="#{filesRecord.ikrCategoryId}"/>      	 					                        	 					   
+							                        	 	</ice:commandButton>		
+									         			</ice:panelGrid>
+								         			</ice:panelStack>
+								        		</ice:column>	     
+								        		<ice:column>
+								         			<f:facet name="header">
+								             			<ice:outputText value=""/>
+								         			</f:facet>
+								         			<ice:panelGroup>
+							                			<ice:selectBooleanCheckbox 
+							                               value="#{filesRecord.enable}"
+							                               valueChangeListener="#{filesRecord.select}"
+							                               partialSubmit="true"/>
+								         			</ice:panelGroup>
+								        		</ice:column>
+							     			</ice:dataTable>
+						     			</ice:panelGroup>
+									</td>
+									<td align="center">
+										<ice:panelGrid columns="1" style="text-align: center;">
+											<ice:panelGrid columns="2">
+												<ice:outputLabel value="Metric Category"/>
+												<ice:selectOneMenu value="#{ikrStaticDomainSelectorBean.metricCategoryId}"
+													    		   valueChangeListener="#{ikrStaticDomainSelectorBean.onChangeMetricCategory}"
+																   partialSubmit="true" style="width:250px">
+													<f:selectItems value="#{ikrDefinitionsManager.metricCategoryItems}"/>
+												</ice:selectOneMenu>
+												<ice:outputLabel value="Metric Name"/>
+												<ice:inputText value="#{ikrDefinitionsManager.instanceToCreate}" style="width:250px" />
+											</ice:panelGrid>
+											<br/>	
+											<ice:commandLink  actionListener="#{ikrDefinitionsManager.createMetric}"
+														    	value="add New Metric" />					
+										</ice:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" align="center">
+										<br/>
+										<ice:commandButton	actionListener="#{ikrDefinitionsManager.validate}"
+															action="#{ikrDefinitionsManager.action}"
+												    		value="Update" />
+										<ice:commandButton value="Cancel" action="monitorSelection"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+                   			
+</ice:form>
+</ice:panelGroup>
+</ice:panelGrid>
+</ice:panelGrid>
+</ui:define>
+</ui:composition> -->
+
+
+
+<!-- <ui:composition template="/WEB-INF/templatemainTemplate.xhtmlml"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+             	
+<ui:param name="pageTitle" value="Monitors"/>
+
+<ui:define name="content">
+<ice:panelGrid columns="1" width="950" style="text-align: center;" >
+<ice:outputLabel value="Metrics" style="font-size: 16px; font-weight: bold"/>
+<HR/>
+<ice:form>	
+	<table border="0" width="100%">
+		<tr align="center" valign="top">
+			<td align="center">
+				<ice:panelGroup scrollWidth="600" scrollHeight="400">
+					<ice:dataTable id="IKR_DEFINITION_TABLE"
+						       value="#{ikrDefinitionsManager.filesGroupRecordBeans}"
+						       var="filesRecord"
+						       columnWidths="30,250,100,30"
+						       cellpadding="0" width="580">
+						<ice:column>
+		            		<ice:panelGroup>	       
+		                		<ice:commandLink actionListener="#{filesRecord.toggleSubGroupAction}">
+		                    		<ice:graphicImage value="#{filesRecord.expandContractImage}"
+		                                      	  	  style="border: 0px solid;"/>
+		                		</ice:commandLink>
+		            		</ice:panelGroup>
+		        		</ice:column> -->
+		        		<!--  
+		 				<ice:column>
+		        			<f:facet name="header">
+		             			<ice:outputText value="#{msgs['page.expandTable.header1']}"/>
+		         			</f:facet>
+		         			<ice:panelGroup style="width: 70px;">
+		             			<ice:outputText value="#{filesRecord.id}"/>
+		         			</ice:panelGroup> 
+		        		</ice:column>
+		        		-->
+		        		<!-- <ice:column>
+		        			<f:facet name="header">
+		             			<ice:outputText value="#{msgs['page.expandTable.header2']}"/>
+		         			</f:facet>
+		         			<ice:panelGroup>
+		             			<ice:inputText value="#{filesRecord.name}" style="width: 250px;" rendered="#{filesRecord.ikrDefinition != null}"/>
+		             			<ice:outputText value="#{filesRecord.name}" style="width: 250px;"  rendered="#{filesRecord.ikrDefinition == null}"/>
+		         			</ice:panelGroup> 
+		        		</ice:column>		     
+		     			<ice:column>
+		         			<f:facet name="header">
+		             			<ice:outputText value="Compute"/>
+		         			</f:facet>
+		         			<ice:panelStack selectedPanel="#{filesRecord.computePanelStack}">
+		         				<ice:panelGrid id="NO_COMPUTE">
+		         				</ice:panelGrid>
+		         				<ice:panelGrid id="COMPUTED">
+		         					<ice:outputLabel value="#{filesRecord.computedValue}"/>
+		         				</ice:panelGrid>
+			         			<ice:panelGrid columns="2" id="STATISTIC_COMPUTE">
+									<ice:selectOneMenu value="#{filesRecord.metricCompute}"
+													   partialSubmit="trues">
+	                        			<f:selectItems value="#{filesRecord.metricComputeItems}"/>
+	                				</ice:selectOneMenu>
+	                				<ice:commandButton value="+"
+	                								   actionListener="#{ikrDefinitionsManager.createNewMetricCompute}"
+	                        	 					   action="#{ikrDefinitionsManager.action}">
+	                        	 		<f:attribute name="compute" value="#{filesRecord.metricCompute}"/>
+	                        	 		<f:attribute name="ikrInstance" value="#{filesRecord.name}"/>
+	                        	 		<f:attribute name="ikrCategoryId" value="#{filesRecord.ikrCategoryId}"/>      	 					                        	 					   
+	                        	 	</ice:commandButton>		
+			         			</ice:panelGrid>
+		         			</ice:panelStack>
+		        		</ice:column>	     
+		        		<ice:column>
+		         			<f:facet name="header">
+		             			<ice:outputText value=""/>
+		         			</f:facet>
+		         			<ice:panelGroup>
+	                			<ice:selectBooleanCheckbox 
+	                               value="#{filesRecord.enable}"
+	                               valueChangeListener="#{filesRecord.select}"
+	                               partialSubmit="true"/>
+		         			</ice:panelGroup>
+		        		</ice:column>
+	     			</ice:dataTable>
+     			</ice:panelGroup>
+			</td>
+			<td align="center">
+				<ice:panelGrid columns="1" style="text-align: center;">
+					<ice:panelGrid columns="2">
+						<ice:outputLabel value="Metric Category"/>
+						<ice:selectOneMenu value="#{ikrStaticDomainSelectorBean.metricCategoryId}"
+							    		   valueChangeListener="#{ikrStaticDomainSelectorBean.onChangeMetricCategory}"
+										   partialSubmit="true" style="width:250px">
+							<f:selectItems value="#{ikrDefinitionsManager.metricCategoryItems}"/>
+						</ice:selectOneMenu>
+						<ice:outputLabel value="Metric Name"/>
+						<ice:inputText value="#{ikrDefinitionsManager.instanceToCreate}" style="width:250px" />
+					</ice:panelGrid>
+					<br/>	
+					<ice:commandLink  actionListener="#{ikrDefinitionsManager.createMetric}"
+								    	value="add New Metric" />					
+				</ice:panelGrid>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<br/>
+				<HR/>
+				<ice:commandButton	actionListener="#{ikrDefinitionsManager.validate}"
+									action="#{ikrDefinitionsManager.action}"
+						    		value="Update" />
+				<ice:commandButton value="Cancel" action="monitorSelection"/>
+			</td>
+		</tr>
+	</table>	
+</ice:form>
+</ice:panelGrid>
+</ui:define>
+</ui:composition> -->

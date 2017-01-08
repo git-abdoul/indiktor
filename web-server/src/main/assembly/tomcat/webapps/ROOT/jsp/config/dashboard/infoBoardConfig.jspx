@@ -1,0 +1,45 @@
+<f:subview id="infoBoardComponentConfig" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+        
+<ice:panelGrid columns="2" style="margin: 0px; padding: 0px; text-align: center;">
+	<ice:panelGroup style="border: 1px solid #336699; width: 545px; height: 501px;"
+					rendered="#{dashboardSelectMainConfigBean.addMetricPanelVisible}"
+					scrollHeight="550" scrollWidth="612px">
+		<ice:commandButton image="/images/i/cal_off.gif"
+								   style="float: right; margin-right: 2px; margin-top: 2px;"
+						   actionListener="#{dashboardSelectMainConfigBean.closeAddPanel}"
+						   title="Close panel"/>
+		<ui:include src="/jsp/ikrComponent/metricSelector.jspx"/>
+	</ice:panelGroup>
+	<ice:panelGrid columns="1">
+		<ice:panelGroup style="text-align: center; border: 1px solid #336699; height: 50px;">
+			<ice:panelGrid columns="2">
+				<ice:outputLabel value="Component Title:"/>
+				<ice:inputText size="40" value="#{infoBoardConfigBean.infoBoard.title}"
+							   style="#{infoBoardConfigBean.infoTitleStyle}"/>
+				<ice:outputLabel value="" rendered="#{infoBoardConfigBean.errorInfoBoardTitleVisible}"/>
+				<ice:outputLabel value="Mandatory" style="color: red; font-size: 10px;"
+	 							 rendered="#{infoBoardConfigBean.errorInfoBoardTitleVisible}"/>
+				<ice:outputLabel value="" rendered="#{dashboardSelectMainConfigBean.titleAlreadyExists}"/>
+				<ice:outputLabel value="Title already exists! Please, choose another title." style="color: red; font-size: 10px;"
+	 							 rendered="#{dashboardSelectMainConfigBean.titleAlreadyExists}"/>
+			</ice:panelGrid>
+		</ice:panelGroup>
+		<ice:panelGroup style="#{infoBoardConfigBean.infoPanelStyle}" rendered="#{infoBoardConfigBean.listRenderer}">
+			<ui:include src="/jsp/ikrComponent/ikrSelectorDataTableSelection.jspx"/>
+		</ice:panelGroup>
+		<ice:panelGroup style="#{infoBoardConfigBean.infoPanelStyle}" rendered="#{!infoBoardConfigBean.listRenderer}">
+			<ice:outputLabel value="No metrics has been configured. Click on the plus icon "/>
+			<ice:graphicImage url="/images/IndiKtor2.0/Buttons/expandPanelSmall.png"/>
+			<ice:outputLabel value=" to add metrics"/>
+			<BR/><BR/>
+			<ice:outputText value="Info list cannot be empty"
+					  		rendered="#{infoBoardConfigBean.errorInfoListVisible}"
+					  		style="color: red;"/>
+		</ice:panelGroup>		
+	</ice:panelGrid>
+ </ice:panelGrid>  
+</f:subview>

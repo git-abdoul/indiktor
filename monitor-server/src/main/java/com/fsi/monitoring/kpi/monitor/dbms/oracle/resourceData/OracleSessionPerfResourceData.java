@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fsi.monitoring.kpi.monitor.IkrInstanceData;
 import com.fsi.monitoring.kpi.monitor.IkrResourceData;
 import com.fsi.monitoring.kpi.monitor.dbms.oracle.measurement.OracleSessionMeasurement.OracleSessionPerfResult;
+import com.fsi.monitoring.kpi.monitor.dbms.oracle.measurement.OracleSessionMeasurement.OracleSessionWaitResult;
 
 public class OracleSessionPerfResourceData extends IkrResourceData {
 	private List<OracleSessionPerfResult> infos;

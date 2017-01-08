@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ <f:view xmlns="http://www.w3.org/1999/xhtml" 
+ 		 xmlns:h="http://java.sun.com/jsf/html"
+ 	     xmlns:ui="http://java.sun.com/jsf/facelets"
+         xmlns:f="http://java.sun.com/jsf/core"
+         xmlns:ice="http://www.icesoft.com/icefaces/component">
+        
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+
+<h:head>
+ 	<title>#{pageTitle}</title>
+	<ice:outputStyle href="#{styleBean.style}"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="#{facesContext.externalContext.requestContextPath}/css/indiktor.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="#{facesContext.externalContext.requestContextPath}/css/common.css" rel="stylesheet" type="text/css" media="screen" />
+	<h:outputText value="&lt;!--[if IE]&gt;&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;#{facesContext.externalContext.requestContextPath}/css/indiktor_IE.css&quot; /&gt;&lt;![endif]--&gt;" escape="false" /> 
+	<h:outputText value="&lt;!--[if !IE]&gt; &lt;--&gt;&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;#{facesContext.externalContext.requestContextPath}/css/indiktor_Firefox.css&quot; /&gt;&lt;!--&gt; &lt;![endif]--&gt;" escape="false" /> 
+	<link rel="shortcut icon" type="image/x-icon" href="#{facesContext.externalContext.requestContextPath}/images/IndiKtor2.0/WelcomeLoginPages/favicon.ico" />  
+    <f:loadBundle basename="messages" var="msgs"/>
+</h:head>
+
+<h:body>
+
+<div id="header">
+	<div class="header_left">
+		<div class="k_header">	
+			<ui:insert name="K_Indiktor_Banner">
+				<ice:form>			 
+					<ice:commandButton value="Home"
+									   title="Home"
+									   image="/images/IndiKtor2.0/Banner/K_Banner.png"
+									   action="home"/>
+				</ice:form>
+			</ui:insert>
+		</div>
+		<div class="menu_workspace">
+			<div class="dbacdc">
+				<ui:insert name="menu">
+					<ice:form>
+						<ice:commandLink value="Dashboard"
+									     actionListener="#{boardBean.navigate}"
+									     action="#{boardBean.action}">
+						<f:attribute name="boardEnv" value="global"/>
+						<f:attribute name="boardType" value="alertBoard"/>
+						<f:attribute name="boardTitle" value="DashBoard"/>
+						</ice:commandLink>
+						<ice:outputLabel value="|"/>	
+						<ice:commandLink value="Alert Centre"
+										 actionListener="#{alertCenterBean.init}" 
+									   	 action="#{alertCenterBean.action}"/>
+						<ice:outputLabel value="|"/>
+						<ice:commandLink value="Data Centre"
+							   			 actionListener="#{dataCenterBean.init}" 
+							   			 action="#{dataCenterBean.action}"/>
+					</ice:form>
+				</ui:insert>
+				
+				
+			</div>
+			<div>
+				<ice:panelGroup style="z-index:50;">
+					<ui:insert name="nav"/>
+				</ice:panelGroup>
+				<ice:form>
+					<ice:commandLink value="Save and Back to Configuration"
+									 title="Save and Back to Configuration" 
+								     actionListener="#{boardBeanManager.save}"
+									 action="#{boardBeanManager.action}"
+									 rendered="#{boardBeanManager.onPreview}"
+									 style="margin-top: 25px; margin-left: 10px;">
+						<f:attribute name="boardId" value="#{boardBean.components.summary.boardId}"/>
+					</ice:commandLink>
+					<ice:commandButton value="Save and Back to Configuration"
+									   title="Save and Back to Configuration" 
+								       actionListener="#{boardBeanManager.save}"
+									   action="#{boardBeanManager.action}"
+									   rendered="#{boardBeanManager.onPreview}"
+									   image="/images/IndiKtor2.0/Buttons/save.png"
+									   style="margin-top: 25px; margin-left: 5px;">
+						<f:attribute name="boardId" value="#{boardBean.components.summary.boardId}"/>
+					</ice:commandButton>
+					<ice:outputLabel value="|"
+									 rendered="#{boardBeanManager.onPreview}"
+									 style="margin-top: 25px; margin-left: 10px; margin-right: 5px;"/>
+					<ice:commandLink value="Cancel"
+									 title="Cancel" 
+								     actionListener="#{boardBeanManager.cancel}" 
+						    	  	 action="#{dashboardMainConfigBean.action}"
+									 rendered="#{boardBeanManager.onPreview}"
+									 style="margin-top: 25px;"/>
+					<ice:commandButton value="Cancel"
+									   title="Cancel" 
+								       actionListener="#{boardBeanManager.cancel}" 
+						    	  	   action="#{dashboardMainConfigBean.action}"
+									   rendered="#{boardBeanManager.onPreview}"
+									   image="/images/IndiKtor2.0/Buttons/cancel.png"
+									   style="margin-top: 25px; margin-left: 5px;"/>
+				</ice:form>
+			</div>
+		</div>
+		
+		<div class="header_right">
+			<div>
+			<ice:panelGroup styleClass="menu_right"
+							rendered="#{securityBean.logged}">
+				<ui:insert name="menuOnRight">	
+					<ice:form>	
+						<ice:commandButton value="Console"
+										   title="Console"
+										   image="/images/IndiKtor2.0/Banner/consoleIcon.png"
+										   actionListener="#{adminConsoleBean.init}"
+										   action="#{adminConsoleBean.action}"/>
+						<ice:outputLabel value=" "/>
+						<ice:commandButton value="Admin"
+										   title="Admin"
+										   image="/images/IndiKtor2.0/Banner/adminIcon.png"
+										   actionListener="#{adminBean.init}"
+										   action="#{adminBean.action}"/>
+						<ice:outputLabel value=" "/>
+						<ice:commandButton value="Change My Pwd" 
+										   title="Change my password"
+										   image="/images/IndiKtor2.0/Banner/changeMyPwdIcon.png"
+										   actionListener="#{userBean.changeMyPwd}" 
+									       action="#{userBean.action}"/>
+					 	<ice:outputLabel value=" "/>
+						<ice:commandButton value="Logout"
+										   title="Logout"
+										   image="/images/IndiKtor2.0/Banner/logoutIcon.png"
+										   action="#{securityBean.logout}"/>
+					</ice:form>
+				</ui:insert>
+			</ice:panelGroup>
+			</div>
+			<BR/><BR/><BR/>
+			<div class="versionRight">
+			<ice:form>
+				<ice:outputLabel styleClass="versionRight" value="v #{ikrVersionBean.label}"/>
+			</ice:form>
+			</div>
+		</div>
+	</div>
+</div>
+<div align="center" style="padding-top: 0.5px;">
+	<ui:insert name="content"/>
+</div>
+</h:body>
+</html>
+</f:view> 

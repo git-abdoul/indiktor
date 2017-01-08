@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fsi.monitoring.kpi.monitor.IkrInstanceData;
 import com.fsi.monitoring.kpi.monitor.IkrResourceData;
 import com.fsi.monitoring.kpi.monitor.dbms.oracle.measurement.OracleStatementMeasurement.OracleSQLGlobalStatsMemoryResult;
 

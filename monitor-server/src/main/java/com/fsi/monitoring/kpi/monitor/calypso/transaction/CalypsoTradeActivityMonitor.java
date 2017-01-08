@@ -16,6 +16,7 @@ import com.calypso.tk.core.JDate;
 import com.calypso.tk.core.JDatetime;
 import com.calypso.tk.core.Trade;
 import com.calypso.tk.event.PSEvent;
+import com.calypso.tk.event.PSEventMessage;
 import com.calypso.tk.event.PSEventTrade;
 import com.calypso.tk.mo.TradeFilter;
 import com.calypso.tk.util.TradeArray;

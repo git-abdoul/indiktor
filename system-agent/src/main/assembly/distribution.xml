@@ -9,26 +9,36 @@
     <includeBaseDirectory>true</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>bin</directory>
-            <outputDirectory>bin</outputDirectory>
+            <directory>src/main/resources/scripts/unix</directory>
+            <outputDirectory>bin/unix</outputDirectory>
             <fileMode>755</fileMode>
         </fileSet>
-        <!-- the following file set includes the JAR artifact built by the package
-            goal -->
         <fileSet>
-            <directory>target</directory>
-            <outputDirectory>lib</outputDirectory>
+            <directory>src/main/resources/scripts/win</directory>
+            <outputDirectory>bin/win</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources/scripts</directory>
+            <outputDirectory>bin</outputDirectory>
             <includes>
-                <include>*.jar</include>
+                <include>*.policy</include>
             </includes>
         </fileSet>
         <fileSet>
-            <directory>log</directory>
-            <outputDirectory>log</outputDirectory>
+            <directory>src/main/resources</directory>
+            <outputDirectory>configs</outputDirectory>
+            <includes>
+                <include>*.properties</include>
+                <include>*.xml</include>
+            </includes>
         </fileSet>
         <fileSet>
-            <directory>src/main/resources</directory>
-            <outputDirectory>etc</outputDirectory>
+            <directory>src/main/resources/sigar-1.6.3.0</directory>
+            <outputDirectory>lib/sigar-1.6.3.0</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>docs</directory>
+            <outputDirectory>docs</outputDirectory>
         </fileSet>
     </fileSets>
     <dependencySets>

@@ -24,7 +24,7 @@
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
     
     
-    <Parameter name="ikr.appEnv.prop" value="/opt/indiktor/current/conf/demo.properties" override="false"/>
+    <Parameter name="ikr.appEnv.prop" value="${catalina.base}/conf/demo.properties" override="false"/>
     
     <Parameter name="ikr.jdbc.databaseType" value="mysql" override="false"/>
 

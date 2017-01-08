@@ -9,9 +9,9 @@
 	
 <ui:define name="content">
 	
-<table width="100%" border="0" style="float: left;">
+<table width="100%" border="~0" style="float: left;">
 	<tr height="100px">
-		<td></td>
+		<td><ice:outputLabel value="This is a test"/></td>
 	</tr>
 	<tr height="468px">
 		<td></td>

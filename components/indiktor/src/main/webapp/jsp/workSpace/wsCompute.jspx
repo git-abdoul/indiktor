@@ -1,0 +1,51 @@
+<f:subview id="wsCompute" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component"> 
+		      	
+	<ice:panelGrid width="200px" columns="1">
+		<ice:panelGrid columns="2">
+			<ice:outputLabel value="Title:" style="font-size: 10px; font-weight: bold"/>
+     	 	<ice:inputText value="#{workSpaceBean.title}"  style="font-size: 10px;"/>
+     	</ice:panelGrid>
+     	<ice:panelGroup>
+			<ice:outputLabel value="From:" style="font-size: 10px; font-weight: bold"/>
+			<ice:selectInputDate renderMonthAsDropdown="true" renderYearAsDropdown="true"
+                            	 value="#{workSpaceBean.fromDate}"
+                             	 valueChangeListener="#{workSpaceBean.effect2ChangeListener}"
+                             	 title="TITLE"
+                             	 renderAsPopup="true" style="font-size: 10px;">
+            				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="#{workSpaceBean.timeZone}"/>
+        	</ice:selectInputDate>
+        </ice:panelGroup>
+        <ice:panelGroup>
+        	<ice:outputLabel value="To:" style="font-size: 10px; font-weight: bold"/>
+        	<ice:selectInputDate renderMonthAsDropdown="true" renderYearAsDropdown="true"
+	                           	 value="#{workSpaceBean.toDate}"
+	                             valueChangeListener="#{workSpaceBean.effect2ChangeListener}"
+	                             title="TITLE"
+	                             renderAsPopup="true" style="font-size: 10px;">
+	            				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="#{workSpaceBean.timeZone}"/>
+        	</ice:selectInputDate>
+        </ice:panelGroup>	
+		<ice:panelGrid columns="4">
+			<ice:outputLabel value="Chart" style="font-size: 10px; font-weight: bold"/>
+	 	 	<ice:selectBooleanCheckbox value="#{workSpaceBean.graphDisplay}"/>
+	 	 	<ice:outputLabel value="Grid" style="font-size: 10px; font-weight: bold"/>
+	 	 	<ice:selectBooleanCheckbox value="#{workSpaceBean.gridDisplay}"/>	 	 	
+		</ice:panelGrid>
+		<ice:commandButton image="/images/IndiKtor2.0/WelcomeLoginPages/Validate.png"
+			   			   title="Ok" 
+						   actionListener="#{dataCenterBean.generateAnalysis}"
+						   styleClass="topMenuBarRightIcons"/> 
+   		<br/>
+   		<ice:outputProgress id="analysisProgressBar"
+				            labelPosition="#{workSpaceBean.progressBarController.progressBar.labelPosition}"
+				            label="#{workSpaceBean.progressBarController.progressBar.progressMessage}"
+				            labelComplete="#{workSpaceBean.progressBarController.progressBar.completedMessage}"
+				            indeterminate="#{workSpaceBean.progressBarController.progressBar.intermediatMode}"
+				            value="#{workSpaceBean.progressBarController.progressBar.percentComplete}"
+				            rendered="#{workSpaceBean.progressBarController.renderProgressBar}"/>
+	</ice:panelGrid>	
+</f:subview>

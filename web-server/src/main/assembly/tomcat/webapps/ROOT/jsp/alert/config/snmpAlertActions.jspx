@@ -1,0 +1,196 @@
+<f:subview id="snmpAlertActions" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid columns="2">
+	<ice:outputLabel value="SNMP :"/>
+	<ice:outputLabel value=""/>
+	<ice:panelGrid columns="1" style="border: 1px solid #336699; width: 405px; height: 180px;">
+		<ice:panelGroup>
+			<ice:outputText value="Search config by name :"/>
+			<ice:inputText value="#{alertDefinitionModificationBean.alertSnmpActionBean.snmpConfigNameSearch}"
+						   valueChangeListener="#{alertDefinitionModificationBean.alertSnmpActionBean.searchSnmpConfigs}"/>						
+			<!-- <ice:commandButton actionListener="#{alertDefinitionModificationBean.alertSnmpActionBean.searchSnmpConfigs}" value="Search"/> -->
+		</ice:panelGroup>
+		<ice:dataTable 	var="snmpItem"
+						value="#{alertDefinitionModificationBean.alertSnmpActionBean.snmpSearchResultConfigs}"
+   						columnWidths="20, 120, 45, 120, 35"
+   						scrollable="true"
+   						scrollHeight="100px"
+						cellspacing="0" cellpadding="0" border="0">
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+					<ice:commandButton actionListener="#{alertDefinitionModificationBean.alertSnmpActionBean.addSnmpAll}"
+									   image="/images/IndiKtor2.0/Buttons/addSmall.png"
+					    			   value="Add all snmp configs to the list"
+					    			   title="Add all snmp configs to the list"/>
+				</f:facet>
+				<ice:commandButton actionListener="#{alertDefinitionModificationBean.alertSnmpActionBean.addSnmp}"
+								   image="/images/IndiKtor2.0/Buttons/addSmall.png"
+				    			   value="Add this user to the list"
+				    			   title="Add this user to the list">
+					<f:attribute name="snmpItem" value="#{snmpItem}"/>
+				</ice:commandButton>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+  					<ice:outputText value="Config Name"/>
+				</f:facet>
+				<ice:outputText value="#{snmpItem.config.name}"/>
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+  					<ice:outputText value="Version"/>
+				</f:facet>
+				<ice:outputText value="#{snmpItem.config.version}"/>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+  					<ice:outputText value="Hostname"/>
+				</f:facet>
+				<ice:outputText value="#{snmpItem.config.hostname}"/>
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+  					<ice:outputText value="Port"/>
+				</f:facet>
+				<ice:outputText value="#{snmpItem.config.port}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGrid>
+	<ice:panelGrid columns="1" style="border: 1px solid #336699; width: 405px; height: 180px; padding: 0px;">
+		<ice:dataTable 	var="snmpItem"
+						value="#{alertDefinitionModificationBean.alertSnmpActionBean.snmpConfigs}"
+   						columnWidths="120, 45, 120, 35, 20"
+   						scrollable="true"
+   						scrollHeight="140px"
+						cellspacing="0" cellpadding="0" border="0"
+						style="margin-top: 0px; padding: 0px;">
+			<ice:column>
+				<f:facet name="header">
+  					<ice:outputText value="Config Name"/>
+				</f:facet>
+				<ice:outputText value="#{snmpItem.config.name}"/>
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+  					<ice:outputText value="Version"/>
+				</f:facet>
+				<ice:outputText value="#{snmpItem.config.version}"/>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">
+  					<ice:outputText value="Hostname"/>
+				</f:facet>
+				<ice:outputText value="#{snmpItem.config.hostname}"/>
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+  					<ice:outputText value="Port"/>
+				</f:facet>
+				<ice:outputText value="#{snmpItem.config.port}"/>
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+					<ice:commandButton actionListener="#{alertDefinitionModificationBean.alertSnmpActionBean.removeSnmpAll}"
+									   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+					    			   value="Remove all snmp configs to the list"
+					    			   title="Remove all snmp configs to the list"/>
+				</f:facet>
+				<ice:commandButton actionListener="#{alertDefinitionModificationBean.alertSnmpActionBean.removeSnmp}"
+								   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+				    			   value="Remove this user to the list"
+				    			   title="Remove this user to the list">
+					<f:attribute name="snmpItem" value="#{snmpItem}"/>
+				</ice:commandButton>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGrid>
+</ice:panelGrid>
+
+<!-- 
+	<ice:panelGrid>
+	  	<ice:panelGroup>	
+	  		<table border="1px" bordercolor="#FFFFFF" width="100%">
+				<tr bordercolor="#336699">
+					<td align="left" valign="top">
+						<ice:panelGroup>
+							<ice:outputText value="Search config by name :"/>
+							<ice:inputText value="#{alertDefinitionModificationBean.alertSnmpActionBean.snmpConfigNameSearch}"/>						
+							<ice:commandButton actionListener="#{alertDefinitionModificationBean.alertSnmpActionBean.searchSnmpConfigs}" value="Search"/>
+					  	</ice:panelGroup>
+					  	<HR/>
+					  	<ice:panelGroup scrollHeight="250px" scrollWidth="250px">
+					  		<table width="100%">
+					  			<tr>
+						  			<td></td>
+						  			<td><ice:outputText value="Config Name" style="font-size: 10px; font-weight: bold"/></td>
+						  			<td><ice:outputText value="Version" style="font-size: 10px; font-weight: bold"/></td>
+						  			<td><ice:outputText value="Hostname" style="font-size: 10px; font-weight: bold"/></td>
+						  			<td><ice:outputText value="Port" style="font-size: 10px; font-weight: bold"/></td>
+						  		</tr>					  			
+								<ui:repeat var="snmpItem" value="#{alertDefinitionModificationBean.alertSnmpActionBean.snmpSearchResultConfigs}">
+									<tr valign="middle">
+										<td width="30px" align="center"><ice:selectBooleanCheckbox value="#{snmpItem.selected}" partialSubmit="true"/></td>
+										<td align="center"><ice:outputText value="#{snmpItem.config.name}" style="font-size: 10px"/></td>
+										<td align="center"><ice:outputText value="#{snmpItem.config.version}" style="font-size: 10px"/></td>
+										<td align="center"><ice:outputText value="#{snmpItem.config.hostname}" style="font-size: 10px"/></td>
+										<td align="center"><ice:outputText value="#{snmpItem.config.port}" style="font-size: 10px"/></td>
+									</tr>
+								</ui:repeat>
+							</table>
+					  	</ice:panelGroup>
+					  	<HR/>
+						<ice:panelGrid border="0" columns="2">
+							<ice:commandButton 
+							 		actionListener="#{alertDefinitionModificationBean.alertSnmpActionBean.addSnmp}"
+							 		value="Add"/>
+						 	<ice:commandButton                 
+							 		actionListener="#{alertDefinitionModificationBean.alertSnmpActionBean.addSnmpAll}"
+							 		value="Add All"/>
+						</ice:panelGrid>	
+					</td>
+					<td align="center" valign="middle">
+						<ice:outputText value="SNMP Configs Selected"/>
+						<br/>
+						<br/>
+						<HR/>
+						<ice:panelGroup scrollHeight="262px" scrollWidth="250px" >
+						  	<table width="100%">
+						  		<tr>
+						  			<td><ice:selectBooleanCheckbox value="#{alertDefinitionModificationBean.alertUserActionBean.allSelected}" 
+							        			 				   valueChangeListener="#{alertDefinitionModificationBean.alertUserActionBean.onChangeAllSelected}"
+							        				   			   partialSubmit="true"/></td>
+						  			<td><ice:outputText value="Config Name" style="font-size: 10px; font-weight: bold"/></td>
+						  			<td><ice:outputText value="Version" style="font-size: 10px; font-weight: bold"/></td>
+						  			<td><ice:outputText value="Hostname" style="font-size: 10px; font-weight: bold"/></td>
+						  			<td><ice:outputText value="Port" style="font-size: 10px; font-weight: bold"/></td>
+						  		</tr>
+								<ui:repeat var="snmpItem" value="#{alertDefinitionModificationBean.alertSnmpActionBean.snmpConfigs}">
+									<tr valign="middle">
+										<td align="center"><ice:selectBooleanCheckbox value="#{snmpItem.selected}" partialSubmit="true"/></td>
+										<td align="center"><ice:outputText value="#{snmpItem.config.name}" style="font-size: 10px"/></td>
+										<td align="center"><ice:outputText value="#{snmpItem.config.version}" style="font-size: 10px"/></td>
+										<td align="center"><ice:outputText value="#{snmpItem.config.hostname}" style="font-size: 10px"/></td>
+										<td align="center"><ice:outputText value="#{snmpItem.config.port}" style="font-size: 10px"/></td>
+									</tr>
+								</ui:repeat>
+							</table>		
+						</ice:panelGroup>
+						<HR/>
+						<ice:panelGrid columns="3">
+							<ice:outputText style="font-size:10px;" value="Delete checked Snmp Config"/>
+							<ice:outputText style="font-size:10px;" value="      "/>
+							<ice:commandButton style="font-size:8px;"
+					 						   value="OK" 
+					 	  			  	  	   actionListener="#{alertDefinitionModificationBean.alertSnmpActionBean.removeSnmp}"/>
+						</ice:panelGrid>			
+					</td>
+				</tr>
+			</table>	 
+	 	</ice:panelGroup> 	
+	</ice:panelGrid>
+ -->
+</f:subview>

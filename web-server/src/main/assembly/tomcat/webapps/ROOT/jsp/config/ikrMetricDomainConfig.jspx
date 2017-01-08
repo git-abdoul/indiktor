@@ -1,0 +1,33 @@
+<f:subview id="wsCompute" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component"> 
+	<ice:panelGroup>
+		<ice:form id="panelStackFormIkrDef" partialSubmit="false">
+			<ice:panelStack selectedPanel="#{panelStack.selectedPanel}">
+				<ice:panelGroup id="EMPTY">        			
+                </ice:panelGroup>
+                
+				<ice:panelGrid id="IKR_DEFINITION" columns="1">	
+					<table border="1px" bordercolor="#336699" width="600px">
+						<tr bordercolor="#FFFFFF" align="center">
+							<td align="right">
+								<ice:outputLabel value="Add Instance:" />
+							</td>
+							<td align="left">
+								<ice:inputText value="#{monitorBean.instanceToCreate}" size="45" />
+							</td>
+							<td>
+								<ice:commandButton value="Create"                  
+				                        	 	   actionListener="#{monitorBean.createNewInstance}"
+				                        	 	   action="#{monitorBean.action}"/>
+							</td>
+						</tr>
+					</table>
+	     		</ice:panelGrid>	
+	  		</ice:panelStack>
+  		</ice:form>
+	</ice:panelGroup>
+</f:subview>
+

@@ -1,0 +1,35 @@
+<f:subview id="alertConditionsCreation" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">   
+<ice:form>        	
+	<ice:panelPopup draggable="false" 
+	            	modal="#{errorMessageBean.modal}"
+	            	visible="#{errorMessageBean.rendered}"
+	            	autoCentre="true"
+	            	style="width: 400px;-moz-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); -webkit-box-shadow: -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); box-shadow: 0px 5px 10px rgba(0,0,0,0.8);">
+		<f:facet name="body">
+			<ice:panelGroup>
+				<table width="400px">
+					<tr align="center" >
+						<td>
+							<ice:outputLabel value="#{errorMessageBean.type}!!!" style="font-size: 14; font-weight: bold;"/>
+							<HR/>
+							<br/>
+						</td>
+					</tr>					
+					<ui:repeat var="msg" value="#{errorMessageBean.messages}">
+						<tr align="center">
+							<td><ice:outputText value="#{msg}"/></td>
+						</tr>
+					</ui:repeat>
+					<tr align="center">
+						<td><br/><ice:commandButton value="Close" actionListener="#{errorMessageBean.toggleMessage}"/></td>
+					</tr>
+				</table>		
+			</ice:panelGroup>	
+	    </f:facet>
+	</ice:panelPopup>
+</ice:form>  
+</f:subview>

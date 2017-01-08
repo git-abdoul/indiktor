@@ -1,3 +1,4 @@
+/web-server/src/main/assembly/tomcat/webapps/indiktor
 /scheduler-server/target
 /monitor-server/target
 /components/indiktor/target

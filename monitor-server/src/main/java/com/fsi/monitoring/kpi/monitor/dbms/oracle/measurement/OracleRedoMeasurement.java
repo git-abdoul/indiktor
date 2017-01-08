@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.fsi.fwk.exception.BaseException;
 import com.fsi.fwk.exception.persistence.PersistenceException;
 import com.fsi.monitoring.connector.ConnectorException;
 import com.fsi.monitoring.connector.rdbms.RdbmsConnector;

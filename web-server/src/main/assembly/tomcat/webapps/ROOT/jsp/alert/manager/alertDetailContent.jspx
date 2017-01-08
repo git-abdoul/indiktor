@@ -1,0 +1,284 @@
+<f:subview id="detail" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid style="text-align: center;" columns="1">
+<ice:panelGrid columns="2" >
+	<ice:outputLabel value="Name :"/>
+	<ice:outputText value="#{alertModifierBean.alertBean.alertDefinitionBean.alertDefinition.name}"/>		
+<ice:outputLabel value="State :"/>
+<ice:outputText value="#{alertModifierBean.alertBean.alert.state}">
+  		<f:converter converterId="DisplayConverter"/>
+</ice:outputText>
+<ice:outputLabel value="Date :"/>
+<ice:outputText value="#{alertModifierBean.alertBean.alert.alertEvent.eventDate}">
+  	<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+  </ice:outputText>	    
+		<ice:outputLink value="#{alertModifierBean.alertBean.alertDefinitionBean.alertDefinition.howTo}"
+					    rendered="#{alertModifierBean.alertBean.alertDefinitionBean.howToRendered}">   
+  			<ice:outputText value="How To"/>
+  		</ice:outputLink> 		    
+</ice:panelGrid>
+<BR/>
+<ice:panelGroup>
+	<table bordercolor="#336699" border="1px">
+		<tr valign="top" >
+			<td>
+				<ice:panelGrid  border="0" columns="1" style="text-align: center; vertical-align: top;"> 
+			<ice:panelGrid columns="1" style="text-align: center;">
+				<ice:outputLabel value="Alert Definition" style="font-size: 14px; font-weight: bold; "/>
+			</ice:panelGrid>
+			<BR/>
+			<ice:panelGrid border="0" columns="1" style="text-align: left;">
+				<ice:panelGroup>
+					<table>
+						<tr>
+							<th align="center" colspan="2">
+								<ice:outputLabel value="Alert Properties" style="font-size: 12px; font-weight: bold;"/>
+							</th>
+						</tr>
+						<tr>
+							<td align="left"><ice:outputLabel value="Name :"/></td>
+							<td align="left"><ice:outputText value="#{alertModifierBean.alertBean.alertDefinitionBean.alertDefinition.name}"/></td>
+						</tr>
+						<tr valign="top">
+							<td align="left"><ice:outputLabel value="Description :"/></td>
+							<td align="left"><ice:outputText value="#{alertModifierBean.alertBean.alertDefinitionBean.alertDefinition.description}"
+				            								 style="width:280px;height:80px;overflow: auto;"/>	
+				            </td>
+						</tr>
+						<tr>
+							<td align="left"><ice:outputLabel value="Environment :"/></td>
+							<td align="left"><ice:outputText value="#{alertModifierBean.alertBean.alertDefinitionBean.logicalEnv.name}"/></td>
+						</tr>
+						<tr>
+							<td align="left"><ice:outputLabel value="Group :"/></td>
+							<td align="left"><ice:outputText value="#{alertModifierBean.alertBean.alertDefinitionBean.group}"/></td>
+						</tr>
+						<tr>
+							<td align="left"><ice:outputLabel value="Domain :"/>	</td>
+							<td align="left"><ice:outputText value="#{alertModifierBean.alertBean.alertDefinitionBean.domain}"/></td>
+						</tr>
+						<tr>
+							<td align="left"><ice:outputLabel value="Sub-Domain :"/></td>
+							<td align="left"><ice:outputText value="#{alertModifierBean.alertBean.alertDefinitionBean.subDomain}"/></td>
+						</tr>
+						<tr>
+							<td align="left"><ice:outputLabel value="Actived :"/></td>
+							<td align="left"><ice:outputText value="#{alertModifierBean.alertBean.alertDefinitionBean.alertDefinition.enable == true ? 'YES' : 'NO'}"/></td>
+						</tr>
+					</table>							
+				</ice:panelGroup>
+				<BR/>	
+				<ice:panelGroup>
+					<table>
+						<tr>
+							<th align="center" colspan="2"><ice:outputLabel value="Alert Conditions" style="font-size: 12px; font-weight: bold"/></th>
+						</tr>
+						<ui:repeat var="conditionBean" value="#{alertModifierBean.alertDefinitionBean.alertConditionBeans}">
+							<tr>
+								<td width="20"></td>
+								<td>
+									<ice:outputText value="(C#{conditionBean.id})" />
+								</td>
+								<td>	
+									<ice:outputText value="&#160;&#160;" />	
+									<ice:outputText id="linkHeader" value="#{conditionBean.ikrMetricLabel}"/>
+								</td>
+								<td>
+									<ice:outputText value="&#160;&#160;&#160;#{conditionBean.operator}" style="width:140px"/>
+								</td>
+								<td>
+									<ice:outputText  value="&#160;&#160;&#160;&#160;#{conditionBean.value}" />
+									<ice:outputText  value="#{conditionBean.unitSymbol}" rendered="#{conditionBean.unitsRendered}"/>
+								</td>
+							</tr>
+						</ui:repeat>
+					</table>
+				</ice:panelGroup>
+				<BR/>
+				<ice:panelGroup>
+					<table>
+						<tr>
+							<th align="center" colspan="8"><ice:outputLabel value="Alert Computations" style="font-size: 12px; font-weight: bold"/></th>
+						</tr>
+						<ui:repeat var="alertCompute" value="#{alertModifierBean.alertBean.alertDefinitionBean.alertDefinition.alertComputes}">
+							<tr>
+								<td><ice:outputLabel value="Workflow:" style="font-weight: bold;"/></td>
+							  	<td>	
+									<ice:outputText value="#{alertCompute.workflow}">
+										<f:converter converterId="DisplayConverter"/>
+									</ice:outputText>
+							 	</td>
+							  	<td><ice:outputLabel value="Cause:" style="font-weight: bold;"/></td>
+							  	<td><ice:outputText value="#{alertCompute.cause}"/></td>		
+							  	<td><ice:outputLabel value="Label:" style="font-weight: bold;"/></td>
+							  	<td><ice:outputText value="#{alertCompute.label}"/></td>
+							  	<td><ice:outputLabel value="Active :" style="font-weight: bold;"/></td>
+							  	<td><ice:outputText value="#{alertCompute.enable == true ? 'YES' : 'NO'}"/></td>
+							</tr>
+						</ui:repeat>
+					</table>								
+				</ice:panelGroup>
+				<BR/>	
+				<ice:panelGroup>
+					<table>
+						<tr>
+							<th align="center" colspan="2"><ice:outputLabel value="Alert Actions" style="font-size: 12px; font-weight: bold"/></th>
+						</tr>
+						<tr>
+							<td align="left"><ice:outputLabel value="SMS :" style="font-weight: bold;"/></td>
+							<td align="left"><ice:outputText value="#{alertModifierBean.alertDefinitionBean.alertUserActionBean.sms == true ? 'YES' : 'NO'}"/></td>
+						</tr>
+						<tr>
+							<td align="left"><ice:outputLabel value="EMAIL :" style="font-weight: bold;"/></td>
+							<td align="left"><ice:outputText value="#{alertModifierBean.alertDefinitionBean.alertUserActionBean.mail == true ? 'YES' : 'NO'}"/></td>
+						</tr>
+						<tr valign="top">
+							<td colspan="2">
+								<ice:dataTable value="#{alertModifierBean.alertDefinitionBean.alertUserActionBean.selectedUsers}" var="userItem">
+						  	  		<ice:column>
+										<f:facet name="header"><ice:outputText value="Id"/></f:facet>
+										<ice:outputText value="#{userItem.user.id}"/>
+									</ice:column>
+														
+									<ice:column>
+										<f:facet name="header"><ice:outputText value="First Name"/></f:facet>
+										<ice:outputText value="#{userItem.user.firstName}"/>
+									</ice:column>
+																
+									<ice:column>
+										<f:facet name="header"><ice:outputText value="Last name"/></f:facet>
+										<ice:outputText value="#{userItem.user.lastName}"/>
+									</ice:column>
+			  					</ice:dataTable>											
+							</td>
+						</tr>
+						<tr><td colspan="2"></td></tr>
+						<tr>
+							<td align="left"><ice:outputLabel value="SNMP :" style="font-weight: bold;"/></td>
+							<td align="left"><ice:outputText value="#{alertModifierBean.alertDefinitionBean.alertSnmpActionBean.snmp == true ? 'YES' : 'NO'}"/></td>
+						</tr>
+						<tr valign="top">
+							<td colspan="2">
+								<ice:dataTable value="#{alertModifierBean.alertDefinitionBean.alertSnmpActionBean.snmpConfigs}" var="snmpItem">
+								  	<ice:column>
+						                <f:facet name="header">
+						                    <ice:outputText value="Name"/>
+						                </f:facet>
+						                <ice:outputText value="#{snmpItem.config.name}"/>
+						            </ice:column>		
+						            <ice:column>
+						                <f:facet name="header">
+						                    <ice:outputText value="Version"/>
+						                </f:facet>
+						                <ice:outputText value="#{snmpItem.config.version}"/>
+						            </ice:column>
+						            <ice:column>		                
+						            	<f:facet name="header">
+						                    <ice:outputText value="Hostname"/>
+						                </f:facet>
+						                <ice:outputText value="#{snmpItem.config.hostname}"/>
+						            </ice:column>
+						             <ice:column>		                
+						            	<f:facet name="header">
+						                    <ice:outputText value="Port"/>
+						                </f:facet>
+						                 <ice:outputText value="#{snmpItem.config.port}"/>		                
+						            </ice:column>
+						            <ice:column>
+						                <f:facet name="header">
+						                    <ice:outputText value="Community"/>
+						                </f:facet>
+						                <ice:outputText value="#{snmpItem.config.community}"/>
+						            </ice:column>					
+			  					</ice:dataTable>											
+							</td>
+						</tr>
+					</table>								
+				</ice:panelGroup>
+			</ice:panelGrid>
+		</ice:panelGrid>
+	</td>
+	<td>
+		<ice:panelGrid columns="1" style="text-align: center; vertical-align: top;">
+			<ice:panelGrid columns="1" style="text-align: center;">
+				<ice:outputLabel value="Alert Events" style="font-size: 14px; font-weight: bold;"/>
+			</ice:panelGrid>
+			<BR/>
+			<ui:repeat var="alertEventBean" value="#{alertModifierBean.alertBean.alertEventBeans}">
+				<ice:panelGrid columns="1" style="text-align: left;">
+					<ice:panelGrid columns="2" style="text-align: left;">
+						  <ice:panelGrid columns="2" style="text-align: left;">				
+							<ice:outputLabel value="Event Date:" style="font-weight: bold;"/>		  
+							<ice:outputText value="#{alertEventBean.event.eventDate}">
+							   	<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+							</ice:outputText>
+						  </ice:panelGrid>			  	
+						  <ice:panelGrid columns="2" style="text-align: left;">
+						  	 <ice:outputLabel value="Workflow:" style="font-weight: bold;"/>
+						  	 <ice:panelGrid columns="3">
+						  	 	<ice:outputText value="#{alertEventBean.event.oldState}">
+							 		<f:converter converterId="DisplayConverter"/>
+							 	</ice:outputText>
+							 	<ice:outputText value=" > "/>
+							  	<ice:outputText value="#{alertEventBean.event.newState}">
+							  		<f:converter converterId="DisplayConverter"/>
+							  	</ice:outputText>
+						  	 </ice:panelGrid>				 
+						  </ice:panelGrid>
+						  <ui:repeat var="alertComputeResolutionBean" value="#{alertEventBean.alertComputeResolutionBeans}">					  
+							  <ice:panelGrid columns="2" style="text-align: left;">
+							  	<ice:outputLabel value="Computation result:" style="font-weight: bold;"/>
+								<ice:outputText value="#{alertComputeResolutionBean.alertComputeResolution.computeStatus}"/>
+							  </ice:panelGrid>			  
+							  <ice:panelGrid columns="2" style="text-align: left;">				  
+							    <ice:outputLabel value="Computation:" style="font-weight: bold;"/>
+								<ice:outputText value="#{alertComputeResolutionBean.alertComputeResolution.alertCompute.cause}"/>
+							  </ice:panelGrid>
+							  <ui:repeat var="ikrValueBean" value="#{alertComputeResolutionBean.ikrValueBeans}"> 
+						  		<ice:panelGrid columns="2" style="text-align: left;">
+							  		<ice:outputLabel value="Metric:" style="font-weight: bold;"/>
+								  	<ice:outputText value="#{ikrValueBean.ikrDefinitionBean.ikrDefinition.fullIkrInstance}@#{ikrValueBean.ikrDefinitionBean.context} : #{ikrValueBean.ikrDefinitionBean.ikrCategory.label}"/>
+								  	<ice:outputLabel value="Value:" style="font-weight: bold;"/>
+								  	<ice:outputText value="#{ikrValueBean.formattedValue.value}#{ikrValueBean.formattedValue.ikrUnit.symbol}"/>
+						  		</ice:panelGrid>
+					  		</ui:repeat>
+					  		<BR/> 	
+						</ui:repeat>
+				</ice:panelGrid>
+			  </ice:panelGrid>  
+			   <HR/>
+			</ui:repeat> 
+		</ice:panelGrid>
+	</td>
+	<td>
+		<ice:panelGrid columns="1" style="text-align: center; vertical-align: top;">
+			<ice:panelGrid columns="1" style="text-align: center;">
+				<ice:outputLabel value="Comments" style="font-size: 14px; font-weight: bold;"/>
+			</ice:panelGrid>
+			<BR/>
+			<ui:repeat var="commentBean" value="#{alertModifierBean.alertBean.alertCommentBeans}">
+				<ice:panelGrid columns="3">
+					<ice:outputText value="#{commentBean.event.eventDate}">
+			    		<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+			    	</ice:outputText>
+			    	<ice:outputText value="#{commentBean.user.firstName} #{commentBean.user.lastName}"/>
+					<ice:outputText value="#{commentBean.event.comment}"/>
+		    	</ice:panelGrid>
+			</ui:repeat>
+			<ice:inputText value="#{alertModifierBean.comment}" size="70"/>
+			<ice:commandButton value="Add Comment" 
+							   actionListener="#{alertModifierBean.addComment}"/>
+			<ice:commandButton value="Acknowledge" 
+							   rendered="#{alertModifierBean.alertBean.alert.acknowledged == false}" 
+							   actionListener="#{alertModifierBean.acknowledge}"/>	
+				 	</ice:panelGrid> 
+				</td>
+			</tr>		
+		</table>
+	</ice:panelGroup>
+</ice:panelGrid>
+</f:subview>

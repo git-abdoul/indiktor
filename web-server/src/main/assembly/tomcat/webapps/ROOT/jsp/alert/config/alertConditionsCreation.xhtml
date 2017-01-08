@@ -1,0 +1,84 @@
+<f:subview id="alertConditionsCreation" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid columns="1" width="650px">
+	<ice:panelCollapsible expanded="true">		
+		<f:facet name="header">
+	        <ice:panelGroup>
+	            <ice:outputText value="Conditions Creation" style="font-size: 12px; font-weight: bold"/>
+	        </ice:panelGroup>
+    	</f:facet>		
+    	<ice:panelGrid columns="1">
+			<ice:panelGroup scrollWidth="580px">
+	 			<ice:dataTable 	id="selection" 
+	 							scrollable="true" 
+	 							scrollHeight="100px" 
+	 							columnWidths="30px,300px,250px"
+	 							value="#{ikrSelectorBean.selectionBeans}" 
+	 							var="filesRecord">
+	 				<ice:column>
+				    	<f:facet name="header">
+				        	<ice:outputText value=""/>
+				       	</f:facet>
+				        <ice:panelGroup>
+			            	<ice:selectBooleanCheckbox value="#{filesRecord.selected}" 
+			            				 valueChangeListener="#{filesRecord.onChangeSelected}"
+			            					   partialSubmit="true"/>
+				        </ice:panelGroup>
+				   	</ice:column>
+					<ice:column>
+				    	<f:facet name="header">
+				        	<ice:outputText value="Metric"/>
+				        </f:facet>
+				        <ice:panelGroup>
+				        	<ice:outputText value="#{filesRecord.ikrDefinitionBean.ikrCategory.label}"/>
+				        </ice:panelGroup> 
+				  	</ice:column>
+				    <ice:column>
+				    	<f:facet name="header">
+				        	<ice:outputText value="#{msgs['page.expandTable.header2']}"/>
+				      	</f:facet>
+				        <ice:panelGroup>
+				        	<ice:outputText value="#{filesRecord.ikrDefinitionBean.ikrDefinition.ikrInstance}@#{filesRecord.ikrDefinitionBean.ikrDefinition.ikrEnv}"/>
+				       	</ice:panelGroup> 
+					</ice:column>						  	
+				</ice:dataTable>	
+				<table width="580px">
+					<tr>
+						<td align="center">
+							<ice:commandButton 	actionListener="#{ikrSelectorBean.remove}"
+									 			value="Remove"/>
+							<ice:commandButton                 
+									 		actionListener="#{ikrSelectorBean.removeAll}"
+									 		value="Remove All"/> 	
+						</td>
+					</tr>
+				</table>
+			</ice:panelGroup>
+			<HR/>
+			<ice:panelGrid>
+				<ice:commandButton 	actionListener="#{alertDefinitionModificationBean.createNewAlertCondition}"
+				 					value="Create New Condition">
+					<f:attribute name="controlType" value="ConditionMetrics"/>		
+				</ice:commandButton>
+			</ice:panelGrid>	
+			<HR/>
+			<ice:panelGrid columns="1" rendered="#{alertDefinitionModificationBean.renderedConditionCreation}">
+				<ice:outputLabel value="Condition for : #{alertDefinitionModificationBean.ikrDefName}" style="font-size: 11px; font-weight: bold"/>
+
+				<ice:panelGrid columns="2">
+					<ice:commandButton	actionListener="#{alertDefinitionModificationBean.addAlertCondition}"
+	                    				value="Add">
+	                	<f:attribute name="controlType" value="ConditionValuesConsistency"/>			
+	                </ice:commandButton>
+	                <ice:commandButton	actionListener="#{alertDefinitionModificationBean.cancelAlertCondition}"
+	                    				value="Cancel"/>
+				</ice:panelGrid>
+			</ice:panelGrid>		
+		</ice:panelGrid>
+	</ice:panelCollapsible>
+</ice:panelGrid>
+</f:subview>

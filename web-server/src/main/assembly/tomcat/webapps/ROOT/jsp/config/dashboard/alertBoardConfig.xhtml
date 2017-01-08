@@ -1,0 +1,146 @@
+<f:subview id="alertBoardComponentConfig" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ice:panelGrid columns="2" style="margin: 0px; padding: 0px; text-align: center;"> 
+	
+	<ice:panelGroup style="text-align: center; border: 1px solid #336699; width: 700px; height: 486px;"
+					rendered="#{alertBoardConfigBean.alertBoardItemConfigVisible}">
+		<ice:commandButton image="/images/i/cal_off.gif"
+						   style="float: right; margin-right: 2px; margin-top: 2px;"
+						   title="Close panel"
+						   actionListener="#{alertBoardConfigBean.closeAddAlertPanel}"/>
+  		<ui:include src="/jsp/config/dashboard/alertBoardItemConfig.xhtml"/>
+  	</ice:panelGroup>	
+  	
+	<ice:panelGrid columns="1">
+	
+		<ice:panelGroup style="text-align: center; border: 1px solid #336699; height: 50px;">
+			<ice:panelGrid columns="2">
+				<ice:outputLabel value="Component Title:"/>
+				<ice:inputText size="40" value="#{alertBoardConfigBean.alertBoard.title}" style="#{alertBoardConfigBean.alertBoardTitleStyle}"/>
+				<ice:outputLabel value="" rendered="#{alertBoardConfigBean.errorAlertBoardTitleVisible}"/>
+				<ice:outputLabel value="Mandatory" style="color: red; font-size: 10px;"
+	 							 rendered="#{alertBoardConfigBean.errorAlertBoardTitleVisible}"/>
+				<ice:outputLabel value="" rendered="#{dashboardSelectMainConfigBean.titleAlreadyExists}"/>
+				<ice:outputLabel value="Title already exists! Please, choose another title." style="color: red; font-size: 10px;"
+	 							 rendered="#{dashboardSelectMainConfigBean.titleAlreadyExists}"/>
+	 							 
+				<ice:outputLabel value="" rendered="#{alertBoardConfigBean.tableRecordManager.noItemSelectedError}"/>
+				<ice:outputLabel value="No alert item Selected! Please, select an Item on the right side." style="color: red; font-size: 10px;"
+	 							 rendered="#{alertBoardConfigBean.tableRecordManager.noItemSelectedError}"/>
+				<ice:outputLabel value="" rendered="#{alertBoardConfigBean.tableRecordManager.multipleItemsSelectedError}"/>
+				<ice:outputLabel value="You cannot select multiple items! Please, select only one item." style="color: red; font-size: 10px;"
+	 							 rendered="#{alertBoardConfigBean.tableRecordManager.multipleItemsSelectedError}"/>
+			</ice:panelGrid>
+		</ice:panelGroup>
+	  
+		<ice:panelGroup style="text-align: center; border: 1px solid #336699; width: 430px; height: 430px;">
+		 	<ice:panelGroup rendered="#{!alertBoardConfigBean.listRenderer}">
+			 	<ice:outputLabel value="No items has been configured. Click on the "/>
+				<ice:graphicImage url="/images/IndiKtor2.0/Buttons/addSmall.png"/>
+				<ice:outputLabel value=" icon to add items"/>
+				<BR/><BR/>
+				<ice:outputText value="The list of items cannot be empty"
+								rendered="#{alertBoardConfigBean.errorItemListVisible}"
+								style="color: red;"/>
+			</ice:panelGroup>
+			
+			<ice:panelGroup rendered="#{alertBoardConfigBean.alertlist}">
+				<ice:outputLabel value="No alerts has been configured. Click on the "/>
+				<ice:graphicImage url="/images/IndiKtor2.0/Buttons/expandPanelSmall.png"/>
+				<ice:outputLabel value=" icon to add alerts to an item"/>
+				<BR/><BR/>
+				<ice:outputText value="You must add an alert in at least one item"
+								rendered="#{alertBoardConfigBean.errorAlertListVisible}"
+								style="color: red;"/>
+			</ice:panelGroup>
+			
+		 	<ice:dataTable	cellpadding="0" cellspacing="0"
+			 				columnWidths="30px, 20px, 170px, 110px, 20px"
+					 		columnClasses="ikrSelectorCB,ikrSelectorInstance"
+			 				value="#{alertBoardConfigBean.tableRecordManager.filesGroupRecordBeans}"
+			 				scrollable="true"
+			 				scrollHeight="#{alertBoardConfigBean.itemsTableScrollHeight}" 
+			 				var="filesRecord">
+			 	<ice:column>
+					<f:facet name="header">
+					</f:facet> 	
+					<ice:selectBooleanCheckbox value="#{filesRecord.selected}"
+						 		 			rendered="#{filesRecord.alertItem != null}"
+									   		partialSubmit="true"/>
+				</ice:column>	
+			 	<ice:column>
+            		<ice:panelGroup>	       
+                		<ice:commandLink actionListener="#{filesRecord.toggleSubGroupAction}">
+                    		<ice:graphicImage value="#{filesRecord.expandContractImage}"
+                                      	  	  style="border: 0px solid;"/>
+                		</ice:commandLink>
+            		</ice:panelGroup>
+        		</ice:column>
+				<ice:column style="text-align: left;">
+	       			<f:facet name="header">
+	            		<ice:outputText value="#{msgs['page.expandTable.header2']}"/>
+        			</f:facet>
+        			<ice:panelGroup>
+            			<ice:inputText valueChangeListener="#{filesRecord.itemTitleChanged}"
+            						   value="#{filesRecord.alertItem.alertItem.title}"
+            						   style="#{alertBoardConfigBean.itemTitleStyle}" rendered="#{filesRecord.alertItem != null}"/>
+		             	<ice:outputText value="#{filesRecord.alertDefinitionBean.alertDefinitionBean.alertDefinition.name}"
+		             					style="width: 150px;"  rendered="#{filesRecord.alertDefinitionBean != null}"/>
+		             	<ice:outputText value="Mandatory to add an alert in this item"
+										rendered="#{alertBoardConfigBean.errorItemTitleVisible and filesRecord.alertItem != null}"
+										style="color: red;"/>
+        			</ice:panelGroup> 
+	       		</ice:column>
+				<ice:column>
+         			<f:facet name="header">
+             			<ice:outputText value="Environment"/>
+         			</f:facet>
+         			<ice:panelStack selectedPanel="#{filesRecord.computePanelStack}">
+         				<ice:panelGrid id="NO_ALERT">
+         				</ice:panelGrid>
+         				<ice:panelGrid id="ALERT">
+         					<ice:outputLabel value="#{filesRecord.alertDefinitionBean.alertDefinitionBean.logicalEnv.name}"/>
+         				</ice:panelGrid>
+         			</ice:panelStack>
+        		</ice:column>
+        	 
+				<ice:column style="text-align: center;">
+					<f:facet name="header">
+						<ice:commandButton value="Add new item" 
+										   image="/images/IndiKtor2.0/Buttons/addSmall.png"
+										   title="Add new item"
+		 								   actionListener="#{alertBoardConfigBean.addItem}"/>					
+					</f:facet>
+	 				<ice:panelStack selectedPanel="#{filesRecord.computePanelStackbis}">
+         				<ice:panelGrid id="ITEMS">
+         					<ice:commandButton value="Delete this item"
+			 								   title="Delete this item"
+											   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+			 								   actionListener="#{alertBoardConfigBean.removeItem}">
+			 					<f:attribute name="item" value="#{filesRecord}"/>
+			 				</ice:commandButton>
+         				</ice:panelGrid>
+         				<ice:panelGrid id="ALERTS">
+         					<ice:commandButton value="Delete this alert"
+			 								   title="Delete this alert"
+											   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+			 								   actionListener="#{alertBoardConfigBean.removeAlert}">
+			 					<f:attribute name="alert" value="#{filesRecord}"/>
+			 				</ice:commandButton>
+         				</ice:panelGrid>
+         			</ice:panelStack>
+				</ice:column>
+		  </ice:dataTable>
+	  
+<!-- 		  <ice:panelGrid rendered="#{alertBoardConfigBean.tableRecordManager.errorAlertItemTitleVisible}">
+		  	<ice:outputText value="AlertItem Title cannot be empty"
+							style="color: red;"/>
+		  </ice:panelGrid> -->
+	  </ice:panelGroup> 
+	</ice:panelGrid>
+</ice:panelGrid>
+</f:subview> 

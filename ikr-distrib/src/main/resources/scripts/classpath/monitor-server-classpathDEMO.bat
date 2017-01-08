@@ -1,1 +1,0 @@
-SET CLASSPATH=%IKR_HOME%\DEMO-lib\calypso-10.0.3.jar

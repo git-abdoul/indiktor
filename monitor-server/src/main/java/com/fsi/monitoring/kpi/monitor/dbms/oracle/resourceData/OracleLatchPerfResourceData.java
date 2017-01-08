@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fsi.monitoring.kpi.monitor.IkrInstanceData;
 import com.fsi.monitoring.kpi.monitor.IkrResourceData;
 import com.fsi.monitoring.kpi.monitor.dbms.oracle.measurement.OracleLatchMeasurement.OracleLatchPerfResult;
+import com.fsi.monitoring.kpi.monitor.dbms.oracle.measurement.OracleLatchMeasurement.OracleLatchResult;
 
 public class OracleLatchPerfResourceData extends IkrResourceData {
 	private List<OracleLatchPerfResult> infos;

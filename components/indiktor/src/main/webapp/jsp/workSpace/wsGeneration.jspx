@@ -1,0 +1,257 @@
+<f:subview id="wsGeneration" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">      
+
+<ice:form>
+	<table id="pageAnalysis">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft2">
+							<div class="topMenuBarLeftAnalysis">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/AnalysisON.png"
+								   				   title="Analysis"
+								   				   value="#{dataCenterBean.menus['analysis']}"
+								   				   actionListener="#{dataCenterBean.navigate}">		
+									<f:attribute name="to" value="analysis"/> 
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftCC">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/CrossComputeOFFRight.png"
+								   				   title="Cross Compute"
+								   				   value="#{dataCenterBean.menus['crossComputeDefinitionSelection']}"
+								   				   actionListener="#{dataCenterBean.navigate}">		
+									<f:attribute name="to" value="crossComputeDefinitionSelection"/>
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftSD">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/StaticDataOFF.png"
+												   title="Static Data"
+												   value="#{dataCenterBean.menus['staticDataConfig']}"
+												   actionListener="#{dataCenterBean.navigate}">			
+									<f:attribute name="to" value="staticDataConfig"/> 
+								</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRightNoSearch">
+							<table>
+								<tr>
+									<td>
+										<ice:commandButton image="/images/IndiKtor2.0/Buttons/historicalDataAnalysis.png"
+														   title="Historical data analysis" 
+														   value="Historical data analysis"
+														   actionListener="#{dataCenterBean.openHistoricalDataAnalysisPopup}"
+														   styleClass="topMenuBarRightIcons"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+													   	   title="Help"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentLeftPanel2">
+							<table>
+								<tr>
+									<td class="panelTitleAnalysis">
+										<ice:outputLabel value="My Data" style="padding-right:219px;"/>	
+										<!-- 	
+										<ice:commandButton image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+														   title="Delete selected metric"
+														   style="margin-right:5px;"
+														   value="OK" 
+														   actionListener="#{workSpaceBean.metricSelectorBean.removeItems}"/>										  
+										 -->
+										<ice:commandButton image="/images/IndiKtor2.0/Buttons/addSmall.png"
+														   title="Add metric" 
+														   value="Metric Selector"
+														   actionListener="#{dataCenterBean.openMetricSelectorPopup}"/>
+									</td>
+								</tr>
+								<tr height="5px"><td></td></tr>
+								<tr>
+									<td style="text-align: center;">
+										<ui:include src="/jsp/workSpace/wsMyDataSelection.jspx"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table height="100%">
+								<tr>
+									<td>
+										<table>
+											<tr height="5px"><td></td></tr>
+											<tr>
+												<td class="panelTitleAnalysis2">
+													<ice:outputLabel value="My Workspace"/>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td class="contentRightPanelAnalysis">
+										<table>
+											<tr height="10px"><td></td></tr>
+											<tr align="center">
+												<td align="center">
+													<ice:panelGroup scrollHeight="600px" scrollWidth="812px">
+														<ui:include src="/jsp/workSpace/wsResults.jspx"/>
+													</ice:panelGroup>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table> 	
+			</td>
+		</tr>
+	</table>	
+	
+	<ice:panelPopup draggable="false" 
+					modal="true"
+	                visible="#{workSpaceBean.exportVisible}"
+	                autoCentre="true"
+	                style="width: 200px;">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 20px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td>
+		       				<ice:outputLabel value="#{workSpaceBean.exportType} Export" style="font-size: 10px; font-weight: bold; float: left;"/>
+		       			</td>
+		       			<td>
+		       				<ice:commandButton actionListener="#{workSpaceBean.toggleExportView}" image="/images/i/cal_off.gif" alt="Close" style="float: right;"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+	        <ice:panelGroup style="border-color: #336699;">
+	        	<table width="180px" height="50px">
+	        		<tr>	   
+	        			<td align="center">     			
+							<ice:outputResource label="View"
+												resource="#{workSpaceBean.resource}" 
+									            mimeType="application/pdf"
+									            fileName="#{workSpaceBean.resource.resourceName}"
+									            attachment="false"
+									            type="button"
+									            rendered="#{workSpaceBean.pdf}"/>
+							<ice:outputResource label="View"
+												resource="#{workSpaceBean.resource}" 
+									            mimeType="application/vnd.ms-excel"
+									            fileName="#{workSpaceBean.resource.resourceName}"
+									            attachment="false"
+									            type="button"
+									            rendered="#{workSpaceBean.excel}"/>
+	        			</td>	        			
+	        		</tr>
+	        	</table> 
+	        </ice:panelGroup>
+	    </f:facet>
+	</ice:panelPopup>
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" style="width: 625px; height: 575px;"
+					rendered="#{dataCenterBean.rendererMetricSelector}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputText style="float: left;" value="Metric Selector"/></td>
+		       			<td><ice:commandButton style="float: right;" 
+		       								   actionListener="#{dataCenterBean.closeMetricSelectorPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGrid align="center" cellpadding="0" cellspacing="0">
+				<ui:include src="/jsp/workSpace/wsSearchModule.jspx"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{dataCenterBean.rendererHistoricalDataAnalysis}">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td><ice:outputText style="float: left;" value="Historical Data Analysis"/></td>
+		       			<td><ice:commandButton style="float: right;" 
+		       								   actionListener="#{dataCenterBean.closeHistoricalDataAnalysisPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+			<ice:panelGrid align="center" cellpadding="0" cellspacing="0">
+				<ui:include src="/jsp/workSpace/wsCompute.jspx"/>
+			</ice:panelGrid>
+	    </f:facet>
+	</ice:panelPopup>
+	
+	<ice:panelPopup draggable="false" modal="true" autoCentre="true" rendered="#{workSpaceBean.extendedGraphPopup}" style="width: 770px; height: 550px;">
+	    <f:facet name="header">
+	    	<ice:panelGroup style="height: 25px;">
+		       	<table width="100%">
+		       		<tr>
+		       			<td style="text-align: center;" align="center" width="800">
+		       				<ice:outputLabel style="text-align: center;" value="#{workSpaceBean.graphToExtend.title}"/>
+		       			</td>
+		       			<td style="float: right;">
+		       				<ice:commandButton actionListener="#{workSpaceBean.closeExtendedGraphPopup}"
+		       								   image="/images/i/cal_off.gif"
+		       								   alt="Close"/>		       								   
+						</td>
+		       		</tr>
+		       	</table> 
+		    </ice:panelGroup>
+	    </f:facet>
+	    <f:facet name="body">
+	    	<ice:panelGroup rendered="#{workSpaceBean.graphToExtend.graphComponent}">  	
+			  	<applet codebase="#{facesContext.externalContext.requestContextPath}/appletJars/"
+			  			archive="jfreechart-1.0.13.jar, 
+			  					 jcommon-1.0.16.jar,
+			  					 foundation-#{version}.jar,
+		  					 	 compute-server-#{version}.jar,
+		  					 	 framework-base-#{version}.jar,
+		  					 	 persistency-#{version}.jar,
+			  					 appletJars/jsf-api-1.2.jar,
+			  					 appletJars/jsf-impl-1.2.jar,
+			  					 indiktor.jar"
+			  			code="com.fsi.monitoring.applet.IkrHistoChartApplet"
+			  			width="750" height="500"
+			  			alt="You should see an applet, not this text.">
+			  		<param name="chartSeriesLabels" value="#{workSpaceBean.graphToExtend.chartSeriesLabels}"/>
+			  		<param name="chartUnits" value="#{workSpaceBean.graphToExtend.chartUnits}"/>
+			  		<param name="chartData" value="#{workSpaceBean.graphToExtend.chartData}"/>
+			  	</applet> 						  	
+			</ice:panelGroup>
+	    </f:facet>
+	</ice:panelPopup>
+</ice:form>
+</f:subview>

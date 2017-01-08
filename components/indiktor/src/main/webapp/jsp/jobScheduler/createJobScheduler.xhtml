@@ -1,0 +1,355 @@
+<f:subview id="updateCollector" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+<ice:panelGrid columns="1" style="width: 378px; height: 500px;">
+	<ice:panelGroup style="border: 1px solid #336699; text-align: center; width: 100%; height: 255px;">
+		<ice:outputLabel value="Properties"/>
+		<ice:panelGrid columns="2">
+			<ice:outputLabel value="Enable"/>
+			<ice:selectBooleanCheckbox partialSubmit="true" value="#{jobSchedulerCreationBean.config.active}"/>
+									    
+		    <ice:outputLabel value="Job Type:"/>
+		    <ice:outputText value="#{jobSchedulerStaticDomainSelectionBean.taskStaticDomain.jobSchedulerType}" rendered="#{jobSchedulerCreationBean.update || jobSchedulerCreationBean.duplicate}"/>
+			<ice:selectOneMenu rendered="#{jobSchedulerCreationBean.update == false and jobSchedulerCreationBean.duplicate == false}"
+							   value="#{jobSchedulerStaticDomainSelectionBean.taskStaticDomainId}"
+			 				   valueChangeListener="#{jobSchedulerStaticDomainSelectionBean.onChangeTaskStaticDomain}"
+							   partialSubmit="true"
+							   style="width: 250px;">
+				<f:selectItems value="#{jobSchedulerStaticDomainSelectionBean.taskStaticDomainItems}"/>
+			</ice:selectOneMenu>
+			
+			<ice:outputLabel value="Name:"/>
+			<ice:inputText value="#{jobSchedulerCreationBean.config.name}"
+						   style="#{jobSchedulerCreationBean.nameStyle}"
+						   actionListener="#{jobSchedulerCreationBean.onChangeName}"/>
+			<ice:outputLabel value="" rendered="#{jobSchedulerCreationBean.nameMandatory}"/>
+			<ice:outputLabel value="Mandatory" style="color: red; font-size: 10px;"
+ 							 rendered="#{jobSchedulerCreationBean.nameMandatory}"/>
+ 			
+ 			<ice:outputLabel value="" rendered="#{jobSchedulerCreationBean.coupleEnvNameExist}"/>
+			<ice:outputLabel value="#{jobSchedulerCreationBean.coupleEnvNameErrorMsgTrim}"
+						     title="#{jobSchedulerCreationBean.coupleEnvNameErrorMsg}"
+						     style="color: red; font-size: 10px;" rendered="#{jobSchedulerCreationBean.coupleEnvNameExist}"/>
+		    
+		    <ice:outputLabel value="Logical Env:"/>
+			<ice:outputText value="#{jobSchedulerCreationBean.logicalEnvSelectionBean.logicalEnvName}" rendered="#{jobSchedulerCreationBean.update}"/>
+			<ice:selectOneMenu rendered="#{jobSchedulerCreationBean.update == false}"
+							   value="#{jobSchedulerCreationBean.logicalEnvSelectionBean.logicalEnvId}"
+			 				   valueChangeListener="#{jobSchedulerCreationBean.logicalEnvSelectionBean.onChangeLogicalEnv}"
+							   partialSubmit="false"
+							   style="#{jobSchedulerCreationBean.envStyle}">
+				<f:selectItems value="#{jobSchedulerCreationBean.logicalEnvSelectionBean.logicalEnvItems}"/>
+			</ice:selectOneMenu>	
+			
+			<ice:outputLabel value="Description:"/>
+			<ice:inputTextarea value="#{jobSchedulerCreationBean.config.description}" style="width: 250px; height: 100px"/>						
+		    	
+		</ice:panelGrid>
+	</ice:panelGroup>
+	<BR/>
+	<ice:panelGroup style="border: 1px solid #336699; text-align: center; width: 100%; height: 108px;">
+		<ice:outputLabel value="Scheduling"/>
+		<ice:panelGrid columns="1">
+			<ice:panelGrid columns="2">
+				<ice:outputLabel value="Mode:"/>
+				<ice:selectOneMenu value="#{jobSchedulerCreationBean.config.mode}"
+								   partialSubmit="true"
+								   valueChangeListener="#{jobSchedulerCreationBean.jobSchedulingConfigBean.onChangeSchedulerMode}"
+								   style="width: 200px;">
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.schedulerModeItems}"/>
+				</ice:selectOneMenu>
+			</ice:panelGrid>
+			<ice:panelGrid columns="2" rendered="#{jobSchedulerCreationBean.jobSchedulingConfigBean.activeSchedulerModeType}">
+				<ice:outputLabel value="Mode Type:"/>
+				<ice:selectOneMenu value="#{jobSchedulerCreationBean.config.modeType}"
+								   partialSubmit="true"
+								   valueChangeListener="#{jobSchedulerCreationBean.jobSchedulingConfigBean.onChangeSchedulerModeType}"
+								   style="width: 200px;">
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.schedulerModeTypeItems}"/>
+				</ice:selectOneMenu>
+				<ice:outputLabel value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.modeTypeLabel}:"/>
+				<ice:inputText value="#{jobSchedulerCreationBean.config.modeValue}" style="width: 200px;"/>
+			</ice:panelGrid>
+	    </ice:panelGrid> 
+		<ice:panelGroup rendered="#{!jobSchedulerCreationBean.jobSchedulingConfigBean.activeSchedulerModeType}">
+			<ice:panelGrid columns="1" > 
+				<ice:panelGrid columns="6">
+					<ice:outputLabel value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.dayLabel}" rendered="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.dayRendered}"/>
+					<ice:panelGroup rendered="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.dayRendered}">
+						<!-- <ice:inputText 	value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.day}"
+												rendered="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.monthlyRenderer}"
+												style="width: 50px;"/> -->
+						<ice:selectOneMenu value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.day}"
+										   partialSubmit="true"
+										   valueChangeListener="#{jobSchedulerCreationBean.jobSchedulingConfigBean.onChangeDaysOfMonth}"
+										   style="width: 50px;"
+										   rendered="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.monthlyRenderer}">
+							<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.daysOfMonthItems}"/>
+						</ice:selectOneMenu>
+						<ice:selectOneMenu value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.day}"
+										   partialSubmit="true"
+										   valueChangeListener="#{jobSchedulerCreationBean.jobSchedulingConfigBean.onChangeStartDateWeekly}"
+										   rendered="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.weeklyRenderer}"
+										   style="width: 100px;">
+							<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.daysOfWeekItems}"/>
+						</ice:selectOneMenu>
+					</ice:panelGroup>												    	
+					<ice:outputLabel value="Hour"/>
+					<ice:selectOneMenu value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.hour}"
+									   partialSubmit="true"
+									   valueChangeListener="#{jobSchedulerCreationBean.jobSchedulingConfigBean.onChangeHour}"
+									   style="width: 50px;">
+						<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.hourItems}"/>
+					</ice:selectOneMenu>
+					<!-- <ice:inputText 	value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.hour}" style="width: 50px;"/> -->	
+					<ice:outputLabel value="min"/>
+					<ice:selectOneMenu value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.min}"
+									   partialSubmit="true"
+									   valueChangeListener="#{jobSchedulerCreationBean.jobSchedulingConfigBean.onChangeMin}"
+									   style="width: 50px;">
+						<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.minItems}"/>
+					</ice:selectOneMenu>			
+					<!-- <ice:inputText 	value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.min}" style="width: 50px;"/> -->								     
+				</ice:panelGrid>
+			</ice:panelGrid>
+		</ice:panelGroup>
+	</ice:panelGroup>
+	<BR/>
+	<ice:panelGroup style="border: 1px solid #336699; text-align: center; width: 100%; height: 117px;"
+					rendered="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributesEnabled}">
+		<ice:outputLabel value="Attributes"/>
+		<ice:panelGroup rendered="#{!jobSchedulerCreationBean.rendererCustomAttribute}">							        									        	
+			<ice:panelGrid columns="2">
+				<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute1']}"/>
+				<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute1']}" style="width: 200px;"/>
+				<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute1']}" style="width: 200px;">
+					<f:attribute name="attrKey" value="attribute1"/>
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute1']}"/>
+				</ice:selectOneMenu>
+				<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute2']}"/>
+				<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute2']}" style="width: 200px;"/>
+				<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute2']}" style="width: 200px;">
+						<f:attribute name="attrKey" value="attribute2"/>
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute2']}"/>
+				</ice:selectOneMenu>
+				<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute3']}"/>
+				<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute3']}" style="width: 200px;"/>
+				<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute3']}" style="width: 200px;">
+					<f:attribute name="attrKey" value="attribute3"/>
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute3']}"/>
+				</ice:selectOneMenu>
+				<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute4']}"/>
+				<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute4']}" style="width: 200px;"/>
+				<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute4']}" style="width: 200px;">
+					<f:attribute name="attrKey" value="attribute4"/>
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute4']}"/>
+				</ice:selectOneMenu>
+				<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute5']}"/>
+				<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute5']}" style="width: 200px;"/>
+				<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute5']}" style="width: 200px;">
+					<f:attribute name="attrKey" value="attribute5"/>
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute5']}"/>
+				</ice:selectOneMenu>
+				<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute6']}"/>
+				<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute6']}" style="width: 200px;"/>
+				<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute6']}" style="width: 200px;">
+					<f:attribute name="attrKey" value="attribute6"/>
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute6']}"/>
+				</ice:selectOneMenu>
+				<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute7']}"/>
+				<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute7']}" style="width: 200px;"/>
+				<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute7']}" style="width: 200px;">
+					<f:attribute name="attrKey" value="attribute7"/>
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute7']}"/>
+				</ice:selectOneMenu>
+				<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute8']}"/>
+				<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute8']}" style="width: 200px;"/>
+				<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute8']}" style="width: 200px;">
+					<f:attribute name="attrKey" value="attribute8"/>
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute8']}"/>
+				</ice:selectOneMenu>
+				<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute9']}"/>
+				<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute9']}" style="width: 200px;"/>
+				<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute9']}" style="width: 200px;">
+					<f:attribute name="attrKey" value="attribute9"/>
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute9']}"/>
+				</ice:selectOneMenu>
+				<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute10']}"/>
+				<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute10']}" style="width: 200px;"/>
+				<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute10']}" style="width: 200px;">
+					<f:attribute name="attrKey" value="attribute10"/>
+					<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute10']}"/>
+				</ice:selectOneMenu>
+			</ice:panelGrid>		
+		</ice:panelGroup>	
+		<ice:panelGroup rendered="#{jobSchedulerCreationBean.rendererCustomAttribute}">
+			<ui:include src="#{jobSchedulerCreationBean.customAttributeBean.jspPage}"/>
+		</ice:panelGroup>
+	</ice:panelGroup>
+</ice:panelGrid>        
+
+<!--         
+<ice:panelGrid columns="1" width="425" style="text-align: center;" >
+<ice:panelGroup>
+	<table border="0px" width="100%" height="100%">
+		<tr bordercolor="#FFFFFF" align="center">
+			<td>
+				<ice:panelTabSet width="400" height="292"> 
+					<ice:panelTab id="tab1" label="Properties">
+						<ice:panelGrid columns="2">
+							<ice:outputLabel value="Enable"/>
+							<ice:selectBooleanCheckbox partialSubmit="true" value="#{jobSchedulerCreationBean.config.active}"/>
+													    
+						    <ice:outputLabel value="Job Type:"/>
+						    <ice:outputText value="#{jobSchedulerStaticDomainSelectionBean.taskStaticDomain.jobSchedulerType}" rendered="#{jobSchedulerCreationBean.update || jobSchedulerCreationBean.duplicate}"/>
+							<ice:selectOneMenu rendered="#{jobSchedulerCreationBean.update == false and jobSchedulerCreationBean.duplicate == false}"
+											   value="#{jobSchedulerStaticDomainSelectionBean.taskStaticDomainId}"
+							 				   valueChangeListener="#{jobSchedulerStaticDomainSelectionBean.onChangeTaskStaticDomain}"
+											   partialSubmit="true"
+											   style="width: 250px;">
+								<f:selectItems value="#{jobSchedulerStaticDomainSelectionBean.taskStaticDomainItems}"/>
+							</ice:selectOneMenu>
+							
+							<ice:outputLabel value="Name:"/>
+							<ice:inputText value="#{jobSchedulerCreationBean.config.name}" style="width: 250px;"/>
+						    
+						    <ice:outputLabel value="Logical Env:"/>
+							<ice:outputText value="#{jobSchedulerCreationBean.logicalEnvSelectionBean.logicalEnvName}" rendered="#{jobSchedulerCreationBean.update}"/>
+							<ice:selectOneMenu rendered="#{jobSchedulerCreationBean.update == false}"
+											   value="#{jobSchedulerCreationBean.logicalEnvSelectionBean.logicalEnvId}"
+							 				   valueChangeListener="#{jobSchedulerCreationBean.logicalEnvSelectionBean.onChangeLogicalEnv}"
+											   partialSubmit="true"
+											   style="width: 250px;">
+								<f:selectItems value="#{jobSchedulerCreationBean.logicalEnvSelectionBean.logicalEnvItems}"/>
+							</ice:selectOneMenu>	
+							
+							<ice:outputLabel value="Description:"/>
+							<ice:inputTextarea value="#{jobSchedulerCreationBean.config.description}" style="width: 250px; height: 100px"/>						
+						    	
+						</ice:panelGrid>
+					</ice:panelTab>	
+					<ice:panelTab id="tab3" label="Scheduling">
+						<ice:panelGrid columns="1">
+							<ice:panelGrid columns="2">
+								<ice:outputLabel value="Mode:"/>
+								<ice:selectOneMenu value="#{jobSchedulerCreationBean.config.mode}"
+												   partialSubmit="true"
+												   valueChangeListener="#{jobSchedulerCreationBean.jobSchedulingConfigBean.onChangeSchedulerMode}"
+												   style="width: 200px;">
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.schedulerModeItems}"/>
+								</ice:selectOneMenu>
+							</ice:panelGrid>
+							<ice:panelGrid columns="2" rendered="#{jobSchedulerCreationBean.jobSchedulingConfigBean.activeSchedulerModeType}">
+								<ice:outputLabel value="Mode Type:"/>
+								<ice:selectOneMenu value="#{jobSchedulerCreationBean.config.modeType}"
+												   partialSubmit="true"
+												   valueChangeListener="#{jobSchedulerCreationBean.jobSchedulingConfigBean.onChangeSchedulerModeType}"
+												   style="width: 200px;">
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.schedulerModeTypeItems}"/>
+								</ice:selectOneMenu>
+								<ice:outputLabel value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.modeTypeLabel}:"/>
+								<ice:inputText value="#{jobSchedulerCreationBean.config.modeValue}" style="width: 200px;"/>
+							</ice:panelGrid>
+					    </ice:panelGrid> 
+						<ice:panelGroup rendered="#{!jobSchedulerCreationBean.jobSchedulingConfigBean.activeSchedulerModeType}">
+							<ice:panelGrid columns="1" > 
+								<ice:panelGrid columns="6">
+									<ice:outputLabel value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.dayLabel}" rendered="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.dayRendered}"/>
+									<ice:panelGroup rendered="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.dayRendered}">
+										<ice:inputText 	value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.day}" rendered="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.monthlyRenderer}" style="width: 50px;"/>
+										<ice:selectOneMenu value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.day}"
+														   partialSubmit="true"
+														   valueChangeListener="#{jobSchedulerCreationBean.jobSchedulingConfigBean.onChangeStartDateWeekly}"
+														   rendered="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.weeklyRenderer}"
+														   style="width: 100px;">
+											<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.daysOfWeekItems}"/>
+										</ice:selectOneMenu>
+									</ice:panelGroup>												    	
+									<ice:outputLabel value="Hour"/>
+									<ice:inputText 	value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.hour}" style="width: 50px;"/>	
+									<ice:outputLabel value="min"/>
+									<ice:inputText 	value="#{jobSchedulerCreationBean.jobSchedulingConfigBean.startDate.min}" style="width: 50px;"/>											     
+								</ice:panelGrid>
+							</ice:panelGrid>
+						</ice:panelGroup>	
+					</ice:panelTab>														 
+					<ice:panelTab id="tab2" label="Attributes" rendered="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributesEnabled}">	
+						<ice:panelGroup rendered="#{!jobSchedulerCreationBean.rendererCustomAttribute}">							        									        	
+							<ice:panelGrid columns="2">
+								<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute1']}"/>
+								<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute1']}" style="width: 200px;"/>
+								<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute1']}" style="width: 200px;">
+									<f:attribute name="attrKey" value="attribute1"/>
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute1']}"/>
+								</ice:selectOneMenu>
+								<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute2']}"/>
+								<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute2']}" style="width: 200px;"/>
+								<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute2']}" style="width: 200px;">
+										<f:attribute name="attrKey" value="attribute2"/>
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute2']}"/>
+								</ice:selectOneMenu>
+								<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute3']}"/>
+								<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute3']}" style="width: 200px;"/>
+								<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute3']}" style="width: 200px;">
+									<f:attribute name="attrKey" value="attribute3"/>
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute3']}"/>
+								</ice:selectOneMenu>
+								<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute4']}"/>
+								<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute4']}" style="width: 200px;"/>
+								<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute4']}" style="width: 200px;">
+									<f:attribute name="attrKey" value="attribute4"/>
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute4']}"/>
+								</ice:selectOneMenu>
+								<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute5']}"/>
+								<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute5']}" style="width: 200px;"/>
+								<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute5']}" style="width: 200px;">
+									<f:attribute name="attrKey" value="attribute5"/>
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute5']}"/>
+								</ice:selectOneMenu>
+								<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute6']}"/>
+								<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute6']}" style="width: 200px;"/>
+								<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute6']}" style="width: 200px;">
+									<f:attribute name="attrKey" value="attribute6"/>
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute6']}"/>
+								</ice:selectOneMenu>
+								<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute7']}"/>
+								<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute7']}" style="width: 200px;"/>
+								<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute7']}" style="width: 200px;">
+									<f:attribute name="attrKey" value="attribute7"/>
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute7']}"/>
+								</ice:selectOneMenu>
+								<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute8']}"/>
+								<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute8']}" style="width: 200px;"/>
+								<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute8']}" style="width: 200px;">
+									<f:attribute name="attrKey" value="attribute8"/>
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute8']}"/>
+								</ice:selectOneMenu>
+								<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute9']}"/>
+								<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute9']}" style="width: 200px;"/>
+								<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute9']}" style="width: 200px;">
+									<f:attribute name="attrKey" value="attribute9"/>
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute9']}"/>
+								</ice:selectOneMenu>
+								<ice:outputLabel binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeLabelUIs['attribute10']}"/>
+								<ice:inputText binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeUIs['attribute10']}" style="width: 200px;"/>
+								<ice:selectOneMenu valueChangeListener="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.onChangeAttributeValue}" binding="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.selectUIs['attribute10']}" style="width: 200px;">
+									<f:attribute name="attrKey" value="attribute10"/>
+									<f:selectItems value="#{jobSchedulerCreationBean.jobSchedulerConfigAttributesBean.attributeSelectionValues['attribute10']}"/>
+								</ice:selectOneMenu>
+							</ice:panelGrid>		
+						</ice:panelGroup>	
+						<ice:panelGroup rendered="#{jobSchedulerCreationBean.rendererCustomAttribute}">
+							<ui:include src="#{jobSchedulerCreationBean.customAttributeBean.jspPage}"/>
+						</ice:panelGroup>		
+					</ice:panelTab>	
+				</ice:panelTabSet>
+			</td>
+		</tr>
+	</table>
+</ice:panelGroup>
+</ice:panelGrid>
+ -->
+</f:subview>
+

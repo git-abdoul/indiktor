@@ -1,0 +1,29 @@
+<f:subview id="updateCollector" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+	<ice:panelGroup>
+		<ice:panelGrid columns="2">
+			<ice:outputLabel value="Purge Frequency :"/>
+			<ice:outputLabel value="#{jobSchedulerCreationBean.customAttributeBean.purgeFrequency}"/>
+			<!-- 
+			<ice:selectOneMenu partialSubmit="true" value="#{jobSchedulerCreationBean.customAttributeBean.purgeFrequency}" valueChangeListener="#{jobSchedulerCreationBean.customAttributeBean.onComponentValueChanged}" style="width: 200px;">
+				<f:attribute name="attrKey" value="PURGE_FREQUENCY"/>
+				<f:selectItems value="#{jobSchedulerCreationBean.customAttributeBean.purgeFrequencyItems}"/>
+			</ice:selectOneMenu>
+			 -->
+			<ice:outputLabel value="Archive Needed ?"/>
+			<ice:selectOneMenu partialSubmit="true" value="#{jobSchedulerCreationBean.customAttributeBean.archiveNeeded}" valueChangeListener="#{jobSchedulerCreationBean.customAttributeBean.onComponentValueChanged}" style="width: 200px;">
+					<f:attribute name="attrKey" value="ARCHIVE_NEEDED"/>
+				<f:selectItems value="#{jobSchedulerCreationBean.customAttributeBean.booleanSelectionItems}"/>
+			</ice:selectOneMenu>
+			<ice:outputLabel value="Values per Day : " rendered="#{jobSchedulerCreationBean.customAttributeBean.archiveNeeded}"/>
+			<ice:selectOneMenu partialSubmit="true" value="#{jobSchedulerCreationBean.customAttributeBean.valuesPerDay}" valueChangeListener="#{jobSchedulerCreationBean.customAttributeBean.onComponentValueChanged}" rendered="#{jobSchedulerCreationBean.customAttributeBean.archiveNeeded}" style="width: 200px;">
+				<f:attribute name="attrKey" value="VALUES_PER_DAY"/>
+				<f:selectItems value="#{jobSchedulerCreationBean.customAttributeBean.valuesPerDayItems}"/>
+			</ice:selectOneMenu>
+		</ice:panelGrid>
+	</ice:panelGroup>
+</f:subview>
+

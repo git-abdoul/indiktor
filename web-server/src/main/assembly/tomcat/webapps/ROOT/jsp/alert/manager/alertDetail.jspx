@@ -1,0 +1,79 @@
+<f:subview id="alertDetail" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+        
+<ice:form>
+	<table id="pageAlertBoardDetail">
+		<tr>
+			<td>
+				<table id="topMenuBar">
+					<tr>
+						<td class="topMenuBarLeft">
+							<div class="topMenuBarLeftAB">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/AlertBoardON.png"
+								   				   title="Board"
+								   				   value="#{alertCenterBean.menus['alertBoard']}"
+								   				   actionListener="#{alertCenterBean.navigate}">		
+									<f:attribute name="to" value="alertBoard"/> 
+								</ice:commandButton>
+							</div>
+							<div class="topMenuBarLeftAD">
+								<ice:commandButton image="/images/IndiKtor2.0/Content/AlertDefinitionOFF.png"
+												   title="Definition"
+												   value="#{alertCenterBean.menus['alertDefinitionList']}"
+												   actionListener="#{alertCenterBean.navigate}">		
+									<f:attribute name="to" value="alertDefinitionList"/> 
+								</ice:commandButton>
+							</div>
+						</td>
+						<td class="topMenuBarRight">
+							<table>
+								<tr>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/validate.png"
+														   value="Acknowledge this alert" 
+														   title="Acknowledge this alert"
+														   rendered="#{alertManagerBean.selectedAlertBean.alertBean.alert.acknowledged == false}" 
+														   actionListener="#{alertManagerBean.selectedAlertBean.acknowledge}"/>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   value="Back To Alert Manager"
+														   actionListener="#{alertCenterBean.navigate}"
+														   image="/images/IndiKtor2.0/Buttons/cancel.png"
+													   	   title="Back to Alert Board">
+											<f:attribute name="to" value="alertBoard"/>
+										</ice:commandButton>
+									</td>
+									<td>
+										<ice:commandButton styleClass="topMenuBarRightIcons"
+														   image="/images/IndiKtor2.0/Buttons/help.png"
+													   	   title="Help"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	
+		<tr>
+			<td>
+				<table id="pageContent">
+					<tr>
+						<td class="contentFullPanel2">
+							<ui:include src="/jsp/alert/manager/alertDetailContentForAlertBoard.jspx">
+						    	<ui:param name="alertModifierBean" value="#{alertManagerBean.selectedAlertBean}"/>
+						    </ui:include>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</ice:form>
+</f:subview>

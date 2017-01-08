@@ -9,33 +9,73 @@
     <includeBaseDirectory>true</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>bin</directory>
-            <outputDirectory>bin</outputDirectory>
+            <directory>src/main/assembly/apache-activemq</directory>
+            <outputDirectory>apps/activemq</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources/scripts/unix</directory>
+            <outputDirectory>bin/unix</outputDirectory>
             <fileMode>755</fileMode>
-        </fileSet>
-        <!-- the following file set includes the JAR artifact built by the package
-            goal -->
-        <fileSet>
-            <directory>target</directory>
-            <outputDirectory>lib</outputDirectory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
+            <lineEnding>unix</lineEnding>
         </fileSet>
         <fileSet>
-            <directory>log</directory>
-            <outputDirectory>log</outputDirectory>
+            <directory>src/main/resources/scripts/win</directory>
+            <outputDirectory>bin/win</outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>src/main/resources</directory>
-            <outputDirectory>etc</outputDirectory>
+            <directory>src/main/resources/configs</directory>
+            <outputDirectory>configs</outputDirectory>
+            <includes><include>*.properties</include></includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources/dashboard</directory>
+            <outputDirectory>resources/dashboard</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources/configs</directory>
+            <outputDirectory>ext-libs</outputDirectory>
+            <excludes><exclude>*/**</exclude></excludes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources/sql</directory>
+            <outputDirectory>deploy/sql</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>../components/toolkits/src/main/resources/scripts</directory>
+            <outputDirectory>deploy/scripts</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>../components/toolkits/src/main/resources/toolkits</directory>
+            <outputDirectory>deploy/configs</outputDirectory>
         </fileSet>
     </fileSets>
+    <files>
+        <file>
+            <source>../compute-server/target/compute-server-${version}.tar</source>
+            <outputDirectory>deploy/servers</outputDirectory>
+            <destName>compute-server.tar</destName>
+        </file>
+        <file>
+            <source>../monitor-server/target/monitor-server-${version}.tar</source>
+            <outputDirectory>deploy/servers</outputDirectory>
+            <destName>monitor-server.tar</destName>
+        </file>
+        <file>
+            <source>../scheduler-server/target/scheduler-server-${version}.tar</source>
+            <outputDirectory>deploy/servers</outputDirectory>
+            <destName>scheduler-server.tar</destName>
+        </file>
+        <file>
+            <source>../web-server/target/web-server-${version}.tar</source>
+            <outputDirectory>deploy/servers</outputDirectory>
+            <destName>web-server.tar</destName>
+        </file>
+    </files>
     <dependencySets>
         <!-- the following dependency set includes the dependency JARs needed by
             the main Java executable for indicator processing -->
         <dependencySet>
-            <outputDirectory>lib</outputDirectory>
+            <outputDirectory>deploy/lib</outputDirectory>
             <useProjectArtifact>true</useProjectArtifact>
             <scope>runtime</scope>
             <unpack>false</unpack>

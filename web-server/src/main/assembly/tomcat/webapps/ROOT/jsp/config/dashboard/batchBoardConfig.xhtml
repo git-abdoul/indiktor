@@ -1,0 +1,199 @@
+<f:subview id="batchBoardComponentConfig" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+       
+<ice:panelGrid columns="2" style="margin: 0px; padding: 0px; text-align: center;"> 
+	<ice:panelGrid columns="1">
+		<ice:panelGroup style="text-align: center; border: 1px solid #336699; height: 85px;">
+			<ice:panelGrid columns="2">
+				<ice:outputLabel value="Component Title:"/>
+				<ice:inputText size="40" value="#{batchBoardConfigBean.componentTitle}" style="#{batchBoardConfigBean.batchBoardTitleStyle}"/>
+				<ice:outputLabel value="" rendered="#{batchBoardConfigBean.errorBatchBoardTitleVisible}"/>
+				<ice:outputLabel value="Mandatory" style="color: red; font-size: 10px;"
+	 							 rendered="#{batchBoardConfigBean.errorBatchBoardTitleVisible}"/>
+				<ice:outputLabel value="" rendered="#{dashboardSelectMainConfigBean.titleAlreadyExists}"/>
+				<ice:outputLabel value="Title already exists! Please, choose another title." style="color: red; font-size: 10px;"
+	 							 rendered="#{dashboardSelectMainConfigBean.titleAlreadyExists}"/>
+				<ice:outputLabel value="Auto Discovery" for="autoDiscovery"/>
+				<ice:selectBooleanCheckbox id="autoDiscovery"
+										   value="#{batchBoardConfigBean.autoDiscovery}"
+										   valueChangeListener="#{batchBoardConfigBean.onAutoDiscoveryChanged}"
+										   partialSubmit="true"/>
+			</ice:panelGrid>
+			<BR/>
+			<ice:outputText value="You must select at least one configs"
+					  		rendered="#{batchBoardConfigBean.errorBatchBoardSelectedCollectorVisible}"
+					  		style="color: red;"/>
+			<ice:outputText value="When you are not in auto discovery, you must select at least one batch name"
+					  		rendered="#{batchBoardConfigBean.errorBatchNameSelectedVisible}"
+					  		style="color: red;"/>
+		</ice:panelGroup>
+		<ice:panelGroup style="#{batchBoardConfigBean.batchBoardPanelStyle}">
+			<ice:panelGroup style="text-align:center;">
+				<ice:dataPaginator id="CollectorConfigTableScroll_2"
+			                       for="CollectorConfigTable"
+			                       rowsCountVar="rowsCount"
+			                       displayedRowsCountVar="displayedRowsCountVar"
+			                       firstRowIndexVar="firstRowIndex"
+			                       lastRowIndexVar="lastRowIndex"
+			                       pageCountVar="pageCount"
+			                       pageIndexVar="pageIndex">
+			      <ice:outputFormat value="{0} Collectors found,  displaying {1} Collector,  from {2} to {3}. Page {4} / {5}." style="font-weight: bold; font-size: xx-small;" styleClass="standard">
+			      	<f:param value="#{rowsCount}"/>
+			        <f:param value="#{displayedRowsCountVar}"/>
+			        <f:param value="#{firstRowIndex}"/>
+			        <f:param value="#{lastRowIndex}"/>
+			        <f:param value="#{pageIndex}"/>
+			        <f:param value="#{pageCount}"/>
+			      </ice:outputFormat>
+			     </ice:dataPaginator>
+		    </ice:panelGroup>
+			<ice:panelGroup>
+				<ice:dataTable id="CollectorConfigTable"
+							   value="#{batchBoardConfigBean.monitorConfigsFiltered}" 
+							   var="monitorConfigBean"						   
+							   columnWidths="150, 150, 150, 20"
+						       cellspacing="0" cellpadding="0" border="0"
+	   						   styleClass="dataPaginatorDataTable"
+	   						   rows="#{batchBoardConfigBean.rowsByPage}">
+					<ice:column>
+						<!-- <ice:rowSelector value="#{monitorConfigBean.selected}" 
+										selectedClass="tableRowSelSelected"
+										mouseOverClass="tableRowSelMouseOver"
+										selectedMouseOverClass="tableRowSelSelectedMouseOver"
+										enhancedMultiple="false"
+						               	styleClass="iceRowSel-Dis"
+						                selectionListener="#{batchBoardConfigBean.rowSelectionListener}"/> -->
+						<f:facet name="header">
+							<!-- <ice:commandSortHeader columnName="#{monitorSelectionBean.envColumnName}" arrow="true" >
+				                <ice:outputText value="#{monitorSelectionBean.envColumnName}"/>
+				            </ice:commandSortHeader> -->
+				            <ice:outputText value="Env"/>
+						</f:facet>	
+						<ice:panelGroup style="text-align: left; font-size: 11px;">
+							<ice:outputText value="#{monitorConfigBean.logicalEnv.name}"/>
+						</ice:panelGroup> 							
+					</ice:column>		
+					<ice:column>													
+						<f:facet name="header">
+							<!-- <ice:commandSortHeader columnName="#{monitorSelectionBean.metricDomainColumnName}" arrow="true" >
+				                <ice:outputText value="#{monitorSelectionBean.metricDomainColumnName}"/>
+				            </ice:commandSortHeader> -->
+				            <ice:outputText value="Metric Domain"/>
+						</f:facet>	
+						<ice:panelGroup style="text-align: left; font-size: 11px;">
+							<ice:outputText value="#{monitorConfigBean.ikrStaticDomain.label} #{monitorConfigBean.domainView}"/>
+						</ice:panelGroup> 							
+					</ice:column>						  
+					<ice:column>
+						<f:facet name="header">
+							<!-- <ice:commandSortHeader columnName="#{monitorSelectionBean.contextColumnName}" arrow="true" >
+				                <ice:outputText value="#{monitorSelectionBean.contextColumnName}"/>
+				            </ice:commandSortHeader> -->
+				            <ice:outputText value="Context"/>
+						</f:facet>	
+						<ice:panelGroup style="text-align: left; font-size: 11px;">
+							<ice:outputText value="#{monitorConfigBean.context}"/>
+						</ice:panelGroup> 							
+					</ice:column>
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+			            </f:facet>
+			            <ice:selectBooleanCheckbox value="#{monitorConfigBean.selected}"
+												   valueChangeListener="#{batchBoardConfigBean.handleSelectedCollector}"
+											       partialSubmit="true">
+							<f:attribute name="monitorConfigBean" value="#{monitorConfigBean}"/>
+						</ice:selectBooleanCheckbox>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+			<ice:panelGroup style="float:center;" visible="#{batchBoardConfigBean.paginationVisible}">
+	            <center>
+		            <ice:dataPaginator id="CollectorConfigTableScroll_1"
+					                   for="CollectorConfigTable"
+					                   fastStep="3"
+					                   paginator="true">
+		                <f:facet name="first">
+		                    <ice:graphicImage id="firstpage_1"
+		                                      url="#{styleBean.imageDirectory}arrow-first.gif"
+		                                      style="border:none;"
+		                                      title="#{msgs['page.dataScrolling.firstpage']}"/>
+		                </f:facet>
+		                <f:facet name="last">
+		                    <ice:graphicImage id="lastpage_1"
+		                                      url="#{styleBean.imageDirectory}arrow-last.gif"
+		                                      style="border:none;"
+		                                      title="#{msgs['page.dataScrolling.lastpage']}"/>
+		                </f:facet>
+		                <f:facet name="previous">
+		                    <ice:graphicImage id="previouspage_1"
+		                                      url="#{styleBean.imageDirectory}arrow-previous.gif"
+		                                      style="border:none;"
+		                                      title="#{msgs['page.dataScrolling.previouspage']}"/>
+		                </f:facet>
+		                <f:facet name="next">
+		                    <ice:graphicImage id="nextpage_1"
+		                                      url="#{styleBean.imageDirectory}arrow-next.gif"
+		                                      style="border:none;"
+		                                      title="#{msgs['page.dataScrolling.nextpage']}"/>
+		                </f:facet>
+		                <f:facet name="fastforward">
+		                    <ice:graphicImage id="fastforward_1"
+		                                      url="#{styleBean.imageDirectory}arrow-ff.gif"
+		                                      style="border:none;"
+		                                      title="#{msgs['page.dataScrolling.fastforward']}"/>
+		                </f:facet>
+		                <f:facet name="fastrewind">
+		                    <ice:graphicImage id="fastrewind_1"
+		                                      url="#{styleBean.imageDirectory}arrow-fr.gif"
+		                                      style="border:none;"
+		                                      title="#{msgs['page.dataScrolling.fastbackward']}"/>
+		                </f:facet>
+		            </ice:dataPaginator>
+	            </center>
+	        </ice:panelGroup>
+	    </ice:panelGroup>
+	</ice:panelGrid>
+	
+	<ice:panelGroup style="#{batchBoardConfigBean.batchBoardPanel2Style}" rendered="#{!batchBoardConfigBean.autoDiscovery}">
+		<ice:dataTable value="#{batchBoardConfigBean.batchBeans}"
+					   var="batchNames"	
+				       cellspacing="0" cellpadding="0" border="0"
+				       scrollable="true"
+				       scrollHeight="382px"
+				       style="padding: 0px; margin: 0px;"
+				       columnWidths="250, 20">
+			<ice:column>
+				<!-- <ice:rowSelector value="#{batchNames.selected}" 
+									selectedClass="tableRowSelSelected"
+									mouseOverClass="tableRowSelMouseOver"
+									selectedMouseOverClass="tableRowSelSelectedMouseOver"
+									enhancedMultiple="true"
+					               	styleClass="iceRowSel-Dis"
+					                selectionListener="#{batchBoardConfigBean.rowSelectionListenerBatchNames}"/> -->
+				<f:facet name="header">
+		            <ice:outputText value="Batch name"/>
+				</f:facet>	
+				<ice:panelGroup style="text-align: left; font-size: 11px;">
+					<ice:outputText value="#{batchNames.batchName}"/>
+				</ice:panelGroup> 							
+			</ice:column>
+			<ice:column style="text-align: center;">
+				<f:facet name="header">
+		            <ice:selectBooleanCheckbox value="#{batchBoardConfigBean.selectAllBatches}"
+											   valueChangeListener="#{batchBoardConfigBean.handleSelectAllBatches}"
+										       partialSubmit="true"/>
+	            </f:facet>
+	            <ice:selectBooleanCheckbox value="#{batchNames.selected}"
+										   valueChangeListener="#{batchBoardConfigBean.handleSelectedBatch}"
+									       partialSubmit="true">
+					<f:attribute name="batchNames" value="#{batchNames}"/>
+				</ice:selectBooleanCheckbox>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGroup>
+	
+ </ice:panelGrid>  
+</f:subview>

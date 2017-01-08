@@ -5,7 +5,9 @@ import org.apache.log4j.Logger;
 import com.fsi.monitoring.kpi.monitor.Monitor;
 import com.fsi.monitoring.kpi.monitor.MonitorTask;
 
+import sun.jvmstat.monitor.MonitorException;
 import sun.jvmstat.monitor.MonitoredHost;
+import sun.tools.jps.Arguments;
 
 public class JStatMonitor extends MonitorTask implements Monitor {
 	private static final Logger LOG = Logger.getLogger(JStatMonitor.class);

@@ -1,0 +1,81 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:h="http://java.sun.com/jsf/html"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+<ui:param name="pageTitle" value="#{boardBean.title} Board : #{boardBean.env}"/>	
+
+<ui:define name="nav">
+<ice:outputStyle href="#{styleBean.style}"/>
+ <ui:include src="/jsp/dashboard/dashboardNavigation.jspx"/>
+</ui:define>
+
+<ui:define name="content"> 
+	<div id="mainFrame" style="height:400px; width: 1000px;">
+				<!-- Tabs -->
+				<ul class="dataServerTabs">
+					<li onClick="switchDSTab('1','2');" id="tab1" class="selectedTab">Board</li>
+					<li onClick="switchDSTab('2','1');" id="tab2" class="unselectedTab">Threads detail</li>
+				</ul>
+				<div style="clear: both;"></div>
+				<!-- Tab 1 content -->
+				<div id="dataServerContentTab1">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="550" valign="top">
+								<!-- Process -->
+								<div class="tableBox">
+									<table cellspacing="0" cellpadding="0" border="0" class="eventServerContentTable">
+										<tr>
+											<td class="externalApp"><b>Start Time :</b> 
+												<h:outputLabel value="#{boardBean.components['ES Info'].infosByLabel['Start Time'].value}">
+	         			   							<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+	         			   						</h:outputLabel>
+	         			   					</td>
+											<td class="externalApp"><b>Event Pool :</b> <h:outputLabel value="#{boardBean.components['ES Info'].infosByLabel['Queue Size'].value}"/></td>
+										</tr>
+										<tr align="center">
+											<td align="center" colspan="2" style="padding-left: 5px; padding-top: 5px;">
+												<ice:form>
+												<ui:repeat var="alertBoardBean" value="#{boardBean.alertBoards['Alerts'].children}">
+													<div class="eventServerItem">					
+														<ice:commandLink actionListener="#{boardBean.navigate}"
+									         							 action="#{boardBean.action}">
+															<h:outputLabel value="#{alertBoardBean.title}"/>
+															<h:graphicImage url="#{alertBoardBean.url}" height="60"/>
+															<f:attribute name="component" value="#{alertBoardBean}"/>
+														</ice:commandLink> 
+													</div>
+												</ui:repeat>
+												</ice:form>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</td>							
+						</tr>
+					</table>
+					<!-- Alerts -->
+					<!-- 
+					<ice:form>
+						<ui:include src="/jsp/alert/alertList.jspx"/>
+					</ice:form>
+					 -->
+				<div style="clear: both;">&amp;nbsp;</div>
+				</div>
+				<!-- Tab 2 content -->
+				<div id="dataServerContentTab2">
+				   <ui:include src="/jsp/threadDump/threadDumpDetailsAnalysis.jspx"/>
+				</div>
+			</div>
+				<ice:form>
+	<ice:panelGroup rendered="#{alertDetailBean.showAlertDetails}"
+			style="width: 650px; cursor:move; top: -300px; position: absolute; left: 400px; top: 550px;"
+			draggable="true" dragMask="hover_start, dragging, hover_end, drag_cancel" 
+			dragOptions="solid">
+		 <ui:include src="/jsp/alert/alertDetails.jspx"/>  
+	</ice:panelGroup>
+	</ice:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,39 @@
+<f:subview id="calypsoIntraDay" 
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    	<ice:panelGrid border="0" columns="1" cellspacing="0" cellpadding="0" width="500" visible="true">	
+			<ice:panelCollapsible expanded="true">	
+				<f:facet name="header">
+			        <ice:panelGroup style="font-size:14px; font-weight:bold; font-family:verdana; text-align: center;">
+			            <ice:outputText value="Intraday"/>
+			        </ice:panelGroup>
+			    </f:facet>
+			    <table border="0" cellspacing="5" cellpadding="0" width="500" style="empty-cells: hide">
+					<ice:panelSeries var="component" value="#{calypsoIntradayManager.alertComponents}">										
+						<td align="center" height="110px" width="125px" >
+							<ice:panelGroup style="border: 1px #d9d9d9 solid;">
+								<table>
+									<tr>
+										<th align="center"  style="font-size:10px; font-weight:bold; font-family:verdana;" width="110px">
+											<h:outputLabel value="#{component.label}"/>
+										</th>
+									</tr>
+									<tr>
+										<td align="center" width="110px">
+											<h:commandLink actionListener="#{navigationBean.navigate}"
+														   action="#{navigationBean.action}">
+												<h:graphicImage url="#{component.url}" height="80"/>
+												<f:attribute name="config" value="#{component.resourcePath}"/>
+											</h:commandLink>
+										</td>
+									</tr>
+								</table>
+							</ice:panelGroup>
+						</td>										
+					</ice:panelSeries>
+				</table>	
+			</ice:panelCollapsible>
+		</ice:panelGrid>
+</f:subview>

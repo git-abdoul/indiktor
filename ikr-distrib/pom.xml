@@ -40,7 +40,7 @@
     <dependencies>
         <dependency>
             <groupId>indiktor</groupId>
-            <artifactId>framework-base</artifactId>
+            <artifactId>toolkits</artifactId>
             <version>${project.version}</version>
         </dependency>
 

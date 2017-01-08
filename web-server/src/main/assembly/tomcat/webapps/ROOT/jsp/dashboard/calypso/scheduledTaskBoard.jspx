@@ -1,0 +1,127 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+               	xmlns:h="http://java.sun.com/jsf/html"
+		 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+		        xmlns:f="http://java.sun.com/jsf/core"
+		        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ui:param name="pageTitle" value="#{scheduledTaskBoardBean.title} Board : #{scheduledTaskBoardBean.env}" />
+
+<ui:define name="nav">
+ <ui:include src="/jsp/dashboard/dashboardNavigation.jspx"/>
+</ui:define>
+		
+<ui:define name="content">	
+<div id="mainFrame" style="width: 900px;">
+	<ice:outputStyle href="#{styleBean.style}"/>
+	<ice:form>  
+<!--
+	 <div class="tableBox" style="border: 1px solid #CCC; padding: 10px 20px 10px 10px;">
+		<h:panelGroup>
+			<ui:include src="/jsp/dashboard/calypso/scheduledTaskStatusBoard.jspx"/>					
+		</h:panelGroup>	
+	</div>
+-->		
+	<div style="clear: both;"/>
+	<ice:panelGroup>		
+		<ice:panelTabSet var="scheduledTaskTabBean" value="#{scheduledTaskBoardBean.taskTabList}">
+			<ice:panelTab label="#{scheduledTaskTabBean.tabName}">
+	        	<ice:panelSeries var="scheduledTaskBean" value="#{scheduledTaskTabBean.taskList}">
+		        	<ice:panelGroup>
+						<table border="0" cellspacing="1" cellpadding="0" width="550" style="font-family:verdana;"> 
+				     		<tr>
+				     			<th align="left" height="30" width="300" colspan="2"  style="font-size:14px; font-weight:bold; font-family:verdana; border: 1px #d9d9d9 solid;"><ice:outputText value="#{scheduledTaskBean.name} : #{scheduledTaskBean.poId}"/></th>
+				     			<td height="30" width="150">
+				     				<table border="0" cellspacing="1" cellpadding="0" width="150">
+										<tr>
+											<td width="150" style="border: 1px #d9d9d9 solid;">
+							     				<table border="0" cellspacing="0" cellpadding="0" width="150">
+													<tr>
+														<th align="left" height="15" width="80" style="font-size:12px; font-weight:bold; font-family:verdana;">Uptime</th>
+														<td align="left" height="15" width="70"  style="border-width:1px; border-color:black; font-size:12px"><ice:outputText value="#{scheduledTaskBean.uptime}"></ice:outputText></td>
+													</tr>
+												</table>
+							     			</td>
+										</tr>
+										<tr>
+											<td width="150" style="border: 1px #d9d9d9 solid;">
+							     				<table border="0" cellspacing="0" cellpadding="0" width="150">
+													<tr>
+														<th align="left" height="15" width="80" style="font-size:12px; font-weight:bold; font-family:verdana;">Delay</th>
+														<td align="left" height="15" width="70"  style="border-width:1px; border-color:black; font-size:12px"><ice:outputText value="#{scheduledTaskBean.delay}"></ice:outputText></td>
+													</tr>
+												</table>
+							     			</td>
+										</tr>
+									</table>
+				     			</td>
+				     			<td height="30" width="100" rowspan="2" style="border: 1px #d9d9d9 solid;">
+				     				<table border="0" cellspacing="0" cellpadding="0" width="100">
+										<tr>
+											<th align="center" style="font-size:14px;"><ice:outputText value="Trend"/></th>
+										</tr>
+										<tr>
+											<td align="center"><ice:graphicImage url="#{scheduledTaskBean.trend}" height="30"/></td>
+										</tr>
+									</table>	
+				     			</td>
+				     			<td height="30" width="100" rowspan="2" style="border: 1px #d9d9d9 solid;">
+				     				<table border="0" cellspacing="0" cellpadding="0" width="100">
+										<tr>
+											<th align="center" style="font-size:14px;"><ice:outputText value="#{scheduledTaskBean.statusLabel}"/></th>
+										</tr>
+										<tr>
+											<td align="center"><ice:graphicImage url="#{scheduledTaskBean.status}" height="30"/></td>
+										</tr>
+									</table>	
+				     			</td>
+				     		</tr>
+				     		<tr>
+				     			<td height="30" width="150" style="border: 1px #d9d9d9 solid;">
+				     				<table border="0" cellspacing="0" cellpadding="0" width="150">
+										<tr>
+											<th align="left" height="15" width="150" style="font-size:12px; font-weight:bold; font-family:verdana;">Scheduled Time</th>
+										</tr>
+										<tr>
+											<td align="left" height="15" width="150"  style="border-width:1px; border-color:black; font-size:12px">					
+												<h:outputLabel value="#{scheduledTaskBean.values['scheduledTime']}">
+	         			   							<f:convertDateTime pattern="#{msgs.format_date1}" timeZone="#{styleBean.timeZone}"/>
+	         			   						</h:outputLabel>
+											</td>
+										</tr>
+									</table>
+				     			</td>
+				     			<td height="30" width="150" style="border: 1px #d9d9d9 solid;">
+				     				<table border="0" cellspacing="0" cellpadding="0" width="150">
+										<tr>
+											<th align="left" height="15" width="150" style="font-size:12px; font-weight:bold; font-family:verdana;">Start Time</th>
+										</tr>
+										<tr>
+											<td align="left" height="15" width="150"  style="border-width:1px; border-color:black; font-size:12px">
+												<h:outputLabel value="#{scheduledTaskBean.values['startTime']}"/>
+											</td>
+										</tr>
+									</table>
+				     			</td>
+				     			<td height="30" width="150" style="border: 1px #d9d9d9 solid;">
+				     				<table border="0" cellspacing="0" cellpadding="0" width="150">
+										<tr>
+											<th align="left" height="15" width="150" style="font-size:12px; font-weight:bold; font-family:verdana;">End Time</th>
+										</tr>
+										<tr>
+											<td align="left" height="15" width="150"  style="border-width:1px; border-color:black; font-size:12px">
+												<h:outputLabel value="#{scheduledTaskBean.values['endTime']}"/>
+											</td>
+										</tr>
+									</table>
+				     			</td>
+				     		</tr>
+						</table>
+					</ice:panelGroup><br/>
+				</ice:panelSeries>
+	        </ice:panelTab>
+		</ice:panelTabSet>		
+	</ice:panelGroup>	
+	</ice:form>
+	</div>
+</ui:define>
+</ui:composition>

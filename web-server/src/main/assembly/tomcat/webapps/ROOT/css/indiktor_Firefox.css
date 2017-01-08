@@ -1,0 +1,1248 @@
+#header
+{
+	width: 100%;
+}
+
+.header_left
+{
+	float: left;
+	width: 100%;
+	height: 70px;
+	background-image: url("../images/IndiKtor2.0/Banner/Banner_IndiKtor_Left.png");
+	background-repeat: no-repeat;	
+}
+
+.k_header
+{
+	float: left;
+	margin-top: 0px;
+	margin-left: 0px;
+	background-repeat: no-repeat;
+}
+
+.menu_workspace
+{
+	float: left;
+	margin-top: 25px;
+	color: #fff;
+}
+
+/* Menu Dashboard / Alert Center / Data Center */
+.dbacdc label
+{	
+	margin-left: 3px;
+	margin-right: -2px;
+	font-family: "Tamaho", Arial, serif;
+	font-size: 13px;
+	font-style: bold;
+	color: #ff774f;
+	text-decoration: none;
+}
+
+.dbacdc a
+{	
+	margin-left: 5px;
+	margin-right: 0px;
+	font-family: "Tamaho", Arial, serif;
+	font-size: 13px;
+	font-style: bold;
+	color: #fff;
+	text-decoration: none;
+	border-bottom: none;
+}
+
+.dbacdc a:hover
+{	
+	margin-left: 5px;
+	margin-right: 0px;
+	font-family: "Tamaho", Arial, serif;
+	font-size: 13px;
+	font-style: bold;
+	color: #ff774f;
+	text-decoration: underline;
+}
+
+/* Navigation Menu Dashboard */ 
+.menuNavDB 
+{
+	margin-top: 5px;
+	margin-left: 2px;
+	font-family: "Tamaho", Arial, serif;
+	font-size: 13px;
+	font-style: normal;
+	color: #071a39;
+	text-decoration: none;
+}
+
+.menuNavDB a
+{
+	margin-top: 5px;
+	margin-left: 2px;
+	font-family: "Tamaho", Arial, serif;
+	font-size: 13px;
+	font-style: normal;
+	color: #071a39;
+	text-decoration: none;
+}
+
+/* Navigation Menu Alert Center */
+.menuNavAC 
+{
+	margin-top: 0px;
+	margin-left: 65px;
+	font-family: "Tamaho", Arial, serif;
+	font-size: 13px;
+	font-style: normal;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.menuNavAC2 
+{
+	margin-top: 0px;
+	margin-left: 17px;
+	font-family: "Tamaho", Arial, serif;
+	font-size: 13px;
+	font-style: normal;
+	color: #ffffff;
+	text-decoration: none;
+}	
+
+/* Navigation Menu Data Center */
+.menuNavDC 
+{
+	margin-top: 0px;
+	margin-left: 167px;
+	font-family: "Tamaho", Arial, serif;
+	font-size: 13px;
+	font-style: normal;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.menuNavDC2 
+{
+	margin-top: 0px;
+	margin-left: 0px;
+	font-family: "Tamaho", Arial, serif;
+	font-size: 13px;
+	font-style: normal;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.header_right
+{
+	float: right;
+	width: 200px;
+	height: 70px;
+	/*background-image: url("../images/IndiKtor2.0/Banner/Banner_IndiKtor_Right.png");*/
+	background-repeat: no-repeat;	
+}
+
+/* Icon Menu on the Right */
+.menu_right
+{
+	float: right;
+	background-repeat: no-repeat;
+	margin-top: 11px;
+	margin-right: 5px;
+}
+
+/* Logo K of the Login Page */
+.Klog
+{
+	margin: auto;
+	background-repeat: no-repeat;
+}
+
+/* Login Page */
+.loginForm
+{
+	margin-left: 120px;
+	margin-top: 140px;
+}
+
+/* Change My Password Page */
+.loginForm_pwd
+{
+	margin-left: 120px;
+	margin-top: 130px;
+}
+
+/* Home Page */
+.indiktorLogo
+{
+	background-repeat: no-repeat;
+}
+
+/* InfiKtor Version Home Page */
+.version
+{
+	font-family: "Tamaho", Arial, serif;
+	font-size: 45px;
+	font-style: bold;
+	color: #ff774f;
+	text-decoration: none;
+}
+
+/* InfiKtor Version Banner */
+.versionRight
+{
+	float: right;
+	margin-top: -2px;
+	margin-right: 3px;
+	color: #071a39;
+	font-size: 13px;
+}
+
+.copyrights
+{
+	background-repeat: no-repeat;
+	margin-left: 50px;
+	margin-top: 70px;
+}
+
+/* Titles of the Administration Panel and Change My password Pages */
+.pageTitle
+{
+	font-size: 24px;
+	color: #1473b5;
+}
+
+/* Dashboard Alert Detail*/
+#pageAlertDetailForDashboard
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentAlertDetailForDashboard.png");
+	background-repeat: no-repeat;	
+	margin-top: 6px;
+	float: left;
+	margin-left: 20px;
+}
+
+/* ALERT CENTER Content Pages */
+#pageAlertBoard
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuAB.png");
+	background-repeat: no-repeat;	
+}
+
+#pageAlertBoardDetail
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuABDetail.png");
+	background-repeat: no-repeat;	
+}
+
+#pageAlertDefinition
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuAD.png");
+	background-repeat: no-repeat;	
+}
+
+#pageAlertDefinitionTest
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuADTEST.png");
+	background-repeat: no-repeat;	
+	margin-left: -20px;
+}
+
+#pageAlertDefinitionProperties
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuADProperties.png");
+	background-repeat: no-repeat;	
+}
+
+#pageAlertDefinitionFull
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuADFull.png");
+	background-repeat: no-repeat;
+}
+
+#topMenuBar
+{
+	width: 1225px;
+	height: 28px;
+	border: 0px;
+}
+
+.topMenuBarLeft
+{
+	width: 394px;
+	height: 100%;
+	padding-left: 2px;
+	padding-top: 7px;
+}
+
+.topMenuBarLeftAB
+{
+	float: left;
+	width: 198px;
+	height: 100%;
+}
+
+.topMenuBarLeftAD
+{
+	float: left;
+	width: 196px;
+	height: 100%;
+}
+
+.topMenuBarLeftAB2
+{
+	float: left;
+	width: 196px;
+	height: 100%;
+}
+
+.topMenuBarLeftAD2
+{
+	float: left;
+	width: 198px;
+	height: 100%;
+} 
+
+.topMenuBarRight
+{
+	float: right;
+	height: 100%;
+	text-align: right;
+}
+
+.topMenuBarRightNoSearch
+{
+	float: right;
+	height: 100%;
+	text-align: right;
+	margin-top: 5px;
+}
+
+.topMenuBarRightTEST
+{
+	height: 100%;
+	text-align: right;
+	padding-right: 20px;
+	padding-top: 5px;
+}
+
+.topMenuBarRightIcons
+{
+	margin-right: 20px;
+}
+
+#pageContent
+{
+	width: 1225px;
+	height: 722px;	
+}
+	
+.contentLeftPanel
+{
+	width: 330px;
+	height: 100%;
+	color: #000000;
+	text-align: center;
+	padding-left: 10px;
+	padding-top: 100px;
+	vertical-align: top;
+	font-family: "Tamaho", Arial, serif;
+}
+
+.contentRightPanel
+{
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	color: #000000;
+	text-decoration: none;
+	font-family: "Tamaho", Arial, serif;
+	font-weight: normal;
+}
+
+/* Alert Properties Layout */
+.alertPropertiesLeft
+{
+	width: 300px;
+	height: 100%;
+	color: #000000;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 10px;
+	padding-left: 10px;
+	font-family: "Tamaho", Arial, serif;
+}
+
+.alertPropertiesRight
+{
+	height: 100%;
+	color: #000000;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 10px;
+	font-family: "Tamaho", Arial, serif;
+}
+
+.alertProperties
+{
+	width: 100%;
+	height: 630px;
+}
+
+.panelTitle
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 10px;
+	font-size: 18px;
+}
+
+.panelTitleAlertProperties
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 10px;
+	font-size: 16px;
+}
+
+.panelTitleAnalysis
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 10px;
+	font-size: 16px;
+}
+
+.panelTitleAnalysis2
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 5px;
+	font-size: 16px;
+}
+
+.panelTitleCrossCompute
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 25px;
+	font-size: 16px;
+}
+
+.panelTitleCrossCompute2
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 13px;
+	font-size: 16px;
+}
+
+.panelTitleMetricDomain
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 15px;
+	font-size: 16px;
+}
+
+.panelTitleMetricDomain2
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 5px;
+	font-size: 16px;
+}
+
+.panelTitle2
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 15px;
+	font-size: 18px;
+}
+
+.panelTitle3
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 30px;
+	font-size: 18px;
+}
+
+.panelTitle4
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 25px;
+	font-size: 18px;
+}
+
+.panelTitle5
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 18px;
+	font-size: 16px;
+}
+
+.panelTitle6
+{
+	vertical-align: top;
+	text-align: left;
+	font-size: 16px;
+}
+
+.panelTitle7
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 15px;
+	font-size: 16px;
+}
+
+.panelTitleAlertItemInAlertDetail
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 30px;
+	font-size: 16px;
+}
+
+.panelTitleAlertItemInAlertDetail2
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 25px;
+	font-size: 16px;
+}
+
+.panelTitle8
+{
+	vertical-align: top;
+	text-align: left;
+	padding-left: 10px;
+	font-size: 16px;
+}
+
+.alertCondition
+{
+	width: 850px;
+	height: 220px;
+	font-size: 13px;
+	padding-left: 15px;
+}
+
+.conditionTable1
+{
+	background-color: white;
+	font-family: "Tamaho", Arial, serif;
+	font-size: 10px;
+	text-align: center;
+	vertical-align: middle;
+} 
+
+.conditionTable2
+{
+	background-color: #ecebeb;
+	font-family: "Tamaho", Arial, serif;
+	font-size: 10px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.alertComputation
+{
+	width: 840px;
+	height: 175px;
+	font-size: 13px;
+	margin-top: 20px;
+	padding-left: 15px;
+}
+
+.alertValidity
+{
+	width: 425px;
+	height: 50px;
+	margin-top: 15px;
+	padding-left: 15px;
+}
+
+.alertTimeSlot
+{
+	width: 420px;
+	height: 75px;
+	vertical-align: top;
+	margin-top: 15px;
+	padding-left: 10px;
+}
+
+.alertNotification
+{
+	width: 840px;
+	height: 75px;
+	vertical-align: top;
+	margin-top: 7px;
+	padding-left: 15px;
+}
+
+.alertConditionLeft
+{
+	width: 300px;
+	height: 100%;
+	color: #000000;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 5px;
+	padding-left: 10px;
+	font-family: "Tamaho", Arial, serif;
+}
+
+.alertConditionRight
+{
+	height: 100%;
+	color: #000000;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 70px;
+	font-family: "Tamaho", Arial, serif;
+}
+
+/* DATA CENTER Content Pages */
+#pageAnalysis
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuAnalysis.png");
+	background-repeat: no-repeat;	
+}
+
+#pageDomain
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuDomain.png");
+	background-repeat: no-repeat;	
+}
+
+#pageCrossCompute
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuCrossCompute.png");
+	background-repeat: no-repeat;	
+}
+
+#pageUpdateCrossCompute
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuUpdateCrossCompute2.png");
+	background-repeat: no-repeat;	
+}
+
+#pageStaticData
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuStaticData.png");
+	background-repeat: no-repeat;	
+}
+
+#pageUpdateStaticData
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuUpdateStaticData.png");
+	background-repeat: no-repeat;	
+}
+
+.topMenuBarLeft2
+{
+	width: 786x;
+	height: 100%;
+	padding-left: 2px;
+	padding-top: 7px;
+}
+
+.topMenuBarLeft3
+{
+	width: 590x;
+	height: 100%;
+	padding-left: 2px;
+	padding-top: 7px;
+}
+
+.topMenuBarLeftAnalysis
+{
+	float: left;
+	width: 198px;
+	height: 100%;
+}
+
+.topMenuBarLeftDomain
+{
+	float: left;
+	width: 196px;
+	height: 100%;
+}
+
+.topMenuBarLeftCC
+{
+	float: left;
+	width: 196px;
+	height: 100%;
+}
+
+.topMenuBarLeftSD
+{
+	float: left;
+	width: 196px;
+	height: 100%;
+}
+
+.topMenuBarLeftAnalysis2
+{
+	float: left;
+	width: 196px;
+	height: 100%;
+}
+
+.topMenuBarLeftDomain2
+{
+	float: left;
+	width: 198px;
+	height: 100%;
+}
+
+.topMenuBarLeftCC2
+{
+	float: left;
+	width: 198px;
+	height: 100%;
+}
+
+.topMenuBarLeftSD2
+{
+	float: left;
+	width: 198px;
+	height: 100%;
+}
+
+.contentLeftPanel2
+{
+	width: 330px;
+	height: 100%;
+	color: #000000;
+	text-align: center;
+	padding-left: 25px;
+	padding-top: 12px;
+	vertical-align: top;
+	font-family: "Tamaho", Arial, serif;
+}
+
+.contentRightPanel2
+{
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	color: #000000;
+	text-decoration: none;
+	font-family: "Tamaho", Arial, serif;
+	font-weight: normal;
+}
+
+.contentRightPanelAnalysis
+{
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	color: #000000;
+	text-decoration: none;
+	font-family: "Tamaho", Arial, serif;
+	font-weight: normal;
+}
+
+.contentLeftPanel3
+{
+	width: 318px;
+	height: 100%;
+	text-align: left;
+	vertical-align: top;
+	padding-left: 0px;
+	padding-top: 10px;
+}
+
+.contentRightPanel3
+{
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	text-align: center;
+}
+
+.contentLeftPanel4
+{
+	width: 330px;
+	height: 100%;
+	color: #000000;
+	text-align: center;
+	padding-left: 0px;
+	padding-top: 12px;
+	vertical-align: top;
+	font-family: "Tamaho", Arial, serif;
+}
+
+.contentLeftPanelCrossCompute
+{
+	width: 330px;
+	height: 100%;
+	color: #000000;
+	text-align: center;
+	padding-left: 10px;
+	padding-top: 12px;
+	vertical-align: top;
+	font-family: "Tamaho", Arial, serif;
+}
+
+.contentFullPanel
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.contentFullPanel2
+{
+	width: 100%;
+	height: 100%;
+	text-align: left;
+	vertical-align: top;
+	padding-left: 10px;
+}
+
+.alertDescriptionInAlertDetail
+{
+	font-size: 10px;
+}
+
+.contentFullPanelDashboard
+{
+	width: 100%;
+	height: 100%;
+	text-align: left;
+	vertical-align: top;
+	padding-left: 0px;
+	padding-top: 15px;
+}
+
+/*ADMIN - DASHBOARD */
+#pageDashBoardManager
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/AdminPanel/Dashboard/ContentDashboardManager.png");
+	background-repeat: no-repeat;	
+}
+
+/*ADMIN - DATA COLLECTION */
+#pageLogicalEnv
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/AdminPanel/DataCollection/ContentDataCollectionLogicalEnv.png");
+	background-repeat: no-repeat;	
+}
+
+#pageConnectors
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/AdminPanel/DataCollection/ContentDataCollectionConnectors.png");
+	background-repeat: no-repeat;	
+}
+
+#pageCollectors
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/AdminPanel/DataCollection/ContentDataCollectionCollectors.png");
+	background-repeat: no-repeat;	
+}
+
+#pageMonitorTasks
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/AdminPanel/DataCollection/ContentDataCollectionMonitorTasks.png");
+	background-repeat: no-repeat;	
+}
+
+/*ADMIN - SECURITY */
+#pageSecurityUser
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/AdminPanel/Security/ContentSecurityUser.png");
+	background-repeat: no-repeat;	
+}
+
+#pageSecurityRole
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/AdminPanel/Security/ContentSecurityRole.png");
+	background-repeat: no-repeat;	
+}
+
+/*ADMIN - THIRD PARTY */
+#pageThirdPartySNMP
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/AdminPanel/ThirdParty/ContentThirdPartySNMP.png");
+	background-repeat: no-repeat;	
+}
+
+#pageThirdPartySMTP
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/AdminPanel/ThirdParty/ContentThirdPartySMTP.png");
+	background-repeat: no-repeat;	
+}
+
+/*ADMIN - EXTENSIONS */
+#pageExtensionsMDC
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/AdminPanel/Extensions/ContentExtensionsMDC.png");
+	background-repeat: no-repeat;	
+}
+
+#pageExtensionsMDR
+{
+	width: 1225px;
+	height: 750px;
+	background-image: url("../images/IndiKtor2.0/AdminPanel/Extensions/ContentExtensionsMDR.png");
+	background-repeat: no-repeat;	
+}
+
+.contentFullPanel3
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 23px;
+}
+
+.contentFullPanel4
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 10px;
+}
+
+.contentFullPanelAlertDefinition
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 23px;
+}
+
+.contentFullPanelCrossCompute
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 25px;
+}
+
+.contentFullPanelStaticData
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 23px;
+}
+
+.contentFullPanelDashboardManager
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 10px;
+	padding-left: 25px;
+}
+
+.contentFullPanelDashboardManager2
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 10px;
+	padding-left: 23px;
+}
+
+.contentFullPanelConnectors
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 24px;
+}
+
+.contentFullPanelCollectors
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 21px;
+}
+
+.contentFullPanelJobScheduler
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 24px;
+}
+
+.contentFullPanelRoles
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 23px;
+}
+
+.contentFullPanelUsers
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 21px;
+}
+
+.contentFullPanelSNMP
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 23px;
+}
+
+.contentFullPanelMDC
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 25px;
+}
+
+.contentFullPanelMDR
+{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 60px;
+	padding-left: 24px;
+}
+
+.contentRightPanelMetricDomain
+{
+	padding-left: 225px;
+	padding-top: 50px;
+}
+
+/* Filter menu */
+.filterLabel
+{
+	float: left;
+	margin-top: 3px;
+	margin-right: 10px;
+	margin-top: 5px;
+}
+
+.filterMenu
+{
+	float: right;
+	width: 100px;
+}  
+
+.sortHeader
+{
+	font-weight: normal;
+	font-size: 10px;
+	color: #1473b5;
+}
+
+/* TABLE ROW SELECTION */
+.tableRowSelSelected {
+    background: #071a39;
+}
+.tableRowSelSelectedAlert {
+    background: #ffffff;
+}
+.tableRowSelSelected .iceOutTxt{
+    color: green;
+    font-weight: bold;
+}
+.tableRowSelSelected .iceOutTxt {
+    color: white;
+    font-weight: bold;
+}
+.tableRowSelSelectedMouseOver {
+    background: #071a39;
+}
+.tableRowSelSelectedMouseOverAlert {
+    background: #ffffff;
+}
+.tableRowSelSelectedMouseOver  .iceOutTxt {
+    color: orange;
+    font-weight: bold;
+}
+.tableRowSelMouseOver {
+    color: orange;
+    background: orange;
+}
+.tableRowSelMouseOverAlert {
+    background: #fffff;
+}
+.tableRowSelMouseOver .iceOutTxt {
+    color: black;
+}
+
+.popupClass
+{
+	width="300px";
+	height="600px";
+	background-image: url("../images/IndiKtor2.0/Content/ContentMenuADFull.png");
+	background-repeat: no-repeat;
+}
+
+.dashboardTitle
+{
+	color: white;
+	font-size: 13px;
+}
+
+.container
+{
+	/*background-image: url("../images/IndiKtor2.0/Buttons/add.png");
+	background-repeat: repeat;*/
+	background-color: black;
+	margin: 10px;
+}
+
+.moveLabel 
+{
+	border-color: black;
+	border-width: 3px;
+	background-color: blue;
+	color: white;
+}
+
+.exampleBox
+{
+	color: green;
+	font-weight: bold;
+	background-color: yellow;
+}
+
+.positionPanelContainer
+{
+	background-color: orange;
+}
+
+.masterDashboard {
+	background-color: #F06161;
+	font-size: 11px;
+}
+
+.centerNoAlerts
+{
+	padding-left: 525px;
+}
+
+.centerNoAlerts2
+{
+	padding-left: 360px;
+}
+
+.centerNoInfos
+{
+	padding-left: 375px;
+}
+
+.iconPopup {
+	padding-right: 5px;
+}
+
+.calculator {
+	padding-left: 5px;
+}
+
+.alertBoardGridPanelAlign {
+	margin-left: 3.5px;
+}
+
+.addButtonCommentAlertDetail {
+	margin-right: 3px;
+}
+
+.checkBoxStyle {
+	text-decoration : none;
+	width: 13px;
+	height: 13px;
+}
+
+.checkBoxStyle:focus {
+	outline: 0;
+}
+
+.newCommentTextArea {
+	height: 38px;
+	width: 262px;	
+}

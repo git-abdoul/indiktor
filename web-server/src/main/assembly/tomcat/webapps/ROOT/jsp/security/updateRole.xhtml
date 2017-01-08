@@ -1,0 +1,249 @@
+<f:subview id="updateRole" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+        
+<ice:panelGrid columns="1" style="width: auto; height: auto; text-align: center; vertical-align: top;">
+	<ice:panelGrid columns="2">
+		<ice:outputLabel value="Name :" style="float: right;"/>
+		<ice:inputText value="#{roleBean.role.name}" style="#{roleBean.nameStyle}"/>
+		<ice:outputLabel value="" rendered="#{roleBean.nameMandatory}"/>
+		<ice:outputLabel value="Mandatory" style="color: red; font-size: 10px;" rendered="#{roleBean.nameMandatory}"/>
+		<ice:outputLabel value="" rendered="#{roleBean.nameError}"/>
+		<ice:outputLabel value="This name is already used !" style="color: red; font-size: 10px;" rendered="#{roleBean.nameError}"/>
+		<ice:outputLabel value="" rendered="#{roleBean.nameError}"/>
+		<ice:outputLabel  value="Please, choose another name" style="color: red; font-size: 10px;"
+						  rendered="#{roleBean.nameError}"/>
+						  
+		<ice:outputLabel value="Description :" style="float: right;"/>
+		<ice:inputTextarea id="decription"
+                     value="#{roleBean.role.description}"
+                     cols="20" rows="4"
+                     style="width:280px; height:80px;" />
+	</ice:panelGrid>
+	
+	<HR/>
+	
+	<ice:panelGroup style="#{roleBean.accessPermStyle}">
+		<ice:outputLabel value="A role must have at least one access perm."
+						 style="color: red; font-size: 10px;"
+						 rendered="#{roleBean.noAccessPerm}"/>
+	    <ice:panelGrid id="MODIFY_ACCESS_PERM" columns="2" style="text-align: center;">
+	    
+			<ice:outputLabel value="Add Access Perms"/>
+			<ice:outputLabel value="Access Perms"/>
+	    	<ice:dataTable 	id="AvailableAccessPermSelection"
+	   		  	    		value="#{roleBean.availableAccessPermBeans}"
+	               			var="accessPermBean"
+	               			cellpadding="0"
+	               			scrollable="true"
+	               			scrollHeight="200px"
+	               			columnWidths="20, 300">						    
+	       		<ice:column style="text-align: center;">
+        			<f:facet name="header">
+            			<ice:commandButton style="float: center;" 
+										   image="/images/IndiKtor2.0/Buttons/addSmall.png"
+									   	   title="Add all access perms"														   	   
+									   	   actionListener="#{roleBean.addAllAccessPermItem}"/>
+        			</f:facet>
+       				<ice:commandButton style="float: center;" 
+									   image="/images/IndiKtor2.0/Buttons/addSmall.png"
+								   	   title="Add this access perm"														   	   
+								   	   actionListener="#{roleBean.addAccessPermItem}">
+						<f:attribute name="accessPermBean" value="#{accessPermBean}"/>
+					</ice:commandButton>
+	       		</ice:column>
+	       		<ice:column>
+	       			<f:facet name="header">
+            			<ice:outputText value="Title"/>
+        			</f:facet>
+        			<ice:panelGroup style="width: 300px;">
+            			<ice:outputText style="font-size: 11px;" value="#{accessPermBean.accessPerm.name}"/>
+        			</ice:panelGroup>
+	       		</ice:column>
+	    	</ice:dataTable>
+	    	<ice:dataTable 	id="RoleAccessPermSelection"
+	   		  	    		value="#{roleBean.roleAccessPermBeans}"
+	               			var="accessPermBean"
+	               			cellpadding="0"
+	               			scrollable="true"
+	               			scrollHeight="200px"
+	               			columnWidths="300, 20">
+	       		<ice:column>
+	       			<f:facet name="header">
+	            			<ice:outputText value="Title"/>
+	        			</f:facet>
+	        			<ice:panelGroup style="width: 300px;">
+	            			<ice:outputText style="font-size: 11px;" value="#{accessPermBean.accessPerm.name}"/>
+	        			</ice:panelGroup>
+	       		</ice:column>						    
+	       		<ice:column style="text-align: center;">
+        			<f:facet name="header">
+            			<ice:commandButton style="float: center;" 
+										   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+									   	   title="Remove all access perms"														   	   
+									   	   actionListener="#{roleBean.removeAllAccessPermItem}"/>
+        			</f:facet>
+       				<ice:commandButton style="float: center;" 
+									   image="/images/IndiKtor2.0/Buttons/deleteSmall.png"
+								   	   title="Remove this access perm"														   	   
+								   	   actionListener="#{roleBean.removeAccessPermItem}">
+						<f:attribute name="accessPermBean" value="#{accessPermBean}"/>
+					</ice:commandButton>
+	       		</ice:column>
+	    	</ice:dataTable>
+	    </ice:panelGrid>
+	</ice:panelGroup>
+</ice:panelGrid>
+</f:subview>
+
+
+
+<!--
+<f:subview id="updateRole" 
+		xmlns:h="http://java.sun.com/jsf/html"
+ 	    xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+        
+<ice:panelGrid columns="1" style="width: auto; height: auto; text-align: center; vertical-align: top;">
+	<ice:panelGrid columns="2">
+		<ice:outputLabel value="Name :" style="float: right;"/>
+		<ice:inputText value="#{roleBean.role.name}" style="width:280px;"/>
+		<ice:outputLabel value="Description :" style="float: right;"/>
+		<ice:inputTextarea id="decription"
+                     value="#{roleBean.role.description}"
+                     cols="20" rows="4"
+                     style="width:280px; height:80px;" />
+	</ice:panelGrid>
+	<ice:panelGrid columns="2">
+	   	<ice:outputLabel value="Please set Some Access Perms"/>
+	   	<ice:commandButton actionListener="#{roleBean.handleAccessPerm}"
+						   image="/images/IndiKtor2.0/Buttons/editSmall.png"
+						   rendered="#{roleBean.panelStack == 'ROLE_ACCESS_PERM'}"
+		    			   alt="Edit access perms"/> 
+	</ice:panelGrid>
+	<ice:panelGrid columns="2">
+		<ice:panelStack selectedPanel="#{roleBean.panelStack}">
+					<ice:panelGrid id="ROLE_ACCESS_PERM" columns="2" style="align: center; vertical-align: top;">
+	 					<ice:dataTable 	id="MyRoleAccessPermSelection"
+				   		  	    		value="#{roleBean.roleAccessPermBeans}"
+				               			var="accessPermBean"
+				               			cellpadding="0"
+				               			rendered="#{!roleBean.roleAccessPermEmpty}"
+				               			scrollable="true"
+				               			scrollHeight="200px"
+				               			columnWidths="300">
+				       		<ice:column>
+				       			<f:facet name="header">
+				            			<ice:outputText value="Access Perms"/>
+				        			</f:facet>
+				        			<ice:panelGroup style="width: 300px;">
+				            			<ice:outputText style="font-size: 11px;" value="#{accessPermBean.accessPerm.name}"/>
+				        			</ice:panelGroup>
+				       		</ice:column>				       		
+				    	</ice:dataTable>				    	
+				    </ice:panelGrid> 
+				    <ice:panelGrid id="MODIFY_ACCESS_PERM" columns="2" style="align: center;">
+					  	<ice:panelGroup>	
+							<table border="1px" bordercolor="#FFFFFF">
+						 		<tr valign="top" bordercolor="#336699">
+						   			<td valign="top">
+						   				<ice:panelGroup>	
+									   		<ice:dataTable 	id="AvailableAccessPermSelection"
+									   		  	    		value="#{roleBean.availableAccessPermBeans}"
+									               			var="accessPermBean"
+									               			cellpadding="0"
+									               			scrollable="true"
+									               			scrollHeight="200px"
+									               			columnWidths="300, 25">
+									       		<ice:column>
+									       			<f:facet name="header">
+									            			<ice:outputText value="AccessPerms Available"/>
+									        			</f:facet>
+									        			<ice:panelGroup style="width: 300px;">
+									            			<ice:outputText style="font-size: 11px;" value="#{accessPermBean.accessPerm.name}"/>
+									        			</ice:panelGroup>
+									       		</ice:column>						    
+									       		<ice:column>
+									        			<f:facet name="header">
+									            			<ice:outputText value=""/>
+									        			</f:facet>
+									        			<ice:panelGroup>
+									              			<ice:selectBooleanCheckbox 
+									                             		value="#{accessPermBean.selected}"
+									                            		partialSubmit="true"/>
+									        			</ice:panelGroup>
+									       		</ice:column>
+									    	</ice:dataTable>   	
+									    </ice:panelGroup>	
+						 			</td>
+						 			<td valign="middle" align="center">
+										<BR/>
+										<ice:commandButton                 
+											 		actionListener="#{roleBean.addAccessPermItem}"
+											 		image="/images/icon_set_arrows_add.jpg"
+											 		alt="Add An Access Perm" onfocus="this.blur();"/>
+										<BR/>
+										<ice:commandButton                 
+											 		actionListener="#{roleBean.addAllAccessPermItem}"
+											 		image="/images/icon_set_arrows_addall.jpg"
+											 		alt="Add All Access Perms" onfocus="this.blur();"/>
+										<BR/>			
+										<ice:commandButton                 
+											 		actionListener="#{roleBean.removeAccessPermItem}"
+											 		image="/images/icon_set_arrows_remove.jpg"
+											 		alt="Remove An Access Perm" onfocus="this.blur();"/>	
+										<BR/>			
+										<ice:commandButton                 
+											 		actionListener="#{roleBean.removeAllAccessPermItem}"
+											 		image="/images/icon_set_arrows_removeall.jpg"
+											 		alt="Remove All Access Perm" onfocus="this.blur();"/>	
+						 			</td>		 
+						 			<td valign="top">	
+						 				<ice:panelGroup>
+						 					<ice:dataTable 	id="RoleAccessPermSelection"
+									   		  	    		value="#{roleBean.roleAccessPermBeans}"
+									               			var="accessPermBean"
+									               			cellpadding="0"
+									               			scrollable="true"
+									               			scrollHeight="200px"
+									               			columnWidths="300, 25">
+									       		<ice:column>
+									       			<f:facet name="header">
+									            			<ice:outputText value="Role AccessPerms Selected"/>
+									        			</f:facet>
+									        			<ice:panelGroup style="width: 300px;">
+									            			<ice:outputText style="font-size: 11px;" value="#{accessPermBean.accessPerm.name}"/>
+									        			</ice:panelGroup>
+									       		</ice:column>
+									    
+									       		<ice:column>
+									        			<f:facet name="header">
+									            			<ice:outputText value=""/>
+									        			</f:facet>
+									        			<ice:panelGroup>
+									              			<ice:selectBooleanCheckbox 
+									                             value="#{accessPermBean.selected}"
+									                             partialSubmit="true"/>
+									        			</ice:panelGroup>
+									       		</ice:column>
+									    	</ice:dataTable> 
+									    </ice:panelGroup>  	
+					  				</td>
+					  			</tr>
+					  		</table>
+						 </ice:panelGroup>							 
+				    </ice:panelGrid>
+			    </ice:panelStack> 
+			    <ice:panelGroup>
+					<ice:commandButton 	actionListener="#{roleBean.backToRoleDesc}"
+								   		image="/images/IndiKtor2.0/Buttons/validateSmall.png"
+									   	rendered="#{roleBean.panelStack == 'MODIFY_ACCESS_PERM'}"
+					    			   	alt="Save acces perms"/>     
+			    </ice:panelGroup>
+	</ice:panelGrid>
+</ice:panelGrid>
+</f:subview>
+  -->

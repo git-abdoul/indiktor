@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-
-<CONFIG>
-	<QUERY_CONFIG connector="" query="select count(*) as NB, M_STATUS, M_VALUE_DATE from PAY_FLOW_DBF group by M_STATUS, M_VALUE_DATE">
-		<QUERY_ITEM itemType="INSTANCE" item="Status" queryField="M_STATUS" datatype="STRING"/>
-		<QUERY_ITEM itemType="INSTANCE" item="ValueDate" queryField="M_VALUE_DATE" datatype="STRING"/>
-		<QUERY_ITEM itemType="METRIC" item="count" queryField="NB" datatype="INTEGER"/>
-	</QUERY_CONFIG>
-</CONFIG>

@@ -7,38 +7,64 @@
         <format>tar</format>
     </formats>
     <includeBaseDirectory>true</includeBaseDirectory>
+
     <fileSets>
         <fileSet>
-            <directory>bin</directory>
+            <directory>src/main/assembly/tomcat/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <fileMode>755</fileMode>
-        </fileSet>
-        <!-- the following file set includes the JAR artifact built by the package
-            goal -->
-        <fileSet>
-            <directory>target</directory>
-            <outputDirectory>lib</outputDirectory>
             <includes>
-                <include>*.jar</include>
+                <include>*.sh</include>
             </includes>
         </fileSet>
         <fileSet>
-            <directory>log</directory>
-            <outputDirectory>log</outputDirectory>
+            <directory>src/main/assembly/tomcat/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <excludes>
+                <exclude>*.sh</exclude>
+            </excludes>
         </fileSet>
         <fileSet>
-            <directory>src/main/resources</directory>
-            <outputDirectory>etc</outputDirectory>
+            <directory>src/main/assembly/tomcat/conf</directory>
+            <outputDirectory>conf</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/assembly/tomcat/lib</directory>
+            <outputDirectory>lib</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/assembly/tomcat/temp</directory>
+            <outputDirectory>temp</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/assembly/tomcat/webapps</directory>
+            <outputDirectory>webapps</outputDirectory>
+        </fileSet>
+        <!--
+        <fileSet>
+            <directory>../components/indiktor/target/</directory>
+            <outputDirectory>webapps</outputDirectory>
+            <includes>
+                <include>*.war</include>
+            </includes>
+        </fileSet>
+        -->
+        <fileSet>
+            <directory>src/main/assembly/tomcat</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>*.txt</include>
+                <include>LICENSE</include>
+                <include>NOTICE</include>
+                <include>RELEASE-NOTES</include>
+            </includes>
         </fileSet>
     </fileSets>
-    <dependencySets>
-        <!-- the following dependency set includes the dependency JARs needed by
-            the main Java executable for indicator processing -->
-        <dependencySet>
-            <outputDirectory>lib</outputDirectory>
-            <useProjectArtifact>true</useProjectArtifact>
-            <scope>runtime</scope>
-            <unpack>false</unpack>
-        </dependencySet>
-    </dependencySets>
+    <files>
+        <file>
+            <source>../components/indiktor/target/indiktor-${version}.war</source>
+            <outputDirectory>webapps</outputDirectory>
+            <destName>indiktor.war</destName>
+        </file>
+    </files>
 </assembly>

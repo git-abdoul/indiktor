@@ -1,0 +1,117 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ui:param name="pageTitle" value="Monitor Config Fields Extension" />
+
+<ui:define name="content">
+		<ice:panelGrid border="0" columns="2" cellspacing="50" columnClasses="colVTop,colVTop">
+			<ice:panelGrid styleClass="treeContainer" columns="1">
+				<ice:form id="TreeForm" partialSubmit="false">  
+                <ice:panelGroup>
+        			<BR/>&amp;nbsp;<BR/>
+                </ice:panelGroup>     
+                <ice:tree id="tree" value="#{ikrMonitorConfigFieldController.model}" 
+                		  var="item" hideRootNode="true" hideNavigation="false" style="width: 372px" 
+                		  imageDir="#{styleBean.imageDirectory}">
+                    <ice:treeNode>
+                        <f:facet name="content">
+							<ice:commandLink actionListener="#{item.userObject.selectNodeObject}" 
+												      value="#{item.userObject.text}"/>
+                        </f:facet>
+                    </ice:treeNode>
+                </ice:tree>
+               	</ice:form>
+            </ice:panelGrid>        	
+        	<ice:form id="panelStackForm" partialSubmit="false">
+			<ice:panelStack selectedPanel="#{panelStack.selectedPanel}">
+				<ice:panelGroup id="EMPTY">
+                </ice:panelGroup>    
+    			<ice:panelGrid id="CONFIG_FIELD" columns="1" style="align: center;">
+    				<ice:panelGrid columns="2">
+		   				<ice:outputLabel value="Type:"/>
+		       			<ice:inputText binding="#{ikrMonitorConfigFieldBean.typeUI}" value="#{ikrMonitorConfigFieldBean.configField.type}" style="width:250px"/>
+		       			<ice:selectOneMenu
+                        		value="#{ikrMonitorConfigFieldBean.configField.type}" 
+                        		partialSubmit="true"
+                        		binding="#{ikrMonitorConfigFieldBean.typeSelectionMenu}">
+                    			<f:selectItems value="#{ikrMonitorConfigFieldBean.configTypes}"/>
+                		</ice:selectOneMenu>   
+		       			<ice:outputLabel value="Field Name:"/>
+		       			<ice:inputText value="#{ikrMonitorConfigFieldBean.configField.fieldName}" style="width:250px"/>
+		       			<ice:outputLabel value="Field Label:"/>
+		       			<ice:inputText value="#{ikrMonitorConfigFieldBean.configField.fieldLabel}" style="width:250px"/>  
+		       			<ice:outputLabel value="Enabled:"/>     
+		       			<ice:selectBooleanCheckbox 
+						              			valueChangeListener="#{ikrMonitorConfigFieldBean.enabledChangeListener}"
+						                      	value="#{ikrMonitorConfigFieldBean.configField.enabled}"
+						                       	partialSubmit="true"/>   			        
+		   			</ice:panelGrid>
+		   			<ice:panelGroup>
+						<table width="100%" border="0">
+							<tr>
+								<td align="center">
+									<ice:commandButton 
+												actionListener="#{ikrMonitorConfigFieldBean.addNewIkrMonitorConfigField}" 
+												value="Add New Field" 
+												binding="#{ikrMonitorConfigFieldBean.newFieldCommand}"/>
+									<ice:commandButton 
+												actionListener="#{ikrMonitorConfigFieldBean.addNewMonitorConfig}" 
+												value="Add New Monitor" 
+												binding="#{ikrMonitorConfigFieldBean.newMonitorConfigCommand}"/>
+									<ice:commandButton
+												actionListener="#{ikrMonitorConfigFieldBean.saveIkrMonitorConfigField}" 
+												binding="#{ikrMonitorConfigFieldBean.saveCommand}"
+												style="width:75px"/>							
+									<ice:commandButton 
+												actionListener="#{ikrMonitorConfigFieldBean.removeIkrMonitorConfigField}" 
+												value="Remove" 
+												binding="#{ikrMonitorConfigFieldBean.removeCommand}"
+												style="width:75px"/>
+								</td>									
+							</tr>
+						</table>
+				    </ice:panelGroup> 	
+				    <ice:panelGroup>
+				    	<ice:dataTable 
+				    				var="field"
+		                       		value="#{ikrMonitorConfigFieldBean.configFields}"
+		                       		columnClasses="tableCol" >
+				            <ice:column>
+				                <ice:rowSelector
+				                		value="#{field.selected}"
+				                        selectionListener="#{ikrMonitorConfigFieldBean.rowSelectionListener}"
+				                        preStyleOnSelection="true"/>
+				                <f:facet name="header">
+				                    <ice:outputText value="Type"/>
+				                </f:facet>
+				                <ice:outputText value="#{field.type}"/>
+				            </ice:column>		
+				            <ice:column>
+				                <f:facet name="header">
+				                    <ice:outputText value="Field Name"/>
+				                </f:facet>
+				                <ice:outputText value="#{field.fieldName}"/>
+				            </ice:column>		
+				            <ice:column>		                
+				            	<f:facet name="header">
+				                    <ice:outputText value="Field Label"/>
+				                </f:facet>
+				                <ice:outputText value="#{field.fieldLabel}"/>
+				            </ice:column>
+				             <ice:column>		                
+				            	<f:facet name="header">
+				                    <ice:outputText value="Enabled"/>
+				                </f:facet>
+				                 <ice:outputText value="#{field.enabled}"/>		                
+				            </ice:column>
+				        </ice:dataTable>
+				    </ice:panelGroup>  
+    			</ice:panelGrid>				
+	  	</ice:panelStack>
+	  	</ice:form>
+	 </ice:panelGrid> 
+    </ui:define>
+</ui:composition>

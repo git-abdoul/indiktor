@@ -1,1 +1,0 @@
-start-monitor-server.bat DEMO

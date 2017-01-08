@@ -24,11 +24,10 @@ public class IkrCartesianChartModel extends IkrChartModel {
 	protected void initModel() {
 		model = new CartesianChartModel();
 	}
-
-	//TODO Remove comments otherwise Chrts won't be displayed
+	
 	public void init() {
-//		int nbOfCategory = chartWidth/50;
-//		((CartesianChartModel)model).setNbOfCategory(nbOfCategory);
+		int nbOfCategory = chartWidth/50;
+		((CartesianChartModel)model).setNbOfCategory(nbOfCategory);
 	}
 
 

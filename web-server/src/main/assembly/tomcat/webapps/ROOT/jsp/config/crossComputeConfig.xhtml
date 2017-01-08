@@ -1,0 +1,142 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.xhtml
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<ui:param name="pageTitle" value="Monitoring Configuration" />
+<ui:define name="content">
+
+<ice:panelGroup>
+<ice:form>
+	<table border="0">
+		<tr>
+			<td colspan="2" align="center">
+				<ice:outputLabel value="CrossCompute Definition" style="font-size: 20px"/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" height="10px"></td>
+		</tr>		
+		<tr>
+			<td align="right">
+				<ice:outputLabel value="Monitor:"/>
+			</td>
+			<td align="right">
+				<ice:outputText value="#{crossComputeConfigBean.ikrDefinitionBean.monitorConfig.label}"/>
+			</td>
+		</tr>		
+		<tr>
+			<td colspan="2" height="20px"></td>
+		</tr>
+		<tr>
+			<td align="right" width="50%">
+				<ice:outputLabel value="Metric Group:"/>
+			</td>
+			<td align="right">
+				<ice:outputText value="#{crossComputeConfigBean.ikrDefinitionBean.ikrCategory.ikrCategoryGroup}"/>
+			</td>
+		</tr>		
+		<tr>
+			<td align="right">
+				<ice:outputLabel value="Metric Label:"/>
+			</td>
+			<td align="right">
+				<ice:outputText value="#{crossComputeConfigBean.ikrDefinitionBean.ikrCategory.label}"/>
+			</td>
+		</tr>		
+		<tr>
+			<td align="right">
+				<ice:outputLabel value="CrossCompute Formula:"/>
+			</td>
+			<td align="right">
+				<ice:outputText value="#{crossComputeConfigBean.ikrDefinitionBean.ikrCategory.name}"/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" height="10px"></td>
+		</tr>		
+		<tr>
+			<td align="right">
+				<ice:outputLabel value="Metric Instance:"/>
+			</td>
+			<td align="right">
+				<ice:outputText value="#{crossComputeConfigBean.ikrDefinitionBean.ikrDefinition.ikrInstance}"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				<ice:outputLabel value="Metric Instance:"/>
+			</td>
+			<td align="right">
+				<ice:outputText value="#{crossComputeConfigBean.ikrDefinitionBean.ikrDefinition.ikrContext}"/>
+			</td>
+		</tr>					
+	</table>
+
+<BR/><BR/>
+	
+ 	<ice:selectOneRadio id="crossComputeRadio"
+ 					 value="#{crossComputeConfigBean.selectedKey}"
+ 		 	 partialSubmit="true"
+ 	   valueChangeListener="#{crossComputeConfigBean.onChangeKeyListener}"
+ 	   			 	layout="spread">
+ 		<f:selectItems value="#{crossComputeConfigBean.itemKeys}"/>
+ 	</ice:selectOneRadio>	
+	
+  <ice:dataTable cellpadding="0" cellspacing="0" 
+  				value="#{crossComputeConfigBean.computeItems}" 
+			 	  var="item"
+			varStatus="rowInfo">
+			 	  
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Formula ID"/>
+		</f:facet>
+		 <ice:radio for="crossComputeRadio"
+ 	 			  index="#{rowInfo.index}"/>
+	</ice:column>	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Metric Group"/>
+		</f:facet>
+		<ice:outputText value="#{item.ikrCategory.ikrCategoryGroup}"/>
+	</ice:column>			     	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Metric"/>
+		</f:facet>
+		<ice:outputText value="#{item.ikrCategory.label}"/>
+	</ice:column>
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Metric Instance"/>
+		</f:facet>
+		<ice:outputText value="#{item.ikrDefinition.fullIkrInstance}"/>
+	</ice:column>	
+	<ice:column>
+		<f:facet name="header">
+			<ice:outputText value="Metric Context"/>
+		</f:facet>
+		<ice:outputText value="#{item.ikrDefinition.ikrContext}"/>
+	</ice:column>	
+  </ice:dataTable>	
+	
+<BR/>	
+	
+
+	<ice:commandButton value="Cancel"
+				 	   action="monitoringConfig" />
+	<ice:commandButton value="Save"
+				 	   actionListener="#{crossComputeConfigBean.save}"
+				 	   action="#{crossComputeConfigBean.action}" />					 	   
+
+<BR/><BR/>
+
+	<ui:include src="/jsp/ikrComponent/monoIkrSelector.xhtml/>
+	</ice:form>
+</ice:panelGroup>
+
+</ui:define>
+</ui:composition>
+

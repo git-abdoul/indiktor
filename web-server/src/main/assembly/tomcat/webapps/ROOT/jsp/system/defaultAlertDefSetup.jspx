@@ -1,0 +1,82 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+                xmlns="http://www.w3.org/1999/xhtml"
+             	xmlns:ui="http://java.sun.com/jsf/facelets"
+             	xmlns:f="http://java.sun.com/jsf/core"
+             	xmlns:ice="http://www.icesoft.com/icefaces/component">
+<ui:param name="pageTitle" value="Default Alert Definitions Setup" />
+<ui:define name="content">
+	<ice:form>
+		<ice:panelGrid columns="2" cellspacing="60" columnClasses="colVTop,colVTop">			
+			<ice:panelGroup>
+				<table border="1px" bordercolor="#336699" width="500px">
+					<tr bgcolor="#336699" height="30px">
+						<th colspan="2" align="left">
+							<ice:outputLabel value="Default Alerts Definitions" style="font-size: 12px; color: #FFF; font-weight: bold;"/>
+						</th>				
+					</tr>
+					<tr bordercolor="#FFFFFF" align="center">
+						<td>
+							<br/>
+							<ice:panelGrid columns="1">
+								<ice:panelGrid columns="2">
+									<ice:outputLabel value="Monitor Env: "/>
+									<ice:inputText value="#{defaultAlertDefinitionBean.monitorEnv}"/>
+								</ice:panelGrid>
+								<br/>
+								<ice:panelGroup>
+									<ice:commandButton
+							       			value="Delete "
+											actionListener="#{defaultAlertDefinitionBean.deleteToggleModal}"
+											action="#{defaultAlertDefinitionBean.action}"/>
+									<ice:commandButton
+							       			value="Create "
+											actionListener="#{defaultAlertDefinitionBean.createToggleModal}"
+											action="#{defaultAlertDefinitionBean.action}"/>
+									<ice:commandButton
+							       			value="Update "
+											actionListener="#{defaultAlertDefinitionBean.updateAlertConditions}"
+											action="#{defaultAlertDefinitionBean.action}"/>
+								</ice:panelGroup>								
+							</ice:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</ice:panelGroup>
+		</ice:panelGrid>
+		
+		<ice:panelPopup id="modalPnlPop"
+		            draggable="false" modal="true"
+		            visible="#{defaultAlertDefinitionBean.withConfirmation}"
+		            autoCentre="true"
+		            style="width: 300px;">
+	    	<f:facet name="header">
+		     	<ice:panelGroup>
+		     		<ice:panelGrid columns="1" style="align: center;">
+		     			<ice:outputLabel value="Are you sure to #{defaultAlertDefinitionBean.whatToDo} #{defaultAlertDefinitionBean.monitorEnv} ?"/>
+		     		</ice:panelGrid> 
+		    	</ice:panelGroup>
+	    	</f:facet>
+	    	<f:facet name="body">
+		        <ice:panelGroup>
+					<table width="100%" border="0">
+						<tr>
+							<td align="center">
+								<ice:commandButton
+											value="Ok"
+				    						actionListener="#{defaultAlertDefinitionBean.resetAlerts}"
+				    						action="#{defaultAlertDefinitionBean.action}"
+				    						style="width:75px;"/>
+								<ice:commandButton 
+											value="Cancel"
+				         					actionListener="#{defaultAlertDefinitionBean.toggleModal}"
+				         					style="width:75px;"/>
+							</td>									
+						</tr>
+					</table>
+		    	</ice:panelGroup>  
+	    	</f:facet>
+		</ice:panelPopup>
+	</ice:form>
+</ui:define>
+</ui:composition>
+

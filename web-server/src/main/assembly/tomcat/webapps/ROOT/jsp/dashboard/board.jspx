@@ -1,0 +1,1639 @@
+<ui:composition template="/WEB-INF/template/mainTemplate.jspx"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+	
+	<ui:param name="pageTitle" value="#{boardBean.components.summary.title} - #{boardBean.components.summary.env}" />
+
+	<ui:define name="nav">
+		<ui:include src="/jsp/dashboard/dashboardNavigation.jspx" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<ice:form>
+
+			<ice:outputText value="#{boardBean.components.summary.title}"
+				style="font-size: 20px; font-weight: bold;" />
+
+			<ui:repeat var="navigationBoard"
+				value="#{boardBean.components.navigationBoardComponents}">
+				<ice:panelGroup style="#{navigationBoard.style}"
+					styleClass="boardComponentNavigationBoard">
+					<ice:panelGroup
+						style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+						<ice:outputLabel styleClass="dashboardTitle"
+							value="#{navigationBoard.title}" />
+					</ice:panelGroup>
+					<ui:repeat var="summary" value="#{navigationBoard.summaries}">
+						<div class="alertItem">
+							<ice:commandLink actionListener="#{boardBean.navigate}"
+								action="#{boardBean.action}">
+								<ice:graphicImage url="#{summary.url}" />
+								<ice:outputLabel value="#{summary.title}" />
+								<f:attribute name="to" value="#{summary}" />
+								<f:attribute name="from" value="#{boardBean.components.summary}" />
+							</ice:commandLink>
+						</div>
+					</ui:repeat>
+				</ice:panelGroup>
+			</ui:repeat>
+
+			<ice:panelGroup
+				style="#{boardBean.alertBoardMap['alertBoard0'].style}"
+				styleClass="boardComponentAlertBoard"
+				rendered="#{boardBean.alertBoardMap['alertBoard0'] != null}">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.alertBoardMap['alertBoard0'].title}" />
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard0'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenON.png"
+									   rendered="#{boardBean.alertBoardMap['alertBoard0'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard0'].commandLinkTitle}"/>
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard0'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenOFF.png"
+									   rendered="#{!boardBean.alertBoardMap['alertBoard0'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard0'].commandLinkTitle}"/>
+					<!-- <ice:commandLink
+						actionListener="#{boardBean.alertBoardMap['alertBoard0'].showAlertsOn}"
+						partialSubmit="true"
+						value="#{boardBean.alertBoardMap['alertBoard0'].commandLinkTitle}"
+						style="color: white;" /> -->
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.alertBoardMap['alertBoard0'].alertLeafs}"
+					var="alertItem" cellpadding="0" cellspacing="0"
+					style="margin: 1px 1px 1px 1px;" columnWidths="180, 180"
+					scrollable="true" scrollHeight="#{boardBean.alertBoardMap['alertBoard0'].scrollHeight}">
+					<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:outputText value="Category" />
+						</f:facet>
+						<!--  
+			  	<ice:outputText value="#{alertItem.title}" rendered="#{alertItem.nbActiveAlert == 0}"/>
+			  	<ice:commandLink value="#{alertItem.title}" 
+			  	  	    actionListener="#{boardBean.viewAlertBoardComponent}"
+			      	   		    action="#{boardBean.action}"
+			      	  		  rendered="#{alertItem.nbActiveAlert != 0}">
+					  	<f:attribute name="alertItem" value="#{alertItem}"/>
+				</ice:commandLink> 
+				-->
+						<ice:commandLink
+							value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"
+							actionListener="#{boardBean.viewAlertBoardComponent}"
+							action="#{boardBean.action}">
+							<f:attribute name="alertItem" value="#{alertItem}" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column style="text-align: left;">
+						<f:facet name="header">
+							<ice:outputText value="Alerts" />
+						</f:facet>
+						<ice:panelGroup
+							rendered="#{boardBean.alertBoardMap['alertBoard0'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.allAlertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+						<ice:panelGroup
+							rendered="#{!boardBean.alertBoardMap['alertBoard0'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.alertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.alertBoardMap['alertBoard1'].style}"
+				styleClass="boardComponentAlertBoard"
+				rendered="#{boardBean.alertBoardMap['alertBoard1'] != null}">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.alertBoardMap['alertBoard1'].title}" />
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard1'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenON.png"
+									   rendered="#{boardBean.alertBoardMap['alertBoard1'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard1'].commandLinkTitle}"/>
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard1'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenOFF.png"
+									   rendered="#{!boardBean.alertBoardMap['alertBoard1'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard1'].commandLinkTitle}"/>
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.alertBoardMap['alertBoard1'].alertLeafs}"
+					var="alertItem" cellpadding="0" cellspacing="0"
+					style="margin: 1px 1px 1px 1px;" columnWidths="180, 180"
+					scrollable="true" scrollHeight="#{boardBean.alertBoardMap['alertBoard1'].scrollHeight}">
+					<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:outputText value="Category" />
+						</f:facet>
+						<!--  
+			  	<ice:outputText value="#{alertItem.title}" rendered="#{alertItem.nbActiveAlert == 0}"/>
+			  	<ice:commandLink value="#{alertItem.title}" 
+			  	  	    actionListener="#{boardBean.viewAlertBoardComponent}"
+			      	   		    action="#{boardBean.action}"
+			      	  		  rendered="#{alertItem.nbActiveAlert != 0}">
+					  	<f:attribute name="alertItem" value="#{alertItem}"/>
+				</ice:commandLink> 
+				-->
+						<ice:commandLink
+							value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"
+							actionListener="#{boardBean.viewAlertBoardComponent}"
+							action="#{boardBean.action}">
+							<f:attribute name="alertItem" value="#{alertItem}" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column style="text-align: left;">
+						<f:facet name="header">
+							<ice:outputText value="Alerts" />
+						</f:facet>
+						<ice:panelGroup
+							rendered="#{boardBean.alertBoardMap['alertBoard1'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.allAlertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+						<ice:panelGroup
+							rendered="#{!boardBean.alertBoardMap['alertBoard1'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.alertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.alertBoardMap['alertBoard2'].style}"
+				styleClass="boardComponentAlertBoard"
+				rendered="#{boardBean.alertBoardMap['alertBoard2'] != null}">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.alertBoardMap['alertBoard2'].title}" />
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard2'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenON.png"
+									   rendered="#{boardBean.alertBoardMap['alertBoard2'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard2'].commandLinkTitle}"/>
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard2'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenOFF.png"
+									   rendered="#{!boardBean.alertBoardMap['alertBoard2'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard2'].commandLinkTitle}"/>
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.alertBoardMap['alertBoard2'].alertLeafs}"
+					var="alertItem" cellpadding="0" cellspacing="0"
+					style="margin: 1px 1px 1px 1px;" columnWidths="180, 180"
+					scrollable="true" scrollHeight="#{boardBean.alertBoardMap['alertBoard2'].scrollHeight}">
+					<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:outputText value="Category" />
+						</f:facet>
+						<!--  
+			  	<ice:outputText value="#{alertItem.title}" rendered="#{alertItem.nbActiveAlert == 0}"/>
+			  	<ice:commandLink value="#{alertItem.title}" 
+			  	  	    actionListener="#{boardBean.viewAlertBoardComponent}"
+			      	   		    action="#{boardBean.action}"
+			      	  		  rendered="#{alertItem.nbActiveAlert != 0}">
+					  	<f:attribute name="alertItem" value="#{alertItem}"/>
+				</ice:commandLink> 
+				-->
+						<ice:commandLink
+							value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"
+							actionListener="#{boardBean.viewAlertBoardComponent}"
+							action="#{boardBean.action}">
+							<f:attribute name="alertItem" value="#{alertItem}" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column style="text-align: left;">
+						<f:facet name="header">
+							<ice:outputText value="Alerts" />
+						</f:facet>
+						<ice:panelGroup
+							rendered="#{boardBean.alertBoardMap['alertBoard2'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.allAlertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+						<ice:panelGroup
+							rendered="#{!boardBean.alertBoardMap['alertBoard2'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.alertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.alertBoardMap['alertBoard3'].style}"
+				styleClass="boardComponentAlertBoard"
+				rendered="#{boardBean.alertBoardMap['alertBoard3'] != null}">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.alertBoardMap['alertBoard3'].title}" />
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard3'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenON.png"
+									   rendered="#{boardBean.alertBoardMap['alertBoard3'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard3'].commandLinkTitle}"/>
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard3'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenOFF.png"
+									   rendered="#{!boardBean.alertBoardMap['alertBoard3'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard3'].commandLinkTitle}"/>
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.alertBoardMap['alertBoard3'].alertLeafs}"
+					var="alertItem" cellpadding="0" cellspacing="0"
+					style="margin: 1px 1px 1px 1px;" columnWidths="180, 180"
+					scrollable="true" scrollHeight="#{boardBean.alertBoardMap['alertBoard3'].scrollHeight}">
+					<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:outputText value="Category" />
+						</f:facet>
+						<!--  
+			  	<ice:outputText value="#{alertItem.title}" rendered="#{alertItem.nbActiveAlert == 0}"/>
+			  	<ice:commandLink value="#{alertItem.title}" 
+			  	  	    actionListener="#{boardBean.viewAlertBoardComponent}"
+			      	   		    action="#{boardBean.action}"
+			      	  		  rendered="#{alertItem.nbActiveAlert != 0}">
+					  	<f:attribute name="alertItem" value="#{alertItem}"/>
+				</ice:commandLink> 
+				-->
+						<ice:commandLink
+							value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"
+							actionListener="#{boardBean.viewAlertBoardComponent}"
+							action="#{boardBean.action}">
+							<f:attribute name="alertItem" value="#{alertItem}" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column style="text-align: left;">
+						<f:facet name="header">
+							<ice:outputText value="Alerts" />
+						</f:facet>
+						<ice:panelGroup
+							rendered="#{boardBean.alertBoardMap['alertBoard3'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.allAlertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+						<ice:panelGroup
+							rendered="#{!boardBean.alertBoardMap['alertBoard3'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.alertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.alertBoardMap['alertBoard4'].style}"
+				styleClass="boardComponentAlertBoard"
+				rendered="#{boardBean.alertBoardMap['alertBoard4'] != null}">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.alertBoardMap['alertBoard4'].title}" />
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard4'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenON.png"
+									   rendered="#{boardBean.alertBoardMap['alertBoard4'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard4'].commandLinkTitle}"/>
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard4'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenOFF.png"
+									   rendered="#{!boardBean.alertBoardMap['alertBoard4'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard4'].commandLinkTitle}"/>
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.alertBoardMap['alertBoard4'].alertLeafs}"
+					var="alertItem" cellpadding="0" cellspacing="0"
+					style="margin: 1px 1px 1px 1px;" columnWidths="180, 180"
+					scrollable="true" scrollHeight="#{boardBean.alertBoardMap['alertBoard4'].scrollHeight}">
+					<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:outputText value="Category" />
+						</f:facet>
+						<ice:commandLink
+							value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"
+							actionListener="#{boardBean.viewAlertBoardComponent}"
+							action="#{boardBean.action}">
+							<f:attribute name="alertItem" value="#{alertItem}" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column style="text-align: left;">
+						<f:facet name="header">
+							<ice:outputText value="Alerts" />
+						</f:facet>
+						<ice:panelGroup
+							rendered="#{boardBean.alertBoardMap['alertBoard4'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.allAlertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+						<ice:panelGroup
+							rendered="#{!boardBean.alertBoardMap['alertBoard4'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.alertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.alertBoardMap['alertBoard5'].style}"
+				styleClass="boardComponentAlertBoard"
+				rendered="#{boardBean.alertBoardMap['alertBoard5'] != null}">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.alertBoardMap['alertBoard5'].title}" />
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard5'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenON.png"
+									   rendered="#{boardBean.alertBoardMap['alertBoard5'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard5'].commandLinkTitle}"/>
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard5'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenOFF.png"
+									   rendered="#{!boardBean.alertBoardMap['alertBoard5'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard5'].commandLinkTitle}"/>
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.alertBoardMap['alertBoard5'].alertLeafs}"
+					var="alertItem" cellpadding="0" cellspacing="0"
+					style="margin: 1px 1px 1px 1px;" columnWidths="180, 180"
+					scrollable="true" scrollHeight="#{boardBean.alertBoardMap['alertBoard5'].scrollHeight}">
+					<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:outputText value="Category" />
+						</f:facet>
+						<ice:commandLink
+							value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"
+							actionListener="#{boardBean.viewAlertBoardComponent}"
+							action="#{boardBean.action}">
+							<f:attribute name="alertItem" value="#{alertItem}" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column style="text-align: left;">
+						<f:facet name="header">
+							<ice:outputText value="Alerts" />
+						</f:facet>
+						<ice:panelGroup
+							rendered="#{boardBean.alertBoardMap['alertBoard5'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.allAlertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+						<ice:panelGroup
+							rendered="#{!boardBean.alertBoardMap['alertBoard5'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.alertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.alertBoardMap['alertBoard6'].style}"
+				styleClass="boardComponentAlertBoard"
+				rendered="#{boardBean.alertBoardMap['alertBoard6'] != null}">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.alertBoardMap['alertBoard6'].title}" />
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard6'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenON.png"
+									   rendered="#{boardBean.alertBoardMap['alertBoard6'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard6'].commandLinkTitle}"/>
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard6'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenOFF.png"
+									   rendered="#{!boardBean.alertBoardMap['alertBoard6'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard6'].commandLinkTitle}"/>
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.alertBoardMap['alertBoard6'].alertLeafs}"
+					var="alertItem" cellpadding="0" cellspacing="0"
+					style="margin: 1px 1px 1px 1px;" columnWidths="180, 180"
+					scrollable="true" scrollHeight="#{boardBean.alertBoardMap['alertBoard6'].scrollHeight}">
+					<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:outputText value="Category" />
+						</f:facet>
+						<ice:commandLink
+							value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"
+							actionListener="#{boardBean.viewAlertBoardComponent}"
+							action="#{boardBean.action}">
+							<f:attribute name="alertItem" value="#{alertItem}" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column style="text-align: left;">
+						<f:facet name="header">
+							<ice:outputText value="Alerts" />
+						</f:facet>
+						<ice:panelGroup
+							rendered="#{boardBean.alertBoardMap['alertBoard6'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.allAlertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+						<ice:panelGroup
+							rendered="#{!boardBean.alertBoardMap['alertBoard6'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.alertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.alertBoardMap['alertBoard7'].style}"
+				styleClass="boardComponentAlertBoard"
+				rendered="#{boardBean.alertBoardMap['alertBoard7'] != null}">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.alertBoardMap['alertBoard7'].title}" />
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard7'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenON.png"
+									   rendered="#{boardBean.alertBoardMap['alertBoard7'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard7'].commandLinkTitle}"/>
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard7'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenOFF.png"
+									   rendered="#{!boardBean.alertBoardMap['alertBoard7'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard7'].commandLinkTitle}"/>
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.alertBoardMap['alertBoard7'].alertLeafs}"
+					var="alertItem" cellpadding="0" cellspacing="0"
+					style="margin: 1px 1px 1px 1px;" columnWidths="180, 180"
+					scrollable="true" scrollHeight="#{boardBean.alertBoardMap['alertBoard7'].scrollHeight}">
+					<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:outputText value="Category" />
+						</f:facet>
+						<ice:commandLink
+							value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"
+							actionListener="#{boardBean.viewAlertBoardComponent}"
+							action="#{boardBean.action}">
+							<f:attribute name="alertItem" value="#{alertItem}" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column style="text-align: left;">
+						<f:facet name="header">
+							<ice:outputText value="Alerts" />
+						</f:facet>
+						<ice:panelGroup
+							rendered="#{boardBean.alertBoardMap['alertBoard7'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.allAlertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+						<ice:panelGroup
+							rendered="#{!boardBean.alertBoardMap['alertBoard7'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.alertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.alertBoardMap['alertBoard8'].style}"
+				styleClass="boardComponentAlertBoard"
+				rendered="#{boardBean.alertBoardMap['alertBoard8'] != null}">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.alertBoardMap['alertBoard8'].title}" />
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard8'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenON.png"
+									   rendered="#{boardBean.alertBoardMap['alertBoard8'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard8'].commandLinkTitle}"/>
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard8'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenOFF.png"
+									   rendered="#{!boardBean.alertBoardMap['alertBoard8'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard8'].commandLinkTitle}"/>
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.alertBoardMap['alertBoard8'].alertLeafs}"
+					var="alertItem" cellpadding="0" cellspacing="0"
+					style="margin: 1px 1px 1px 1px;" columnWidths="180, 180"
+					scrollable="true" scrollHeight="#{boardBean.alertBoardMap['alertBoard8'].scrollHeight}">
+					<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:outputText value="Category" />
+						</f:facet>
+						<ice:commandLink
+							value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"
+							actionListener="#{boardBean.viewAlertBoardComponent}"
+							action="#{boardBean.action}">
+							<f:attribute name="alertItem" value="#{alertItem}" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column style="text-align: left;">
+						<f:facet name="header">
+							<ice:outputText value="Alerts" />
+						</f:facet>
+						<ice:panelGroup
+							rendered="#{boardBean.alertBoardMap['alertBoard8'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.allAlertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+						<ice:panelGroup
+							rendered="#{!boardBean.alertBoardMap['alertBoard8'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.alertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.alertBoardMap['alertBoard9'].style}"
+				styleClass="boardComponentAlertBoard"
+				rendered="#{boardBean.alertBoardMap['alertBoard9'] != null}">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.alertBoardMap['alertBoard9'].title}" />
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard9'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenON.png"
+									   rendered="#{boardBean.alertBoardMap['alertBoard9'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard9'].commandLinkTitle}"/>
+					<ice:commandButton actionListener="#{boardBean.alertBoardMap['alertBoard9'].showAlertsOn}"
+									   partialSubmit="true"
+									   style="margin-left: 5px;"
+									   image="/images/IndiKtor2.0/Buttons/alertGreenOFF.png"
+									   rendered="#{!boardBean.alertBoardMap['alertBoard9'].showAllAlerts}"
+									   title="#{boardBean.alertBoardMap['alertBoard9'].commandLinkTitle}"/>
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.alertBoardMap['alertBoard9'].alertLeafs}"
+					var="alertItem" cellpadding="0" cellspacing="0"
+					style="margin: 1px 1px 1px 1px;" columnWidths="180, 180"
+					scrollable="true" scrollHeight="#{boardBean.alertBoardMap['alertBoard9'].scrollHeight}">
+					<!-- <ice:column>
+	        	<f:facet name="header">
+	            	<ice:outputText value="Stats"/>
+	         	</f:facet>
+	         	<ice:panelGroup style="width: 50px; text-align: center">
+	         		<ice:outputLabel value="#{alertItem.nbActiveAlert} / #{alertItem.nbAlert}"/>
+	         	</ice:panelGroup> 
+	        </ice:column> -->
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:outputText value="Category" />
+						</f:facet>
+						<ice:commandLink
+							value="#{alertItem.title} (#{alertItem.nbActiveAlert} / #{alertItem.nbAlert})"
+							actionListener="#{boardBean.viewAlertBoardComponent}"
+							action="#{boardBean.action}">
+							<f:attribute name="alertItem" value="#{alertItem}" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column style="text-align: left;">
+						<f:facet name="header">
+							<ice:outputText value="Alerts" />
+						</f:facet>
+						<ice:panelGroup
+							rendered="#{boardBean.alertBoardMap['alertBoard9'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.allAlertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+						<ice:panelGroup
+							rendered="#{!boardBean.alertBoardMap['alertBoard9'].showAllAlerts}">
+							<table>
+								<ui:repeat value="#{alertItem.alertBeans}" var="alertBean">
+									<tr>
+										<td><ice:graphicImage url="#{alertBean.url}" width="20px" />
+										</td>
+										<td><ice:commandLink
+												value="#{alertBean.alertDefinitionBean.alertDefinition.name}"
+												actionListener="#{boardBean.viewAlertBoardComponentOnAlertClick}"
+												action="#{boardBean.action}">
+												<f:attribute name="alertItem" value="#{alertItem}" />
+												<f:attribute name="alertItemSelected"
+													value="#{alertBean.alertDefinitionBean.alertDefinition.name}" />
+											</ice:commandLink> <!-- <ice:outputText value="#{alertBean.alertDefinitionBean.alertDefinition.name}"/> -->
+										</td>
+									</tr>
+								</ui:repeat>
+							</table>
+						</ice:panelGroup>
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ui:repeat var="infoBoard"
+				value="#{boardBean.components.infoBoardComponents}">
+				<ice:panelGroup style="#{infoBoard.style}"
+					styleClass="boardComponent">
+					<ice:panelGroup
+						style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+						<ice:outputLabel styleClass="dashboardTitle"
+							value="#{infoBoard.title}" />
+					</ice:panelGroup>
+					<ice:dataTable value="#{infoBoard.infoDetails}" var="infoDetail"
+						sortColumn="#{infoBoard.columnName}"
+						sortAscending="#{infoBoard.ascending}" cellpadding="0"
+						cellspacing="0" style="margin: 1px 1px 1px 1px; font-size: 11px"
+						columnWidths="290, 80"
+						scrollable="true"
+						scrollHeight="#{infoBoard.scrollHeight}">
+						<ice:column style="text-align: left;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="Name" arrow="true">
+									<ice:outputText value="Name" />
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:outputLabel value="#{infoDetail.label}" />
+						</ice:column>
+						<ice:column style="text-align: left;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="Value" arrow="true">
+									<ice:outputText value="Value" />
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:outputText value="#{infoDetail.value}" />
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>
+			</ui:repeat>
+
+			<ui:repeat var="batchBoard"
+				value="#{boardBean.components.batchBoardComponents}">
+				<ice:panelGroup style="#{batchBoard.style}"
+					styleClass="boardComponentBatchBoard">
+					<ice:panelGroup
+						style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+						<ice:outputLabel styleClass="dashboardTitle"
+							value="#{batchBoard.title}" />
+					</ice:panelGroup>
+					<ice:dataTable value="#{batchBoard.batchBoardDetails}"
+						var="batchDetail" sortColumn="#{batchBoard.columnName}"
+						sortAscending="#{batchBoard.ascending}" cellpadding="0"
+						cellspacing="0" style="margin: 1px 1px 1px 1px; font-size: 11px"
+						rowClasses="#{batchBoard.colors}" columnClasses="tableCol"
+						columnWidths="240, 65, 65, 65, 45, 50">
+						<ice:column style="text-align: left;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="Name" arrow="true">
+									<ice:outputText value="Name" />
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:outputLabel value="#{batchDetail.label}" style="font-size: 9px;"/>
+						</ice:column>
+						<ice:column style="text-align: center;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="Scheduled Time" arrow="true">
+									<ice:outputText value="Scheduled Time" />
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:outputLabel value="#{batchDetail.scheduledTime}" style="font-size: 9px;"/>
+						</ice:column>
+						<ice:column style="text-align: center;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="Start Time" arrow="true">
+									<ice:outputText value="Start Time" />
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:outputLabel value="#{batchDetail.startTime}" style="font-size: 9px;"/>
+						</ice:column>
+						<ice:column style="text-align: center;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="End Time" arrow="true">
+									<ice:outputText value="End Time" />
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:outputLabel value="#{batchDetail.endTime}" style="font-size: 9px;"/>
+						</ice:column>
+						<ice:column style="text-align: left;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="Uptime" arrow="true">
+									<ice:outputText value="Uptime" />
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:outputLabel value="#{batchDetail.uptime}" style="font-size: 9px;"/>
+						</ice:column>
+						<ice:column style="text-align: left;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="Status" arrow="true">
+									<ice:outputText value="Status" />
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:outputLabel value="#{batchDetail.status}" style="font-size: 9px;"/>
+							<!-- <ice:graphicImage url="/images/IndiKtor2.0/WelcomeLoginPages/progressBar.gif"
+			         				   rendered="#{batchDetail.status == "IN_PROGRESS"}"/> -->
+						</ice:column>
+						<!-- <ice:column>
+				     <f:facet name="header">
+						<ice:commandSortHeader columnName="Output" arrow="true">
+							<ice:outputText value="Output"/>
+						</ice:commandSortHeader>
+					 </f:facet>
+			         <ice:outputLabel value="#{batchDetail.output}"/>
+			     </ice:column> -->
+					</ice:dataTable>
+				</ice:panelGroup>
+			</ui:repeat>
+
+			<ui:repeat var="alertBoardGrid"
+				value="#{boardBean.components.alertBoardGridComponents}">
+				<ice:panelGroup style="#{alertBoardGrid.style}"
+					styleClass="boardComponent">
+					<ice:panelGroup
+						style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+						<ice:outputLabel styleClass="dashboardTitle"
+							value="#{alertBoardGrid.title}" />
+					</ice:panelGroup>
+					<ice:dataTable value="#{alertBoardGrid.alertBeans}"
+						var="alertBoardGridDetail" cellpadding="0" cellspacing="0"
+						style="margin: 1px 1px 1px 1px; font-size: 11px"
+						columnClasses="tableCol"
+						rowClasses="#{alertBoardGrid.colors}"
+						sortColumn="#{alertBoardGrid.columnName}"
+						sortAscending="#{alertBoardGrid.ascending}"
+						columnWidths="80, 50, 140, 80"
+						scrollable="true"
+						scrollHeight="270px">
+						<ice:column style="text-align: left;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="State" arrow="true">
+									<ice:outputText value="State"/>
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertState}"
+											 style="font-size: 9px;">
+								<f:converter converterId="DisplayConverter" />
+							</ice:outputLabel>
+						</ice:column>
+						<ice:column style="text-align: center;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="Date" arrow="true">
+									<ice:outputText value="Date" />
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alert.alertEvent.eventDate}"
+											 style="font-size: 9px;">
+								<f:convertDateTime pattern="#{msgs.format_date1}"
+									timeZone="#{styleBean.timeZone}" />
+							</ice:outputLabel>
+						</ice:column>
+						<ice:column style="text-align: left;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="Label" arrow="true">
+									<ice:outputText value="Label" />
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:commandLink value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+											 actionListener="#{boardBean.viewAlertFromAlertBoardGrid}"
+											 action="#{boardBean.action}">
+								<f:attribute name="alertBoardGrid" value="#{alertBoardGrid}"/>			 
+								<f:attribute name="selectedAlert" value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"/>
+							</ice:commandLink>
+							<!-- <ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.alertDefinition.name}"
+											 style="font-size: 9px;"/> -->
+						</ice:column>
+
+						<ice:column style="text-align: left;">
+							<f:facet name="header">
+								<ice:commandSortHeader columnName="Env" arrow="true">
+									<ice:outputText value="Env" />
+								</ice:commandSortHeader>
+							</f:facet>
+							<ice:outputLabel value="#{alertBoardGridDetail.alertBean.alertDefinitionBean.logicalEnv.name}"
+											 style="font-size: 9px;"/>
+						</ice:column>
+					</ice:dataTable>
+				</ice:panelGroup>
+			</ui:repeat>
+
+			<!-- 
+   <ui:repeat var="ikrCategoryChart" value="#{boardBean.components.ikrCategoryChartComponents}">
+   		<ice:panelGroup style="#{ikrCategoryChart.style}" styleClass="boardComponent">
+   			<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable">
+				<tr>
+					<td class="title"><b><h:outputLabel value="#{ikrCategoryChart.title}"/></b></td>
+				</tr>
+				<tr>
+					<td width="100%">
+						<applet codebase="#{facesContext.externalContext.requestContextPath}/appletJars/"
+								archive="jfreechart-1.0.13.jar, 
+					  					 jcommon-1.0.16.jar,
+					  					 foundation-#{version}.jar,
+					  					 compute-server-#{version}.jar,
+					  					 framework-base-#{version}.jar,
+					  					 persistency-#{version}.jar,
+					  					 jsf-api-1.2.jar,
+					  					 jsf-impl-1.2.jar,
+					  					 log4j-1.2.12.jar,
+					  					 indiktor.jar"
+					  			code="com.fsi.monitoring.applet.IkCategoryRTChartApplet"
+					  			width="#{ikrCategoryChart.width}" height="#{ikrCategoryChart.height}"
+					  			alt="You should see an applet, not this text.">
+					  		<param name="chartType" value="#{ikrCategoryChart.type}"/>
+					  		<param name="maxSlot" value="#{ikrCategoryChart.maxSlot}"/>
+					  		<param name="chartUnits" value="#{ikrCategoryChart.chartUnits}"/>
+					  		<param name="chartData" value="#{ikrCategoryChart.chartData}"/>
+					  	</applet> 
+					</td>
+				</tr>
+			</table>
+   		</ice:panelGroup>
+   </ui:repeat>
+  -->
+
+			<ui:repeat var="ikrComponentChart"
+				value="#{boardBean.components.ikrChartComponents}">
+				<ice:panelGroup style="#{ikrComponentChart.style}"
+					styleClass="boardComponent">
+					<ice:panelGroup
+						style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+						<ice:outputLabel styleClass="dashboardTitle"
+							value="#{ikrComponentChart.title}" />
+					</ice:panelGroup>
+					<ice:panelGroup>
+						<table cellspacing="0" cellpadding="0" border="0" class="dataServerContentTable" bgcolor="#CBCBCB">
+							<tr>
+								<td width="100%">
+									<p:lineChart value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].chartModel}" 
+									 			rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].line}"
+									 			style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].chartStyle}"
+									 			fill="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].fill}"
+									 			stacked="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].stacked}"
+									 			legendPosition="e" showMarkers="false"/>
+									<p:pieChart value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].chartModel}" 
+												rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].pie}"
+												style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].chartStyle}"
+												showDataLabels="true" sliceMargin="5" dataFormat="label"/>
+									<p:barChart value="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].chartModel}" 
+												rendered="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].bar}"
+												style="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].chartStyle}"
+												orientation="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].orientation}"
+												stacked="#{boardBeanManager.ikrDefinitionChartMap['ikrDefinitionChart9'].stacked}"
+												legendPosition="ne"/>		
+								
+								<ice:outputChart
+										type="#{ikrComponentChart.type}" chartTitle="  "
+										xaxisTitle="  " yaxisTitle="  "
+										xaxisLabels="#{ikrComponentChart.chartAxisTimes}"
+										labels="#{ikrComponentChart.chartLabels}"
+										colors="#{ikrComponentChart.chartColors}"
+										data="#{ikrComponentChart.pieChart?ikrComponentChart.pieChartData:ikrComponentChart.chartData}"
+										legendColumns="2" legendPlacement="none"
+										renderOnSubmit="#{ikrComponentChart.renderOnSubmit}"
+										actionListener="#{ikrComponentChart.imageClicked}"
+										width="#{ikrComponentChart.width}"
+										height="#{ikrComponentChart.height}"
+										horizontal="#{ikrComponentChart.horizontal}" />
+								</td>
+							</tr>
+						</table>
+					</ice:panelGroup>
+				</ice:panelGroup>
+				<ice:panelPopup draggable="false" autoCentre="false"
+					rendered="#{ikrComponentChart.rendererLegendsPopup}"
+					style="#{ikrComponentChart.legendStyle}">
+					<f:facet name="header">
+						<ice:panelGroup style="height: 20px;">
+							<table width="100%">
+								<tr>
+									<td><ice:outputText style="float: left;" value="Legends" />
+									</td>
+									<td><ice:commandButton style="float: right;"
+											actionListener="#{ikrComponentChart.closeLegendsPopup}"
+											image="/images/i/cal_off.gif" alt="Close" /></td>
+								</tr>
+							</table>
+						</ice:panelGroup>
+					</f:facet>
+					<f:facet name="body">
+						<ice:panelGrid columns="1">
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend0']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend0'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend0'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend1']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend1'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend1'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend2']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend2'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend2'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend3']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend3'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend3'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend4']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend4'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend4'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend5']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend5'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend5'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend6']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend6'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend6'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend7']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend7'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend7'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend8']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend8'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend8'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend9']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend9'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend9'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend10']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend10'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend10'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+							<ice:panelGrid columns="2"
+								rendered="#{ikrComponentChart.legends['legend11']!=null}">
+								<ice:graphicImage
+									url="/images/IndiKtor2.0/ChartsColors/#{ikrComponentChart.legends['legend11'].colorId}.png" />
+								<ice:outputText
+									value="#{ikrComponentChart.legends['legend11'].label}"
+									style="font-size: 13px;" />
+							</ice:panelGrid>
+						</ice:panelGrid>
+					</f:facet>
+				</ice:panelPopup>
+			</ui:repeat>
+
+			<ice:panelGroup
+				style="#{boardBean.components.threadAnalysisComponent.details.threadComponent.style}"
+				rendered="#{boardBean.components.threadAnalysisComponent.details.threadComponent.rendered}"
+				styleClass="boardComponent">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.components.threadAnalysisComponent.details.threadComponent.title}" />
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.components.threadAnalysisComponent.details.beans}"
+					sortColumn="#{boardBean.components.threadAnalysisComponent.details.sortColumnName}"
+					sortAscending="#{boardBean.components.threadAnalysisComponent.details.ascending}"
+					var="threadDetailBean" styleClass="threadDetails" cellspacing="0"
+					cellpadding="0" border="0" rowClasses="oddRow,evenRow"
+					columnClasses="name,state,time,time" headerClass="big big big big">
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.details.nameColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.details.nameColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:commandLink value="#{threadDetailBean.threadName}"
+							actionListener="#{boardBean.components.threadAnalysisComponent.rowSelectionListener}">
+							<f:attribute name="details" value="#{threadDetailBean}" />
+						</ice:commandLink>
+					</ice:column>
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.details.stateColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.details.stateColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadDetailBean.state}" />
+					</ice:column>
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.details.blockedTimeColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.details.blockedTimeColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadDetailBean.blockedTime}" />
+					</ice:column>
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.details.waitedTimeColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.details.waitedTimeColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadDetailBean.waitedTime}" />
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.components.threadAnalysisComponent.statuses.threadComponent.style}"
+				rendered="#{boardBean.components.threadAnalysisComponent.statuses.threadComponent.rendered}"
+				styleClass="boardComponent">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.components.threadAnalysisComponent.statuses.threadComponent.title}" />
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.components.threadAnalysisComponent.statuses.beans}"
+					sortColumn="#{boardBean.components.threadAnalysisComponent.statuses.sortColumnName}"
+					sortAscending="#{boardBean.components.threadAnalysisComponent.statuses.ascending}"
+					var="threadStatsBean" styleClass="threadAnalysis" cellspacing="0"
+					cellpadding="0" border="0" rowClasses="oddRow,evenRow"
+					columnClasses="name,data,data" headerClass="big big big">
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.statuses.nameColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.statuses.nameColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadStatsBean.status}" />
+					</ice:column>
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.statuses.nbColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.statuses.nbColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadStatsBean.value}" />
+					</ice:column>
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.statuses.percentColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.statuses.percentColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadStatsBean.percentage}" />
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.components.threadAnalysisComponent.methods.threadComponent.style}"
+				rendered="#{boardBean.components.threadAnalysisComponent.methods.threadComponent.rendered}"
+				styleClass="boardComponent">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.components.threadAnalysisComponent.methods.threadComponent.title}" />
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.components.threadAnalysisComponent.methods.beans}"
+					sortColumn="#{boardBean.components.threadAnalysisComponent.methods.sortColumnName}"
+					sortAscending="#{boardBean.components.threadAnalysisComponent.methods.ascending}"
+					var="threadStatsBean" styleClass="threadAnalysis" cellspacing="0"
+					cellpadding="0" border="0" rowClasses="oddRow,evenRow"
+					columnClasses="name,data,data" headerClass="big big big">
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.methods.nameColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.methods.nameColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadStatsBean.status}" />
+					</ice:column>
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.methods.nbColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.methods.nbColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadStatsBean.value}" />
+					</ice:column>
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.methods.percentColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.methods.percentColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadStatsBean.percentage}" />
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.components.threadAnalysisComponent.types.threadComponent.style}"
+				rendered="#{boardBean.components.threadAnalysisComponent.types.threadComponent.rendered}"
+				styleClass="boardComponent">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.components.threadAnalysisComponent.types.threadComponent.title}" />
+				</ice:panelGroup>
+				<ice:dataTable
+					value="#{boardBean.components.threadAnalysisComponent.types.beans}"
+					sortColumn="#{boardBean.components.threadAnalysisComponent.types.sortColumnName}"
+					sortAscending="#{boardBean.components.threadAnalysisComponent.types.ascending}"
+					var="threadStatsBean" styleClass="threadAnalysis" cellspacing="0"
+					cellpadding="0" border="0" rowClasses="oddRow,evenRow"
+					columnClasses="name,data,data" headerClass="big big big">
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.types.nameColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.types.nameColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadStatsBean.status}" />
+					</ice:column>
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.types.nbColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.types.nbColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadStatsBean.value}" />
+					</ice:column>
+					<ice:column style="text-align: center;">
+						<f:facet name="header">
+							<ice:commandSortHeader
+								columnName="#{boardBean.components.threadAnalysisComponent.types.percentColumnName}"
+								arrow="true">
+								<ice:outputText
+									value="#{boardBean.components.threadAnalysisComponent.types.percentColumnName}" />
+							</ice:commandSortHeader>
+						</f:facet>
+						<ice:outputLabel value="#{threadStatsBean.percentage}" />
+					</ice:column>
+				</ice:dataTable>
+			</ice:panelGroup>
+
+			<ice:panelGroup
+				style="#{boardBean.components.threadAnalysisComponent.style}"
+				rendered="#{boardBean.components.threadAnalysisComponent.rendered}"
+				styleClass="boardComponent">
+				<ice:panelGroup
+					style="margin: 1px 1px 1px 1px;background-color: #071a39;">
+					<ice:outputLabel styleClass="dashboardTitle"
+						value="#{boardBean.components.threadAnalysisComponent.title}" />
+				</ice:panelGroup>
+				<ice:panelGroup>
+					<ice:outputLabel
+						value="#{boardBean.components.threadAnalysisComponent.selectedThreadDetails.stackTrace}" />
+				</ice:panelGroup>
+			</ice:panelGroup>
+		</ice:form>
+	</ui:define>
+</ui:composition>
