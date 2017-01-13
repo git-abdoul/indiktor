@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+	"-//SPRING//DTD BEAN//EN"
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="propertyConfigurer"
+		  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>file:${file.propEnv}</value>
+		</property>
+	</bean>
+	
+	<import resource="classpath:applicationContext-persistency.xml"/>
+	<import resource="classpath:applicationContext-foundation.xml"/>
+	
+	<bean id="cacheManager" class="com.fsi.monitoring.cache.EhCacheManagerBean">
+  		<property name="ehcacheConfigLocation">
+    		<value>classpath:ehcache.xml</value>
+  		</property>
+		<property name="propertiesFile">
+    		<value>file:${file.propEnv}</value>
+  		</property>
+		<property name="componentName">
+    		<value>scheduler-server</value>
+  		</property>
+		<property name="cacheManagerName">
+    		<value>scheduler-server</value>
+  		</property>
+	</bean>
+	
+	<bean id="computeServerConnector"
+    	  class="com.fsi.fwk.apps.connection.RemoteServiceConnector"
+    	  singleton="true"
+		  init-method="initConnection">
+		<property name="hostName">
+			<value>${compute-server.hostname}</value>
+		</property>   
+		<property name="port">
+			<value>${compute-server.port}</value>
+		</property>
+		<property name="serviceName">
+			<value>${compute-server.serviceName}</value>
+		</property>			
+	</bean>
+	
+	<bean id="jobSchedulerManager"
+    	  class="com.fsi.scheduler.apps.JobSchedulerManager"
+    	  singleton="true"
+		  init-method="init">
+			<property name="dataModelPM" ref="dataModelPM"/>
+			<property name="jmsFactory" ref="jmsProcessorFactory"/>
+			<property name="heartbeatEventType" value="HEARTBEAT_JOB_TASK"/>
+	</bean>		
+	
+	<bean id="jobSchedulerFactory"
+    	  class="com.fsi.scheduler.jobs.config.JobSchedulerFactory"
+    	  singleton="true"
+		  init-method="initFactory">
+		    <property name="dataModelPM" ref="dataModelPM"/>
+	</bean>
+ 
+</beans>

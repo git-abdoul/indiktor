@@ -19,12 +19,11 @@
 		<module>components/krysalis-jCharts</module>
 		<module>components/publisher</module>
 		<module>components/indiktor</module>
-		<module>system-agent</module>
-		<module>compute-server</module>
-		<module>monitor-server</module>
-		<module>scheduler-server</module>
+		<module>components/system-agent</module>
+		<module>components/compute-server</module>
+		<module>components/monitor-server</module>
+		<module>components/scheduler-server</module>
 		<module>components/toolkits</module>
-		<module>web-server</module>
 		<module>ikr-distrib</module>
 	</modules>
   

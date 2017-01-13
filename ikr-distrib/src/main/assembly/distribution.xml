@@ -32,11 +32,6 @@
             <outputDirectory>resources/dashboard</outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>src/main/resources/configs</directory>
-            <outputDirectory>ext-libs</outputDirectory>
-            <excludes><exclude>*/**</exclude></excludes>
-        </fileSet>
-        <fileSet>
             <directory>src/main/resources/sql</directory>
             <outputDirectory>deploy/sql</outputDirectory>
         </fileSet>
@@ -51,22 +46,27 @@
     </fileSets>
     <files>
         <file>
-            <source>../compute-server/target/compute-server-${version}.tar</source>
+            <source>../components/compute-server/target/compute-server-${version}.tar</source>
             <outputDirectory>deploy/servers</outputDirectory>
             <destName>compute-server.tar</destName>
         </file>
         <file>
-            <source>../monitor-server/target/monitor-server-${version}.tar</source>
+            <source>../components/monitor-server/target/monitor-server-${version}.tar</source>
             <outputDirectory>deploy/servers</outputDirectory>
             <destName>monitor-server.tar</destName>
         </file>
         <file>
-            <source>../scheduler-server/target/scheduler-server-${version}.tar</source>
+            <source>../components/scheduler-server/target/scheduler-server-${version}.tar</source>
             <outputDirectory>deploy/servers</outputDirectory>
             <destName>scheduler-server.tar</destName>
         </file>
         <file>
-            <source>../web-server/target/web-server-${version}.tar</source>
+            <source>../components/system-agent/target/system-agent-${version}.tar</source>
+            <outputDirectory>deploy/servers</outputDirectory>
+            <destName>system-agent.tar</destName>
+        </file>
+        <file>
+            <source>../components/indiktor/target/indiktor-${version}.tar</source>
             <outputDirectory>deploy/servers</outputDirectory>
             <destName>web-server.tar</destName>
         </file>

@@ -20,7 +20,8 @@ extends AbstractService {
 	throws Exception {
 		try {			
 			String objectURL = "rmi://"+hostName+":"+port+"/"+serviceName;
-			Naming.rebind(objectURL, service);	
+
+				Naming.rebind(objectURL, service);
 			
 			String message = "Service published: " + serviceName;
 			LOG.info(message);

@@ -1,0 +1,55 @@
+<assembly
+        xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>tar</id>
+    <formats>
+        <format>tar</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>src/main/resources/scripts/unix</directory>
+            <outputDirectory>bin/unix</outputDirectory>
+            <lineEnding>unix</lineEnding>
+            <fileMode>755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/scripts/win</directory>
+            <outputDirectory>bin/win</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/scripts</directory>
+            <outputDirectory>bin</outputDirectory>
+            <includes>
+                <include>*.policy</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>configs</outputDirectory>
+            <includes>
+                <include>*.properties</include>
+                <include>*.xml</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/sigar-1.6.3.0</directory>
+            <outputDirectory>lib/sigar-1.6.3.0</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>docs</directory>
+            <outputDirectory>docs</outputDirectory>
+        </fileSet>
+    </fileSets>
+    <dependencySets>
+        <!-- the following dependency set includes the dependency JARs needed by
+            the main Java executable for indicator processing -->
+        <dependencySet>
+            <outputDirectory>lib</outputDirectory>
+            <useProjectArtifact>true</useProjectArtifact>
+            <scope>runtime</scope>
+            <unpack>false</unpack>
+        </dependencySet>
+    </dependencySets>
+</assembly>
