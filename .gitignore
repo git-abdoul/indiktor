@@ -1,4 +1,5 @@
 **/target
 **/*.iml
+/components/indiktor/**/*.jspx
 /.idea
 # Created by .ignore support plugin (hsz.mobi)
