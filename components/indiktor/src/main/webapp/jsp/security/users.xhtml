@@ -1,4 +1,4 @@
-<ui:composition template="/WEB-INF/template/mainTemplate.xhtml
+<ui:composition template="/WEB-INF/template/mainTemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
              	xmlns:ui="http://java.sun.com/jsf/facelets"
              	xmlns:f="http://java.sun.com/jsf/core"
@@ -320,13 +320,13 @@
 	    </f:facet>
 	    <f:facet name="body">
 	    	  <ice:panelGrid id="UpdateUser">
-				<ui:include src="/jsp/security/updateUser.xhtml/>
+				<ui:include src="/jsp/security/updateUser.xhtml"/>
 			</ice:panelGrid>
 	    </f:facet>
 	</ice:panelPopup>
 			
 </ice:form>
-<ui:include src="/jsp/util/errorMessag.xhtmlml"/>
+<ui:include src="/jsp/util/errorMessage.xhtml"/>
 </ice:panelGrid>
 </ice:panelGrid>
 </ui:define>
